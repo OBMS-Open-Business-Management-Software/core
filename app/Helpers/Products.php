@@ -2,16 +2,7 @@
 
 namespace App\Helpers;
 
-use App\Models\Accounting\Invoice\Invoice;
-use App\Models\Accounting\Invoice\InvoiceHistory;
-use App\Models\Accounting\Prepaid\PrepaidHistory;
-use App\Models\Payment;
-use App\Models\PaymentGatewaySetting;
-use App\Models\User;
-use Carbon\Carbon;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Auth;
 
 /**
  * Class Products.

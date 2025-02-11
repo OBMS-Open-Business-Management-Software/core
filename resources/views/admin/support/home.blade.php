@@ -8,7 +8,7 @@
                     <div class="col-md-12">
                         <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                             <li class="nav-item" role="presentation">
-                                <a class="nav-link active" id="pills-category-uncategorized-tab" data-toggle="pill" data-type="category" href="#pills-category-uncategorized" role="tab" aria-controls="pills-category-uncategorized" aria-selected="true">{{ __('Uncategorized') }}</a>
+                                <a class="nav-link active" id="pills-category-uncategorized-tab" data-toggle="pill" data-type="category" href="#pills-category-uncategorized" role="tab" aria-controls="pills-category-uncategorized" aria-selected="true">{{ __('interface.status.uncategorized') }}</a>
                             </li>
                             @foreach($categories as $category)
                                 <li class="nav-item" role="presentation">
@@ -26,16 +26,16 @@
                                     <div class="col-md-12">
                                         <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                                             <li class="nav-item" role="presentation">
-                                                <a class="nav-link active" id="pills-category-uncategorized-open-tab" data-toggle="pill" data-type="status" href="#pills-category-uncategorized-open" role="tab" aria-controls="pills-category-uncategorized-open" aria-selected="true">{{ __('Open') }}</a>
+                                                <a class="nav-link active" id="pills-category-uncategorized-open-tab" data-toggle="pill" data-type="status" href="#pills-category-uncategorized-open" role="tab" aria-controls="pills-category-uncategorized-open" aria-selected="true">{{ __('interface.status.open') }}</a>
                                             </li>
                                             <li class="nav-item" role="presentation">
-                                                <a class="nav-link" id="pills-category-uncategorized-closed-tab" data-toggle="pill" data-type="status" href="#pills-category-uncategorized-closed" role="tab" aria-controls="pills-category-uncategorized-closed" aria-selected="false">{{ __('Closed') }}</a>
+                                                <a class="nav-link" id="pills-category-uncategorized-closed-tab" data-toggle="pill" data-type="status" href="#pills-category-uncategorized-closed" role="tab" aria-controls="pills-category-uncategorized-closed" aria-selected="false">{{ __('interface.status.closed') }}</a>
                                             </li>
                                             <li class="nav-item" role="presentation">
-                                                <a class="nav-link" id="pills-category-uncategorized-unknown-tab" data-toggle="pill" data-type="status" href="#pills-category-uncategorized-unknown" role="tab" aria-controls="pills-category-uncategorized-unknown" aria-selected="false">{{ __('Locked') }}</a>
+                                                <a class="nav-link" id="pills-category-uncategorized-unknown-tab" data-toggle="pill" data-type="status" href="#pills-category-uncategorized-unknown" role="tab" aria-controls="pills-category-uncategorized-unknown" aria-selected="false">{{ __('interface.status.locked') }}</a>
                                             </li>
                                             <li class="nav-item" role="presentation">
-                                                <a class="nav-link" id="pills-category-uncategorized-all-tab" data-toggle="pill" data-type="status" href="#pills-category-uncategorized-all" role="tab" aria-controls="pills-category-uncategorized-all" aria-selected="false">{{ __('All') }}</a>
+                                                <a class="nav-link" id="pills-category-uncategorized-all-tab" data-toggle="pill" data-type="status" href="#pills-category-uncategorized-all" role="tab" aria-controls="pills-category-uncategorized-all" aria-selected="false">{{ __('interface.misc.all') }}</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -46,17 +46,17 @@
                                             <div class="tab-pane fade show active" id="pills-category-uncategorized-open" role="tabpanel" aria-labelledby="pills-category-uncategorized-open-tab">
                                                 <div class="card">
                                                     <div class="card-header">
-                                                        <i class="bi bi-question-circle"></i> {{ __('Open') }}
+                                                        <i class="bi bi-question-circle"></i> {{ __('interface.status.open') }}
                                                     </div>
                                                     <div class="card-body">
                                                         <table id="open-tickets-uncategorized" class="table mt-4 w-100">
                                                             <thead>
                                                             <tr>
                                                                 <td>{{ __('interface.data.id') }}</td>
-                                                                <td>{{ __('Subject') }}</td>
-                                                                <td>{{ __('Category') }}</td>
-                                                                <td>{{ __('Status') }}</td>
-                                                                <td>{{ __('Priority') }}</td>
+                                                                <td>{{ __('interface.data.subject') }}</td>
+                                                                <td>{{ __('interface.data.category') }}</td>
+                                                                <td>{{ __('interface.data.status') }}</td>
+                                                                <td>{{ __('interface.data.priority') }}</td>
                                                                 <td>{{ __('interface.actions.view') }}</td>
                                                             </tr>
                                                             </thead>
@@ -70,17 +70,17 @@
                                             <div class="tab-pane fade" id="pills-category-uncategorized-closed" role="tabpanel" aria-labelledby="pills-category-uncategorized-closed-tab">
                                                 <div class="card">
                                                     <div class="card-header">
-                                                        <i class="bi bi-check-circle"></i> {{ __('Closed') }}
+                                                        <i class="bi bi-check-circle"></i> {{ __('interface.status.closed') }}
                                                     </div>
                                                     <div class="card-body">
                                                         <table id="closed-tickets-uncategorized" class="table mt-4 w-100">
                                                             <thead>
                                                             <tr>
                                                                 <td>{{ __('interface.data.id') }}</td>
-                                                                <td>{{ __('Subject') }}</td>
-                                                                <td>{{ __('Category') }}</td>
-                                                                <td>{{ __('Status') }}</td>
-                                                                <td>{{ __('Priority') }}</td>
+                                                                <td>{{ __('interface.data.subject') }}</td>
+                                                                <td>{{ __('interface.data.category') }}</td>
+                                                                <td>{{ __('interface.data.status') }}</td>
+                                                                <td>{{ __('interface.data.priority') }}</td>
                                                                 <td>{{ __('interface.actions.view') }}</td>
                                                             </tr>
                                                             </thead>
@@ -94,17 +94,17 @@
                                             <div class="tab-pane fade" id="pills-category-uncategorized-unknown" role="tabpanel" aria-labelledby="pills-category-uncategorized-unknown-tab">
                                                 <div class="card">
                                                     <div class="card-header">
-                                                        <i class="bi bi-exclamation-circle"></i> {{ __('Locked') }}
+                                                        <i class="bi bi-exclamation-circle"></i> {{ __('interface.status.locked') }}
                                                     </div>
                                                     <div class="card-body">
                                                         <table id="locked-tickets-uncategorized" class="table mt-4 w-100">
                                                             <thead>
                                                             <tr>
                                                                 <td>{{ __('interface.data.id') }}</td>
-                                                                <td>{{ __('Subject') }}</td>
-                                                                <td>{{ __('Category') }}</td>
-                                                                <td>{{ __('Status') }}</td>
-                                                                <td>{{ __('Priority') }}</td>
+                                                                <td>{{ __('interface.data.subject') }}</td>
+                                                                <td>{{ __('interface.data.category') }}</td>
+                                                                <td>{{ __('interface.data.status') }}</td>
+                                                                <td>{{ __('interface.data.priority') }}</td>
                                                                 <td>{{ __('interface.actions.view') }}</td>
                                                             </tr>
                                                             </thead>
@@ -118,17 +118,17 @@
                                             <div class="tab-pane fade" id="pills-category-uncategorized-all" role="tabpanel" aria-labelledby="pills-category-uncategorized-all-tab">
                                                 <div class="card">
                                                     <div class="card-header">
-                                                        <i class="bi bi-info-circle"></i> {{ __('All') }}
+                                                        <i class="bi bi-info-circle"></i> {{ __('interface.misc.all') }}
                                                     </div>
                                                     <div class="card-body">
                                                         <table id="all-tickets-uncategorized" class="table mt-4 w-100">
                                                             <thead>
                                                             <tr>
                                                                 <td>{{ __('interface.data.id') }}</td>
-                                                                <td>{{ __('Subject') }}</td>
-                                                                <td>{{ __('Category') }}</td>
-                                                                <td>{{ __('Status') }}</td>
-                                                                <td>{{ __('Priority') }}</td>
+                                                                <td>{{ __('interface.data.subject') }}</td>
+                                                                <td>{{ __('interface.data.category') }}</td>
+                                                                <td>{{ __('interface.data.status') }}</td>
+                                                                <td>{{ __('interface.data.priority') }}</td>
                                                                 <td>{{ __('interface.actions.view') }}</td>
                                                             </tr>
                                                             </thead>
@@ -149,16 +149,16 @@
                                         <div class="col-md-12">
                                             <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                                                 <li class="nav-item" role="presentation">
-                                                    <a class="nav-link active" id="pills-category-{{ $category->id }}-open-tab" data-toggle="pill" data-type="status" href="#pills-category-{{ $category->id }}-open" role="tab" aria-controls="pills-category-{{ $category->id }}-open" aria-selected="true">{{ __('Open') }}</a>
+                                                    <a class="nav-link active" id="pills-category-{{ $category->id }}-open-tab" data-toggle="pill" data-type="status" href="#pills-category-{{ $category->id }}-open" role="tab" aria-controls="pills-category-{{ $category->id }}-open" aria-selected="true">{{ __('interface.status.open') }}</a>
                                                 </li>
                                                 <li class="nav-item" role="presentation">
-                                                    <a class="nav-link" id="pills-category-{{ $category->id }}-closed-tab" data-toggle="pill" data-type="status" href="#pills-category-{{ $category->id }}-closed" role="tab" aria-controls="pills-category-{{ $category->id }}-closed" aria-selected="false">{{ __('Closed') }}</a>
+                                                    <a class="nav-link" id="pills-category-{{ $category->id }}-closed-tab" data-toggle="pill" data-type="status" href="#pills-category-{{ $category->id }}-closed" role="tab" aria-controls="pills-category-{{ $category->id }}-closed" aria-selected="false">{{ __('interface.status.closed') }}</a>
                                                 </li>
                                                 <li class="nav-item" role="presentation">
-                                                    <a class="nav-link" id="pills-category-{{ $category->id }}-unknown-tab" data-toggle="pill" data-type="status" href="#pills-category-{{ $category->id }}-unknown" role="tab" aria-controls="pills-category-{{ $category->id }}-unknown" aria-selected="false">{{ __('Locked') }}</a>
+                                                    <a class="nav-link" id="pills-category-{{ $category->id }}-unknown-tab" data-toggle="pill" data-type="status" href="#pills-category-{{ $category->id }}-unknown" role="tab" aria-controls="pills-category-{{ $category->id }}-unknown" aria-selected="false">{{ __('interface.status.locked') }}</a>
                                                 </li>
                                                 <li class="nav-item" role="presentation">
-                                                    <a class="nav-link" id="pills-category-{{ $category->id }}-all-tab" data-toggle="pill" data-type="status" href="#pills-category-{{ $category->id }}-all" role="tab" aria-controls="pills-category-{{ $category->id }}-all" aria-selected="false">{{ __('All') }}</a>
+                                                    <a class="nav-link" id="pills-category-{{ $category->id }}-all-tab" data-toggle="pill" data-type="status" href="#pills-category-{{ $category->id }}-all" role="tab" aria-controls="pills-category-{{ $category->id }}-all" aria-selected="false">{{ __('interface.misc.all') }}</a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -169,17 +169,17 @@
                                                 <div class="tab-pane fade show active" id="pills-category-{{ $category->id }}-open" role="tabpanel" aria-labelledby="pills-category-{{ $category->id }}-open-tab">
                                                     <div class="card">
                                                         <div class="card-header">
-                                                            <i class="bi bi-question-circle"></i> {{ __('Open') }}
+                                                            <i class="bi bi-question-circle"></i> {{ __('interface.status.open') }}
                                                         </div>
                                                         <div class="card-body">
                                                             <table id="open-tickets-{{ $category->id }}" class="table mt-4 w-100">
                                                                 <thead>
                                                                 <tr>
                                                                     <td>{{ __('interface.data.id') }}</td>
-                                                                    <td>{{ __('Subject') }}</td>
-                                                                    <td>{{ __('Category') }}</td>
-                                                                    <td>{{ __('Status') }}</td>
-                                                                    <td>{{ __('Priority') }}</td>
+                                                                    <td>{{ __('interface.data.subject') }}</td>
+                                                                    <td>{{ __('interface.data.category') }}</td>
+                                                                    <td>{{ __('interface.data.status') }}</td>
+                                                                    <td>{{ __('interface.data.priority') }}</td>
                                                                     <td>{{ __('interface.actions.view') }}</td>
                                                                 </tr>
                                                                 </thead>
@@ -193,17 +193,17 @@
                                                 <div class="tab-pane fade" id="pills-category-{{ $category->id }}-closed" role="tabpanel" aria-labelledby="pills-category-{{ $category->id }}-closed-tab">
                                                     <div class="card">
                                                         <div class="card-header">
-                                                            <i class="bi bi-check-circle"></i> {{ __('Closed') }}
+                                                            <i class="bi bi-check-circle"></i> {{ __('interface.status.closed') }}
                                                         </div>
                                                         <div class="card-body">
                                                             <table id="closed-tickets-{{ $category->id }}" class="table mt-4 w-100">
                                                                 <thead>
                                                                 <tr>
                                                                     <td>{{ __('interface.data.id') }}</td>
-                                                                    <td>{{ __('Subject') }}</td>
-                                                                    <td>{{ __('Category') }}</td>
-                                                                    <td>{{ __('Status') }}</td>
-                                                                    <td>{{ __('Priority') }}</td>
+                                                                    <td>{{ __('interface.data.subject') }}</td>
+                                                                    <td>{{ __('interface.data.category') }}</td>
+                                                                    <td>{{ __('interface.data.status') }}</td>
+                                                                    <td>{{ __('interface.data.priority') }}</td>
                                                                     <td>{{ __('interface.actions.view') }}</td>
                                                                 </tr>
                                                                 </thead>
@@ -217,17 +217,17 @@
                                                 <div class="tab-pane fade" id="pills-category-{{ $category->id }}-unknown" role="tabpanel" aria-labelledby="pills-category-{{ $category->id }}-unknown-tab">
                                                     <div class="card">
                                                         <div class="card-header">
-                                                            <i class="bi bi-exclamation-circle"></i> {{ __('Locked') }}
+                                                            <i class="bi bi-exclamation-circle"></i> {{ __('interface.status.locked') }}
                                                         </div>
                                                         <div class="card-body">
                                                             <table id="locked-tickets-{{ $category->id }}" class="table mt-4 w-100">
                                                                 <thead>
                                                                 <tr>
                                                                     <td>{{ __('interface.data.id') }}</td>
-                                                                    <td>{{ __('Subject') }}</td>
-                                                                    <td>{{ __('Category') }}</td>
-                                                                    <td>{{ __('Status') }}</td>
-                                                                    <td>{{ __('Priority') }}</td>
+                                                                    <td>{{ __('interface.data.subject') }}</td>
+                                                                    <td>{{ __('interface.data.category') }}</td>
+                                                                    <td>{{ __('interface.data.status') }}</td>
+                                                                    <td>{{ __('interface.data.priority') }}</td>
                                                                     <td>{{ __('interface.actions.view') }}</td>
                                                                 </tr>
                                                                 </thead>
@@ -241,17 +241,17 @@
                                                 <div class="tab-pane fade" id="pills-category-{{ $category->id }}-all" role="tabpanel" aria-labelledby="pills-category-{{ $category->id }}-all-tab">
                                                     <div class="card">
                                                         <div class="card-header">
-                                                            <i class="bi bi-info-circle"></i> {{ __('All') }}
+                                                            <i class="bi bi-info-circle"></i> {{ __('interface.misc.all') }}
                                                         </div>
                                                         <div class="card-body">
                                                             <table id="all-tickets-{{ $category->id }}" class="table mt-4 w-100">
                                                                 <thead>
                                                                 <tr>
                                                                     <td>{{ __('interface.data.id') }}</td>
-                                                                    <td>{{ __('Subject') }}</td>
-                                                                    <td>{{ __('Category') }}</td>
-                                                                    <td>{{ __('Status') }}</td>
-                                                                    <td>{{ __('Priority') }}</td>
+                                                                    <td>{{ __('interface.data.subject') }}</td>
+                                                                    <td>{{ __('interface.data.category') }}</td>
+                                                                    <td>{{ __('interface.data.status') }}</td>
+                                                                    <td>{{ __('interface.data.priority') }}</td>
                                                                     <td>{{ __('interface.actions.view') }}</td>
                                                                 </tr>
                                                                 </thead>
@@ -274,15 +274,15 @@
             <div class="col-md-3">
                 <div class="card mt-10">
                     <div class="card-header">
-                        <i class="bi bi-arrow-right-circle"></i> {{ __('Run') }}
+                        <i class="bi bi-arrow-right-circle"></i> {{ __('interface.actions.run') }}
                     </div>
                     <div class="card-body">
                         @if (empty($run))
                             <a href="#" class="btn btn-success w-100" data-toggle="modal" data-target="#runStart"><i class="bi bi-play-fill"></i> {{ __('interface.actions.start') }}</a>
                         @else
-                            <label class="font-weight-bold mb-0">{{ __('Category') }}:</label> {{ ! empty($run->category_id) ? (! empty($run->category) ? $run->category->name : __('Uncategorized')) : __('All') }}<br>
-                            <label class="font-weight-bold mb-3">{{ __('Started at') }}:</label> {{ $run->created_at->format('d.m.Y, H:i') }}
-                            <a href="{{ route('admin.support.run.next') }}" class="btn btn-warning w-100 mb-3"><i class="bi bi-skip-forward-fill"></i> {{ __('Next') }}</a>
+                            <label class="font-weight-bold mb-0">{{ __('interface.data.category') }}:</label> {{ ! empty($run->category_id) ? (! empty($run->category) ? $run->category->name : __('interface.status.uncategorized')) : __('interface.misc.all') }}<br>
+                            <label class="font-weight-bold mb-3">{{ __('interface.misc.started_at') }}:</label> {{ $run->created_at->format('d.m.Y, H:i') }}
+                            <a href="{{ route('admin.support.run.next') }}" class="btn btn-warning w-100 mb-3"><i class="bi bi-skip-forward-fill"></i> {{ __('interface.actions.next') }}</a>
                             <a href="{{ route('admin.support.run.stop') }}" class="btn btn-danger w-100"><i class="bi bi-stop-fill"></i> {{ __('interface.actions.stop') }}</a>
                         @endif
                     </div>
@@ -296,7 +296,7 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header bg-primary text-white">
-                        <h5 class="modal-title" id="runStartLabel"><i class="bi bi-play-fill"></i> {{ __('Start ticket run') }}</h5>
+                        <h5 class="modal-title" id="runStartLabel"><i class="bi bi-play-fill"></i> {{ __('interface.actions.start_ticket_run') }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -305,12 +305,12 @@
                         @csrf
                         <div class="modal-body">
                             <div class="form-group row">
-                                <label for="category" class="col-md-4 col-form-label text-md-right">{{ __('Category') }}</label>
+                                <label for="category" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.category') }}</label>
 
                                 <div class="col-md-8">
                                     <select id="category" class="form-control @error('category') is-invalid @enderror" name="category">
-                                        <option value="">{{ __('All') }}</option>
-                                        <option value="0">{{ __('Uncategorized') }}</option>
+                                        <option value="">{{ __('interface.misc.all') }}</option>
+                                        <option value="0">{{ __('interface.status.uncategorized') }}</option>
                                         @foreach ($categories as $category)
                                             <option value="{{ $category->id }}"{{ $category->id == old('category') ? ' selected' : '' }}></option>
                                         @endforeach

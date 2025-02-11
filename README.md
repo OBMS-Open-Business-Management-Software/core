@@ -4,10 +4,16 @@
 [![coverage report](https://gitlab.com/ipvx/interface/badges/master/coverage.svg)](https://gitlab.com/ipvx/interface/-/commits/master)
 [![Latest Release](https://gitlab.com/ipvx/interface/-/badges/release.svg)](https://gitlab.com/ipvx/interface/-/releases)
 ## Code style enforcement
+### Run the PHP code checker
+Check the application PHP code for obvious errors (e.g. missing imports):
+```
+./vendor/bin/phpstan --memory-limit=2G
+```
+
 ### Run the PHP code style fixer
 Format the application PHP code in accordance to the required code style:
 ```
-php tools/php-cs-fixer/vendor/bin/php-cs-fixer fix app
+./vendor/bin/pint
 ```
 
 ### Install commit linter hooks
@@ -35,4 +41,17 @@ docker-compose up -d
 Stop and delete the Docker containers associated to the application:
 ```
 docker-compose down
+```
+## Search for untranslated strings
+
+Enable regex search in VSCode and search for the following pattern to get interpolations:
+
+```
+\{\{\s*__\(\s*(?='(?!interface))
+```
+
+Enable regex search in VSCode and search for the following pattern to get all translations:
+
+```
+\s*__\(\s*(?='(?!interface))
 ```

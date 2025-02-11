@@ -4,14 +4,14 @@
     <div class="container-fluid my-4">
         <div class="row">
             <div class="col-md-12">
-                <a class="btn btn-primary float-right mb-4" data-toggle="modal" data-target="#add"><i class="bi bi-plus-circle"></i> {{ __('Create API User') }}</a>
+                <a class="btn btn-primary float-right mb-4" data-toggle="modal" data-target="#add"><i class="bi bi-plus-circle"></i> {{ __('interface.api.create_api_user') }}</a>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <i class="bi bi-gear-wide-connected"></i> {{ __('API Users') }}
+                        <i class="bi bi-gear-wide-connected"></i> {{ __('interface.misc.api_users') }}
                     </div>
                     <div class="card-body">
                         <table id="apiusers" class="table mt-4 w-100">
@@ -19,9 +19,9 @@
                             <tr>
                                 <td>{{ __('interface.data.id') }}</td>
                                 <td>{{ __('interface.data.name') }}</td>
-                                <td>{{ __('Email Address') }}</td>
-                                <td>{{ __('Status') }}</td>
-                                <td>{{ __('Lock') }}</td>
+                                <td>{{ __('interface.data.email_address') }}</td>
+                                <td>{{ __('interface.data.status') }}</td>
+                                <td>{{ __('interface.actions.lock') }}</td>
                                 <td>{{ __('interface.actions.edit') }}</td>
                                 <td>{{ __('interface.actions.delete') }}</td>
                             </tr>
@@ -40,7 +40,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="addLabel"><i class="bi bi-plus-circle"></i> {{ __('Create API User') }}</h5>
+                    <h5 class="modal-title" id="addLabel"><i class="bi bi-plus-circle"></i> {{ __('interface.api.create_api_user') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -63,7 +63,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Email') }}</label>
+                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.email') }}</label>
 
                             <div class="col-md-8">
                                 <input id="email" type="email" class="form-control @error('name') is-invalid @enderror" name="email" value="{{ old('email') }}">
@@ -77,7 +77,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.password') }}</label>
 
                             <div class="col-md-8">
                                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password">
@@ -91,7 +91,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
+                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.confirm_password') }}</label>
 
                             <div class="col-md-8">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation">

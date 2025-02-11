@@ -4,24 +4,24 @@
     <div class="container-fluid my-4">
         <div class="row">
             <div class="col-md-12">
-                <a class="btn btn-primary float-right mb-4" data-toggle="modal" data-target="#add"><i class="bi bi-plus-circle"></i> {{ __('Create Tenant') }}</a>
+                <a class="btn btn-primary float-right mb-4" data-toggle="modal" data-target="#add"><i class="bi bi-plus-circle"></i> {{ __('interface.tenant.create') }}</a>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <i class="bi bi-people-fill"></i> {{ __('Tenants') }}
+                        <i class="bi bi-people"></i> {{ __('interface.misc.tenants') }}
                     </div>
                     <div class="card-body">
                         <table id="tenants" class="table mt-4 w-100">
                             <thead>
                             <tr>
                                 <td>{{ __('interface.data.id') }}</td>
-                                <td>{{ __('User') }}</td>
-                                <td>{{ __('Contract') }}</td>
-                                <td>{{ __('Domain') }}</td>
-                                <td>{{ __('Info') }}</td>
+                                <td>{{ __('interface.data.user') }}</td>
+                                <td>{{ __('interface.misc.contract') }}</td>
+                                <td>{{ __('interface.data.domain') }}</td>
+                                <td>{{ __('interface.data.info') }}</td>
                                 <td>{{ __('interface.actions.edit') }}</td>
                                 <td>{{ __('interface.actions.delete') }}</td>
                             </tr>
@@ -40,7 +40,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="addLabel"><i class="bi bi-plus-circle"></i> {{ __('Create Tenant') }}</h5>
+                    <h5 class="modal-title" id="addLabel"><i class="bi bi-plus-circle"></i> {{ __('interface.tenant.create') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -49,7 +49,7 @@
                     @csrf
                     <div class="modal-body">
                         <div class="form-group row">
-                            <label for="domain" class="col-md-4 col-form-label text-md-right">{{ __('Domain') }}</label>
+                            <label for="domain" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.domain') }}</label>
 
                             <div class="col-md-8">
                                 <input id="domain" type="text" class="form-control @error('domain') is-invalid @enderror" name="domain" value="{{ old('domain') }}">
@@ -63,7 +63,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="user_id" class="col-md-4 col-form-label text-md-right">{{ __('User ID') }}</label>
+                            <label for="user_id" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.user_id') }}</label>
 
                             <div class="col-md-8">
                                 <input id="user_id" type="number" class="form-control @error('user_id') is-invalid @enderror" name="user_id" value="{{ old('user_id') }}">
@@ -77,7 +77,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="contract_id" class="col-md-4 col-form-label text-md-right">{{ __('Contract ID') }}</label>
+                            <label for="contract_id" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.contract_id') }}</label>
 
                             <div class="col-md-8">
                                 <input id="contract_id" type="number" class="form-control @error('contract_id') is-invalid @enderror" name="contract_id" value="{{ old('contract_id') }}">

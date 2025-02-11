@@ -12,7 +12,7 @@
                     <div class="card-body">
                         {!! $render($page->getAttributes()['latest']->compiled, request()->toArray()) !!}
                         <div class="date mt-3">
-                            <label class="mb-0 font-weight-bold">{{ __('Date:') }}</label> {{ $page->getAttributes()['latest']->created_at->format('d.m.Y, H:i') }}
+                            <label class="mb-0 font-weight-bold">{{ __('interface.units.date') }}:</label> {{ $page->getAttributes()['latest']->created_at->format('d.m.Y, H:i') }}
                         </div>
                     </div>
                 </div>

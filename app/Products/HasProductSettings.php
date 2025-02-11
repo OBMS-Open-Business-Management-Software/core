@@ -2,12 +2,11 @@
 
 namespace App\Products;
 
-use App\Models\PaymentGatewaySetting;
 use App\Models\ProductSetting;
 use Illuminate\Support\Collection;
 
 /**
- * Trait HasGatewaySettings.
+ * Trait HasProductSettings.
  *
  * This trait defines the method to get settings.
  *

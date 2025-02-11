@@ -6,17 +6,17 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <i class="bi bi-file-earmark-text"></i> {{ __('Invoices') }}
+                        <i class="bi bi-file-earmark-text"></i> {{ __('interface.misc.invoices') }}
                     </div>
                     <div class="card-body">
                         <table id="categories" class="table mt-4 w-100">
                             <thead>
                             <tr>
-                                <td>{{ __('Invoice No.') }}</td>
+                                <td>{{ __('interface.misc.invoice_no') }}</td>
                                 <td>{{ __('interface.data.type') }}</td>
-                                <td>{{ __('Status') }}</td>
-                                <td>{{ __('Date') }}</td>
-                                <td>{{ __('Due By') }}</td>
+                                <td>{{ __('interface.data.status') }}</td>
+                                <td>{{ __('interface.data.date') }}</td>
+                                <td>{{ __('interface.misc.due_by') }}</td>
                                 <td>{{ __('interface.actions.view') }}</td>
                             </tr>
                             </thead>

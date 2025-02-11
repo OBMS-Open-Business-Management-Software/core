@@ -54,7 +54,7 @@ class CustomerInvoiceController extends Controller
             ]);
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -113,35 +113,35 @@ class CustomerInvoiceController extends Controller
                     switch ($invoice->status) {
                         case 'unpaid':
                             if ($invoice->overdue) {
-                                $status = '<span class="badge badge-danger badge-pill">' . __('Overdue') . '</span>';
+                                $status = '<span class="badge badge-danger">' . __('interface.status.overdue') . '</span>';
                             } else {
-                                $status = '<span class="badge badge-warning badge-pill">' . __('Unpaid') . '</span>';
+                                $status = '<span class="badge badge-warning">' . __('interface.status.unpaid') . '</span>';
                             }
                             break;
                         case 'paid':
-                            $status = '<span class="badge badge-success badge-pill">' . __('Paid') . '</span>';
+                            $status = '<span class="badge badge-success">' . __('interface.status.paid') . '</span>';
                             break;
                         case 'refunded':
-                            $status = '<span class="badge badge-secondary badge-pill">' . __('Refunded') . '</span>';
+                            $status = '<span class="badge badge-secondary">' . __('interface.status.refunded') . '</span>';
                             break;
                         case 'refund':
-                            $status = '<span class="badge badge-info badge-pill text-white">' . __('Refund') . '</span>';
+                            $status = '<span class="badge badge-info text-white">' . __('interface.actions.refund') . '</span>';
                             break;
                         case 'revoked':
-                            $status = '<span class="badge badge-secondary badge-pill">' . __('Revoked') . '</span>';
+                            $status = '<span class="badge badge-secondary">' . __('interface.status.revoked') . '</span>';
                             break;
                         case 'template':
                         default:
-                            $status = '<span class="badge badge-primary badge-pill">' . __('Draft') . '</span>';
+                            $status = '<span class="badge badge-primary">' . __('interface.status.draft') . '</span>';
                             break;
                     }
 
                     return (object) [
                         'id' => $invoice->number,
                         'status' => $status,
-                        'type' => $invoice->type->name ?? __('N/A'),
-                        'date' => ! empty($invoice->archived_at) ? $invoice->archived_at->format('d.m.Y, H:i') : __('N/A'),
-                        'due' => ! empty($invoice->archived_at) ? $invoice->archived_at->addDays($invoice->type->period)->format('d.m.Y') . ', 23:59' : __('N/A'),
+                        'type' => $invoice->type->name ?? __('interface.misc.not_available'),
+                        'date' => ! empty($invoice->archived_at) ? $invoice->archived_at->format('d.m.Y, H:i') : __('interface.misc.not_available'),
+                        'due' => ! empty($invoice->archived_at) ? $invoice->archived_at->addDays($invoice->type->period)->format('d.m.Y') . ', 23:59' : __('interface.misc.not_available'),
                         'view' => '<a href="' . route('customer.invoices.details', $invoice->id) . '" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>',
                     ];
                 })
@@ -322,29 +322,29 @@ class CustomerInvoiceController extends Controller
                 ->transform(function (InvoiceHistory $history) {
                     switch ($history->status) {
                         case 'publish':
-                            $status = '<span class="badge badge-success badge-pill">' . __('Published') . '</span>';
+                            $status = '<span class="badge badge-success">' . __('interface.status.published') . '</span>';
                             break;
                         case 'revoke':
-                            $status = '<span class="badge badge-secondary badge-pill">' . __('Revoked') . '</span>';
+                            $status = '<span class="badge badge-secondary">' . __('interface.status.revoked') . '</span>';
                             break;
                         case 'refund':
-                            $status = '<span class="badge badge-info badge-pill text-white">' . __('Refund') . '</span>';
+                            $status = '<span class="badge badge-info text-white">' . __('interface.actions.refund') . '</span>';
                             break;
                         case 'unpay':
-                            $status = '<span class="badge badge-warning badge-pill">' . __('Unpaid') . '</span>';
+                            $status = '<span class="badge badge-warning">' . __('interface.status.unpaid') . '</span>';
                             break;
                         case 'pay':
-                            $status = '<span class="badge badge-success badge-pill">' . __('Paid') . '</span>';
+                            $status = '<span class="badge badge-success">' . __('interface.status.paid') . '</span>';
                             break;
                         default:
-                            $status = '<span class="badge badge-secondary badge-pill">' . __('Unknown') . '</span>';
+                            $status = '<span class="badge badge-secondary">' . __('interface.status.unknown') . '</span>';
                             break;
                     }
 
                     return (object) [
                         'id' => $history->id,
                         'date' => $history->created_at->format('d.m.Y, H:i'),
-                        'name' => ! empty($history->user) && ! empty($history->user->realName) ? '<i class="bi bi-person mr-2"></i> ' . $history->user->realName : '<i class="bi bi-robot mr-2""></i> ' . __('System'),
+                        'name' => ! empty($history->user) && ! empty($history->user->realName) ? '<i class="bi bi-person mr-2"></i> ' . $history->user->realName : '<i class="bi bi-robot mr-2""></i> ' . __('interface.data.system'),
                         'status' => $status,
                     ];
                 })

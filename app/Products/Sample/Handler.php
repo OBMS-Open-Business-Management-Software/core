@@ -2,6 +2,7 @@
 
 namespace App\Products\Sample;
 
+use App\Products\HasProductCapabilities;
 use App\Products\HasProductService;
 use App\Products\HasProductSettings;
 use App\Products\Product;
@@ -17,6 +18,7 @@ use Illuminate\Support\Collection;
  */
 class Handler implements Product
 {
+    use HasProductCapabilities;
     use HasProductSettings;
     use HasProductService;
 
@@ -29,7 +31,7 @@ class Handler implements Product
     public function parameters(): Collection
     {
         return collect([
-            "test" => __('Test'),
+            "test" => __('sample.test'),
         ]);
     }
 
@@ -44,13 +46,23 @@ class Handler implements Product
     }
 
     /**
+     * Get product path.
+     *
+     * @return string
+     */
+    public function folderName(): string
+    {
+        return dirname(__FILE__);
+    }
+
+    /**
      * Get product name.
      *
      * @return string
      */
     public function name(): string
     {
-        return __('Sample');
+        return __('sample.test');
     }
 
     /**
@@ -60,17 +72,30 @@ class Handler implements Product
      */
     public function icon(): ?string
     {
-        return null;
+        return 'bi bi-app';
     }
 
     /**
-     * Get product method status.
+     * Get product shop status.
      *
      * @return bool
      */
     public function status(): bool
     {
         return true;
+    }
+
+    /**
+     * Enable user interface capabilities.
+     *
+     * @return object
+     */
+    public function ui(): object
+    {
+        return (object)[
+            'admin' => true,
+            'customer' => true,
+        ];
     }
 
     /**

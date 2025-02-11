@@ -6,19 +6,19 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <i class="bi bi-info-circle"></i> {{ __('User Details') }}
+                        <i class="bi bi-info-circle"></i> {{ __('interface.data.user_details') }}
                     </div>
                     <div class="card-body">
-                        <label class="font-weight-bold">{{ __('Name:') }}</label> {{ Auth::user()->name }}<br>
-                        <label class="font-weight-bold mb-0">{{ __('Email:') }}</label> {{ Auth::user()->email }} {!! Auth::user()->hasVerifiedEmail() ? '<span class="badge badge-success badge-pill">' . __('Verified') . '</span>' : '<span class="badge badge-warning badge-pill">' . __('Unverified') . '</span>' !!}<br>
+                        <label class="font-weight-bold">{{ __('interface.data.name') }}:</label> {{ Auth::user()->name }}<br>
+                        <label class="font-weight-bold mb-0">{{ __('interface.data.email') }}:</label> {{ Auth::user()->email }} {!! Auth::user()->hasVerifiedEmail() ? '<span class="badge badge-success">' . __('interface.status.verified') . '</span>' : '<span class="badge badge-warning">' . __('interface.status.unverified') . '</span>' !!}<br>
                         <br>
-                        <a class="btn btn-primary" data-toggle="modal" data-target="#edit"><i class="bi bi-pencil-square"></i> {{ __('Edit user details') }}</a>
-                        <a class="btn btn-warning" data-toggle="modal" data-target="#password"><i class="bi bi-key-fill"></i> {{ __('Change password') }}</a>
+                        <a class="btn btn-primary" data-toggle="modal" data-target="#edit"><i class="bi bi-pencil-square"></i> {{ __('interface.misc.edit_user_details') }}</a>
+                        <a class="btn btn-warning" data-toggle="modal" data-target="#password"><i class="bi bi-key-fill"></i> {{ __('interface.actions.change_password') }}</a>
                     </div>
                 </div>
                 <div class="card mt-4">
                     <div class="card-header">
-                        <i class="bi bi-qr-code"></i> {{ __('2-Factor Authentication') }}
+                        <i class="bi bi-qr-code"></i> {{ __('interface.misc.2fa_long') }}
                     </div>
                     <div class="card-body">
                         @if(Auth::user()->two_factor_confirmed)
@@ -27,7 +27,7 @@
                                 @method('delete')
                                 <div class="dropdown d-inline-block">
                                     <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
-                                        <i class="bi bi-eye"></i> {{ __('Recovery codes') }}
+                                        <i class="bi bi-eye"></i> {{ __('interface.data.recovery_codes') }}
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         @foreach(Auth::user()->recoveryCodes() as $code)
@@ -35,29 +35,29 @@
                                         @endforeach
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-danger"><i class="bi bi-x-circle"></i> {{ __('Disable 2FA') }}</button>
+                                <button type="submit" class="btn btn-danger"><i class="bi bi-x-circle"></i> {{ __('interface.actions.disable_2fa') }}</button>
                             </form>
                         @elseif(Auth::user()->two_factor_secret)
-                            <p>{{ __('Validate 2FA by scanning the following QRcode and entering the TOTP') }}</p>
+                            <p>{{ __('interface.misc.2fa_validation_notice') }}</p>
                             {!! Auth::user()->twoFactorQrCodeSvg() !!}
                             <form action="{{ route('two-factor.confirm') }}" method="post">
                                 @csrf
                                 <div class="input-group mt-3">
                                     <input name="code" class="form-control" required />
-                                    <button type="submit" class="btn btn-primary"><i class="bi bi-check-circle"></i> {{ __('Validate 2FA') }}</button>
+                                    <button type="submit" class="btn btn-primary"><i class="bi bi-check-circle"></i> {{ __('interface.actions.validate_2fa') }}</button>
                                 </div>
                             </form>
                         @else
                             <form action="{{ route('two-factor.enable') }}" method="post">
                                 @csrf
-                                <button type="submit" class="btn btn-success"><i class="bi bi-check-circle"></i> {{ __('Activate 2FA') }}</button>
+                                <button type="submit" class="btn btn-success"><i class="bi bi-check-circle"></i> {{ __('interface.actions.activate_2fa') }}</button>
                             </form>
                         @endif
                     </div>
                 </div>
                 <div class="card mt-4">
                     <div class="card-header">
-                        <i class="bi bi-person"></i> {{ __('Profile Details') }}
+                        <i class="bi bi-person"></i> {{ __('interface.data.profile_details') }}
                     </div>
                     <div class="card-body">
                         @if (empty($profile = Auth::user()->profile))
@@ -66,7 +66,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group row">
-                                            <label for="firstname" class="col-md-4 col-form-label text-md-right">{{ __('Firstname') }}*</label>
+                                            <label for="firstname" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.firstname') }}*</label>
 
                                             <div class="col-md-8">
                                                 <input id="firstname" type="text" class="form-control @error('firstname') is-invalid @enderror" name="firstname" value="{{ old('firstname') }}">
@@ -81,7 +81,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group row">
-                                            <label for="lastname" class="col-md-4 col-form-label text-md-right">{{ __('Lastname') }}*</label>
+                                            <label for="lastname" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.lastname') }}*</label>
 
                                             <div class="col-md-8">
                                                 <input id="lastname" type="text" class="form-control @error('lastname') is-invalid @enderror" name="lastname" value="{{ old('lastname') }}">
@@ -98,7 +98,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group row">
-                                            <label for="company" class="col-md-2 col-form-label text-md-right">{{ __('Company') }}</label>
+                                            <label for="company" class="col-md-2 col-form-label text-md-right">{{ __('interface.data.company') }}</label>
 
                                             <div class="col-md-10">
                                                 <input id="company" type="text" class="form-control @error('company') is-invalid @enderror" name="company" value="{{ old('company') }}">
@@ -115,7 +115,7 @@
                                 <div class="row mt-4">
                                     <div class="col-md-6">
                                         <div class="form-group row">
-                                            <label for="tax_id" class="col-md-4 col-form-label text-md-right">{{ __('Tax Number') }}</label>
+                                            <label for="tax_id" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.tax_number') }}</label>
 
                                             <div class="col-md-8">
                                                 <input id="tax_id" type="text" class="form-control @error('tax_id') is-invalid @enderror" name="tax_id" value="{{ old('tax_id') }}">
@@ -130,7 +130,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group row">
-                                            <label for="vat_id" class="col-md-4 col-form-label text-md-right">{{ __('VAT Identification Number') }}</label>
+                                            <label for="vat_id" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.vat_id') }}</label>
 
                                             <div class="col-md-8">
                                                 <input id="vat_id" type="text" class="form-control @error('vat_id') is-invalid @enderror" name="vat_id" value="{{ old('vat_id') }}">
@@ -147,7 +147,7 @@
                                 <div class="row mt-4">
                                     <div class="col-md-8">
                                         <div class="form-group row">
-                                            <label for="street" class="col-md-3 col-form-label text-md-right">{{ __('Street') }}*</label>
+                                            <label for="street" class="col-md-3 col-form-label text-md-right">{{ __('interface.data.street') }}*</label>
 
                                             <div class="col-md-9">
                                                 <input id="street" type="text" class="form-control @error('street') is-invalid @enderror" name="street" value="{{ old('street') }}">
@@ -162,7 +162,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group row">
-                                            <label for="housenumber" class="col-md-4 col-form-label text-md-right">{{ __('Housenumber') }}*</label>
+                                            <label for="housenumber" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.housenumber') }}*</label>
 
                                             <div class="col-md-8">
                                                 <input id="housenumber" type="text" class="form-control @error('housenumber') is-invalid @enderror" name="housenumber" value="{{ old('housenumber') }}">
@@ -179,7 +179,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group row align-items-center">
-                                            <label for="addition" class="col-md-2 col-form-label text-md-right">{{ __('Additional Info') }}</label>
+                                            <label for="addition" class="col-md-2 col-form-label text-md-right">{{ __('interface.data.additional_info') }}</label>
 
                                             <div class="col-md-10">
                                                 <input id="addition" type="text" class="form-control @error('addition') is-invalid @enderror" name="addition" value="{{ old('addition') }}">
@@ -196,7 +196,7 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group row">
-                                            <label for="postalcode" class="col-md-6 col-form-label text-md-right">{{ __('Postalcode') }}*</label>
+                                            <label for="postalcode" class="col-md-6 col-form-label text-md-right">{{ __('interface.data.postalcode') }}*</label>
 
                                             <div class="col-md-6">
                                                 <input id="postalcode" type="text" class="form-control @error('postalcode') is-invalid @enderror" name="postalcode" value="{{ old('postalcode') }}">
@@ -211,7 +211,7 @@
                                     </div>
                                     <div class="col-md-8">
                                         <div class="form-group row">
-                                            <label for="city" class="col-md-2 col-form-label text-md-right">{{ __('City') }}*</label>
+                                            <label for="city" class="col-md-2 col-form-label text-md-right">{{ __('interface.data.city') }}*</label>
 
                                             <div class="col-md-10">
                                                 <input id="city" type="text" class="form-control @error('city') is-invalid @enderror" name="city" value="{{ old('city') }}">
@@ -228,7 +228,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group row">
-                                            <label for="state" class="col-md-4 col-form-label text-md-right">{{ __('State') }}*</label>
+                                            <label for="state" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.state') }}*</label>
 
                                             <div class="col-md-8">
                                                 <input id="state" type="text" class="form-control @error('state') is-invalid @enderror" name="state" value="{{ old('state') }}">
@@ -243,7 +243,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group row">
-                                            <label for="country" class="col-md-4 col-form-label text-md-right">{{ __('Country') }}*</label>
+                                            <label for="country" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.country') }}*</label>
 
                                             <div class="col-md-8">
                                                 <select id="country" class="form-control @error('country') is-invalid @enderror" name="country">
@@ -264,7 +264,7 @@
                                 <div class="row mt-4">
                                     <div class="col-md-6">
                                         <div class="form-group row">
-                                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Email') }}*</label>
+                                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.email') }}*</label>
 
                                             <div class="col-md-8">
                                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}">
@@ -279,7 +279,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group row">
-                                            <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('Phone') }}*</label>
+                                            <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.phone') }}*</label>
 
                                             <div class="col-md-8">
                                                 <input id="phone" type="tel" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}">
@@ -293,27 +293,27 @@
                                         </div>
                                     </div>
                                 </div>
-                                <button class="btn btn-primary float-right" type="submit"><i class="bi bi-check-circle"></i> {{ __('Complete now') }}</button>
-                                <span class="float-right col-form-label mr-4 font-italic">* {{ __('Required fields') }}</span>
+                                <button class="btn btn-primary float-right" type="submit"><i class="bi bi-check-circle"></i> {{ __('interface.actions.complete_now') }}</button>
+                                <span class="float-right col-form-label mr-4 font-italic">* {{ __('interface.misc.required_fields') }}</span>
                             </form>
                         @else
                             @if (! empty($profile->company))
-                                <label class="font-weight-bold mb-0">{{ __('Company:') }}</label> {{ $profile->company }}<br>
-                                <label class="font-weight-bold mb-0">{{ __('Account Type:') }}</label> {{ __('Company') }}<br>
+                                <label class="font-weight-bold mb-0">{{ __('interface.data.company') }}:</label> {{ $profile->company }}<br>
+                                <label class="font-weight-bold mb-0">{{ __('interface.data.account_type') }}:</label> {{ __('interface.data.company') }}<br>
                             @else
-                                <label class="font-weight-bold mb-0">{{ __('Account Type:') }}</label> {{ __('Personal') }}<br>
+                                <label class="font-weight-bold mb-0">{{ __('interface.data.account_type') }}:</label> {{ __('interface.data.personal') }}<br>
                             @endif
-                            <label class="font-weight-bold mb-0">{{ __('Contact Person:') }}</label> {{ $profile->firstname }} {{ $profile->lastname }}<br>
+                            <label class="font-weight-bold mb-0">{{ __('interface.data.contact_person') }}:</label> {{ $profile->firstname }} {{ $profile->lastname }}<br>
                             @if (! empty($profile->tax_id))
-                                <label class="font-weight-bold mb-0">{{ __('Tax Number:') }}</label> {{ $profile->tax_id }}<br>
+                                <label class="font-weight-bold mb-0">{{ __('interface.data.tax_number') }}:</label> {{ $profile->tax_id }}<br>
                             @endif
                             @if (! empty($profile->vat_id))
-                                <label class="font-weight-bold mb-0">{{ __('VAT Identification Number:') }}</label> {{ $profile->vat_id }}<br>
+                                <label class="font-weight-bold mb-0">{{ __('interface.data.vat_id') }}:</label> {{ $profile->vat_id }}<br>
                             @endif
-                            <label class="font-weight-bold mb-0">{{ __('Reverse Charge:') }}</label> {!! Auth::user()->reverseCharge ? '<span class="badge badge-success badge-pill">' . __('Applicable') . '</span>' : '<span class="badge badge-warning badge-pill">' . __('Not applicable') . '</span>' !!}<br>
-                            <label class="font-weight-bold mb-0">{{ __('Verification Status:') }}</label> {!! $profile->verified ? '<span class="badge badge-success badge-pill">' . __('Verified') . '</span>' : '<span class="badge badge-warning badge-pill">' . __('Unverified') . '</span>' !!}<br>
+                            <label class="font-weight-bold mb-0">{{ __('interface.data.reverse_charge') }}:</label> {!! Auth::user()->reverseCharge ? '<span class="badge badge-success">' . __('interface.misc.applicable') . '</span>' : '<span class="badge badge-warning">' . __('interface.misc.not_applicable') . '</span>' !!}<br>
+                            <label class="font-weight-bold mb-0">{{ __('interface.data.verification_status') }}:</label> {!! $profile->verified ? '<span class="badge badge-success">' . __('interface.status.verified') . '</span>' : '<span class="badge badge-warning">' . __('interface.status.unverified') . '</span>' !!}<br>
                             <br>
-                            <a class="btn btn-primary" data-toggle="modal" data-target="#editProfile"><i class="bi bi-pencil-square"></i> {{ __('Edit profile details') }}</a>
+                            <a class="btn btn-primary" data-toggle="modal" data-target="#editProfile"><i class="bi bi-pencil-square"></i> {{ __('interface.actions.edit_profile_details') }}</a>
                         @endif
                     </div>
                 </div>
@@ -322,16 +322,16 @@
                         <div class="col-md-12">
                             <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                                 <li class="nav-item" role="presentation">
-                                    <a class="nav-link active" id="pills-email-tab" data-toggle="pill" href="#pills-email" role="tab" aria-controls="pills-email" aria-selected="true">{{ __('Email Addresses') }}</a>
+                                    <a class="nav-link active" id="pills-email-tab" data-toggle="pill" href="#pills-email" role="tab" aria-controls="pills-email" aria-selected="true">{{ __('interface.data.email_addresses') }}</a>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <a class="nav-link" id="pills-phone-tab" data-toggle="pill" href="#pills-phone" role="tab" aria-controls="pills-phone" aria-selected="false">{{ __('Phone Numbers') }}</a>
+                                    <a class="nav-link" id="pills-phone-tab" data-toggle="pill" href="#pills-phone" role="tab" aria-controls="pills-phone" aria-selected="false">{{ __('interface.data.phone_numbers') }}</a>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <a class="nav-link" id="pills-address-tab" data-toggle="pill" href="#pills-address" role="tab" aria-controls="pills-address" aria-selected="false">{{ __('Postal Addresses') }}</a>
+                                    <a class="nav-link" id="pills-address-tab" data-toggle="pill" href="#pills-address" role="tab" aria-controls="pills-address" aria-selected="false">{{ __('interface.data.postal_addresses') }}</a>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <a class="nav-link" id="pills-bank-tab" data-toggle="pill" href="#pills-bank" role="tab" aria-controls="pills-bank" aria-selected="false">{{ __('Bank Accounts') }}</a>
+                                    <a class="nav-link" id="pills-bank-tab" data-toggle="pill" href="#pills-bank" role="tab" aria-controls="pills-bank" aria-selected="false">{{ __('interface.data.bank_accounts') }}</a>
                                 </li>
                             </ul>
                         </div>
@@ -342,12 +342,12 @@
                                 <div class="tab-pane fade show active" id="pills-email" role="tabpanel" aria-labelledby="pills-email-tab">
                                     <div class="card mt-2">
                                         <div class="card-header">
-                                            <i class="bi bi-envelope"></i> {{ __('Email Addresses') }}
+                                            <i class="bi bi-envelope"></i> {{ __('interface.data.email_addresses') }}
                                         </div>
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <a class="btn btn-primary float-right" data-toggle="modal" data-target="#addEmail"><i class="bi bi-plus-circle"></i> {{ __('Create Email Address') }}</a>
+                                                    <a class="btn btn-primary float-right" data-toggle="modal" data-target="#addEmail"><i class="bi bi-plus-circle"></i> {{ __('interface.email.create') }}</a>
                                                 </div>
                                             </div>
                                             <div class="row mt-4">
@@ -355,10 +355,10 @@
                                                     <table id="emailaddresses" class="table mt-4 w-100">
                                                         <thead>
                                                         <tr>
-                                                            <td>{{ __('Email Address') }}</td>
+                                                            <td>{{ __('interface.data.email_address') }}</td>
                                                             <td>{{ __('interface.data.type') }}</td>
-                                                            <td>{{ __('Status') }}</td>
-                                                            <td>{{ __('Resend Confirmation') }}</td>
+                                                            <td>{{ __('interface.data.status') }}</td>
+                                                            <td>{{ __('interface.actions.resend_confirmation') }}</td>
                                                             <td>{{ __('interface.actions.edit') }}</td>
                                                             <td>{{ __('interface.actions.delete') }}</td>
                                                         </tr>
@@ -375,12 +375,12 @@
                                 <div class="tab-pane fade" id="pills-phone" role="tabpanel" aria-labelledby="pills-phone-tab">
                                     <div class="card mt-2">
                                         <div class="card-header">
-                                            <i class="bi bi-telephone"></i> {{ __('Phone Numbers') }}
+                                            <i class="bi bi-telephone"></i> {{ __('interface.data.phone_numbers') }}
                                         </div>
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <a class="btn btn-primary float-right" data-toggle="modal" data-target="#addPhone"><i class="bi bi-plus-circle"></i> {{ __('Create Phone Number') }}</a>
+                                                    <a class="btn btn-primary float-right" data-toggle="modal" data-target="#addPhone"><i class="bi bi-plus-circle"></i> {{ __('interface.phone.create') }}</a>
                                                 </div>
                                             </div>
                                             <div class="row mt-4">
@@ -388,7 +388,7 @@
                                                     <table id="phonenumbers" class="table mt-4 w-100">
                                                         <thead>
                                                         <tr>
-                                                            <td>{{ __('Phone Number') }}</td>
+                                                            <td>{{ __('interface.data.phone_number') }}</td>
                                                             <td>{{ __('interface.data.type') }}</td>
                                                             <td>{{ __('interface.actions.edit') }}</td>
                                                             <td>{{ __('interface.actions.delete') }}</td>
@@ -406,12 +406,12 @@
                                 <div class="tab-pane fade" id="pills-address" role="tabpanel" aria-labelledby="pills-address-tab">
                                     <div class="card mt-2">
                                         <div class="card-header">
-                                            <i class="bi bi-house"></i> {{ __('Postal Addresses') }}
+                                            <i class="bi bi-house"></i> {{ __('interface.data.postal_addresses') }}
                                         </div>
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <a class="btn btn-primary float-right" data-toggle="modal" data-target="#addAddress"><i class="bi bi-plus-circle"></i> {{ __('Create Address') }}</a>
+                                                    <a class="btn btn-primary float-right" data-toggle="modal" data-target="#addAddress"><i class="bi bi-plus-circle"></i> {{ __('interface.address.create') }}</a>
                                                 </div>
                                             </div>
                                             <div class="row mt-4">
@@ -419,7 +419,7 @@
                                                     <table id="addresses" class="table mt-4 w-100">
                                                         <thead>
                                                         <tr>
-                                                            <td>{{ __('Address') }}</td>
+                                                            <td>{{ __('interface.data.address') }}</td>
                                                             <td>{{ __('interface.data.type') }}</td>
                                                             <td>{{ __('interface.actions.edit') }}</td>
                                                             <td>{{ __('interface.actions.delete') }}</td>
@@ -437,12 +437,12 @@
                                 <div class="tab-pane fade" id="pills-bank" role="tabpanel" aria-labelledby="pills-bank-tab">
                                     <div class="card mt-2">
                                         <div class="card-header">
-                                            <i class="bi bi-receipt"></i> {{ __('Bank Accounts') }}
+                                            <i class="bi bi-receipt"></i> {{ __('interface.data.bank_accounts') }}
                                         </div>
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <a class="btn btn-primary float-right" data-toggle="modal" data-target="#addAccount"><i class="bi bi-plus-circle"></i> {{ __('Create Bank Account') }}</a>
+                                                    <a class="btn btn-primary float-right" data-toggle="modal" data-target="#addAccount"><i class="bi bi-plus-circle"></i> {{ __('interface.bank_account.create') }}</a>
                                                 </div>
                                             </div>
                                             <div class="row mt-4">
@@ -450,12 +450,12 @@
                                                     <table id="bankaccounts" class="table mt-4 w-100">
                                                         <thead>
                                                         <tr>
-                                                            <td>{{ __('IBAN') }}</td>
-                                                            <td>{{ __('BIC') }}</td>
-                                                            <td>{{ __('Bank') }}</td>
-                                                            <td>{{ __('Owner') }}</td>
-                                                            <td>{{ __('Sign SEPA Mandate') }}</td>
-                                                            <td>{{ __('Make Primary') }}</td>
+                                                            <td>{{ __('interface.bank_account.iban') }}</td>
+                                                            <td>{{ __('interface.bank_account.bic') }}</td>
+                                                            <td>{{ __('interface.bank_account.bank') }}</td>
+                                                            <td>{{ __('interface.bank_account.owner') }}</td>
+                                                            <td>{{ __('interface.actions.sign_sepa') }}</td>
+                                                            <td>{{ __('interface.actions.make_primary') }}</td>
                                                             <td>{{ __('interface.actions.delete') }}</td>
                                                         </tr>
                                                         </thead>
@@ -480,7 +480,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="editLabel"><i class="bi bi-pencil-square"></i> {{ __('Edit User Details') }}</h5>
+                    <h5 class="modal-title" id="editLabel"><i class="bi bi-pencil-square"></i> {{ __('interface.misc.edit_user_details') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -505,13 +505,13 @@
                         <div class="form-group row">
                             <div class="col-md-8 offset-md-4">
                                 <div class="alert alert-primary mt-4 mb-1">
-                                    <i class="bi bi-info-circle"></i> The email address only needs to be confirmed if it has changed.
+                                    <i class="bi bi-info-circle"></i> {{ __('interface.misc.email_change_notice') }}
                                 </div>
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Email') }}</label>
+                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.email') }}</label>
 
                             <div class="col-md-8">
                                 <input id="email" type="email" class="form-control @error('name') is-invalid @enderror" name="email" value="{{ old('email') ?? Auth::user()->email }}">
@@ -525,7 +525,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="email-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Email') }}</label>
+                            <label for="email-confirm" class="col-md-4 col-form-label text-md-right">{{ __('interface.actions.confirm_email') }}</label>
 
                             <div class="col-md-8">
                                 <input id="email-confirm" type="email" class="form-control" name="email_confirmation">
@@ -545,7 +545,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header bg-warning">
-                    <h5 class="modal-title" id="passwordLabel"><i class="bi bi-key-fill"></i> {{ __('Change Password') }}</h5>
+                    <h5 class="modal-title" id="passwordLabel"><i class="bi bi-key-fill"></i> {{ __('interface.actions.change_password') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -554,7 +554,7 @@
                     @csrf
                     <div class="modal-body">
                         <div class="form-group row">
-                            <label for="password-current" class="col-md-4 col-form-label text-md-right">{{ __('Current Password') }}</label>
+                            <label for="password-current" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.current_password') }}</label>
 
                             <div class="col-md-8">
                                 <input id="password-current" type="password" class="form-control @error('password_current') is-invalid @enderror" name="password_current">
@@ -568,7 +568,7 @@
                         </div>
 
                         <div class="form-group row mt-5">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('New Password') }}</label>
+                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.new_password') }}</label>
 
                             <div class="col-md-8">
                                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password">
@@ -582,7 +582,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm New Password') }}</label>
+                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.confirm_new_password') }}</label>
 
                             <div class="col-md-8">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation">
@@ -590,7 +590,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-warning"><i class="bi bi-key-fill"></i> {{ __('Change') }}</button>
+                        <button type="submit" class="btn btn-warning"><i class="bi bi-key-fill"></i> {{ __('interface.actions.change') }}</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('interface.actions.close') }}</button>
                     </div>
                 </form>
@@ -603,7 +603,7 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header bg-primary text-white">
-                        <h5 class="modal-title" id="editProfileLabel"><i class="bi bi-pencil-square"></i> {{ __('Edit Profile Details') }}</h5>
+                        <h5 class="modal-title" id="editProfileLabel"><i class="bi bi-pencil-square"></i> {{ __('interface.actions.edit_profile_details') }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -614,7 +614,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group row">
-                                        <label for="firstname" class="col-md-4 col-form-label text-md-right">{{ __('Firstname') }}*</label>
+                                        <label for="firstname" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.firstname') }}*</label>
 
                                         <div class="col-md-8">
                                             <input id="firstname" type="text" class="form-control @error('firstname') is-invalid @enderror" name="firstname" value="{{ $profile->firstname }}">
@@ -629,7 +629,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group row">
-                                        <label for="lastname" class="col-md-4 col-form-label text-md-right">{{ __('Lastname') }}*</label>
+                                        <label for="lastname" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.lastname') }}*</label>
 
                                         <div class="col-md-8">
                                             <input id="lastname" type="text" class="form-control @error('lastname') is-invalid @enderror" name="lastname" value="{{ $profile->lastname }}">
@@ -646,7 +646,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group row">
-                                        <label for="company" class="col-md-2 col-form-label text-md-right">{{ __('Company') }}</label>
+                                        <label for="company" class="col-md-2 col-form-label text-md-right">{{ __('interface.data.company') }}</label>
 
                                         <div class="col-md-10">
                                             <input id="company" type="text" class="form-control @error('company') is-invalid @enderror" name="company" value="{{ $profile->company }}">
@@ -663,7 +663,7 @@
                             <div class="row mt-4">
                                 <div class="col-md-12">
                                     <div class="form-group row">
-                                        <label for="tax_id" class="col-md-2 col-form-label text-md-right">{{ __('Tax Number') }}</label>
+                                        <label for="tax_id" class="col-md-2 col-form-label text-md-right">{{ __('interface.data.tax_number') }}</label>
 
                                         <div class="col-md-10">
                                             <input id="tax_id" type="text" class="form-control @error('tax_id') is-invalid @enderror" name="tax_id" value="{{ $profile->tax_id }}">
@@ -680,7 +680,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group row">
-                                        <label for="vat_id" class="col-md-2 col-form-label text-md-right">{{ __('VAT Identification Number') }}</label>
+                                        <label for="vat_id" class="col-md-2 col-form-label text-md-right">{{ __('interface.data.vat_id') }}</label>
 
                                         <div class="col-md-10">
                                             <input id="vat_id" type="text" class="form-control @error('vat_id') is-invalid @enderror" name="vat_id" value="{{ $profile->vat_id }}">
@@ -708,7 +708,7 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header bg-primary">
-                        <h5 class="modal-title text-white" id="addEmailLabel"><i class="bi bi-plus-circle"></i> {{ __('Create Email Address') }}</h5>
+                        <h5 class="modal-title text-white" id="addEmailLabel"><i class="bi bi-plus-circle"></i> {{ __('interface.email.create') }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -717,7 +717,7 @@
                         @csrf
                         <div class="modal-body">
                             <div class="form-group row">
-                                <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Email') }}*</label>
+                                <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.email') }}*</label>
 
                                 <div class="col-md-8">
                                     <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}">
@@ -730,26 +730,26 @@
                                 </div>
                             </div>
                             <div class="form-group row mt-4">
-                                <label for="all" class="col-md-6 col-form-label text-md-right">{{ __('All') }}</label>
+                                <label for="all" class="col-md-6 col-form-label text-md-right">{{ __('interface.misc.all') }}</label>
 
                                 <div class="col-md-2">
                                     <input id="all" type="radio" class="form-control" name="type" value="all">
                                 </div>
 
-                                <label for="billing" class="col-md-2 col-form-label text-md-right">{{ __('Billing') }}</label>
+                                <label for="billing" class="col-md-2 col-form-label text-md-right">{{ __('interface.data.billing') }}</label>
 
                                 <div class="col-md-2">
                                     <input id="billing" type="radio" class="form-control" name="type" value="billing">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="contact" class="col-md-6 col-form-label text-md-right">{{ __('Contact') }}</label>
+                                <label for="contact" class="col-md-6 col-form-label text-md-right">{{ __('interface.data.contact') }}</label>
 
                                 <div class="col-md-2">
                                     <input id="contact" type="radio" class="form-control" name="type" value="contact">
                                 </div>
 
-                                <label for="none" class="col-md-2 col-form-label text-md-right">{{ __('None') }}</label>
+                                <label for="none" class="col-md-2 col-form-label text-md-right">{{ __('interface.misc.none') }}</label>
 
                                 <div class="col-md-2">
                                     <input id="none" type="radio" class="form-control" name="type" value="none" checked>
@@ -769,7 +769,7 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header bg-primary">
-                        <h5 class="modal-title text-white" id="addPhoneLabel"><i class="bi bi-plus-circle"></i> {{ __('Create Phone Number') }}</h5>
+                        <h5 class="modal-title text-white" id="addPhoneLabel"><i class="bi bi-plus-circle"></i> {{ __('interface.phone.create') }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -778,7 +778,7 @@
                         @csrf
                         <div class="modal-body">
                             <div class="form-group row">
-                                <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('Phone') }}*</label>
+                                <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.phone') }}*</label>
 
                                 <div class="col-md-8">
                                     <input id="phone" type="tel" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}">
@@ -791,26 +791,26 @@
                                 </div>
                             </div>
                             <div class="form-group row mt-4">
-                                <label for="all" class="col-md-6 col-form-label text-md-right">{{ __('All') }}</label>
+                                <label for="all" class="col-md-6 col-form-label text-md-right">{{ __('interface.misc.all') }}</label>
 
                                 <div class="col-md-2">
                                     <input id="all" type="radio" class="form-control" name="type" value="all">
                                 </div>
 
-                                <label for="billing" class="col-md-2 col-form-label text-md-right">{{ __('Billing') }}</label>
+                                <label for="billing" class="col-md-2 col-form-label text-md-right">{{ __('interface.data.billing') }}</label>
 
                                 <div class="col-md-2">
                                     <input id="billing" type="radio" class="form-control" name="type" value="billing">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="contact" class="col-md-6 col-form-label text-md-right">{{ __('Contact') }}</label>
+                                <label for="contact" class="col-md-6 col-form-label text-md-right">{{ __('interface.data.contact') }}</label>
 
                                 <div class="col-md-2">
                                     <input id="contact" type="radio" class="form-control" name="type" value="contact">
                                 </div>
 
-                                <label for="none" class="col-md-2 col-form-label text-md-right">{{ __('None') }}</label>
+                                <label for="none" class="col-md-2 col-form-label text-md-right">{{ __('interface.misc.none') }}</label>
 
                                 <div class="col-md-2">
                                     <input id="none" type="radio" class="form-control" name="type" value="none" checked>
@@ -830,7 +830,7 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header bg-primary">
-                        <h5 class="modal-title text-white" id="addAddressLabel"><i class="bi bi-plus-circle"></i> {{ __('Create Address') }}</h5>
+                        <h5 class="modal-title text-white" id="addAddressLabel"><i class="bi bi-plus-circle"></i> {{ __('interface.address.create') }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -841,7 +841,7 @@
                             <div class="row mt-4">
                                 <div class="col-md-8">
                                     <div class="form-group row">
-                                        <label for="street" class="col-md-3 col-form-label text-md-right">{{ __('Street') }}*</label>
+                                        <label for="street" class="col-md-3 col-form-label text-md-right">{{ __('interface.data.street') }}*</label>
 
                                         <div class="col-md-9">
                                             <input id="street" type="text" class="form-control @error('street') is-invalid @enderror" name="street" value="{{ old('street') }}">
@@ -856,7 +856,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group row">
-                                        <label for="housenumber" class="col-md-4 col-form-label text-md-right">{{ __('Housenumber') }}*</label>
+                                        <label for="housenumber" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.housenumber') }}*</label>
 
                                         <div class="col-md-8">
                                             <input id="housenumber" type="text" class="form-control @error('housenumber') is-invalid @enderror" name="housenumber" value="{{ old('housenumber') }}">
@@ -873,7 +873,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group row align-items-center">
-                                        <label for="addition" class="col-md-2 col-form-label text-md-right">{{ __('Additional Info') }}</label>
+                                        <label for="addition" class="col-md-2 col-form-label text-md-right">{{ __('interface.data.additional_info') }}</label>
 
                                         <div class="col-md-10">
                                             <input id="addition" type="text" class="form-control @error('addition') is-invalid @enderror" name="addition" value="{{ old('addition') }}">
@@ -890,7 +890,7 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group row">
-                                        <label for="postalcode" class="col-md-6 col-form-label text-md-right">{{ __('Postalcode') }}*</label>
+                                        <label for="postalcode" class="col-md-6 col-form-label text-md-right">{{ __('interface.data.postalcode') }}*</label>
 
                                         <div class="col-md-6">
                                             <input id="postalcode" type="text" class="form-control @error('postalcode') is-invalid @enderror" name="postalcode" value="{{ old('postalcode') }}">
@@ -905,7 +905,7 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div class="form-group row">
-                                        <label for="city" class="col-md-2 col-form-label text-md-right">{{ __('City') }}*</label>
+                                        <label for="city" class="col-md-2 col-form-label text-md-right">{{ __('interface.data.city') }}*</label>
 
                                         <div class="col-md-10">
                                             <input id="city" type="text" class="form-control @error('city') is-invalid @enderror" name="city" value="{{ old('city') }}">
@@ -922,7 +922,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group row">
-                                        <label for="state" class="col-md-4 col-form-label text-md-right">{{ __('State') }}*</label>
+                                        <label for="state" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.state') }}*</label>
 
                                         <div class="col-md-8">
                                             <input id="state" type="text" class="form-control @error('state') is-invalid @enderror" name="state" value="{{ old('state') }}">
@@ -937,7 +937,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group row">
-                                        <label for="country" class="col-md-4 col-form-label text-md-right">{{ __('Country') }}*</label>
+                                        <label for="country" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.country') }}*</label>
 
                                         <div class="col-md-8">
                                             <select id="country" class="form-control @error('country') is-invalid @enderror" name="country">
@@ -956,26 +956,26 @@
                                 </div>
                             </div>
                             <div class="form-group row mt-4">
-                                <label for="all" class="col-md-6 col-form-label text-md-right">{{ __('All') }}</label>
+                                <label for="all" class="col-md-6 col-form-label text-md-right">{{ __('interface.misc.all') }}</label>
 
                                 <div class="col-md-2">
                                     <input id="all" type="radio" class="form-control" name="type" value="all">
                                 </div>
 
-                                <label for="billing" class="col-md-2 col-form-label text-md-right">{{ __('Billing') }}</label>
+                                <label for="billing" class="col-md-2 col-form-label text-md-right">{{ __('interface.data.billing') }}</label>
 
                                 <div class="col-md-2">
                                     <input id="billing" type="radio" class="form-control" name="type" value="billing">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="contact" class="col-md-6 col-form-label text-md-right">{{ __('Contact') }}</label>
+                                <label for="contact" class="col-md-6 col-form-label text-md-right">{{ __('interface.data.contact') }}</label>
 
                                 <div class="col-md-2">
                                     <input id="contact" type="radio" class="form-control" name="type" value="contact">
                                 </div>
 
-                                <label for="none" class="col-md-2 col-form-label text-md-right">{{ __('None') }}</label>
+                                <label for="none" class="col-md-2 col-form-label text-md-right">{{ __('interface.misc.none') }}</label>
 
                                 <div class="col-md-2">
                                     <input id="none" type="radio" class="form-control" name="type" value="none" checked>
@@ -995,7 +995,7 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header bg-primary">
-                        <h5 class="modal-title text-white" id="addAccountLabel"><i class="bi bi-plus-circle"></i> {{ __('Create Bank Account') }}</h5>
+                        <h5 class="modal-title text-white" id="addAccountLabel"><i class="bi bi-plus-circle"></i> {{ __('interface.bank_account.create') }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -1004,7 +1004,7 @@
                         @csrf
                         <div class="modal-body">
                             <div class="form-group row">
-                                <label for="iban" class="col-md-4 col-form-label text-md-right">{{ __('IBAN') }}*</label>
+                                <label for="iban" class="col-md-4 col-form-label text-md-right">{{ __('interface.bank_account.iban') }}*</label>
 
                                 <div class="col-md-8">
                                     <input id="iban" type="text" class="form-control @error('iban') is-invalid @enderror" name="iban" value="{{ old('iban') }}">
@@ -1017,7 +1017,7 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="iban" class="col-md-4 col-form-label text-md-right">{{ __('BIC') }}*</label>
+                                <label for="iban" class="col-md-4 col-form-label text-md-right">{{ __('interface.bank_account.bic') }}*</label>
 
                                 <div class="col-md-8">
                                     <input id="bic" type="text" class="form-control @error('bic') is-invalid @enderror" name="bic" value="{{ old('bic') }}">
@@ -1030,7 +1030,7 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="iban" class="col-md-4 col-form-label text-md-right">{{ __('Bank') }}*</label>
+                                <label for="iban" class="col-md-4 col-form-label text-md-right">{{ __('interface.bank_account.bank') }}*</label>
 
                                 <div class="col-md-8">
                                     <input id="bank" type="text" class="form-control @error('bank') is-invalid @enderror" name="bank" value="{{ old('bank') }}">
@@ -1043,7 +1043,7 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="owner" class="col-md-4 col-form-label text-md-right">{{ __('Owner') }}*</label>
+                                <label for="owner" class="col-md-4 col-form-label text-md-right">{{ __('interface.bank_account.owner') }}*</label>
 
                                 <div class="col-md-8">
                                     <input id="owner" type="text" class="form-control @error('owner') is-invalid @enderror" name="owner" value="{{ old('owner') }}">
@@ -1056,7 +1056,7 @@
                                 </div>
                             </div>
                             <div class="form-group row align-items-center">
-                                <label for="primary" class="col-md-4 col-form-label text-md-right">{{ __('Primary bank account') }}</label>
+                                <label for="primary" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.primary_bank_account') }}</label>
 
                                 <div class="col-md-8">
                                     <input id="primary" type="checkbox" class="form-control @error('primary') is-invalid @enderror" name="primary" value="true">

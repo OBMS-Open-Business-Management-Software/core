@@ -4,14 +4,14 @@
     <div class="container-fluid my-4">
         <div class="row">
             <div class="col-md-12">
-                <a class="btn btn-primary float-right mb-4" data-toggle="modal" data-target="#add"><i class="bi bi-plus-circle"></i> {{ __('Create Usage Tracker') }}</a>
+                <a class="btn btn-primary float-right mb-4" data-toggle="modal" data-target="#add"><i class="bi bi-plus-circle"></i> {{ __('interface.usage_tracker.create') }}</a>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <i class="bi bi-list"></i> {{ __('Usage Trackers') }}
+                        <i class="bi bi-list"></i> {{ __('interface.misc.usage_trackers') }}
                     </div>
                     <div class="card-body">
                         <table id="trackers" class="table mt-4 w-100">
@@ -39,7 +39,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="addLabel"><i class="bi bi-plus-circle"></i> {{ __('Create Contract Type') }}</h5>
+                    <h5 class="modal-title" id="addLabel"><i class="bi bi-plus-circle"></i> {{ __('interface.usage_tracker.create') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -74,12 +74,12 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="vat_type" class="col-md-4 col-form-label text-md-right">{{ __('VAT Type') }}</label>
+                            <label for="vat_type" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.vat_type') }}</label>
 
                             <div class="col-md-8">
                                 <select id="vat_type" type="text" class="form-control @error('vat_type') is-invalid @enderror" name="vat_type">
-                                    <option value="basic"{{ old('vat_type') == 'basic' ? ' selected' : '' }}>{{ __('Basic') }}</option>
-                                    <option value="reduced"{{ old('vat_type') == 'reduced' ? ' selected' : '' }}>{{ __('Reduced') }}</option>
+                                    <option value="basic"{{ old('vat_type') == 'basic' ? ' selected' : '' }}>{{ __('interface.misc.basic') }}</option>
+                                    <option value="reduced"{{ old('vat_type') == 'reduced' ? ' selected' : '' }}>{{ __('interface.misc.reduced') }}</option>
                                 </select>
 
                                 @error('vat_type')

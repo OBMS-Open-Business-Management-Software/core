@@ -4,8 +4,8 @@
     <div class="container-fluid my-4">
         <div class="row">
             <div class="col-md-12">
-                <a href="{{ route('admin.contracts') }}" class="btn btn-outline-primary mb-4"><i class="bi bi-arrow-left-circle"></i> {{ __('Back to list') }}</a>
-                <a href="{{ route('admin.customers.profile', $contract->user_id) }}" class="btn btn-primary mb-4" target="_blank"><i class="bi bi-person"></i> {{ __('Customer') }}</a>
+                <a href="{{ route('admin.contracts') }}" class="btn btn-outline-primary mb-4"><i class="bi bi-arrow-left-circle"></i> {{ __('interface.actions.back_to_list') }}</a>
+                <a href="{{ route('admin.customers.profile', $contract->user_id) }}" class="btn btn-primary mb-4" target="_blank"><i class="bi bi-person"></i> {{ __('interface.user_type.customer') }}</a>
                 @if ($contract->type->type !== 'prepaid_auto' && $contract->type->type !== 'prepaid_manual')
                     @if ($contract->status == 'template')
                         <a class="btn btn-warning mb-4 float-right" data-toggle="modal" data-target="#editContract"><i class="bi bi-pencil-square"></i> {{ __('interface.actions.edit') }}</a>
@@ -16,7 +16,7 @@
                         <a href="{{ route('admin.contracts.cancel', $contract->id) }}" class="btn btn-warning mb-4 mr-1 float-right"><i class="bi bi-stop-circle"></i> {{ __('interface.actions.cancel') }}</a>
                         <a href="{{ route('admin.contracts.stop', $contract->id) }}" class="btn btn-danger mb-4 mr-1 float-right"><i class="bi bi-stop-circle-fill"></i> {{ __('interface.actions.stop') }}</a>
                     @elseif ($contract->status == 'expires')
-                        <a href="{{ route('admin.contracts.revoke', $contract->id) }}" class="btn btn-primary mb-4 mr-1 float-right"><i class="bi bi-play-circle"></i> {{ __('Revoke Cancellation') }}</a>
+                        <a href="{{ route('admin.contracts.revoke', $contract->id) }}" class="btn btn-primary mb-4 mr-1 float-right"><i class="bi bi-play-circle"></i> {{ __('interface.actions.revoke_cancellation') }}</a>
                     @elseif ($contract->status == 'cancelled')
                         <a href="{{ route('admin.contracts.restart', $contract->id) }}" class="btn btn-primary mb-4 mr-1 float-right"><i class="bi bi-play-circle"></i> {{ __('interface.actions.restart') }}</a>
                     @endif
@@ -24,7 +24,7 @@
                     @if ($contract->status == 'template')
                         <a href="{{ route('admin.contracts.start', $contract->id) }}" class="btn btn-primary mb-4 mr-1 float-right"><i class="bi bi-play-circle"></i> {{ __('interface.actions.start') }}</a>
                     @else
-                        <a href="{{ route('admin.contracts.extend', $contract->id) }}" class="btn btn-primary mb-4 mr-1 float-right"><i class="bi bi-arrow-right-circle"></i> {{ __('Extend') }}</a>
+                        <a href="{{ route('admin.contracts.extend', $contract->id) }}" class="btn btn-primary mb-4 mr-1 float-right"><i class="bi bi-arrow-right-circle"></i> {{ __('interface.actions.extend') }}</a>
                     @endif
                 @endif
             </div>
@@ -33,53 +33,53 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
-                        <i class="bi bi-info-circle"></i> {{ __('Details') }}
+                        <i class="bi bi-info-circle"></i> {{ __('interface.misc.details') }}
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('Number') }}</label>
+                            <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('interface.data.number') }}</label>
 
                             <div class="col-md-9 col-form-label">
-                                {{ $contract->number ?? __('N/A') }}
+                                {{ $contract->number ?? __('interface.misc.not_available') }}
                             </div>
                         </div>
                         <div class="row">
                             <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('interface.data.type') }}</label>
 
                             <div class="col-md-9 col-form-label">
-                                {{ $contract->type->name ?? __('N/A') }}
+                                {{ $contract->type->name ?? __('interface.misc.not_available') }}
                             </div>
                         </div>
                         <div class="row">
-                            <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('Status') }}</label>
+                            <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('interface.data.status') }}</label>
 
                             <div class="col-md-9 col-form-label">
                                 @switch ($contract->status)
                                     @case ('cancelled')
-                                        <span class="badge badge-danger badge-pill">{{ __('Cancelled') }}</span>
+                                        <span class="badge badge-danger">{{ __('interface.status.cancelled') }}</span>
                                         @break
                                     @case ('expires')
-                                        <span class="badge badge-warning badge-pill">{{ __('Expires') }}</span>
+                                        <span class="badge badge-warning">{{ __('interface.status.expires') }}</span>
                                         @break
                                     @case ('started')
-                                        <span class="badge badge-success badge-pill">{{ __('Active') }}</span>
+                                        <span class="badge badge-success">{{ __('interface.status.active') }}</span>
                                         @break
                                     @case ('template')
                                     @default
-                                        <span class="badge badge-primary badge-pill">{{ __('Draft') }}</span>
+                                        <span class="badge badge-primary">{{ __('interface.status.draft') }}</span>
                                         @break
                                 @endswitch
                             </div>
                         </div>
                         <div class="row">
-                            <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('Reverse charge') }}</label>
+                            <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('interface.data.reverse_charge') }}</label>
 
                             <div class="col-md-9 col-form-label">
-                                {!! $contract->user->reverseCharge ? '<span class="badge badge-success badge-pill">' . __('Applicable') . '</span>' : '<span class="badge badge-warning badge-pill">' . __('Not applicable') . '</span>' !!}
+                                {!! $contract->user->reverseCharge ? '<span class="badge badge-success">' . __('interface.misc.applicable') . '</span>' : '<span class="badge badge-warning">' . __('interface.misc.not_applicable') . '</span>' !!}
                             </div>
                         </div>
                         <div class="row">
-                            <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('Created at') }}</label>
+                            <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('interface.misc.created_at') }}</label>
 
                             <div class="col-md-9 col-form-label">
                                 {{ $contract->created_at->format('d.m.Y, H:i') }}
@@ -87,7 +87,7 @@
                         </div>
                         @if ($contract->started)
                             <div class="row">
-                                <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('Start date') }}</label>
+                                <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('interface.data.start_date') }}</label>
 
                                 <div class="col-md-9 col-form-label">
                                     {{ $contract->started_at->format('d.m.Y, H:i') }}
@@ -96,14 +96,14 @@
                         @endif
                         @if ($contract->cancelled)
                             <div class="row">
-                                <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('Cancel date') }}</label>
+                                <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('interface.data.cancel_date') }}</label>
 
                                 <div class="col-md-9 col-form-label">
                                     {{ $contract->cancelled_at->format('d.m.Y, H:i') }}
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('Cancelled to') }}</label>
+                                <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('interface.data.cancelled_to') }}</label>
 
                                 <div class="col-md-9 col-form-label">
                                     {{ $contract->cancelled_to->format('d.m.Y, H:i') }}
@@ -112,7 +112,7 @@
                         @endif
                         @if ($contract->cancellationRevoked)
                             <div class="row">
-                                <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('Cancellation revokation date') }}</label>
+                                <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('interface.data.cancellation_revokation_date') }}</label>
 
                                 <div class="col-md-9 col-form-label">
                                     {{ $contract->cancellation_revoked_at->format('d.m.Y, H:i') }}
@@ -125,42 +125,42 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
-                        <i class="bi bi-person"></i> {{ __('Customer') }}
+                        <i class="bi bi-person"></i> {{ __('interface.user_type.customer') }}
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('User') }}</label>
+                            <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('interface.data.user') }}</label>
 
                             <div class="col-md-9 col-form-label">
-                                {{ $contract->user->realName ?? __('N/A') }}
+                                {{ $contract->user->realName ?? __('interface.misc.not_available') }}
                                 @if (empty($profile = $contract->user->profile))
-                                    <span class="badge badge-warning badge-pill">{{ __('Incomplete') }}</span>
+                                    <span class="badge badge-warning">{{ __('interface.status.incomplete') }}</span>
                                 @endif
                             </div>
                         </div>
                         <div class="row">
-                            <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('Account Status') }}</label>
+                            <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('interface.data.account_status') }}</label>
 
                             <div class="col-md-9 col-form-label">
-                                {!! $contract->user->locked ? '<span class="badge badge-warning badge-pill">' . __('Locked') . '</span>' : '<span class="badge badge-success badge-pill">' . __('Unlocked') . '</span>' !!}
+                                {!! $contract->user->locked ? '<span class="badge badge-warning">' . __('interface.status.locked') . '</span>' : '<span class="badge badge-success">' . __('interface.status.unlocked') . '</span>' !!}
                             </div>
                         </div>
 
                         @if (! empty($contract->user->profile))
                             <div class="row">
-                                <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('Account Type') }}</label>
+                                <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('interface.data.account_type') }}</label>
 
                                 <div class="col-md-9 col-form-label">
                                     @if (! empty($profile->company))
-                                        {{ __('Company') }}
+                                        {{ __('interface.data.company') }}
                                     @else
-                                        {{ __('Personal') }}
+                                        {{ __('interface.data.personal') }}
                                     @endif
                                 </div>
                             </div>
                             @if (! empty($profile->company))
                                 <div class="row">
-                                    <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('Company') }}</label>
+                                    <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('interface.data.company') }}</label>
 
                                     <div class="col-md-9 col-form-label">
                                         {{ $profile->company }}
@@ -168,7 +168,7 @@
                                 </div>
                             @endif
                             <div class="row">
-                                <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('Contact Person') }}</label>
+                                <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('interface.data.contact_person') }}</label>
 
                                 <div class="col-md-9 col-form-label">
                                     {{ $profile->firstname }} {{ $profile->lastname }}
@@ -176,7 +176,7 @@
                             </div>
                             @if (! empty($address = $profile->billingPostalAddress))
                                 <div class="row">
-                                    <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('Postal Address') }}</label>
+                                    <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('interface.data.postal_address') }}</label>
 
                                     <div class="col-md-9 col-form-label">
                                         {{ $address->street }} {{ $address->housenumber }}<br>
@@ -190,7 +190,7 @@
                             @endif
                             @if (! empty($profile->billingEmailAddress))
                                 <div class="row">
-                                    <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('Email Address') }}</label>
+                                    <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('interface.data.email_address') }}</label>
 
                                     <div class="col-md-9 col-form-label">
                                         {{ $profile->billingEmailAddress->email }} <a href="mailto:{{ $profile->billingEmailAddress->email }}"><i class="bi bi-envelope"></i></a>
@@ -199,7 +199,7 @@
                             @endif
                             @if (! empty($profile->billingPhoneNumber))
                                 <div class="row">
-                                    <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('Phone Number') }}</label>
+                                    <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('interface.data.phone_number') }}</label>
 
                                     <div class="col-md-9 col-form-label">
                                         {{ $profile->billingPhoneNumber->phone }} <a href="tel:{{ $profile->billingPhoneNumber->phone }}"><i class="bi bi-telephone"></i></a>
@@ -208,10 +208,10 @@
                             @endif
                         @else
                             <div class="row">
-                                <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('Account Type') }}</label>
+                                <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('interface.data.account_type') }}</label>
 
                                 <div class="col-md-9 col-form-label">
-                                    {{ __('Prepaid') }}
+                                    {{ __('interface.misc.prepaid') }}
                                 </div>
                             </div>
                         @endif
@@ -222,7 +222,7 @@
         @if ($contract->status == 'template')
             <div class="row">
                 <div class="col-md-12">
-                    <a class="btn btn-primary float-right mt-4" data-toggle="modal" data-target="#addPosition"><i class="bi bi-plus-circle"></i> {{ __('Create Position') }}</a>
+                    <a class="btn btn-primary float-right mt-4" data-toggle="modal" data-target="#addPosition"><i class="bi bi-plus-circle"></i> {{ __('interface.documents.create_position') }}</a>
                 </div>
             </div>
         @endif
@@ -230,7 +230,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <i class="bi bi-list"></i> {{ __('Positions') }}
+                        <i class="bi bi-list"></i> {{ __('interface.data.positions') }}
                     </div>
                     <div class="card-body">
                         @if ($contract->positionLinks->isNotEmpty())
@@ -257,13 +257,13 @@
                                                 {{ $link->position->description }}
                                                 <small class="d-block">
                                                     @if (isset($link->started_at))
-                                                        {{ __('From:') }} {{ $link->started_at->format('d.m.Y H:i') }}
+                                                        {{ __('interface.time.from') }}: {{ $link->started_at->format('d.m.Y H:i') }}
                                                     @endif
                                                     @if (isset($link->started_at, $link->ended_at))
                                                         |
                                                     @endif
                                                     @if (isset($link->ended_at))
-                                                        {{ __('To:') }} {{ $link->ended_at->format('d.m.Y H:i') }}
+                                                        {{ __('interface.time.to') }}: {{ $link->ended_at->format('d.m.Y H:i') }}
                                                     @endif
                                                 </small>
                                             </td>
@@ -284,14 +284,14 @@
                                         @if (! empty($usageTracker = $link->trackerInstance) && $contract->type->type == 'contract_post_pay')
                                             <tr>
                                                 <td>
-                                                    <span class="font-weight-bold">{{ __('Usage Tracker') }}</span><br>
+                                                    <span class="font-weight-bold">{{ __('interface.misc.usage_tracker') }}</span><br>
                                                     {{ __($usageTracker->tracker->name) }}
                                                 </td>
                                                 <td style="width: 10%">{{ number_format($usageTracker->tracker->amount, 2) }} €</td>
-                                                <td style="width: 10%">{{ __('Variable') }}</td>
-                                                <td style="width: 10%">{{ __('Variable') }}</td>
+                                                <td style="width: 10%">{{ __('interface.data.variable') }}</td>
+                                                <td style="width: 10%">{{ __('interface.data.variable') }}</td>
                                                 <td style="width: 10%" class="bg-disabled">{{ $contract->user->reverseCharge ? '0' : (! empty($percentage = $usageTracker->vat_percentage) ? $percentage : $link->position->vat_percentage) }} %</td>
-                                                <td style="width: 10%" class="bg-disabled">{{ __('Variable') }}</td>
+                                                <td style="width: 10%" class="bg-disabled">{{ __('interface.data.variable') }}</td>
                                                 @if ($contract->status == 'template')
                                                     <td style="width: 1%"></td>
                                                     <td style="width: 1%"></td>
@@ -303,7 +303,7 @@
                                                 @case ('percentage')
                                                     <tr>
                                                         <td>
-                                                            <span class="font-weight-bold">{{ __('Discount') }}</span><br>
+                                                            <span class="font-weight-bold">{{ __('interface.data.discount') }}</span><br>
                                                             {{ number_format($discount->amount, 2) }} %
                                                         </td>
                                                         <td style="width: 10%">- {{ number_format($link->position->amount * ($discount->amount / 100), 2) }} €</td>
@@ -321,7 +321,7 @@
                                                 @default
                                                     <tr>
                                                         <td>
-                                                            <span class="font-weight-bold">{{ __('Discount') }}</span><br>
+                                                            <span class="font-weight-bold">{{ __('interface.data.discount') }}</span><br>
                                                             {{ number_format($discount->amount, 2) }} €
                                                         </td>
                                                         <td style="width: 10%">- {{ number_format($discount->amount, 2) }} €</td>
@@ -377,7 +377,7 @@
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row">
-                                                                <label for="vat_percentage" class="col-md-4 col-form-label text-md-right">{{ __('VAT Percentage') }}</label>
+                                                                <label for="vat_percentage" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.vat_percentage') }}</label>
 
                                                                 <div class="col-md-8">
                                                                     <div class="input-group">
@@ -389,14 +389,14 @@
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row">
-                                                                <label for="quantity" class="col-md-4 col-form-label text-md-right">{{ __('Quantity') }}</label>
+                                                                <label for="quantity" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.quantity') }}</label>
 
                                                                 <div class="col-md-8">
                                                                     <input id="quantity" type="number" step="0.01" min="0.01" class="form-control" name="quantity" value="{{ $link->position->quantity }}">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row align-items-center">
-                                                                <label for="service_runtime_dynamic" class="col-md-4 col-form-label text-md-right">{{ __('Position has runtime') }}</label>
+                                                                <label for="service_runtime_dynamic" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.position_has_runtime') }}</label>
 
                                                                 <div class="col-md-8">
                                                                     <input id="service_runtime_dynamic{{ $link->id }}" data-id="{{ $link->id }}" type="checkbox" class="form-control service_runtime_dynamic" name="service_runtime" value="true"{{ isset($link->started_at, $link->ended_at) ? ' checked' : '' }}>
@@ -404,14 +404,14 @@
                                                             </div>
                                                             <div id="serviceRuntimeConfig{{ $link->id }}"{!!  isset($link->started_at, $link->ended_at) ? '' : ' style="display: none"' !!}>
                                                                 <div class="form-group row align-items-center">
-                                                                    <label for="started_at" class="col-md-4 col-form-label text-md-right">{{ __('Started at') }}</label>
+                                                                    <label for="started_at" class="col-md-4 col-form-label text-md-right">{{ __('interface.misc.started_at') }}</label>
 
                                                                     <div class="col-md-8">
                                                                         <input id="started_at" type="datetime-local" class="form-control" name="started_at" value="{{ isset($link->ended_at) ? $link->started_at->format('Y-m-d\TH:i:s') : '' }}">
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group row align-items-center">
-                                                                    <label for="ended_at" class="col-md-4 col-form-label text-md-right">{{ __('Ended at') }}</label>
+                                                                    <label for="ended_at" class="col-md-4 col-form-label text-md-right">{{ __('interface.misc.ended_at') }}</label>
 
                                                                     <div class="col-md-8">
                                                                         <input id="ended_at" type="datetime-local" class="form-control" name="ended_at" value="{{ isset($link->ended_at) ? $link->ended_at->format('Y-m-d\TH:i:s') : '' }}">
@@ -419,11 +419,11 @@
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row align-items-center">
-                                                                <label for="discount_id" class="col-md-4 col-form-label text-md-right">{{ __('Discount') }}</label>
+                                                                <label for="discount_id" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.discount') }}</label>
 
                                                                 <div class="col-md-8">
                                                                     <select id="discount_id" class="form-control @error('discount_id') is-invalid @enderror" name="discount_id">
-                                                                        <option value="">{{ __('None') }}</option>
+                                                                        <option value="">{{ __('interface.misc.none') }}</option>
                                                                         @foreach ($discounts as $discount)
                                                                             <option value="{{ $discount->id }}"{{ $link->position->discount_id == $discount->id ? ' selected' : '' }}>{{ $discount->name }}</option>
                                                                         @endforeach
@@ -432,11 +432,11 @@
                                                             </div>
                                                             @if ($contract->type->type == 'contract_post_pay')
                                                                 <div class="form-group row align-items-center">
-                                                                    <label for="tracker" class="col-md-4 col-form-label text-md-right">{{ __('Usage Tracker') }}</label>
+                                                                    <label for="tracker" class="col-md-4 col-form-label text-md-right">{{ __('interface.misc.usage_tracker') }}</label>
 
                                                                     <div class="col-md-8">
                                                                         <select id="tracker" class="form-control @error('tracker') is-invalid @enderror" name="tracker">
-                                                                            <option value="">{{ __('None') }}</option>
+                                                                            <option value="">{{ __('interface.misc.none') }}</option>
                                                                             @foreach ($trackers as $tracker)
                                                                                 <option value="{{ $tracker->id }}"{{ $tracker->id == (! empty($activeTracker = $link->trackerInstance) ? $activeTracker->tracker_id : 0) ? ' selected' : '' }}>{{ __($tracker->name) }}</option>
                                                                             @endforeach
@@ -489,7 +489,7 @@
                             </table>
                         @else
                             <div class="alert alert-warning mb-0">
-                                <i class="bi bi-exclamation-triangle"></i> {{ __('There are no positions on this contract yet.') }}
+                                <i class="bi bi-exclamation-triangle"></i> {{ __('interface.contracts.no_positions') }}
                             </div>
                         @endif
                     </div>
@@ -500,7 +500,7 @@
             <div class="col-md-12">
                 <div class="card mt-4">
                     <div class="card-header">
-                        <i class="bi bi-exclamation-circle"></i> {{ __('Status History') }}
+                        <i class="bi bi-exclamation-circle"></i> {{ __('interface.misc.status_history') }}
                     </div>
                     <div class="card-body">
                         @if ($contract->history()->exists())
@@ -508,9 +508,9 @@
                                 <thead>
                                 <tr>
                                     <td>#</td>
-                                    <td>{{ __('Date') }}</td>
+                                    <td>{{ __('interface.data.date') }}</td>
                                     <td>{{ __('interface.data.name') }}</td>
-                                    <td>{{ __('Status') }}</td>
+                                    <td>{{ __('interface.data.status') }}</td>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -519,7 +519,7 @@
                             </table>
                         @else
                             <div class="alert alert-warning mb-0">
-                                <i class="bi bi-exclamation-triangle"></i> {{ __('No status history has been logged yet.') }}
+                                <i class="bi bi-exclamation-triangle"></i> {{ __('interface.misc.no_status_history') }}
                             </div>
                         @endif
                     </div>
@@ -543,7 +543,7 @@
                             <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                             <input type="hidden" name="contract_id" value="{{ $contract->id }}" />
                             <div class="form-group row">
-                                <label for="user_id" class="col-md-4 col-form-label text-md-right">{{ __('User ID') }}</label>
+                                <label for="user_id" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.user_id') }}</label>
 
                                 <div class="col-md-8">
                                     <input id="user_id" type="number" class="form-control " name="user_id" value="{{ $contract->user_id }}">
@@ -556,7 +556,7 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="type_id" class="col-md-4 col-form-label text-md-right">{{ __('Contract Type') }}</label>
+                                <label for="type_id" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.contract_type') }}</label>
 
                                 <div class="col-md-8">
                                     <select id="type_id" class="form-control " name="type_id">
@@ -586,7 +586,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header bg-primary">
-                        <h5 class="modal-title text-white" id="addPositionLabel">{{ __('Add Position') }} ({{ $contract->number }})</h5>
+                        <h5 class="modal-title text-white" id="addPositionLabel">{{ __('interface.position.create') }} ({{ $contract->number }})</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -641,7 +641,7 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="vat_percentage" class="col-md-4 col-form-label text-md-right">{{ __('VAT Percentage') }}</label>
+                                <label for="vat_percentage" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.vat_percentage') }}</label>
 
                                 <div class="col-md-8">
                                     <div class="input-group">
@@ -659,7 +659,7 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="quantity" class="col-md-4 col-form-label text-md-right">{{ __('Quantity') }}</label>
+                                <label for="quantity" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.quantity') }}</label>
 
                                 <div class="col-md-8">
                                     <input id="quantity" type="number" step="0.01" min="0.01" class="form-control @error('quantity') is-invalid @enderror" name="quantity" value="{{ old('quantity') ?? 1 }}">
@@ -672,7 +672,7 @@
                                 </div>
                             </div>
                             <div class="form-group row align-items-center">
-                                <label for="service_runtime" class="col-md-4 col-form-label text-md-right">{{ __('Position has runtime') }}</label>
+                                <label for="service_runtime" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.position_has_runtime') }}</label>
 
                                 <div class="col-md-8">
                                     <input id="service_runtime" type="checkbox" class="form-control @error('service_runtime') is-invalid @enderror" name="service_runtime" value="true">
@@ -686,7 +686,7 @@
                             </div>
                             <div id="serviceRuntimeConfig" style="display: none">
                                 <div class="form-group row align-items-center">
-                                    <label for="started_at" class="col-md-4 col-form-label text-md-right">{{ __('Started at') }}</label>
+                                    <label for="started_at" class="col-md-4 col-form-label text-md-right">{{ __('interface.misc.started_at') }}</label>
 
                                     <div class="col-md-8">
                                         <input id="started_at" type="datetime-local" class="form-control @error('started_at') is-invalid @enderror" name="started_at">
@@ -699,7 +699,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group row align-items-center">
-                                    <label for="ended_at" class="col-md-4 col-form-label text-md-right">{{ __('Ended at') }}</label>
+                                    <label for="ended_at" class="col-md-4 col-form-label text-md-right">{{ __('interface.misc.ended_at') }}</label>
 
                                     <div class="col-md-8">
                                         <input id="ended_at" type="datetime-local" class="form-control @error('ended_at') is-invalid @enderror" name="ended_at">
@@ -713,11 +713,11 @@
                                 </div>
                             </div>
                             <div class="form-group row align-items-center">
-                                <label for="discount_id" class="col-md-4 col-form-label text-md-right">{{ __('Discount') }}</label>
+                                <label for="discount_id" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.discount') }}</label>
 
                                 <div class="col-md-8">
                                     <select id="discount_id" class="form-control @error('discount_id') is-invalid @enderror" name="discount_id">
-                                        <option value="">{{ __('None') }}</option>
+                                        <option value="">{{ __('interface.misc.none') }}</option>
                                         @foreach ($discounts as $discount)
                                             <option value="{{ $discount->id }}">{{ __($discount->name) }}</option>
                                         @endforeach
@@ -732,11 +732,11 @@
                             </div>
                             @if ($contract->type->type == 'contract_post_pay')
                                 <div class="form-group row align-items-center">
-                                    <label for="tracker" class="col-md-4 col-form-label text-md-right">{{ __('Usage Tracker') }}</label>
+                                    <label for="tracker" class="col-md-4 col-form-label text-md-right">{{ __('interface.misc.usage_tracker') }}</label>
 
                                     <div class="col-md-8">
                                         <select id="tracker" class="form-control @error('tracker') is-invalid @enderror" name="tracker">
-                                            <option value="">{{ __('None') }}</option>
+                                            <option value="">{{ __('interface.misc.none') }}</option>
                                             @foreach ($trackers as $tracker)
                                                 <option value="{{ $tracker->id }}">{{ __($tracker->name) }}</option>
                                             @endforeach

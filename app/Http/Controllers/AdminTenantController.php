@@ -91,36 +91,36 @@ class AdminTenantController extends Controller
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title" id="infoTenant' . $tenant->id . 'Label">' . __('Information') . ' (' . $tenant->domain . ')</h5>
+                <h5 class="modal-title" id="infoTenant' . $tenant->id . 'Label">' . __('interface.data.information') . ' (' . $tenant->domain . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <div class="form-group row">
-                    <label for="domain" class="col-md-4 col-form-label text-md-right">' . __('Database Size') . '</label>
+                    <label for="domain" class="col-md-4 col-form-label text-md-right">' . __('interface.data.database_size') . '</label>
 
                     <div class="col-md-8 col-form-label">
-                        <span class="badge badge-primary badge-pill">' . number_format($tenant->size, 2) . ' MB</span>
+                        <span class="badge badge-primary">' . number_format($tenant->size, 2) . ' MB</span>
                     </div>
                 </div>
                 <hr>
                 <div class="form-group row">
-                    <label for="domain" class="col-md-4 col-form-label text-md-right">' . __('Database Driver') . '</label>
+                    <label for="domain" class="col-md-4 col-form-label text-md-right">' . __('interface.data.database_driver') . '</label>
 
                     <div class="col-md-8 col-form-label">
                         ' . $tenant->database_driver . '
                     </div>
                 </div>
                 ' . (! empty($tenant->database_url) ? ' <div class="form-group row">
-                    <label for="domain" class="col-md-4 col-form-label text-md-right">' . __('Database URL') . '</label>
+                    <label for="domain" class="col-md-4 col-form-label text-md-right">' . __('interface.data.database_url') . '</label>
 
                     <div class="col-md-8 col-form-label">
                         ' . $tenant->database_url . '
                     </div>
                 </div>' : '') . '
                 ' . (! empty($tenant->database_unix_socket) ? '<div class="form-group row">
-                    <label for="domain" class="col-md-4 col-form-label text-md-right">' . __('Database UNIX Socket') . '</label>
+                    <label for="domain" class="col-md-4 col-form-label text-md-right">' . __('interface.data.database_unix_socket') . '</label>
 
                     <div class="col-md-8 col-form-label">
                         ' . $tenant->database_unix_socket . '
@@ -128,7 +128,7 @@ class AdminTenantController extends Controller
                 </div>' : '') . '
 
                 <div class="form-group row">
-                    <label for="domain" class="col-md-4 col-form-label text-md-right">' . __('Database Host') . '</label>
+                    <label for="domain" class="col-md-4 col-form-label text-md-right">' . __('interface.data.database_host') . '</label>
 
                     <div class="col-md-8 col-form-label">
                         ' . $tenant->database_host . ':' . $tenant->database_port . '
@@ -136,14 +136,14 @@ class AdminTenantController extends Controller
                 </div>
                 <hr>
                 <div class="form-group row">
-                    <label for="domain" class="col-md-4 col-form-label text-md-right">' . __('Database Username') . '</label>
+                    <label for="domain" class="col-md-4 col-form-label text-md-right">' . __('interface.data.database_username') . '</label>
 
                     <div class="col-md-8 col-form-label">
                         ' . $tenant->database_username . '
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="domain" class="col-md-4 col-form-label text-md-right">' . __('Database Password') . '</label>
+                    <label for="domain" class="col-md-4 col-form-label text-md-right">' . __('interface.data.database_password') . '</label>
 
                     <div class="col-md-8 col-form-label">
                         ' . $tenant->database_password . '
@@ -151,28 +151,28 @@ class AdminTenantController extends Controller
                 </div>
                 <hr>
                 <div class="form-group row">
-                    <label for="domain" class="col-md-4 col-form-label text-md-right">' . __('Database Name') . '</label>
+                    <label for="domain" class="col-md-4 col-form-label text-md-right">' . __('interface.data.database_name') . '</label>
 
                     <div class="col-md-8 col-form-label">
                         ' . $tenant->database_database . '
                     </div>
                 </div>
                 ' . (! empty($tenant->database_prefix) ? '<div class="form-group row">
-                    <label for="domain" class="col-md-4 col-form-label text-md-right">' . __('Database Prefix') . '</label>
+                    <label for="domain" class="col-md-4 col-form-label text-md-right">' . __('interface.data.database_prefix') . '</label>
 
                     <div class="col-md-8 col-form-label">
                         ' . $tenant->database_prefix . '
                     </div>
                 </div>' : '') . '
                 <div class="form-group row">
-                    <label for="domain" class="col-md-4 col-form-label text-md-right">' . __('Database Charset') . '</label>
+                    <label for="domain" class="col-md-4 col-form-label text-md-right">' . __('interface.data.database_charset') . '</label>
 
                     <div class="col-md-8 col-form-label">
                         ' . $tenant->database_charset . '
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="domain" class="col-md-4 col-form-label text-md-right">' . __('Database Collation') . '</label>
+                    <label for="domain" class="col-md-4 col-form-label text-md-right">' . __('interface.data.database_collation') . '</label>
 
                     <div class="col-md-8 col-form-label">
                         ' . $tenant->database_collation . '
@@ -180,7 +180,7 @@ class AdminTenantController extends Controller
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('Close') . '</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('interface.actions.close') . '</button>
             </div>
         </div>
     </div>
@@ -193,7 +193,7 @@ class AdminTenantController extends Controller
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-warning">
-                <h5 class="modal-title" id="editTenant' . $tenant->id . 'Label">' . __('Edit') . ' (' . $tenant->domain . ')</h5>
+                <h5 class="modal-title" id="editTenant' . $tenant->id . 'Label">' . __('interface.actions.edit') . ' (' . $tenant->domain . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -204,7 +204,7 @@ class AdminTenantController extends Controller
                     <input type="hidden" name="tenant_id" value="' . $tenant->id . '" />
 
                     <div class="form-group row">
-                        <label for="domain" class="col-md-4 col-form-label text-md-right">' . __('Domain') . '</label>
+                        <label for="domain" class="col-md-4 col-form-label text-md-right">' . __('interface.data.domain') . '</label>
 
                         <div class="col-md-8">
                             <input id="domain" type="text" class="form-control" name="domain" value="' . $tenant->domain . '">
@@ -212,7 +212,7 @@ class AdminTenantController extends Controller
                     </div>
 
                     <div class="form-group row">
-                        <label for="user_id" class="col-md-4 col-form-label text-md-right">' . __('User ID') . '</label>
+                        <label for="user_id" class="col-md-4 col-form-label text-md-right">' . __('interface.data.user_id') . '</label>
 
                         <div class="col-md-8">
                             <input id="user_id" type="number" class="form-control" name="user_id" value="' . $tenant->user_id . '">
@@ -220,7 +220,7 @@ class AdminTenantController extends Controller
                     </div>
 
                     <div class="form-group row">
-                        <label for="contract_id" class="col-md-4 col-form-label text-md-right">' . __('Contract ID') . '</label>
+                        <label for="contract_id" class="col-md-4 col-form-label text-md-right">' . __('interface.data.contract_id') . '</label>
 
                         <div class="col-md-8">
                             <input id="contract_id" type="number" class="form-control" name="contract_id" value="' . $tenant->contract_id . '">
@@ -228,8 +228,8 @@ class AdminTenantController extends Controller
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-warning"><i class="bi bi-pencil-square"></i> ' . __('Edit') . '</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('Close') . '</button>
+                    <button type="submit" class="btn btn-warning"><i class="bi bi-pencil-square"></i> ' . __('interface.actions.edit') . '</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('interface.actions.close') . '</button>
                 </div>
             </form>
         </div>
@@ -239,8 +239,8 @@ class AdminTenantController extends Controller
 
                     return (object) [
                         'id' => $tenant->id,
-                        'user' => ! empty($user = $tenant->user) ? $user->realName : __('N/A'),
-                        'contract' => ! empty($contract = $tenant->contract) ? $contract->number : __('N/A'),
+                        'user' => ! empty($user = $tenant->user) ? $user->realName : __('interface.misc.not_available'),
+                        'contract' => ! empty($contract = $tenant->contract) ? $contract->number : __('interface.misc.not_available'),
                         'domain' => $tenant->domain,
                         'info' => $info,
                         'edit' => $edit,
@@ -345,12 +345,12 @@ class AdminTenantController extends Controller
                 'app.url',
             ]);
 
-            return redirect()->route('admin.tenants')->with('success', __('Tenant has been added successfully.'));
+            return redirect()->route('admin.tenants')->with('success', __('interface.messages.tenant_added'));
         } elseif (! empty($tenant)) {
             $tenant->delete();
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -410,10 +410,10 @@ class AdminTenantController extends Controller
                 ]);
             }
 
-            return redirect()->back()->with('success', __('Tenant has been updated successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.tenant_updated'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -441,9 +441,9 @@ class AdminTenantController extends Controller
 
             $tenant->delete();
 
-            return redirect()->back()->with('success', __('Tenant has been deleted successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.tenant_deleted'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 }

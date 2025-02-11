@@ -2,7 +2,8 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -24,7 +25,12 @@
                         <div class="container mb-5">
                             <div class="row justify-content-center">
                                 <div class="col-md-8 text-center">
-                                    <img src="{{ asset('images/dark.logo.svg') }}" class="logo logo-lg">
+                                    <div class="logo logo-lg logo-center logo-stacked">
+                                        <img src="{{ asset('images/full.logo.svg') }}">
+                                        @if (config('app.slogan'))
+                                            <div class="slogan-stacked small">{{ config('app.slogan', 'Open Business Management Software') }}</div>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -50,7 +56,7 @@
                                                 <div class="alert alert-danger"><i class="bi bi-exclamation-circle"></i> {!! Session::get('danger') !!}</div>
                                             @endif
                                             @if (Session::has('resent'))
-                                                <div class="alert alert-success" role="alert"><i class="bi bi-check-circle"></i> {{ __('A fresh verification link has been sent to your email address.') }}</div>
+                                                <div class="alert alert-success" role="alert"><i class="bi bi-check-circle"></i> {{ __('interface.misc.verification_resent_notification') }}</div>
                                             @endif
                                         </div>
                                     </div>

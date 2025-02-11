@@ -4,13 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Download;
 use App\Models\Accounting\Invoice\Invoice;
-use App\Models\Accounting\Invoice\InvoiceDiscount;
-use App\Models\Accounting\Invoice\InvoiceDunning;
 use App\Models\Accounting\Invoice\InvoiceHistory;
 use App\Models\Accounting\Invoice\InvoiceImporter;
 use App\Models\Accounting\Invoice\InvoiceImporterHistory;
 use App\Models\Accounting\Invoice\InvoicePosition;
-use App\Models\Accounting\Invoice\InvoiceReminder;
 use App\Models\Accounting\Invoice\InvoiceType;
 use App\Models\Accounting\Position;
 use App\Models\Accounting\PositionDiscount;
@@ -19,18 +16,14 @@ use App\Models\FileManager\File;
 use App\Models\ImapInbox;
 use App\Models\User;
 use Carbon\Carbon;
-use Endroid\QrCode\ErrorCorrectionLevel;
-use Exception;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
-use SepaQr\Data;
 
 class AdminInvoiceSupplierController extends Controller
 {
@@ -121,26 +114,26 @@ class AdminInvoiceSupplierController extends Controller
                     switch ($invoice->status) {
                         case 'unpaid':
                             if ($invoice->overdue) {
-                                $status = '<span class="badge badge-danger badge-pill">' . __('Overdue') . '</span>';
+                                $status = '<span class="badge badge-danger">' . __('interface.status.overdue') . '</span>';
                             } else {
-                                $status = '<span class="badge badge-warning badge-pill">' . __('Unpaid') . '</span>';
+                                $status = '<span class="badge badge-warning">' . __('interface.status.unpaid') . '</span>';
                             }
                             break;
                         case 'paid':
-                            $status = '<span class="badge badge-success badge-pill">' . __('Paid') . '</span>';
+                            $status = '<span class="badge badge-success">' . __('interface.status.paid') . '</span>';
                             break;
                         case 'refunded':
-                            $status = '<span class="badge badge-secondary badge-pill">' . __('Refunded') . '</span>';
+                            $status = '<span class="badge badge-secondary">' . __('interface.status.refunded') . '</span>';
                             break;
                         case 'refund':
-                            $status = '<span class="badge badge-info badge-pill text-white">' . __('Refund') . '</span>';
+                            $status = '<span class="badge badge-info text-white">' . __('interface.actions.refund') . '</span>';
                             break;
                         case 'revoked':
-                            $status = '<span class="badge badge-secondary badge-pill">' . __('Revoked') . '</span>';
+                            $status = '<span class="badge badge-secondary">' . __('interface.status.revoked') . '</span>';
                             break;
                         case 'template':
                         default:
-                            $status = '<span class="badge badge-primary badge-pill">' . __('Draft') . '</span>';
+                            $status = '<span class="badge badge-primary">' . __('interface.status.draft') . '</span>';
                             break;
                     }
 
@@ -161,7 +154,7 @@ class AdminInvoiceSupplierController extends Controller
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-warning">
-                <h5 class="modal-title" id="editInvoice' . $invoice->id . 'Label">' . __('Edit') . ' (' . $invoice->number . ')</h5>
+                <h5 class="modal-title" id="editInvoice' . $invoice->id . 'Label">' . __('interface.actions.edit') . ' (' . $invoice->number . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -171,7 +164,7 @@ class AdminInvoiceSupplierController extends Controller
                     <input type="hidden" name="_token" value="' . csrf_token() . '" />
                     <input type="hidden" name="invoice_id" value="' . $invoice->id . '" />
                     <div class="form-group row">
-                        <label for="user_id" class="col-md-4 col-form-label text-md-right">' . __('User ID') . '</label>
+                        <label for="user_id" class="col-md-4 col-form-label text-md-right">' . __('interface.data.user_id') . '</label>
 
                         <div class="col-md-8">
                             <input id="user_id" type="number" class="form-control" name="user_id" value="' . $invoice->user_id . '">
@@ -179,7 +172,7 @@ class AdminInvoiceSupplierController extends Controller
                     </div>
 
                     <div class="form-group row">
-                        <label for="type_id" class="col-md-4 col-form-label text-md-right">' . __('Payment Type') . '</label>
+                        <label for="type_id" class="col-md-4 col-form-label text-md-right">' . __('interface.data.payment_type') . '</label>
 
                         <div class="col-md-8">
                             <select id="type_id" class="form-control" name="type_id">
@@ -189,7 +182,7 @@ class AdminInvoiceSupplierController extends Controller
                     </div>
 
                     <div class="form-group row">
-                        <label for="contract_id" class="col-md-4 col-form-label text-md-right">' . __('Contract ID') . '</label>
+                        <label for="contract_id" class="col-md-4 col-form-label text-md-right">' . __('interface.data.contract_id') . '</label>
 
                         <div class="col-md-8">
                             <input id="contract_id" type="number" class="form-control" name="contract_id" value="' . $invoice->contract_id . '">
@@ -197,8 +190,8 @@ class AdminInvoiceSupplierController extends Controller
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-warning"><i class="bi bi-pencil-square"></i> ' . __('Edit') . '</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('Close') . '</button>
+                    <button type="submit" class="btn btn-warning"><i class="bi bi-pencil-square"></i> ' . __('interface.actions.edit') . '</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('interface.actions.close') . '</button>
                 </div>
             </form>
         </div>
@@ -209,11 +202,11 @@ class AdminInvoiceSupplierController extends Controller
 
                     return (object) [
                         'id' => $invoice->number,
-                        'user' => $invoice->user->realName ?? __('N/A'),
+                        'user' => $invoice->user->realName ?? __('interface.misc.not_available'),
                         'status' => $status,
-                        'type' => $invoice->type->name ?? __('N/A'),
-                        'date' => ! empty($invoice->archived_at) ? $invoice->archived_at->format('d.m.Y, H:i') : __('N/A'),
-                        'due' => ! empty($invoice->archived_at) ? $invoice->archived_at->addDays($invoice->type->period)->format('d.m.Y') . ', 23:59' : __('N/A'),
+                        'type' => $invoice->type->name ?? __('interface.misc.not_available'),
+                        'date' => ! empty($invoice->archived_at) ? $invoice->archived_at->format('d.m.Y, H:i') : __('interface.misc.not_available'),
+                        'due' => ! empty($invoice->archived_at) ? $invoice->archived_at->addDays($invoice->type->period)->format('d.m.Y') . ', 23:59' : __('interface.misc.not_available'),
                         'view' => '<a href="' . route('admin.invoices.suppliers.details', $invoice->id) . '" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>',
                         'edit' => $invoice->status == 'template' ? $edit : '<button type="button" class="btn btn-warning btn-sm" disabled><i class="bi bi-pencil-square"></i></button>',
                         'delete' => $invoice->status == 'template' ? '<a href="' . route('admin.invoices.suppliers.delete', $invoice->id) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>' : '<button type="button" class="btn btn-danger btn-sm" disabled><i class="bi bi-trash"></i></button>',
@@ -242,7 +235,7 @@ class AdminInvoiceSupplierController extends Controller
 
         /* @var UploadedFile|null $file */
         if (empty($file = $request->files->get('file'))) {
-            return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+            return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
         }
 
         if (
@@ -268,11 +261,11 @@ class AdminInvoiceSupplierController extends Controller
                     'name' => $request->name,
                 ]);
 
-                return redirect()->route('admin.invoices.suppliers.details', $invoice->id)->with('success', __('Invoice has been added successfully.'));
+                return redirect()->route('admin.invoices.suppliers.details', $invoice->id)->with('success', __('interface.messages.invoice_added'));
             }
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -305,10 +298,10 @@ class AdminInvoiceSupplierController extends Controller
                 'type_id' => $request->type_id,
             ]);
 
-            return redirect()->back()->with('success', __('Invoice has been updated successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.invoice_updated'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -334,10 +327,10 @@ class AdminInvoiceSupplierController extends Controller
         ) {
             $invoice->delete();
 
-            return redirect()->route('admin.invoices.suppliers')->with('success', __('Invoice has been deleted successfully.'));
+            return redirect()->route('admin.invoices.suppliers')->with('success', __('interface.messages.invoice_deleted'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -373,10 +366,10 @@ class AdminInvoiceSupplierController extends Controller
                 'status' => 'publish',
             ]);
 
-            return redirect()->back()->with('success', __('Invoice has been published successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.invoice_published'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -439,10 +432,10 @@ class AdminInvoiceSupplierController extends Controller
                 'status' => 'revoke',
             ]);
 
-            return redirect()->back()->with('success', __('Invoice has been revoked successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.invoice_revoked'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -482,10 +475,10 @@ class AdminInvoiceSupplierController extends Controller
                 'amount' => $invoice->grossSumDiscounted,
             ]);
 
-            return redirect()->back()->with('success', __('Invoice has been set to paid successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.invoice_paid'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -525,10 +518,10 @@ class AdminInvoiceSupplierController extends Controller
                 'amount' => $invoice->grossSumDiscounted * (-1),
             ]);
 
-            return redirect()->back()->with('success', __('Invoice has been set to unpaid successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.invoice_unpaid'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -549,7 +542,7 @@ class AdminInvoiceSupplierController extends Controller
 
         /* @var UploadedFile|null $file */
         if (empty($file = $request->files->get('file'))) {
-            return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+            return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
         }
 
         /* @var Invoice $invoice */
@@ -581,11 +574,11 @@ class AdminInvoiceSupplierController extends Controller
                     'amount' => $invoice->grossSumDiscounted * (-1),
                 ]);
 
-                return redirect()->route('admin.invoices.suppliers.details', $revokationInvoice->id)->with('success', __('Invoice has been set refunded successfully.'));
+                return redirect()->route('admin.invoices.suppliers.details', $revokationInvoice->id)->with('success', __('interface.messages.invoice_refunded'));
             }
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -637,10 +630,10 @@ class AdminInvoiceSupplierController extends Controller
                 'ended_at' => ! empty($request->service_runtime) ? Carbon::parse($request->ended_at) : null,
             ]);
 
-            return redirect()->back()->with('success', __('Invoice position has been added successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.invoice_position_added'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -690,10 +683,10 @@ class AdminInvoiceSupplierController extends Controller
                 'ended_at' => ! empty($request->service_runtime) ? Carbon::parse($request->ended_at) : null,
             ]);
 
-            return redirect()->back()->with('success', __('Invoice position has been updated successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.invoice_position_updated'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -724,10 +717,10 @@ class AdminInvoiceSupplierController extends Controller
             $position->position->delete();
             $position->delete();
 
-            return redirect()->back()->with('success', __('Invoice position has been deleted successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.invoice_position_deleted'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -783,29 +776,29 @@ class AdminInvoiceSupplierController extends Controller
                 ->transform(function (InvoiceHistory $history) {
                     switch ($history->status) {
                         case 'publish':
-                            $status = '<span class="badge badge-success badge-pill">' . __('Published') . '</span>';
+                            $status = '<span class="badge badge-success">' . __('interface.status.published') . '</span>';
                             break;
                         case 'revoke':
-                            $status = '<span class="badge badge-secondary badge-pill">' . __('Revoked') . '</span>';
+                            $status = '<span class="badge badge-secondary">' . __('interface.status.revoked') . '</span>';
                             break;
                         case 'refund':
-                            $status = '<span class="badge badge-info badge-pill text-white">' . __('Refund') . '</span>';
+                            $status = '<span class="badge badge-info text-white">' . __('interface.actions.refund') . '</span>';
                             break;
                         case 'unpay':
-                            $status = '<span class="badge badge-warning badge-pill">' . __('Unpaid') . '</span>';
+                            $status = '<span class="badge badge-warning">' . __('interface.status.unpaid') . '</span>';
                             break;
                         case 'pay':
-                            $status = '<span class="badge badge-success badge-pill">' . __('Paid') . '</span>';
+                            $status = '<span class="badge badge-success">' . __('interface.status.paid') . '</span>';
                             break;
                         default:
-                            $status = '<span class="badge badge-secondary badge-pill">' . __('Unknown') . '</span>';
+                            $status = '<span class="badge badge-secondary">' . __('interface.status.unknown') . '</span>';
                             break;
                     }
 
                     return (object) [
                         'id' => $history->id,
                         'date' => $history->created_at->format('d.m.Y, H:i'),
-                        'name' => ! empty($history->user) && ! empty($history->user->realName) ? '<i class="bi bi-person mr-2"></i> ' . $history->user->realName : '<i class="bi bi-robot mr-2""></i> ' . __('System'),
+                        'name' => ! empty($history->user) && ! empty($history->user->realName) ? '<i class="bi bi-person mr-2"></i> ' . $history->user->realName : '<i class="bi bi-robot mr-2""></i> ' . __('interface.data.system'),
                         'status' => $status,
                     ];
                 })
@@ -881,7 +874,7 @@ class AdminInvoiceSupplierController extends Controller
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-warning">
-                <h5 class="modal-title" id="editImporter' . $importer->id . 'Label">' . __('Edit') . ' (' . $importer->name . ')</h5>
+                <h5 class="modal-title" id="editImporter' . $importer->id . 'Label">' . __('interface.actions.edit') . ' (' . $importer->name . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -891,74 +884,74 @@ class AdminInvoiceSupplierController extends Controller
                     <input type="hidden" name="_token" value="' . csrf_token() . '" />
                     <input type="hidden" name="importer_id" value="' . $importer->id . '" />
                     <div class="form-group row">
-                        <label for="name" class="col-md-4 col-form-label text-md-right">' . __('Name') . '</label>
+                        <label for="name" class="col-md-4 col-form-label text-md-right">' . __('interface.data.name') . '</label>
 
                         <div class="col-md-8">
                             <input id="name" type="text" class="form-control" name="name" value="' . $importer->name . '">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="description" class="col-md-4 col-form-label text-md-right">' . __('Description') . '</label>
+                        <label for="description" class="col-md-4 col-form-label text-md-right">' . __('interface.data.description') . '</label>
 
                         <div class="col-md-8">
                             <input id="description" type="text" class="form-control" name="description" value="' . $importer->description . '">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="imap_host" class="col-md-4 col-form-label text-md-right">' . __('Host') . '</label>
+                        <label for="imap_host" class="col-md-4 col-form-label text-md-right">' . __('interface.data.host') . '</label>
 
                         <div class="col-md-8">
                             <input id="imap_host" type="text" class="form-control" name="imap[host]" value="' . ($importer->imapInbox->host ?? '') . '">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="imap_port" class="col-md-4 col-form-label text-md-right">' . __('Port') . '</label>
+                        <label for="imap_port" class="col-md-4 col-form-label text-md-right">' . __('interface.data.port') . '</label>
 
                         <div class="col-md-8">
                             <input id="imap_port" type="text" class="form-control" name="imap[port]" value="' . ($importer->imapInbox->port ?? '') . '">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="imap_protocol" class="col-md-4 col-form-label text-md-right">' . __('Protocol') . '</label>
+                        <label for="imap_protocol" class="col-md-4 col-form-label text-md-right">' . __('interface.data.protocol') . '</label>
 
                         <div class="col-md-8">
                             <select id="imap_protocol" type="text" class="form-control" name="imap[protocol]">
-                                <option value="none"' . (($importer->imapInbox->protocol ?? '') == 'none' ? ' selected' : '') . '>' . __('None') . '</option>
-                                <option value="tls"' . (($importer->imapInbox->protocol ?? '') == 'tls' ? ' selected' : '') . '>' . __('TLS') . '</option>
-                                <option value="ssl"' . (($importer->imapInbox->protocol ?? '') == 'ssl' ? ' selected' : '') . '>' . __('SSL') . '</option>
+                                <option value="none"' . (($importer->imapInbox->protocol ?? '') == 'none' ? ' selected' : '') . '>' . __('interface.misc.none') . '</option>
+                                <option value="tls"' . (($importer->imapInbox->protocol ?? '') == 'tls' ? ' selected' : '') . '>' . __('interface.misc.tls') . '</option>
+                                <option value="ssl"' . (($importer->imapInbox->protocol ?? '') == 'ssl' ? ' selected' : '') . '>' . __('interface.misc.ssl') . '</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="imap_username" class="col-md-4 col-form-label text-md-right">' . __('Username') . '</label>
+                        <label for="imap_username" class="col-md-4 col-form-label text-md-right">' . __('interface.data.username') . '</label>
 
                         <div class="col-md-8">
                             <input id="imap_username" type="text" class="form-control" name="imap[username]" value="' . ($importer->imapInbox->username ?? '') . '">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="imap_password" class="col-md-4 col-form-label text-md-right">' . __('Password') . '</label>
+                        <label for="imap_password" class="col-md-4 col-form-label text-md-right">' . __('interface.data.password') . '</label>
 
                         <div class="col-md-8">
                             <input id="imap_password" type="password" class="form-control" name="imap[password]">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="imap_folder" class="col-md-4 col-form-label text-md-right">' . __('Folder') . '</label>
+                        <label for="imap_folder" class="col-md-4 col-form-label text-md-right">' . __('interface.data.folder') . '</label>
 
                         <div class="col-md-8">
                             <input id="imap_folder" type="text" class="form-control" name="imap[folder]" value="' . ($importer->imapInbox->folder ?? 'INBOX') . '">
                         </div>
                     </div>
                     <div class="form-group row align-items-center">
-                        <label for="imap_validate_cert" class="col-md-4 col-form-label text-md-right">' . __('Validate certificate') . '</label>
+                        <label for="imap_validate_cert" class="col-md-4 col-form-label text-md-right">' . __('interface.misc.validate_certificate') . '</label>
 
                         <div class="col-md-8">
                             <input id="imap_validate_cert" type="checkbox" class="form-control" name="imap[validate_cert]" value="true"' . (($importer->imapInbox->validate_cert ?? false) ? ' checked' : '') . '>
                         </div>
                     </div>
                     <div class="form-group row align-items-center">
-                        <label for="delete_after_import" class="col-md-4 col-form-label text-md-right">' . __('Delete message after import') . '</label>
+                        <label for="delete_after_import" class="col-md-4 col-form-label text-md-right">' . __('interface.misc.delete_after_import') . '</label>
 
                         <div class="col-md-8">
                             <input id="delete_after_import" type="checkbox" class="form-control" name="imap[delete_after_import]" value="true"' . (($importer->imapInbox->delete_after_import ?? false) ? ' checked' : '') . '>
@@ -966,8 +959,8 @@ class AdminInvoiceSupplierController extends Controller
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-warning"><i class="bi bi-pencil-square"></i> ' . __('Edit') . '</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('Close') . '</button>
+                    <button type="submit" class="btn btn-warning"><i class="bi bi-pencil-square"></i> ' . __('interface.actions.edit') . '</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('interface.actions.close') . '</button>
                 </div>
             </form>
         </div>
@@ -1033,10 +1026,10 @@ class AdminInvoiceSupplierController extends Controller
                 'imap_inbox_id' => $inbox->id,
             ]);
 
-            return redirect()->back()->with('success', __('Invoice importer has been added successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.invoice_importer_added'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -1110,10 +1103,10 @@ class AdminInvoiceSupplierController extends Controller
                 }
             }
 
-            return redirect()->back()->with('success', __('Invoice importer has been updated successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.invoice_importer_updated'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -1138,10 +1131,10 @@ class AdminInvoiceSupplierController extends Controller
             $importer->imapInbox()->delete();
             $importer->delete();
 
-            return redirect()->back()->with('success', __('Invoice importer has been deleted successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.invoice_importer_deleted'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**

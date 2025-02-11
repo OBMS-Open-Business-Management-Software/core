@@ -1,17 +1,17 @@
-@extends('layouts.admin')
+@extends('layouts.customer')
 
 @section('content')
     <div class="container-fluid my-4">
         <div class="row">
             <div class="col-md-12">
-                <a href="{{ route('customer.contracts') }}" class="btn btn-outline-primary mb-4"><i class="bi bi-arrow-left-circle"></i> {{ __('Back to list') }}</a>
+                <a href="{{ route('customer.contracts') }}" class="btn btn-outline-primary mb-4"><i class="bi bi-arrow-left-circle"></i> {{ __('interface.actions.back_to_list') }}</a>
                 @if ($contract->type->type !== 'prepaid_auto' && $contract->type->type !== 'prepaid_manual')
                     @if ($contract->status == 'started')
                         <a href="{{ route('customer.contracts.cancel', $contract->id) }}" class="btn btn-warning mb-4 mr-1 float-right"><i class="bi bi-stop-circle"></i> {{ __('interface.actions.cancel') }}</a>
                     @endif
                 @else
                     @if ($contract->status !== 'template')
-                        <a href="{{ route('customer.contracts.extend', $contract->id) }}" class="btn btn-primary mb-4 mr-1 float-right"><i class="bi bi-arrow-right-circle"></i> {{ __('Extend') }}</a>
+                        <a href="{{ route('customer.contracts.extend', $contract->id) }}" class="btn btn-primary mb-4 mr-1 float-right"><i class="bi bi-arrow-right-circle"></i> {{ __('interface.actions.extend') }}</a>
                     @endif
                 @endif
             </div>
@@ -20,53 +20,53 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <i class="bi bi-info-circle"></i> {{ __('Details') }}
+                        <i class="bi bi-info-circle"></i> {{ __('interface.misc.details') }}
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('Number') }}</label>
+                            <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('interface.data.number') }}</label>
 
                             <div class="col-md-9 col-form-label">
-                                {{ $contract->number ?? __('N/A') }}
+                                {{ $contract->number ?? __('interface.misc.not_available') }}
                             </div>
                         </div>
                         <div class="row">
                             <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('interface.data.type') }}</label>
 
                             <div class="col-md-9 col-form-label">
-                                {{ $contract->type->name ?? __('N/A') }}
+                                {{ $contract->type->name ?? __('interface.misc.not_available') }}
                             </div>
                         </div>
                         <div class="row">
-                            <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('Status') }}</label>
+                            <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('interface.data.status') }}</label>
 
                             <div class="col-md-9 col-form-label">
                                 @switch ($contract->status)
                                     @case ('cancelled')
-                                        <span class="badge badge-danger badge-pill">{{ __('Cancelled') }}</span>
+                                        <span class="badge badge-danger">{{ __('interface.status.cancelled') }}</span>
                                         @break
                                     @case ('expires')
-                                        <span class="badge badge-warning badge-pill">{{ __('Expires') }}</span>
+                                        <span class="badge badge-warning">{{ __('interface.status.expires') }}</span>
                                         @break
                                     @case ('started')
-                                        <span class="badge badge-success badge-pill">{{ __('Active') }}</span>
+                                        <span class="badge badge-success">{{ __('interface.status.active') }}</span>
                                         @break
                                     @case ('template')
                                     @default
-                                        <span class="badge badge-primary badge-pill">{{ __('Draft') }}</span>
+                                        <span class="badge badge-primary">{{ __('interface.status.draft') }}</span>
                                         @break
                                 @endswitch
                             </div>
                         </div>
                         <div class="row">
-                            <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('Reverse charge') }}</label>
+                            <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('interface.data.reverse_charge') }}</label>
 
                             <div class="col-md-9 col-form-label">
-                                {!! $contract->user->reverseCharge ? '<span class="badge badge-success badge-pill">' . __('Applicable') . '</span>' : '<span class="badge badge-warning badge-pill">' . __('Not applicable') . '</span>' !!}
+                                {!! $contract->user->reverseCharge ? '<span class="badge badge-success">' . __('interface.misc.applicable') . '</span>' : '<span class="badge badge-warning">' . __('interface.misc.not_applicable') . '</span>' !!}
                             </div>
                         </div>
                         <div class="row">
-                            <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('Created at') }}</label>
+                            <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('interface.misc.created_at') }}</label>
 
                             <div class="col-md-9 col-form-label">
                                 {{ $contract->created_at->format('d.m.Y, H:i') }}
@@ -74,7 +74,7 @@
                         </div>
                         @if ($contract->started)
                             <div class="row">
-                                <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('Start date') }}</label>
+                                <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('interface.data.start_date') }}</label>
 
                                 <div class="col-md-9 col-form-label">
                                     {{ $contract->started_at->format('d.m.Y, H:i') }}
@@ -83,14 +83,14 @@
                         @endif
                         @if ($contract->cancelled)
                             <div class="row">
-                                <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('Cancel date') }}</label>
+                                <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('interface.data.cancel_date') }}</label>
 
                                 <div class="col-md-9 col-form-label">
                                     {{ $contract->cancelled_at->format('d.m.Y, H:i') }}
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('Cancelled to') }}</label>
+                                <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('interface.data.cancelled_to') }}</label>
 
                                 <div class="col-md-9 col-form-label">
                                     {{ $contract->cancelled_to->format('d.m.Y, H:i') }}
@@ -99,7 +99,7 @@
                         @endif
                         @if ($contract->cancellationRevoked)
                             <div class="row">
-                                <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('Cancellation revokation date') }}</label>
+                                <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('interface.data.cancellation_revokation_date') }}</label>
 
                                 <div class="col-md-9 col-form-label">
                                     {{ $contract->cancellation_revoked_at->format('d.m.Y, H:i') }}
@@ -114,7 +114,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <i class="bi bi-list"></i> {{ __('Positions') }}
+                        <i class="bi bi-list"></i> {{ __('interface.data.positions') }}
                     </div>
                     <div class="card-body">
                         @if ($contract->positionLinks->isNotEmpty())
@@ -137,13 +137,13 @@
                                                 {{ $link->position->description }}
                                                 <small class="d-block">
                                                     @if (isset($link->started_at))
-                                                        {{ __('From:') }} {{ $link->started_at->format('d.m.Y H:i') }}
+                                                        {{ __('interface.time.from') }}: {{ $link->started_at->format('d.m.Y H:i') }}
                                                     @endif
                                                     @if (isset($link->started_at, $link->ended_at))
                                                         |
                                                     @endif
                                                     @if (isset($link->ended_at))
-                                                        {{ __('To:') }} {{ $link->ended_at->format('d.m.Y H:i') }}
+                                                        {{ __('interface.time.to') }}: {{ $link->ended_at->format('d.m.Y H:i') }}
                                                     @endif
                                                 </small>
                                             </td>
@@ -156,14 +156,14 @@
                                         @if (! empty($usageTracker = $link->trackerInstance) && $contract->type->type == 'contract_post_pay')
                                             <tr>
                                                 <td>
-                                                    <span class="font-weight-bold">{{ __('Usage Tracker') }}</span><br>
+                                                    <span class="font-weight-bold">{{ __('interface.misc.usage_tracker') }}</span><br>
                                                     {{ __($usageTracker->tracker->name) }}
                                                 </td>
                                                 <td style="width: 10%">{{ number_format($usageTracker->tracker->amount, 2) }} €</td>
-                                                <td style="width: 10%">{{ __('Variable') }}</td>
-                                                <td style="width: 10%">{{ __('Variable') }}</td>
+                                                <td style="width: 10%">{{ __('interface.data.variable') }}</td>
+                                                <td style="width: 10%">{{ __('interface.data.variable') }}</td>
                                                 <td style="width: 10%" class="bg-disabled">{{ $contract->user->reverseCharge ? '0' : (! empty($percentage = $usageTracker->vat_percentage) ? $percentage : $link->position->vat_percentage) }} %</td>
-                                                <td style="width: 10%" class="bg-disabled">{{ __('Variable') }}</td>
+                                                <td style="width: 10%" class="bg-disabled">{{ __('interface.data.variable') }}</td>
                                                 @if ($contract->status == 'template')
                                                     <td style="width: 1%"></td>
                                                     <td style="width: 1%"></td>
@@ -175,7 +175,7 @@
                                                 @case ('percentage')
                                                     <tr>
                                                         <td>
-                                                            <span class="font-weight-bold">{{ __('Discount') }}</span><br>
+                                                            <span class="font-weight-bold">{{ __('interface.data.discount') }}</span><br>
                                                             {{ number_format($discount->amount, 2) }} %
                                                         </td>
                                                         <td style="width: 10%">- {{ number_format($link->position->amount * ($discount->amount / 100), 2) }} €</td>
@@ -189,7 +189,7 @@
                                                 @default
                                                     <tr>
                                                         <td>
-                                                            <span class="font-weight-bold">{{ __('Discount') }}</span><br>
+                                                            <span class="font-weight-bold">{{ __('interface.data.discount') }}</span><br>
                                                             {{ number_format($discount->amount, 2) }} €
                                                         </td>
                                                         <td style="width: 10%">- {{ number_format($discount->amount, 2) }} €</td>
@@ -231,7 +231,7 @@
                             </table>
                         @else
                             <div class="alert alert-warning mb-0">
-                                <i class="bi bi-exclamation-triangle"></i> {{ __('There are no positions on this contract yet.') }}
+                                <i class="bi bi-exclamation-triangle"></i> {{ __('interface.contracts.no_positions') }}
                             </div>
                         @endif
                     </div>
@@ -242,7 +242,7 @@
             <div class="col-md-12">
                 <div class="card mt-4">
                     <div class="card-header">
-                        <i class="bi bi-exclamation-circle"></i> {{ __('Status History') }}
+                        <i class="bi bi-exclamation-circle"></i> {{ __('interface.misc.status_history') }}
                     </div>
                     <div class="card-body">
                         @if ($contract->history()->exists())
@@ -250,9 +250,9 @@
                                 <thead>
                                 <tr>
                                     <td>#</td>
-                                    <td>{{ __('Date') }}</td>
+                                    <td>{{ __('interface.data.date') }}</td>
                                     <td>{{ __('interface.data.name') }}</td>
-                                    <td>{{ __('Status') }}</td>
+                                    <td>{{ __('interface.data.status') }}</td>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -261,7 +261,7 @@
                             </table>
                         @else
                             <div class="alert alert-warning mb-0">
-                                <i class="bi bi-exclamation-triangle"></i> {{ __('No status history has been logged yet.') }}
+                                <i class="bi bi-exclamation-triangle"></i> {{ __('interface.misc.no_status_history') }}
                             </div>
                         @endif
                     </div>

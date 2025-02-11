@@ -67,9 +67,9 @@ class AdminPaymentGatewayController extends Controller
                 }
             });
 
-            return redirect()->back()->with('success', __('Payment method has been updated successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.payment_method_updated'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 }

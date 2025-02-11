@@ -2,13 +2,10 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\Tenant;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Session;
-use PDO;
 
 /**
  * Class RequireUnlockedProfile
@@ -33,7 +30,7 @@ class RequireUnlockedProfile
             Session::flush();
             ;
 
-            return redirect()->route('login')->with('warning', __('Your customer account is currently locked. Please contact us for more information.'));
+            return redirect()->route('login')->with('warning', __('interface.messages.account_locked'));
         }
 
         return $next($request);

@@ -58,7 +58,7 @@ class AdminProfileController extends Controller
             ]);
         }
 
-        return redirect()->back()->with('success', __('The user details have been changed successfully.'));
+        return redirect()->back()->with('success', __('interface.messages.profile_updated'));
     }
 
     /**
@@ -81,7 +81,7 @@ class AdminProfileController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        return redirect()->back()->with('success', __('The password has been changed successfully.'));
+        return redirect()->back()->with('success', __('interface.messages.password_changed'));
     }
 
     /**
@@ -96,7 +96,7 @@ class AdminProfileController extends Controller
         $confirmed = $request->user()->confirmTwoFactorAuth($request->code);
 
         if (! $confirmed) {
-            return redirect()->back()->with('warning', __('Invalid two factor authentication code. Please try again.'));
+            return redirect()->back()->with('warning', __('interface.messages.2fa_invalid'));
         }
 
         return redirect()->back();

@@ -236,7 +236,7 @@ class ShopOrderQueue extends Model
                         'order_id' => $this->id,
                         'product_id' => $this->form_id,
                         'discount_id' => null,
-                        'name' => __('Shop order') . ' #' . $this->id,
+                        'name' => __('interface.misc.shop_order') . ' #' . $this->id,
                         'description' => __($this->form->name),
                         'amount' => $this->amount,
                         'vat_percentage' => $this->vat_percentage,

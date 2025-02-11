@@ -2,12 +2,15 @@
 
 use App\Emails\AccountEmailVerificationRequest;
 use App\Emails\ProfileEmailVerificationRequest;
+use App\Products\Product;
+use App\Helpers\Products;
 use App\Models\Content\Page;
 use App\Models\Shop\Configurator\ShopConfiguratorCategory;
 use App\Models\Shop\Configurator\ShopConfiguratorForm;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Session;
+use ScssPhp\ScssPhp\Compiler;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,16 +27,36 @@ Route::get('/', function () {
     return redirect('login');
 });
 
+Route::get('/css/app.css', function () {
+    $cacheKey = 'stylesheet-' . str_replace(['/', ':'], '_', str_replace(['http://', 'https://'], '', config('app.url')));
+
+    if ($stylesheet = Cache::get($cacheKey)) {
+        return Response::make($stylesheet, 200, ['Content-Type' => 'text/css']);
+    }
+
+    $scss = view('styles')->render();
+    $compiler = new Compiler();
+    $compiler->setImportPaths([
+        resource_path('sass/'),
+        base_path('node_modules/'),
+    ]);
+    $compiledCss = $compiler->compileString($scss)->getCss();
+
+    Cache::forever($cacheKey, $compiledCss);
+
+    return Response::make($compiledCss, 200, ['Content-Type' => 'text/css']);
+});
+
 Route::get('/email/verify/{id}/{hash}', function (AccountEmailVerificationRequest $request) {
     $request->fulfill();
 
-    return redirect()->route('customer.home')->with('success', __('The email address has been verified successfully.'));
+    return redirect()->route('customer.home')->with('success', __('interface.messages.email_confirmed'));
 })->middleware('signed')->name('verification.verify');
 
 Route::post('/email/verification-notification', function (Request $request) {
     $request->user()->sendEmailVerificationNotification();
 
-    return back()->with('message', 'Verification link sent!');
+    return back()->with('message', __('interface.messages.email_verification_sent'));
 })->middleware('throttle:6,1')->name('verification.send');
 
 Route::get('/email/verify', function () {
@@ -55,6 +78,7 @@ Route::middleware([
         'prefix' => 'customer',
         'middleware' => [
             'role.customer',
+            'products.customer',
         ],
     ], function () {
         Route::get('/accept', [App\Http\Controllers\CustomerDashboardController::class, 'accept'])->name('customer.accept');
@@ -103,7 +127,7 @@ Route::middleware([
             Route::get('/profile/email/verify/{id}/{hash}', function (ProfileEmailVerificationRequest $request) {
                 $request->fulfill();
 
-                return redirect()->route('customer.profile')->with('success', __('The email address has been verified successfully.'));
+                return redirect()->route('customer.profile')->with('success', __('interface.messages.email_confirmed'));
             })->middleware('signed')->name('customer.verification.verify');
             Route::post('/profile/emailaddresses/create', [App\Http\Controllers\CustomerProfileController::class, 'profile_email_create'])->name('customer.profile.email.create');
             Route::post('/profile/emailaddresses/update', [App\Http\Controllers\CustomerProfileController::class, 'profile_email_update'])->name('customer.profile.email.update');
@@ -130,7 +154,35 @@ Route::middleware([
             Route::post('/profile/transactions/initialize/deposit', [App\Http\Controllers\PaymentController::class, 'customer_initialize_deposit'])->name('customer.profile.transactions.deposit');
             Route::post('/profile/transactions/initialize/invoice/{id}', [App\Http\Controllers\PaymentController::class, 'customer_initialize_invoice'])->name('customer.profile.transactions.invoice');
 
-            // TODO: Add routes to administrate orders
+            Products::list()->transform(function ($handler) {
+                return (object)[
+                    'instance' => $handler,
+                    'capabilities' => $handler->capabilities(),
+                ];
+            })->reject(function ($handler) {
+                return !$handler->capabilities->contains('service') || !$handler->instance->ui()->customer;
+            })->each(function ($handler) {
+                App::bind(Product::class, function () use ($handler) {
+                    return $handler->instance;
+                });
+
+                Route::get('/services/' . $handler->instance->technicalName(), [App\Http\Controllers\CustomerServiceController::class, 'service_index'])->name('customer.services.' . $handler->instance->technicalName());
+                Route::get('/services/' . $handler->instance->technicalName() . '/list', [App\Http\Controllers\CustomerServiceController::class, 'service_list'])->name('customer.services.' . $handler->instance->technicalName() . '.list');
+                Route::get('/services/' . $handler->instance->technicalName() . '/{id}', [App\Http\Controllers\CustomerServiceController::class, 'service_details'])->name('customer.services.' . $handler->instance->technicalName() . '.details');
+                Route::get('/services/' . $handler->instance->technicalName() . '/{id}/statistics', [App\Http\Controllers\CustomerServiceController::class, 'service_statistics'])->name('customer.services.' . $handler->instance->technicalName() . '.statistics');
+
+                if ($handler->capabilities->contains('service.start')) {
+                    Route::get('/services/' . $handler->instance->technicalName() . '/{id}/start', [App\Http\Controllers\AdminServiceController::class, 'service_start'])->name('admin.services.' . $handler->instance->technicalName() . '.start');
+                }
+
+                if ($handler->capabilities->contains('service.stop')) {
+                    Route::get('/services/' . $handler->instance->technicalName() . '/{id}/start', [App\Http\Controllers\AdminServiceController::class, 'service_stop'])->name('admin.services.' . $handler->instance->technicalName() . '.stop');
+                }
+
+                if ($handler->capabilities->contains('service.restart')) {
+                    Route::get('/services/' . $handler->instance->technicalName() . '/{id}/start', [App\Http\Controllers\AdminServiceController::class, 'service_start'])->name('admin.services.' . $handler->instance->technicalName() . '.restart');
+                }
+            });
         });
     });
 
@@ -138,6 +190,7 @@ Route::middleware([
         'prefix' => 'admin',
         'middleware' => [
             'role.employee',
+            'products.admin',
         ],
     ], function () {
         Route::get('/home', [App\Http\Controllers\AdminDashboardController::class, 'index'])->name('admin.home');
@@ -166,6 +219,10 @@ Route::middleware([
         Route::post('/support/tickets/{id}/file/upload', [App\Http\Controllers\AdminSupportController::class, 'support_file_upload'])->name('admin.support.file.upload');
 
         Route::middleware('role.admin')->group(function () {
+            Route::get('/settings', [App\Http\Controllers\AdminSettingsController::class, 'settings_index'])->name('admin.settings');
+            Route::get('/settings/list', [App\Http\Controllers\AdminSettingsController::class, 'settings_list'])->name('admin.settings.list');
+            Route::post('/settings/{id}/update', [App\Http\Controllers\AdminSettingsController::class, 'settings_update'])->name('admin.settings.update');
+
             Route::get('/support/categories', [App\Http\Controllers\AdminSupportController::class, 'support_categories'])->name('admin.support.categories');
             Route::get('/support/categories/list', [App\Http\Controllers\AdminSupportController::class, 'support_categories_list'])->name('admin.support.categories.list');
             Route::get('/support/categories/list/{id}', [App\Http\Controllers\AdminSupportController::class, 'support_category_user_list'])->name('admin.support.categories.list.users');
@@ -414,6 +471,36 @@ Route::middleware([
 
         Route::get('/shop/{id}', [App\Http\Controllers\AdminShopController::class, 'shop_categories_index'])->name('admin.shop.categories.details');
 
+        Products::list()->transform(function ($handler) {
+            return (object)[
+                'instance' => $handler,
+                'capabilities' => $handler->capabilities(),
+            ];
+        })->reject(function ($handler) {
+            return !$handler->capabilities->contains('service') || !$handler->instance->ui()->admin;
+        })->each(function ($handler) {
+            App::bind(Product::class, function () use ($handler) {
+                return $handler->instance;
+            });
+
+            Route::get('/services/' . $handler->instance->technicalName(), [App\Http\Controllers\AdminServiceController::class, 'service_index'])->name('admin.services.' . $handler->instance->technicalName());
+            Route::get('/services/' . $handler->instance->technicalName() . '/list', [App\Http\Controllers\AdminServiceController::class, 'service_list'])->name('admin.services.' . $handler->instance->technicalName() . '.list');
+            Route::get('/services/' . $handler->instance->technicalName() . '/{id}', [App\Http\Controllers\AdminServiceController::class, 'service_details'])->name('admin.services.' . $handler->instance->technicalName() . '.details');
+            Route::get('/services/' . $handler->instance->technicalName() . '/{id}/statistics', [App\Http\Controllers\AdminServiceController::class, 'service_statistics'])->name('admin.services.' . $handler->instance->technicalName() . '.statistics');
+
+            if ($handler->capabilities->contains('service.start')) {
+                Route::get('/services/' . $handler->instance->technicalName() . '/{id}/start', [App\Http\Controllers\AdminServiceController::class, 'service_start'])->name('admin.services.' . $handler->instance->technicalName() . '.start');
+            }
+
+            if ($handler->capabilities->contains('service.stop')) {
+                Route::get('/services/' . $handler->instance->technicalName() . '/{id}/start', [App\Http\Controllers\AdminServiceController::class, 'service_stop'])->name('admin.services.' . $handler->instance->technicalName() . '.stop');
+            }
+
+            if ($handler->capabilities->contains('service.restart')) {
+                Route::get('/services/' . $handler->instance->technicalName() . '/{id}/start', [App\Http\Controllers\AdminServiceController::class, 'service_start'])->name('admin.services.' . $handler->instance->technicalName() . '.restart');
+            }
+        });
+
         Route::group([
             'middleware' => [
                 'tenant.prohibit',
@@ -434,15 +521,23 @@ Route::any('/api/webdav/{path?}', [App\Http\Controllers\AdminFilemanagerControll
 Route::any('/payment/pingback/{payment_method}/{payment_type}', [App\Http\Controllers\PaymentController::class, 'pingback'])->name('customer.payment.pingback');
 
 try {
-    Page::query()->each(function (Page $page) {
-        Route::get(__($page->route), [App\Http\Controllers\PublicPageController::class, 'render'])->name('public.page.' . $page->id);
-        Route::get(__($page->route) . '/{id}', [App\Http\Controllers\PublicPageController::class, 'render_version'])->name('public.page.' . $page->id . '.version');
+    Route::group([
+        'middleware' => [
+            'products.customer',
+        ],
+    ], function () {
+        Page::query()->each(function (Page $page) {
+            Route::get(__($page->route), [App\Http\Controllers\PublicPageController::class, 'render'])->name('public.page.' . $page->id);
+            Route::get(__($page->route) . '/{id}', [App\Http\Controllers\PublicPageController::class, 'render_version'])->name('public.page.' . $page->id . '.version');
+        });
     });
-} catch (Exception $exception) {}
+} catch (Exception $exception) {
+}
 
 Route::group([
     'middleware' => [
-        'shop.categoryOrProduct'
+        'shop.categoryOrProduct',
+        'products.customer',
     ],
 ], function () {
     Route::get('/shop', [App\Http\Controllers\CustomerShopController::class, 'render_category'])->name('public.shop');
@@ -453,7 +548,8 @@ Route::group([
             ->each(function (ShopConfiguratorCategory $category) {
                 Route::get($category->fullRoute, [App\Http\Controllers\CustomerShopController::class, 'render_category'])->name('public.shop.categories.' . $category->id);
             });
-    } catch (Exception $exception) {}
+    } catch (Exception $exception) {
+    }
 
     try {
         ShopConfiguratorForm::query()
@@ -461,7 +557,8 @@ Route::group([
             ->each(function (ShopConfiguratorForm $form) {
                 Route::get($form->fullRoute, [App\Http\Controllers\CustomerShopController::class, 'render_form'])->name('public.shop.forms.' . $form->id);
             });
-    } catch (Exception $exception) {}
+    } catch (Exception $exception) {
+    }
 
     Route::middleware([
         'auth',

@@ -4,14 +4,14 @@
     <div class="container-fluid my-4">
         <div class="row">
             <div class="col-md-12">
-                <a class="btn btn-primary float-right mb-4" data-toggle="modal" data-target="#add"><i class="bi bi-plus-circle"></i> {{ __('Create Discount Type') }}</a>
+                <a class="btn btn-primary float-right mb-4" data-toggle="modal" data-target="#add"><i class="bi bi-plus-circle"></i> {{ __('interface.discount_type.create') }}</a>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <i class="bi bi-list"></i> {{ __('Discount Types') }}
+                        <i class="bi bi-list"></i> {{ __('interface.misc.discount_types') }}
                     </div>
                     <div class="card-body">
                         <table id="categories" class="table mt-4 w-100">
@@ -20,8 +20,8 @@
                                 <td>{{ __('interface.data.id') }}</td>
                                 <td>{{ __('interface.data.name') }}</td>
                                 <td>{{ __('interface.data.description') }}</td>
-                                <td>{{ __('Discount Period') }}</td>
-                                <td>{{ __('Discount Percentage') }}</td>
+                                <td>{{ __('interface.data.discount_period') }}</td>
+                                <td>{{ __('interface.data.discount_percentage') }}</td>
                                 <td>{{ __('interface.actions.edit') }}</td>
                                 <td>{{ __('interface.actions.delete') }}</td>
                             </tr>
@@ -40,7 +40,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="addLabel"><i class="bi bi-plus-circle"></i> {{ __('Create Discount Type') }}</h5>
+                    <h5 class="modal-title" id="addLabel"><i class="bi bi-plus-circle"></i> {{ __('interface.discount_type.create') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -75,7 +75,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="period" class="col-md-4 col-form-label text-md-right">{{ __('Discount Period') }}</label>
+                            <label for="period" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.discount_period') }}</label>
 
                             <div class="col-md-8">
                                 <div class="input-group">
@@ -93,7 +93,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="percentage_amount" class="col-md-4 col-form-label text-md-right">{{ __('Discount Percentage') }}</label>
+                            <label for="percentage_amount" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.discount_percentage') }}</label>
 
                             <div class="col-md-8">
                                 <div class="input-group">

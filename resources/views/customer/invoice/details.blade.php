@@ -4,18 +4,18 @@
     <div class="container-fluid my-4">
         <div class="row">
             <div class="col-md-12">
-                <a href="{{ route('customer.invoices') }}" class="btn btn-outline-primary mb-4"><i class="bi bi-arrow-left-circle"></i> {{ __('Back to list') }}</a>
+                <a href="{{ route('customer.invoices') }}" class="btn btn-outline-primary mb-4"><i class="bi bi-arrow-left-circle"></i> {{ __('interface.actions.back_to_list') }}</a>
                 @if (! empty($invoice->original) && $invoice->status == 'refund')
-                    <a href="{{ route('customer.invoices.details', $invoice->original->id) }}" class="btn btn-primary mb-4"><i class="bi bi-file-earmark-text"></i> {{ __('Linked Invoice (Original)') }}</a>
+                    <a href="{{ route('customer.invoices.details', $invoice->original->id) }}" class="btn btn-primary mb-4"><i class="bi bi-file-earmark-text"></i> {{ __('interface.actions.open_original') }}</a>
                 @endif
                 @if (! empty($invoice->refunded) && $invoice->status == 'refunded')
-                    <a href="{{ route('customer.invoices.details', $invoice->refunded->id) }}" class="btn btn-primary mb-4"><i class="bi bi-file-earmark-text"></i> {{ __('Linked Invoice (Refund)') }}</a>
+                    <a href="{{ route('customer.invoices.details', $invoice->refunded->id) }}" class="btn btn-primary mb-4"><i class="bi bi-file-earmark-text"></i> {{ __('interface.actions.open_refund') }}</a>
                 @endif
                 @if ($invoice->status !== 'template')
-                    <a href="{{ route('customer.invoices.download', $invoice->id) }}" class="btn btn-primary mb-4 mr-1 float-right" download><i class="bi bi-download"></i> {{ __('Download') }}</a>
+                    <a href="{{ route('customer.invoices.download', $invoice->id) }}" class="btn btn-primary mb-4 mr-1 float-right" download><i class="bi bi-download"></i> {{ __('interface.actions.download') }}</a>
                 @endif
                 @if ($invoice->status == 'unpaid')
-                    <a class="btn btn-primary float-right mr-1" data-toggle="modal" data-target="#pay"><i class="bi bi-cash-stack"></i> {{ __('Pay') }}</a>
+                    <a class="btn btn-primary float-right mr-1" data-toggle="modal" data-target="#pay"><i class="bi bi-cash-stack"></i> {{ __('interface.actions.pay') }}</a>
                 @endif
             </div>
         </div>
@@ -23,63 +23,63 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <i class="bi bi-info-circle"></i> {{ __('Details') }}
+                        <i class="bi bi-info-circle"></i> {{ __('interface.misc.details') }}
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('Number') }}</label>
+                            <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('interface.data.number') }}</label>
 
                             <div class="col-md-9 col-form-label">
-                                {{ $invoice->number ?? __('N/A') }}
+                                {{ $invoice->number ?? __('interface.misc.not_available') }}
                             </div>
                         </div>
                         <div class="row">
                             <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('interface.data.type') }}</label>
 
                             <div class="col-md-9 col-form-label">
-                                {{ $invoice->type->name ?? __('N/A') }}
+                                {{ $invoice->type->name ?? __('interface.misc.not_available') }}
                             </div>
                         </div>
                         <div class="row">
-                            <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('Status') }}</label>
+                            <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('interface.data.status') }}</label>
 
                             <div class="col-md-9 col-form-label">
                                 @switch ($invoice->status)
                                     @case ('unpaid')
                                         @if ($invoice->overdue)
-                                            <span class="badge badge-danger badge-pill">{{ __('Overdue') }}</span>
+                                            <span class="badge badge-danger">{{ __('interface.status.overdue') }}</span>
                                         @else
-                                            <span class="badge badge-warning badge-pill">{{ __('Unpaid') }}</span>
+                                            <span class="badge badge-warning">{{ __('interface.status.unpaid') }}</span>
                                         @endif
                                         @break
                                     @case ('paid')
-                                        <span class="badge badge-success badge-pill">{{ __('Paid') }}</span>
+                                        <span class="badge badge-success">{{ __('interface.status.paid') }}</span>
                                         @break
                                     @case ('refunded')
-                                        <span class="badge badge-secondary badge-pill">{{ __('Refunded') }}</span>
+                                        <span class="badge badge-secondary">{{ __('interface.status.refunded') }}</span>
                                         @break
                                     @case ('refund')
-                                        <span class="badge badge-info badge-pill text-white">{{ __('Refund') }}</span>
+                                        <span class="badge badge-info text-white">{{ __('interface.actions.refund') }}</span>
                                         @break
                                     @case ('revoked')
-                                        <span class="badge badge-secondary badge-pill">{{ __('Revoked') }}</span>
+                                        <span class="badge badge-secondary">{{ __('interface.status.revoked') }}</span>
                                         @break
                                     @case ('template')
                                     @default
-                                        <span class="badge badge-primary badge-pill">{{ __('Draft') }}</span>
+                                        <span class="badge badge-primary">{{ __('interface.status.draft') }}</span>
                                         @break
                                 @endswitch
                             </div>
                         </div>
                         <div class="row">
-                            <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('Reverse charge') }}</label>
+                            <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('interface.data.reverse_charge') }}</label>
 
                             <div class="col-md-9 col-form-label">
-                                {!! $invoice->reverse_charge ? '<span class="badge badge-success badge-pill">' . __('Applicable') . '</span>' : '<span class="badge badge-warning badge-pill">' . __('Not applicable') . '</span>' !!}
+                                {!! $invoice->reverse_charge ? '<span class="badge badge-success">' . __('interface.misc.applicable') . '</span>' : '<span class="badge badge-warning">' . __('interface.misc.not_applicable') . '</span>' !!}
                             </div>
                         </div>
                         <div class="row">
-                            <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('Created at') }}</label>
+                            <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('interface.misc.created_at') }}</label>
 
                             <div class="col-md-9 col-form-label">
                                 {{ $invoice->created_at->format('d.m.Y, H:i') }}
@@ -87,14 +87,14 @@
                         </div>
                         @if (isset($invoice->archived_at))
                             <div class="row">
-                                <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('Invoice date') }}</label>
+                                <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('interface.data.invoice_date') }}</label>
 
                                 <div class="col-md-9 col-form-label">
                                     {{ $invoice->archived_at->format('d.m.Y, H:i') }}
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ $invoice->status == 'refund' ? __('Refunded until') : __('Payable until') }}</label>
+                                <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ $invoice->status == 'refund' ? __('interface.documents.refunded_until') : __('interface.documents.payable_until') }}</label>
 
                                 <div class="col-md-9 col-form-label">
                                     {{ $invoice->archived_at->addDays($invoice->type->period)->format('d.m.Y') }}, 23:59
@@ -103,10 +103,10 @@
                         @endif
                         @if (! empty($discount = $invoice->type->discount))
                             <div class="row">
-                                <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('Discount') }}</label>
+                                <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('interface.data.discount') }}</label>
 
                                 <div class="col-md-9 col-form-label">
-                                    {{ $discount->percentage_amount }} % {{ __('when payed within') }} {{ $discount->period }} {{ __('interface.units.days') }}
+                                    {{ $discount->percentage_amount }} % {{ __('interface.misc.when_paid_within') }} {{ $discount->period }} {{ __('interface.units.days') }}
                                 </div>
                             </div>
                         @endif
@@ -118,7 +118,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <i class="bi bi-list"></i> {{ __('Positions') }}
+                        <i class="bi bi-list"></i> {{ __('interface.data.positions') }}
                     </div>
                     <div class="card-body">
                         @if ($invoice->positionLinks->isNotEmpty())
@@ -141,13 +141,13 @@
                                                 {{ $link->position->description }}
                                                 <small class="d-block">
                                                     @if (isset($link->started_at))
-                                                        {{ __('From:') }} {{ $link->started_at->format('d.m.Y H:i') }}
+                                                        {{ __('interface.time.from') }}: {{ $link->started_at->format('d.m.Y H:i') }}
                                                     @endif
                                                     @if (isset($link->started_at, $link->ended_at))
                                                         |
                                                     @endif
                                                     @if (isset($link->ended_at))
-                                                        {{ __('To:') }} {{ $link->ended_at->format('d.m.Y H:i') }}
+                                                        {{ __('interface.time.to') }}: {{ $link->ended_at->format('d.m.Y H:i') }}
                                                     @endif
                                                 </small>
                                             </td>
@@ -162,7 +162,7 @@
                                                 @case ('percentage')
                                                     <tr>
                                                         <td>
-                                                            <span class="font-weight-bold">{{ __('Discount') }}</span><br>
+                                                            <span class="font-weight-bold">{{ __('interface.data.discount') }}</span><br>
                                                             {{ number_format($discount->amount, 2) }} %
                                                         </td>
                                                         <td style="width: 10%">- {{ number_format($link->position->amount * ($discount->amount / 100), 2) }} €</td>
@@ -176,7 +176,7 @@
                                                 @default
                                                     <tr>
                                                         <td>
-                                                            <span class="font-weight-bold">{{ __('Discount') }}</span><br>
+                                                            <span class="font-weight-bold">{{ __('interface.data.discount') }}</span><br>
                                                             {{ number_format($discount->amount, 2) }} €
                                                         </td>
                                                         <td style="width: 10%">- {{ number_format($discount->amount, 2) }} €</td>
@@ -218,7 +218,7 @@
                             </table>
                         @else
                             <div class="alert alert-warning mb-0">
-                                <i class="bi bi-exclamation-triangle"></i> {{ __('There are no positions on this invoice yet.') }}
+                                <i class="bi bi-exclamation-triangle"></i> {{ __('interface.invoices.no_positions') }}
                             </div>
                         @endif
                     </div>
@@ -229,7 +229,7 @@
             <div class="{{ $invoice->type->dunning && $invoice->status !== 'refund' ? 'col-md-6' : 'col-md-12' }}">
                 <div class="card mt-4">
                     <div class="card-header">
-                        <i class="bi bi-exclamation-circle"></i> {{ __('Status History') }}
+                        <i class="bi bi-exclamation-circle"></i> {{ __('interface.misc.status_history') }}
                     </div>
                     <div class="card-body">
                         @if ($invoice->history()->exists())
@@ -237,9 +237,9 @@
                                 <thead>
                                 <tr>
                                     <td>#</td>
-                                    <td>{{ __('Date') }}</td>
+                                    <td>{{ __('interface.data.date') }}</td>
                                     <td>{{ __('interface.data.name') }}</td>
-                                    <td>{{ __('Status') }}</td>
+                                    <td>{{ __('interface.data.status') }}</td>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -248,7 +248,7 @@
                             </table>
                         @else
                             <div class="alert alert-warning mb-0">
-                                <i class="bi bi-exclamation-triangle"></i> {{ __('No status history has been logged yet.') }}
+                                <i class="bi bi-exclamation-triangle"></i> {{ __('interface.misc.no_status_history') }}
                             </div>
                         @endif
                     </div>
@@ -258,17 +258,17 @@
                 <div class="col-md-6">
                     <div class="card mt-4">
                         <div class="card-header">
-                            <i class="bi bi-exclamation-triangle"></i> {{ __('Dunning') }}
+                            <i class="bi bi-exclamation-triangle"></i> {{ __('interface.data.dunning') }}
                         </div>
                         <div class="card-body">
                             @if ($invoice->type->dunnings->isNotEmpty())
                                 <table class="table mt-4 w-100">
                                     <thead>
                                     <tr>
-                                        <td>{{ __('Overdue Time') }}</td>
-                                        <td style="width: 10%">{{ __('Date') }}</td>
-                                        <td style="width: 10%">{{ __('Sent') }}</td>
-                                        <td style="width: 1%">{{ __('Download') }}</td>
+                                        <td>{{ __('interface.data.overdue_time') }}</td>
+                                        <td style="width: 10%">{{ __('interface.data.date') }}</td>
+                                        <td style="width: 10%">{{ __('interface.status.sent') }}</td>
+                                        <td style="width: 1%">{{ __('interface.actions.download') }}</td>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -276,7 +276,7 @@
                                         <tr>
                                             <td> {{ $dunning->after }} {{ __('interface.units.days') }}</td>
                                             <td style="width: 20%">{{ ! empty($invoice->archived_at) ? $invoice->archived_at->addDays($invoice->type->period)->addDays($dunning->after)->format('d.m.Y') : $invoice->created_at->addDays($invoice->type->period)->addDays($dunning->after)->format('d.m.Y') }}, 00:00</td>
-                                            <td style="width: 10%">{!! $invoice->reminders->contains('dunning_id', $dunning->id) ? '<span class="badge badge-success badge-pill">' . __('Generated') . '</span>' : '<span class="badge badge-secondary badge-pill">' . __('Ungenerated') . '</span>' !!}</td>
+                                            <td style="width: 10%">{!! $invoice->reminders->contains('dunning_id', $dunning->id) ? '<span class="badge badge-success">' . __('interface.status.generated') . '</span>' : '<span class="badge badge-secondary">' . __('interface.status.ungenerated') . '</span>' !!}</td>
                                             <td style="width: 10%">{!! $invoice->reminders->contains('dunning_id', $dunning->id) && $invoice->status !== 'template' ? '<a href="' . route('admin.invoices.customers.reminders.download', ['id' => $invoice->id, 'reminder_id' => $invoice->reminders->where('dunning_id', '=', $dunning->id)->first()->id]) . '" class="btn btn-primary btn-sm"><i class="bi bi-download"></i></a>' : '<button type="button" class="btn btn-primary btn-sm" disabled><i class="bi bi-download"></i></button>' !!}</td>
                                         </tr>
                                     @endforeach
@@ -284,7 +284,7 @@
                                 </table>
                             @else
                                 <div class="alert alert-warning mb-0">
-                                    <i class="bi bi-exclamation-triangle"></i> {{ __('Dunning is enabled but no reminders have been defined yet.') }}
+                                    <i class="bi bi-exclamation-triangle"></i> {{ __('interface.misc.no_dunning_reminder_notice') }}
                                 </div>
                             @endif
                         </div>
@@ -298,7 +298,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="payLabel"><i class="bi bi-cash-stack"></i> {{ __('Pay') }} ({{ $invoice->number }})</h5>
+                    <h5 class="modal-title" id="payLabel"><i class="bi bi-cash-stack"></i> {{ __('interface.actions.pay') }} ({{ $invoice->number }})</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -331,7 +331,7 @@
                         @endforeach
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary"><i class="bi bi-cash-stack"></i> {{ __('Pay') }}</button>
+                        <button type="submit" class="btn btn-primary"><i class="bi bi-cash-stack"></i> {{ __('interface.actions.pay') }}</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('interface.actions.close') }}</button>
                     </div>
                 </form>

@@ -29,10 +29,10 @@ class Handler implements Gateway
     public function parameters(): Collection
     {
         return collect([
-            "username" => __('Username'),
-            "publickey" => __('Public Key'),
-            "privatekey" => __('Private Key'),
-            "api_type" => __('API Type ("test" or "live")'),
+            "username" => __('paypal.username'),
+            "publickey" => __('paypal.public_key'),
+            "privatekey" => __('paypal.private_key'),
+            "api_type" => __('paypal.api_type'),
         ]);
     }
 
@@ -53,7 +53,7 @@ class Handler implements Gateway
      */
     public function name(): string
     {
-        return __('PayPal');
+        return 'PayPal';
     }
 
     /**

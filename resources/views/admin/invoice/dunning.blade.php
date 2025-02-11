@@ -4,14 +4,14 @@
     <div class="container-fluid my-4">
         <div class="row">
             <div class="col-md-12">
-                <a class="btn btn-primary float-right mb-4" data-toggle="modal" data-target="#add"><i class="bi bi-plus-circle"></i> {{ __('Create Dunning Type') }}</a>
+                <a class="btn btn-primary float-right mb-4" data-toggle="modal" data-target="#add"><i class="bi bi-plus-circle"></i> {{ __('interface.dunning_type.create') }}</a>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <i class="bi bi-list"></i> {{ __('Dunning Types') }}
+                        <i class="bi bi-list"></i> {{ __('interface.misc.dunning_types') }}
                     </div>
                     <div class="card-body">
                         <table id="categories" class="table mt-4 w-100">
@@ -38,7 +38,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="addLabel"><i class="bi bi-plus-circle"></i> {{ __('Create Dunning Type') }}</h5>
+                    <h5 class="modal-title" id="addLabel"><i class="bi bi-plus-circle"></i> {{ __('interface.dunning_type.create') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

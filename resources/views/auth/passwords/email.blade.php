@@ -6,14 +6,14 @@
         <div class="col-md-8">
             <div class="card mb-4">
                 <div class="card-header text-decoration-none">
-                    <i class="bi bi-key"></i> {{ __('Password Reset') }}
+                    <i class="bi bi-key"></i> {{ __('interface.misc.password_reset') }}
                 </div>
                 <div class="card-body mb-0">
                     <form method="POST" action="{{ route('password.email') }}">
                         @csrf
 
                         <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.email_address') }}</label>
 
                             <div class="col-md-8">
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
@@ -29,7 +29,7 @@
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-4">
                                 <button type="submit" class="btn btn-primary w-100 mt-1">
-                                    {{ __('Send Password Reset Link') }}
+                                    {{ __('interface.actions.send_password_reset') }}
                                 </button>
                             </div>
                         </div>

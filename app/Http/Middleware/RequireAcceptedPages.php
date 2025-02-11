@@ -25,7 +25,7 @@ class RequireAcceptedPages
     public function handle(Request $request, Closure $next)
     {
         if (! Auth::user()->accepted) {
-            return redirect()->route('customer.accept')->with('warning', __('Please accept our terms and conditions before continuing.'));
+            return redirect()->route('customer.accept')->with('warning', __('interface.messages.please_accept_terms'));
         }
 
         return $next($request);

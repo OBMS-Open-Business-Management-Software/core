@@ -2,12 +2,7 @@
 
 namespace App\Helpers;
 
-use App\Models\Support\Category\SupportCategory;
-use App\Models\Support\SupportTicket;
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Support\Facades\Auth;
 use Symfony\Component\Mime\Crypto\SMimeSigner;
 
 /**

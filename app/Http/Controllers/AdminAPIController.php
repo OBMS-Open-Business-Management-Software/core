@@ -2,26 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Accounting\Contract\ContractType;
-use App\Models\Accounting\Invoice\InvoiceType;
-use App\Models\Accounting\PositionDiscount;
-use App\Models\Accounting\Prepaid\PrepaidHistory;
-use App\Models\Address\Address;
-use App\Models\Address\Country;
 use App\Models\API\OauthClient;
-use App\Models\Profile\BankAccount;
-use App\Models\Profile\Profile;
-use App\Models\Profile\ProfileAddress;
-use App\Models\Profile\ProfileEmail;
-use App\Models\Profile\ProfilePhone;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -98,7 +85,7 @@ class AdminAPIController extends Controller
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-warning">
-                <h5 class="modal-title" id="editAPIUser' . $user->id . 'Label">' . __('Edit') . ' (' . __($user->name) . ')</h5>
+                <h5 class="modal-title" id="editAPIUser' . $user->id . 'Label">' . __('interface.actions.edit') . ' (' . __($user->name) . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -108,7 +95,7 @@ class AdminAPIController extends Controller
                     <input type="hidden" name="_token" value="' . csrf_token() . '" />
                     <input type="hidden" name="user_id" value="' . $user->id . '" />
                     <div class="form-group row">
-                        <label for="name" class="col-md-4 col-form-label text-md-right">' . __('Name') . '</label>
+                        <label for="name" class="col-md-4 col-form-label text-md-right">' . __('interface.data.name') . '</label>
 
                         <div class="col-md-8">
                             <input id="name" type="text" class="form-control" name="name" value="' . $user->name . '">
@@ -116,7 +103,7 @@ class AdminAPIController extends Controller
                     </div>
 
                     <div class="form-group row">
-                        <label for="name" class="col-md-4 col-form-label text-md-right">' . __('Email') . '</label>
+                        <label for="name" class="col-md-4 col-form-label text-md-right">' . __('interface.data.email') . '</label>
 
                         <div class="col-md-8">
                             <input id="email" type="email" class="form-control" name="email" value="' . $user->email . '">
@@ -124,7 +111,7 @@ class AdminAPIController extends Controller
                     </div>
 
                     <div class="form-group row">
-                        <label for="password" class="col-md-4 col-form-label text-md-right">' . __('Password') . '</label>
+                        <label for="password" class="col-md-4 col-form-label text-md-right">' . __('interface.data.password') . '</label>
 
                         <div class="col-md-8">
                             <input id="password" type="password" class="form-control" name="password">
@@ -132,7 +119,7 @@ class AdminAPIController extends Controller
                     </div>
 
                     <div class="form-group row">
-                        <label for="password-confirm" class="col-md-4 col-form-label text-md-right">' . __('Confirm Password') . '</label>
+                        <label for="password-confirm" class="col-md-4 col-form-label text-md-right">' . __('interface.data.confirm_password') . '</label>
 
                         <div class="col-md-8">
                             <input id="password-confirm" type="password" class="form-control" name="password_confirmation">
@@ -140,8 +127,8 @@ class AdminAPIController extends Controller
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-warning"><i class="bi bi-pencil-square"></i> ' . __('Edit') . '</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('Close') . '</button>
+                    <button type="submit" class="btn btn-warning"><i class="bi bi-pencil-square"></i> ' . __('interface.actions.edit') . '</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('interface.actions.close') . '</button>
                 </div>
             </form>
         </div>
@@ -153,7 +140,7 @@ class AdminAPIController extends Controller
                         'id' => $user->number,
                         'name' => $user->realName,
                         'email' => $user->email,
-                        'status' => $user->locked ? '<span class="badge badge-warning badge-pill">' . __('Locked') . '</span>' : '<span class="badge badge-success badge-pill">' . __('Unlocked') . '</span>',
+                        'status' => $user->locked ? '<span class="badge badge-warning">' . __('interface.status.locked') . '</span>' : '<span class="badge badge-success">' . __('interface.status.unlocked') . '</span>',
                         'lock' => $user->locked ? '<a href="' . route('admin.api.users.lock', $user->id) . '" class="btn btn-success btn-sm"><i class="bi bi-unlock-fill"></i></a>' : '<a href="' . route('admin.api.users.lock', $user->id) . '" class="btn btn-warning btn-sm"><i class="bi bi-lock-fill"></i></a>',
                         'edit' => $edit,
                         'delete' => '<a href="' . route('admin.api.users.delete', $user->id) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>',
@@ -195,10 +182,10 @@ class AdminAPIController extends Controller
                 ])
             )
         ) {
-            return redirect()->route('admin.api.users')->with('success', __('The API user account has been created successfully.'));
+            return redirect()->route('admin.api.users')->with('success', __('interface.messages.api_account_created'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -243,10 +230,10 @@ class AdminAPIController extends Controller
 
             $user->update($data);
 
-            return redirect()->route('admin.api.users', $user->id)->with('success', __('The API user account has been created successfully.'));
+            return redirect()->route('admin.api.users', $user->id)->with('success', __('interface.messages.api_account_created'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -280,13 +267,13 @@ class AdminAPIController extends Controller
             ]);
 
             if ($status) {
-                return redirect()->back()->with('success', __('The API user account has been locked successfully.'));
+                return redirect()->back()->with('success', __('interface.messages.api_account_locked'));
             } else {
-                return redirect()->back()->with('success', __('The API user account has been unlocked successfully.'));
+                return redirect()->back()->with('success', __('interface.messages.api_account_unlocked'));
             }
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -315,10 +302,10 @@ class AdminAPIController extends Controller
         ) {
             $user->delete();
 
-            return redirect()->back()->with('success', __('The API user account has been deleted successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.api_account_deleted'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -388,7 +375,7 @@ class AdminAPIController extends Controller
                         'id' => $client->id,
                         'name' => $client->name,
                         'secret' => $client->secret,
-                        'type' => $client->personal_access_client ? '<span class="badge badge-primary badge-pill">' . __('Personal') . '</span>' : ($client->password_client ? '<span class="badge badge-primary badge-pill">' . __('Password') . '</span>' : '<span class="badge badge-secondary badge-pill">' . __('N/A') . '</span>'),
+                        'type' => $client->personal_access_client ? '<span class="badge badge-primary">' . __('interface.data.personal') . '</span>' : ($client->password_client ? '<span class="badge badge-primary">' . __('interface.data.password') . '</span>' : '<span class="badge badge-secondary">' . __('interface.misc.not_available') . '</span>'),
                         'delete' => '<a href="' . route('admin.api.oauth-clients.delete', $client->id) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>',
                     ];
                 })
@@ -431,10 +418,10 @@ class AdminAPIController extends Controller
         }
 
         if ($exitCode === 0) {
-            return redirect()->route('admin.api.oauth-clients')->with('success', __('The API client has been created successfully.'));
+            return redirect()->route('admin.api.oauth-clients')->with('success', __('interface.messages.api_client_created'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -457,9 +444,9 @@ class AdminAPIController extends Controller
         if (! empty($client = OauthClient::find($client_id))) {
             $client->delete();
 
-            return redirect()->back()->with('success', __('The API client has been deleted successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.api_client_deleted'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 }

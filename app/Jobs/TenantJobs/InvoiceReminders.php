@@ -81,15 +81,15 @@ class InvoiceReminders extends TenantJob
                                         $lastDunning->after < $dunning->after
                                     ) {
                                         if (
-                                        ! empty(
-                                            $reminder = InvoiceReminder::create([
-                                                'invoice_id' => $invoice->id,
-                                                'dunning_id' => $dunning->id,
-                                                'due_at' => $sendAt,
-                                            ])
-                                        ) &&
-                                        $reminder instanceof InvoiceReminder
-                                    ) {
+                                            ! empty(
+                                                $reminder = InvoiceReminder::create([
+                                                    'invoice_id' => $invoice->id,
+                                                    'dunning_id' => $dunning->id,
+                                                    'due_at' => $sendAt,
+                                                ])
+                                            ) &&
+                                            $reminder instanceof InvoiceReminder
+                                        ) {
                                             $reminder->update([
                                             'archived_at' => Carbon::now(),
                                         ]);
@@ -302,9 +302,9 @@ class InvoiceReminders extends TenantJob
                                                             'last_invoice_at' => Carbon::now(),
                                                         ]);
                                                         } elseif (
-                                                        $contract->type->type == 'prepaid_auto' ||
-                                                        $contract->type->type == 'prepaid_manual'
-                                                    ) {
+                                                            $contract->type->type == 'prepaid_auto' ||
+                                                            $contract->type->type == 'prepaid_manual'
+                                                        ) {
                                                             $factor = ($contract->type->invoice_period - $contract->last_invoice_at->diffInDays(Carbon::now())) / $contract->type->invoice_period;
                                                             $refund = $contract->grossSum * $factor;
 
@@ -400,21 +400,21 @@ class InvoiceReminders extends TenantJob
                                                 } elseif ($reminder->dunning->cancel_contract_regular) {
                                                     if ($contract->status == 'started') {
                                                         if (
-                                                        $contract->type->type == 'contract_pre_pay' ||
-                                                        $contract->type->type == 'contract_post_pay'
-                                                    ) {
-                                                            if (
-                                                            $contract->last_invoice_at->addDays($contract->type->invoice_period)->subDays($contract->type->cancellation_period)
-                                                                ->gte(Carbon::now())
+                                                            $contract->type->type == 'contract_pre_pay' ||
+                                                            $contract->type->type == 'contract_post_pay'
                                                         ) {
+                                                            if (
+                                                                $contract->last_invoice_at->addDays($contract->type->invoice_period)->subDays($contract->type->cancellation_period)
+                                                                    ->gte(Carbon::now())
+                                                            ) {
                                                                 $cancelledTo = $contract->last_invoice_at->addDays($contract->type->invoice_period);
                                                             } else {
                                                                 $cancelledTo = $contract->last_invoice_at->addDays($contract->type->invoice_period * 2);
                                                             }
                                                         } elseif (
-                                                        $contract->type->type == 'prepaid_auto' ||
-                                                        $contract->type->type == 'prepaid_manual'
-                                                    ) {
+                                                            $contract->type->type == 'prepaid_auto' ||
+                                                            $contract->type->type == 'prepaid_manual'
+                                                        ) {
                                                             $cancelledTo = $contract->last_invoice_at->addDays($contract->type->invoice_period);
                                                         }
 

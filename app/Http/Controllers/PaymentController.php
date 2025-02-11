@@ -49,13 +49,13 @@ class PaymentController extends Controller
         }
 
         if ($request->payment_status == 'success') {
-            $redirect = $baseRedirect->with('success', __('Payment successful. It might take a couple minutes for the money to be booked.'));
+            $redirect = $baseRedirect->with('success', __('interface.messages.payment_successful_booked'));
         } elseif ($request->payment_status == 'failure') {
-            $redirect = $baseRedirect->with('warning', __('Payment failed. Please try again later.'));
+            $redirect = $baseRedirect->with('warning', __('interface.messages.payment_failed'));
         } elseif ($request->payment_status == 'waiting') {
-            $redirect = $baseRedirect->with('success', __('Payment pending. It might take a couple minutes for the money to be booked.'));
+            $redirect = $baseRedirect->with('success', __('interface.messages.payment_waiting_booked'));
         } else {
-            $redirect = $baseRedirect->with('warning', __('Ooops, something went wrong. Please try again later.'));
+            $redirect = $baseRedirect->with('warning', __('interface.misc.something_wrong_notice'));
         }
 
         return $redirect;
@@ -75,7 +75,7 @@ class PaymentController extends Controller
             return PaymentGateways::initialize($request->payment_method, $invoice->grossSumDiscounted, 'invoice', $invoice);
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**

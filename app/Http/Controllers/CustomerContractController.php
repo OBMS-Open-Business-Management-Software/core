@@ -4,16 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Accounting\Contract\Contract;
 use App\Models\Accounting\Contract\ContractPosition;
-use App\Models\Accounting\Contract\ContractType;
 use App\Models\Accounting\Invoice\Invoice;
 use App\Models\Accounting\Invoice\InvoiceHistory;
 use App\Models\Accounting\Invoice\InvoicePosition;
-use App\Models\Accounting\Invoice\InvoiceType;
 use App\Models\Accounting\Position;
-use App\Models\Accounting\PositionDiscount;
 use App\Models\Accounting\Prepaid\PrepaidHistory;
 use App\Models\FileManager\File;
-use App\Models\User;
 use Carbon\Carbon;
 use Endroid\QrCode\ErrorCorrectionLevel;
 use Exception;
@@ -57,7 +53,7 @@ class CustomerContractController extends Controller
             ]);
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -112,24 +108,24 @@ class CustomerContractController extends Controller
                 ->transform(function (Contract $contract) {
                     switch ($contract->status) {
                         case 'cancelled':
-                            $status = '<span class="badge badge-danger badge-pill">' . __('Cancelled') . '</span>';
+                            $status = '<span class="badge badge-danger">' . __('interface.status.cancelled') . '</span>';
                             break;
                         case 'expires':
-                            $status = '<span class="badge badge-warning badge-pill">' . __('Expires') . '</span>';
+                            $status = '<span class="badge badge-warning">' . __('interface.status.expires') . '</span>';
                             break;
                         case 'started':
-                            $status = '<span class="badge badge-success badge-pill">' . __('Active') . '</span>';
+                            $status = '<span class="badge badge-success">' . __('interface.status.active') . '</span>';
                             break;
                         case 'template':
                         default:
-                            $status = '<span class="badge badge-primary badge-pill">' . __('Draft') . '</span>';
+                            $status = '<span class="badge badge-primary">' . __('interface.status.draft') . '</span>';
                             break;
                     }
 
                     return (object) [
                         'id' => $contract->number,
                         'status' => $status,
-                        'type' => $contract->type->name ?? __('N/A'),
+                        'type' => $contract->type->name ?? __('interface.misc.not_available'),
                         'view' => '<a href="' . route('customer.contracts.details', $contract->id) . '" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>',
                     ];
                 })
@@ -260,10 +256,10 @@ class CustomerContractController extends Controller
                 'status' => 'pay',
             ]);
 
-            return redirect()->back()->with('success', __('Contract has been extended successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.contract_extended'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -316,11 +312,11 @@ class CustomerContractController extends Controller
                     'cancelled_to' => $cancelledTo,
                 ]);
 
-                return redirect()->back()->with('success', __('Contract has been stopped successfully.'));
+                return redirect()->back()->with('success', __('interface.messages.contract_stopped'));
             }
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -354,9 +350,9 @@ class CustomerContractController extends Controller
                 'cancelled_to' => null,
             ]);
 
-            return redirect()->back()->with('success', __('Contract cancellation has been revoked successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.contract_cancellation_revoked'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 }

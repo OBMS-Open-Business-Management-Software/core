@@ -115,10 +115,10 @@ class CustomerShopController extends Controller
                     'form' => $form,
                 ]);
             } else {
-                return redirect()->route('public.shop')->with('warning', __('Ooops, something went wrong. You are not allowed to order this product with an incomplete profile. Please check your personal information and try again.'));
+                return redirect()->route('public.shop')->with('warning', __('interface.messages.order_denied_incomplete_profile'));
             }
         } else {
-            return redirect()->route('public.shop')->with('warning', __('Ooops, something went wrong. Please try again later.'));
+            return redirect()->route('public.shop')->with('warning', __('interface.misc.something_wrong_notice'));
         }
     }
 
@@ -154,7 +154,7 @@ class CustomerShopController extends Controller
                     'prepaid_manual',
                 ])
             ) {
-                return redirect()->back()->with('warning', __('Ooops, something went wrong. You are not allowed to order this product with an incomplete profile. Please check your personal information and try again.'));
+                return redirect()->back()->with('warning', __('interface.messages.order_denied_incomplete_profile'));
             }
 
             $validationRules = [];
@@ -274,7 +274,7 @@ class CustomerShopController extends Controller
                         'transaction_method' => 'account',
                     ]);
                 } else {
-                    return redirect()->back()->with('warning', __('Ooops, something went wrong. You don\'t have enough credits to order this product. Please add some and try again.'));
+                    return redirect()->back()->with('warning', __('interface.messages.order_denied_credits'));
                 }
             }
 
@@ -323,10 +323,10 @@ class CustomerShopController extends Controller
                 });
 
                 if ($form->approval) {
-                    $text = __('Your order has been placed successfully. Before it can be processed it needs to be approved by an employee. This might take a while. You will be informed when the order status changes.');
+                    $text = __('interface.messages.order_successful_approval_required');
                     $queueItem->sendEmailCreationPendingApprovalNotification();
                 } else {
-                    $text = __('Your order has been placed successfully. It will be processed automatically within the next few minutes.');
+                    $text = __('interface.messages.order_successful_setup');
                     $queueItem->sendEmailCreationSuccessfulApprovalNotification();
                 }
 
@@ -335,7 +335,7 @@ class CustomerShopController extends Controller
             }
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please check your input and try again.'));
+        return redirect()->back()->with('warning', __('interface.messages.something_wrong_input'));
     }
 
     /**
@@ -359,7 +359,7 @@ class CustomerShopController extends Controller
             ]);
         }
 
-        return redirect()->route('customer.home')->with('warning', __('You don\'t have the permission to view this page.'));
+        return redirect()->route('customer.home')->with('warning', __('interface.misc.no_permission_hint'));
     }
 
     public function shop_orders_index(): Renderable
@@ -488,8 +488,8 @@ class CustomerShopController extends Controller
     <thead>
         <tr>
             <td width="1%"></td>
-            <td>' . __('Date') . '</td>
-            <td>' . __('Message') . '</td>
+            <td>' . __('interface.data.date') . '</td>
+            <td>' . __('interface.data.message') . '</td>
         </tr>
     </thead>
     <tbody class="options_tbody">
@@ -498,7 +498,7 @@ class CustomerShopController extends Controller
 </table>
 ';
                     } else {
-                        $historyItems = '<div class="alert alert-warning mb-0"><i class="bi bi-exclamation-triangle"></i> ' . __('No history entries found. Has the setup been approved?') . '</div>';
+                        $historyItems = '<div class="alert alert-warning mb-0"><i class="bi bi-exclamation-triangle"></i> ' . __('interface.messages.no_history_unapproved') . '</div>';
                     }
 
                     $history = '
@@ -507,7 +507,7 @@ class CustomerShopController extends Controller
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title" id="historyQueueItem' . $queue->id . 'Label">' . __('History') . ' (' . $queue->number . ')</h5>
+                <h5 class="modal-title" id="historyQueueItem' . $queue->id . 'Label">' . __('interface.data.history') . ' (' . $queue->number . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -516,7 +516,7 @@ class CustomerShopController extends Controller
                 ' . $historyItems . '
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('Close') . '</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('interface.actions.close') . '</button>
             </div>
         </div>
     </div>
@@ -526,45 +526,45 @@ class CustomerShopController extends Controller
                     $status = '';
 
                     if ($queue->approved) {
-                        $status .= '<span class="badge badge-success"><i class="bi bi-check-circle"></i> ' . __('Approved') . '</span>';
+                        $status .= '<span class="badge badge-success"><i class="bi bi-check-circle"></i> ' . __('interface.status.approved') . '</span>';
 
                         if ($queue->verified) {
-                            $status .= '<br><span class="badge badge-success"><i class="bi bi-check-circle"></i> ' . __('Verified') . '</span>';
+                            $status .= '<br><span class="badge badge-success"><i class="bi bi-check-circle"></i> ' . __('interface.status.verified') . '</span>';
 
                             if ($queue->setup) {
-                                $status .= '<br><span class="badge badge-success"><i class="bi bi-check-circle"></i> ' . __('Completed') . '</span>';
+                                $status .= '<br><span class="badge badge-success"><i class="bi bi-check-circle"></i> ' . __('interface.status.completed') . '</span>';
                             } else {
                                 if ($queue->fails < 3) {
-                                    $status .= '<br><span class="badge badge-success"><i class="bi bi-play-circle"></i> ' . __('Running') . '</span>';
+                                    $status .= '<br><span class="badge badge-success"><i class="bi bi-play-circle"></i> ' . __('interface.status.running') . '</span>';
                                 } else {
-                                    $status .= '<br><span class="badge badge-danger"><i class="bi bi-stop-circle"></i> ' . __('Failed') . '</span>';
+                                    $status .= '<br><span class="badge badge-danger"><i class="bi bi-stop-circle"></i> ' . __('interface.status.failed') . '</span>';
                                 }
                             }
 
                             if ($queue->fails > 0) {
-                                $status .= '<span class="badge badge-warning ml-1"><i class="bi bi-exclamation-triangle"></i> ' . __('Fails: :num', [
+                                $status .= '<span class="badge badge-warning ml-1"><i class="bi bi-exclamation-triangle"></i> ' . __('interface.data.fails_num', [
                                         'num' => $queue->fails,
                                     ]) . '</span>';
                             }
                         } else {
                             if ($queue->invalid) {
-                                $status .= '<br><span class="badge badge-warning"><i class="bi bi-exclamation-triangle"></i> ' . __('Invalid') . '</span>';
+                                $status .= '<br><span class="badge badge-warning"><i class="bi bi-exclamation-triangle"></i> ' . __('interface.status.invalid') . '</span>';
                             } else {
-                                $status .= '<br><span class="badge badge-success"><i class="bi bi-play-circle"></i> ' . __('Verifying') . '</span>';
+                                $status .= '<br><span class="badge badge-success"><i class="bi bi-play-circle"></i> ' . __('interface.status.verifying') . '</span>';
                             }
                         }
                     } elseif ($queue->disapproved) {
-                        $status .= '<span class="badge badge-danger"><i class="bi bi-x-circle"></i> ' . __('Disapproved') . '</span>';
+                        $status .= '<span class="badge badge-danger"><i class="bi bi-x-circle"></i> ' . __('interface.status.disapproved') . '</span>';
                     } else {
-                        $status .= '<span class="badge badge-warning"><i class="bi bi-play-circle"></i> ' . __('Approval') . '</span>';
+                        $status .= '<span class="badge badge-warning"><i class="bi bi-play-circle"></i> ' . __('interface.data.approval') . '</span>';
                     }
 
                     return (object) [
                         'id' => $queue->number,
-                        'user' => $queue->user->realName ?? __('N/A'),
+                        'user' => $queue->user->realName ?? __('interface.misc.not_available'),
                         'form' => __($queue->form->name),
                         'product_type' => ! empty($handler = $queue->handler) ? $handler->name() : '&lt;' . $queue->product_type . '&gt;',
-                        'amount' => number_format($queue->amount, 2) . ' ' . __('€') . '<span class="d-block small">' . number_format($queue->amount * (100 + $queue->vat_percentage) / 100, 2) . ' ' . __('€') . '</span>',
+                        'amount' => number_format($queue->amount, 2) . ' €<span class="d-block small">' . number_format($queue->amount * (100 + $queue->vat_percentage) / 100, 2) . ' €</span>',
                         'status' => $status,
                         'history' => $history,
                     ];

@@ -25,7 +25,7 @@ class RequireCustomerRole
     public function handle(Request $request, Closure $next)
     {
         if (Auth::user()->role !== 'customer') {
-            return redirect()->route('admin.home')->with('warning', __('You don\'t have the permission to view this page.'));
+            return redirect()->route('admin.home')->with('warning', __('interface.misc.no_permission_hint'));
         }
 
         return $next($request);

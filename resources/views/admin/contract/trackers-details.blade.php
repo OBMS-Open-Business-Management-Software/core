@@ -4,7 +4,7 @@
     <div class="container-fluid my-4">
         <div class="row">
             <div class="col-md-12">
-                <a href="{{ route('admin.contracts.trackers') }}" class="btn btn-outline-primary mb-4"><i class="bi bi-arrow-left-circle"></i> {{ __('Back to list') }}</a>
+                <a href="{{ route('admin.contracts.trackers') }}" class="btn btn-outline-primary mb-4"><i class="bi bi-arrow-left-circle"></i> {{ __('interface.actions.back_to_list') }}</a>
                 <a class="btn btn-warning mb-4 float-right" data-toggle="modal" data-target="#editTracker"><i class="bi bi-pencil-square"></i> {{ __('interface.actions.edit') }}</a>
             </div>
         </div>
@@ -12,7 +12,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <i class="bi bi-info-circle"></i> {{ __('Usage Tracker') }}
+                        <i class="bi bi-info-circle"></i> {{ __('interface.misc.usage_tracker') }}
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -30,16 +30,16 @@
                             </div>
                         </div>
                         <div class="row">
-                            <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('VAT Type') }}</label>
+                            <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('interface.data.vat_type') }}</label>
 
                             <div class="col-md-9 col-form-label">
                                 @switch ($tracker->vat_type)
                                     @case ('reduced')
-                                        {{ __('Reduced') }}
+                                        {{ __('interface.misc.reduced') }}
                                         @break
                                     @case ('basic')
                                     @default
-                                        {{ __('Basic') }}
+                                        {{ __('interface.misc.basic') }}
                                         @break
                                 @endswitch
                             </div>
@@ -50,14 +50,14 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <a class="btn btn-primary float-right my-4" data-toggle="modal" data-target="#add"><i class="bi bi-plus-circle"></i> {{ __('Create Item') }}</a>
+                <a class="btn btn-primary float-right my-4" data-toggle="modal" data-target="#add"><i class="bi bi-plus-circle"></i> {{ __('interface.item.create') }}</a>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <i class="bi bi-list"></i> {{ __('Items') }}
+                        <i class="bi bi-list"></i> {{ __('interface.misc.items') }}
                     </div>
                     <div class="card-body">
                         <table id="items" class="table mt-4 w-100">
@@ -65,10 +65,10 @@
                             <tr>
                                 <td>{{ __('interface.data.id') }}</td>
                                 <td>{{ __('interface.data.type') }}</td>
-                                <td>{{ __('Process Type') }}</td>
-                                <td>{{ __('Number Rounding') }}</td>
-                                <td>{{ __('Step') }}</td>
-                                <td>{{ __('Amount Per Step') }}</td>
+                                <td>{{ __('interface.data.process_type') }}</td>
+                                <td>{{ __('interface.data.number_rounding') }}</td>
+                                <td>{{ __('interface.data.step') }}</td>
+                                <td>{{ __('interface.data.amount_per_step') }}</td>
                                 <td>{{ __('interface.actions.edit') }}</td>
                                 <td>{{ __('interface.actions.delete') }}</td>
                             </tr>
@@ -115,8 +115,8 @@
 
                             <div class="col-md-8">
                                 <select id="vat_type" type="text" class="form-control type" name="vat_type">
-                                    <option value="basic"{{ $tracker->vat_type == 'basic' ? ' selected' : '' }}>{{ __('Basic') }}</option>
-                                    <option value="reduced"{{ $tracker->vat_type == 'reduced' ? ' selected' : '' }}>{{ __('Reduced') }}</option>
+                                    <option value="basic"{{ $tracker->vat_type == 'basic' ? ' selected' : '' }}>{{ __('interface.misc.basic') }}</option>
+                                    <option value="reduced"{{ $tracker->vat_type == 'reduced' ? ' selected' : '' }}>{{ __('interface.misc.reduced') }}</option>
                                 </select>
                             </div>
                         </div>
@@ -134,7 +134,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="addLabel"><i class="bi bi-plus-circle"></i> {{ __('Create Item') }}</h5>
+                    <h5 class="modal-title" id="addLabel"><i class="bi bi-plus-circle"></i> {{ __('interface.item.create') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -148,48 +148,48 @@
 
                             <div class="col-md-8">
                                 <select id="type" type="text" class="form-control type" name="type">
-                                    <option value="string"{{ old('type') == 'string' ? ' selected' : '' }}>{{ __('String') }}</option>
-                                    <option value="integer"{{ old('type') == 'integer' ? ' selected' : '' }}>{{ __('Integer') }}</option>
-                                    <option value="double"{{ old('type') == 'double' ? ' selected' : '' }}>{{ __('Double') }}</option>
+                                    <option value="string"{{ old('type') == 'string' ? ' selected' : '' }}>{{ __('interface.data_type.string') }}</option>
+                                    <option value="integer"{{ old('type') == 'integer' ? ' selected' : '' }}>{{ __('interface.data_type.integer') }}</option>
+                                    <option value="double"{{ old('type') == 'double' ? ' selected' : '' }}>{{ __('interface.data_type.double') }}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="process" class="col-md-4 col-form-label text-md-right">{{ __('Process Type') }}</label>
+                            <label for="process" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.process_type') }}</label>
 
                             <div class="col-md-8">
                                 <select id="process" type="text" class="form-control" name="process">
-                                    <option value="min"{{ old('process') == 'min' ? ' selected' : '' }}>{{ __('Minimum') }}</option>
-                                    <option value="median"{{ old('process') == 'median' ? ' selected' : '' }}>{{ __('Median') }}</option>
-                                    <option value="average"{{ old('process') == 'average' ? ' selected' : '' }}>{{ __('Average') }}</option>
-                                    <option value="max"{{ old('process') == 'max' ? ' selected' : '' }}>{{ __('Maximum') }}</option>
-                                    <option value="equals"{{ old('process') == 'equals' ? ' selected' : '' }}>{{ __('Equals') }}</option>
+                                    <option value="min"{{ old('process') == 'min' ? ' selected' : '' }}>{{ __('interface.data_processing.minimum') }}</option>
+                                    <option value="median"{{ old('process') == 'median' ? ' selected' : '' }}>{{ __('interface.data_processing.median') }}</option>
+                                    <option value="average"{{ old('process') == 'average' ? ' selected' : '' }}>{{ __('interface.data_processing.average') }}</option>
+                                    <option value="max"{{ old('process') == 'max' ? ' selected' : '' }}>{{ __('interface.data_processing.maximum') }}</option>
+                                    <option value="equals"{{ old('process') == 'equals' ? ' selected' : '' }}>{{ __('interface.data_processing.equals') }}</option>
                                 </select>
                             </div>
                         </div>
                         <div id="hiddenNumber"{!! old('type') == 'string' || empty(old('type')) ? ' style="display: none"' : '' !!}>
                             <div class="form-group row">
-                                <label for="round" class="col-md-4 col-form-label text-md-right">{{ __('Round Number') }}</label>
+                                <label for="round" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.round_number') }}</label>
 
                                 <div class="col-md-8">
                                     <select id="round" type="text" class="form-control" name="round">
-                                        <option value="up"{{ old('round') == 'up' ? ' selected' : '' }}>{{ __('Up') }}</option>
-                                        <option value="down"{{ old('round') == 'down' ? ' selected' : '' }}>{{ __('Down') }}</option>
-                                        <option value="regular"{{ old('round') == 'regular' ? ' selected' : '' }}>{{ __('Regular') }}</option>
-                                        <option value="none"{{ old('round') == 'none' ? ' selected' : '' }}>{{ __('None') }}</option>
+                                        <option value="up"{{ old('round') == 'up' ? ' selected' : '' }}>{{ __('interface.data_processing.round_up') }}</option>
+                                        <option value="down"{{ old('round') == 'down' ? ' selected' : '' }}>{{ __('interface.data_processing.round_down') }}</option>
+                                        <option value="regular"{{ old('round') == 'regular' ? ' selected' : '' }}>{{ __('interface.data_processing.round_regular') }}</option>
+                                        <option value="none"{{ old('round') == 'none' ? ' selected' : '' }}>{{ __('interface.misc.none') }}</option>
                                     </select>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="step" class="col-md-4 col-form-label text-md-right">{{ __('Step') }}</label>
+                            <label for="step" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.step') }}</label>
 
                             <div class="col-md-8">
                                 <input id="step" type="text" class="form-control" name="step" value="{{ old('step') }}">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="amount" class="col-md-4 col-form-label text-md-right">{{ __('Amount Per Step') }}</label>
+                            <label for="amount" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.amount_per_step') }}</label>
 
                             <div class="col-md-8">
                                 <div class="input-group">

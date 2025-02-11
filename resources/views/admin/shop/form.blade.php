@@ -6,7 +6,7 @@
             <div class="col-md-12">
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <div class="input-group-text">{{ __('Route:') }}</div>
+                        <div class="input-group-text">{{ __('interface.data.route') }}:</div>
                     </div>
                     <input class="form-control" value="{{ $form->fullRoute }}" readonly>
                 </div>
@@ -15,18 +15,18 @@
         <div class="row">
             <div class="col-md-12">
                 @if (! empty($category = $form->category))
-                    <a href="{{ route('admin.shop.categories.details', $category->id) }}" class="btn btn-outline-primary mb-4"><i class="bi bi-arrow-left-circle"></i> {{ __('Back to category') }}</a>
+                    <a href="{{ route('admin.shop.categories.details', $category->id) }}" class="btn btn-outline-primary mb-4"><i class="bi bi-arrow-left-circle"></i> {{ __('interface.actions.back_to_category') }}</a>
                 @else
-                    <a href="{{ route('admin.shop.categories') }}" class="btn btn-outline-primary mb-4"><i class="bi bi-arrow-left-circle"></i> {{ __('Back to category') }}</a>
+                    <a href="{{ route('admin.shop.categories') }}" class="btn btn-outline-primary mb-4"><i class="bi bi-arrow-left-circle"></i> {{ __('interface.actions.back_to_category') }}</a>
                 @endif
-                <a class="btn btn-primary float-right mb-4" data-toggle="modal" data-target="#addField"><i class="bi bi-plus-circle"></i> {{ __('Create Field') }}</a>
+                <a class="btn btn-primary float-right mb-4" data-toggle="modal" data-target="#addField"><i class="bi bi-plus-circle"></i> {{ __('interface.field.create') }}</a>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <i class="bi bi-list"></i> {{ __('Fields') }}
+                        <i class="bi bi-list"></i> {{ __('interface.misc.fields') }}
                     </div>
                     <div class="card-body">
                         <table id="fields" class="table mt-4 w-100">
@@ -34,10 +34,10 @@
                             <tr>
                                 <td>{{ __('interface.data.id') }}</td>
                                 <td>{{ __('interface.data.type') }}</td>
-                                <td>{{ __('Key') }}</td>
-                                <td>{{ __('Label') }}</td>
-                                <td>{{ __('Default Value') }}</td>
-                                <td>{{ __('Required') }}</td>
+                                <td>{{ __('interface.data.key') }}</td>
+                                <td>{{ __('interface.data.label') }}</td>
+                                <td>{{ __('interface.data.default_value') }}</td>
+                                <td>{{ __('interface.misc.required') }}</td>
                                 <td>{{ __('interface.actions.edit') }}</td>
                                 <td>{{ __('interface.actions.delete') }}</td>
                             </tr>
@@ -56,7 +56,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="addFieldLabel"><i class="bi bi-plus-circle"></i> {{ __('Create Field') }}</h5>
+                    <h5 class="modal-title" id="addFieldLabel"><i class="bi bi-plus-circle"></i> {{ __('interface.field.create') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -71,15 +71,15 @@
 
                                 <div class="col-md-8">
                                     <select id="type" type="text" class="form-control @error('type') is-invalid @enderror" name="type">
-                                        <option value="input_text"{{ old('key') == 'input_text' ? ' selected' : '' }}>{{ __('Text') }}</option>
-                                        <option value="input_number"{{ old('key') == 'input_number' ? ' selected' : '' }}>{{ __('Number') }}</option>
-                                        <option value="input_range"{{ old('key') == 'input_range' ? ' selected' : '' }}>{{ __('Range') }}</option>
-                                        <option value="input_radio"{{ old('key') == 'input_radio' ? ' selected' : '' }}>{{ __('Radio Select (Text)') }}</option>
-                                        <option value="input_radio_image"{{ old('key') == 'input_radio_image' ? ' selected' : '' }}>{{ __('Radio Select (Image)') }}</option>
-                                        <option value="input_checkbox"{{ old('key') == 'input_checkbox' ? ' selected' : '' }}>{{ __('Checkbox') }}</option>
-                                        <option value="input_hidden"{{ old('key') == 'input_hidden' ? ' selected' : '' }}>{{ __('Hidden Text') }}</option>
-                                        <option value="select"{{ old('key') == 'select' ? ' selected' : '' }}>{{ __('Select') }}</option>
-                                        <option value="textarea"{{ old('key') == 'textarea' ? ' selected' : '' }}>{{ __('Textarea') }}</option>
+                                        <option value="input_text"{{ old('key') == 'input_text' ? ' selected' : '' }}>{{ __('interface.data.text') }}</option>
+                                        <option value="input_number"{{ old('key') == 'input_number' ? ' selected' : '' }}>{{ __('interface.data.number') }}</option>
+                                        <option value="input_range"{{ old('key') == 'input_range' ? ' selected' : '' }}>{{ __('interface.data.range') }}</option>
+                                        <option value="input_radio"{{ old('key') == 'input_radio' ? ' selected' : '' }}>{{ __('interface.data.radio_text') }}</option>
+                                        <option value="input_radio_image"{{ old('key') == 'input_radio_image' ? ' selected' : '' }}>{{ __('interface.data.radio_image') }}</option>
+                                        <option value="input_checkbox"{{ old('key') == 'input_checkbox' ? ' selected' : '' }}>{{ __('interface.data.checkbox') }}</option>
+                                        <option value="input_hidden"{{ old('key') == 'input_hidden' ? ' selected' : '' }}>{{ __('interface.data.hidden_text') }}</option>
+                                        <option value="select"{{ old('key') == 'select' ? ' selected' : '' }}>{{ __('interface.data.select') }}</option>
+                                        <option value="textarea"{{ old('key') == 'textarea' ? ' selected' : '' }}>{{ __('interface.data.textarea') }}</option>
                                     </select>
 
                                     @error('type')
@@ -93,7 +93,7 @@
                             <input type="hidden" name="type" value="input_hidden">
                         @endif
                         <div class="form-group row">
-                            <label for="label" class="col-md-4 col-form-label text-md-right">{{ __('Label') }}</label>
+                            <label for="label" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.label') }}</label>
 
                             <div class="col-md-8">
                                 <input id="label" type="text" class="form-control @error('label') is-invalid @enderror" name="label" value="{{ old('label') }}">
@@ -106,7 +106,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="key" class="col-md-4 col-form-label text-md-right">{{ __('Key') }}</label>
+                            <label for="key" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.key') }}</label>
 
                             <div class="col-md-8">
                                 <input id="key" type="text" class="form-control @error('key') is-invalid @enderror" name="key" value="{{ old('key') }}">
@@ -119,7 +119,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="value" class="col-md-4 col-form-label text-md-right">{{ __('Default Value') }}</label>
+                            <label for="value" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.default_value') }}</label>
 
                             <div class="col-md-8">
                                 <input id="value" type="text" class="form-control @error('value') is-invalid @enderror" name="value" value="{{ old('value') }}">
@@ -132,7 +132,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="value_prefix" class="col-md-4 col-form-label text-md-right">{{ __('Value Output Prefix') }}</label>
+                            <label for="value_prefix" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.value_output_prefix') }}</label>
 
                             <div class="col-md-8">
                                 <input id="value_prefix" type="text" class="form-control @error('value_prefix') is-invalid @enderror" name="value_prefix" value="{{ old('value_prefix') }}">
@@ -145,7 +145,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="value_suffix" class="col-md-4 col-form-label text-md-right">{{ __('Value Output Suffix') }}</label>
+                            <label for="value_suffix" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.value_output_suffix') }}</label>
 
                             <div class="col-md-8">
                                 <input id="value_suffix" type="text" class="form-control @error('value_suffix') is-invalid @enderror" name="value_suffix" value="{{ old('value_suffix') }}">
@@ -158,7 +158,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="amount" class="col-md-4 col-form-label text-md-right">{{ __('Fees') }}</label>
+                            <label for="amount" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.fees') }}</label>
 
                             <div class="col-md-8">
                                 <div class="input-group">
@@ -176,7 +176,7 @@
                             </div>
                         </div>
                         <div class="form-group row" id="min" style="display: none">
-                            <label for="min" class="col-md-4 col-form-label text-md-right">{{ __('Minimum') }}</label>
+                            <label for="min" class="col-md-4 col-form-label text-md-right">{{ __('interface.data_processing.minimum') }}</label>
 
                             <div class="col-md-8">
                                 <input id="min" type="number" class="form-control @error('min') is-invalid @enderror" name="min" min="{{ old('min') }}">
@@ -189,7 +189,7 @@
                             </div>
                         </div>
                         <div class="form-group row" id="max" style="display: none">
-                            <label for="max" class="col-md-4 col-form-label text-md-right">{{ __('Maximum') }}</label>
+                            <label for="max" class="col-md-4 col-form-label text-md-right">{{ __('interface.data_processing.maximum') }}</label>
 
                             <div class="col-md-8">
                                 <input id="max" type="number" class="form-control @error('max') is-invalid @enderror" name="max" max="{{ old('max') }}">
@@ -202,7 +202,7 @@
                             </div>
                         </div>
                         <div class="form-group row" id="step" style="display: none">
-                            <label for="step" class="col-md-4 col-form-label text-md-right">{{ __('Step Size') }}</label>
+                            <label for="step" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.step_size') }}</label>
 
                             <div class="col-md-8">
                                 <input id="step" type="number" class="form-control @error('step') is-invalid @enderror" name="step" step="{{ old('step') }}">
@@ -215,7 +215,7 @@
                             </div>
                         </div>
                         <div class="form-group row align-items-center">
-                            <label for="required" class="col-md-4 col-form-label text-md-right">{{ __('Required') }}</label>
+                            <label for="required" class="col-md-4 col-form-label text-md-right">{{ __('interface.misc.required') }}</label>
 
                             <div class="col-md-8">
                                 <input id="required" type="checkbox" class="form-control @error('required') is-invalid @enderror" name="required" value="true">
@@ -228,17 +228,17 @@
                             </div>
                         </div>
                         <div class="form-group row" id="options" style="display: none">
-                            <label for="options" class="col-md-12 col-form-label text-md-center">{{ __('Options') }}</label>
+                            <label for="options" class="col-md-12 col-form-label text-md-center">{{ __('interface.data.options') }}</label>
 
                             <div class="col-md-12 mt-3">
                                 <table class="table w-100">
                                     <thead>
                                     <tr>
-                                        <td>{{ __('Label') }}</td>
-                                        <td>{{ __('Value') }}</td>
-                                        <td>{{ __('Fees') }}</td>
-                                        <td width="1%">{{ __('Default Value') }}</td>
-                                        <td width="1%">{{ __('Action') }}</td>
+                                        <td>{{ __('interface.data.label') }}</td>
+                                        <td>{{ __('interface.data.value') }}</td>
+                                        <td>{{ __('interface.data.fees') }}</td>
+                                        <td width="1%">{{ __('interface.data.default_value') }}</td>
+                                        <td width="1%">{{ __('interface.misc.action') }}</td>
                                     </tr>
                                     </thead>
                                     <tbody id="options_tbody">

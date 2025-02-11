@@ -4,8 +4,6 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
 
 /**
  * Class ProhibitTenants
@@ -26,7 +24,7 @@ class ProhibitTenants
     public function handle(Request $request, Closure $next)
     {
         if (! empty($request->tenant)) {
-            return redirect()->back()->with('warning', __('You don\'t have the permission to view this page.'));
+            return redirect()->back()->with('warning', __('interface.misc.no_permission_hint'));
         }
 
         return $next($request);

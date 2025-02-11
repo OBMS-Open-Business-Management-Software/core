@@ -116,26 +116,26 @@ class AdminInvoiceCustomerController extends Controller
                     switch ($invoice->status) {
                         case 'unpaid':
                             if ($invoice->overdue) {
-                                $status = '<span class="badge badge-danger badge-pill">' . __('Overdue') . '</span>';
+                                $status = '<span class="badge badge-danger">' . __('interface.status.overdue') . '</span>';
                             } else {
-                                $status = '<span class="badge badge-warning badge-pill">' . __('Unpaid') . '</span>';
+                                $status = '<span class="badge badge-warning">' . __('interface.status.unpaid') . '</span>';
                             }
                             break;
                         case 'paid':
-                            $status = '<span class="badge badge-success badge-pill">' . __('Paid') . '</span>';
+                            $status = '<span class="badge badge-success">' . __('interface.status.paid') . '</span>';
                             break;
                         case 'refunded':
-                            $status = '<span class="badge badge-secondary badge-pill">' . __('Refunded') . '</span>';
+                            $status = '<span class="badge badge-secondary">' . __('interface.status.refunded') . '</span>';
                             break;
                         case 'refund':
-                            $status = '<span class="badge badge-info badge-pill text-white">' . __('Refund') . '</span>';
+                            $status = '<span class="badge badge-info text-white">' . __('interface.actions.refund') . '</span>';
                             break;
                         case 'revoked':
-                            $status = '<span class="badge badge-secondary badge-pill">' . __('Revoked') . '</span>';
+                            $status = '<span class="badge badge-secondary">' . __('interface.status.revoked') . '</span>';
                             break;
                         case 'template':
                         default:
-                            $status = '<span class="badge badge-primary badge-pill">' . __('Draft') . '</span>';
+                            $status = '<span class="badge badge-primary">' . __('interface.status.draft') . '</span>';
                             break;
                     }
 
@@ -156,7 +156,7 @@ class AdminInvoiceCustomerController extends Controller
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-warning">
-                <h5 class="modal-title" id="editInvoice' . $invoice->id . 'Label">' . __('Edit') . ' (' . $invoice->number . ')</h5>
+                <h5 class="modal-title" id="editInvoice' . $invoice->id . 'Label">' . __('interface.actions.edit') . ' (' . $invoice->number . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -166,7 +166,7 @@ class AdminInvoiceCustomerController extends Controller
                     <input type="hidden" name="_token" value="' . csrf_token() . '" />
                     <input type="hidden" name="invoice_id" value="' . $invoice->id . '" />
                     <div class="form-group row">
-                        <label for="user_id" class="col-md-4 col-form-label text-md-right">' . __('User ID') . '</label>
+                        <label for="user_id" class="col-md-4 col-form-label text-md-right">' . __('interface.data.user_id') . '</label>
 
                         <div class="col-md-8">
                             <input id="user_id" type="number" class="form-control" name="user_id" value="' . $invoice->user_id . '">
@@ -174,7 +174,7 @@ class AdminInvoiceCustomerController extends Controller
                     </div>
 
                     <div class="form-group row">
-                        <label for="type_id" class="col-md-4 col-form-label text-md-right">' . __('Payment Type') . '</label>
+                        <label for="type_id" class="col-md-4 col-form-label text-md-right">' . __('interface.data.payment_type') . '</label>
 
                         <div class="col-md-8">
                             <select id="type_id" class="form-control" name="type_id">
@@ -184,7 +184,7 @@ class AdminInvoiceCustomerController extends Controller
                     </div>
 
                     <div class="form-group row">
-                        <label for="contract_id" class="col-md-4 col-form-label text-md-right">' . __('Contract ID') . '</label>
+                        <label for="contract_id" class="col-md-4 col-form-label text-md-right">' . __('interface.data.contract_id') . '</label>
 
                         <div class="col-md-8">
                             <input id="contract_id" type="number" class="form-control" name="contract_id" value="' . $invoice->contract_id . '">
@@ -192,8 +192,8 @@ class AdminInvoiceCustomerController extends Controller
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-warning"><i class="bi bi-pencil-square"></i> ' . __('Edit') . '</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('Close') . '</button>
+                    <button type="submit" class="btn btn-warning"><i class="bi bi-pencil-square"></i> ' . __('interface.actions.edit') . '</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('interface.actions.close') . '</button>
                 </div>
             </form>
         </div>
@@ -204,11 +204,11 @@ class AdminInvoiceCustomerController extends Controller
 
                     return (object) [
                         'id' => $invoice->number,
-                        'user' => $invoice->user->realName ?? __('N/A'),
+                        'user' => $invoice->user->realName ?? __('interface.misc.not_available'),
                         'status' => $status,
-                        'type' => $invoice->type->name ?? __('N/A'),
-                        'date' => ! empty($invoice->archived_at) ? $invoice->archived_at->format('d.m.Y, H:i') : __('N/A'),
-                        'due' => ! empty($invoice->archived_at) ? $invoice->archived_at->addDays($invoice->type->period)->format('d.m.Y') . ', 23:59' : __('N/A'),
+                        'type' => $invoice->type->name ?? __('interface.misc.not_available'),
+                        'date' => ! empty($invoice->archived_at) ? $invoice->archived_at->format('d.m.Y, H:i') : __('interface.misc.not_available'),
+                        'due' => ! empty($invoice->archived_at) ? $invoice->archived_at->addDays($invoice->type->period)->format('d.m.Y') . ', 23:59' : __('interface.misc.not_available'),
                         'view' => '<a href="' . route('admin.invoices.customers.details', $invoice->id) . '" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>',
                         'edit' => $invoice->status == 'template' ? $edit : '<button type="button" class="btn btn-warning btn-sm" disabled><i class="bi bi-pencil-square"></i></button>',
                         'delete' => $invoice->status == 'template' ? '<a href="' . route('admin.invoices.customers.delete', $invoice->id) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>' : '<button type="button" class="btn btn-danger btn-sm" disabled><i class="bi bi-trash"></i></button>',
@@ -245,10 +245,10 @@ class AdminInvoiceCustomerController extends Controller
                 'reverse_charge' => $user->reverseCharge,
             ]);
 
-            return redirect()->route('admin.invoices.customers.details', $invoice->id)->with('success', __('Invoice has been added successfully.'));
+            return redirect()->route('admin.invoices.customers.details', $invoice->id)->with('success', __('interface.messages.invoice_added'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -281,10 +281,10 @@ class AdminInvoiceCustomerController extends Controller
                 'contract_id' => $request->contract_id,
             ]);
 
-            return redirect()->back()->with('success', __('Invoice has been updated successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.invoice_updated'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -310,10 +310,10 @@ class AdminInvoiceCustomerController extends Controller
         ) {
             $invoice->delete();
 
-            return redirect()->route('admin.invoices.customers')->with('success', __('Invoice has been deleted successfully.'));
+            return redirect()->route('admin.invoices.customers')->with('success', __('interface.messages.invoice_deleted'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -389,10 +389,10 @@ class AdminInvoiceCustomerController extends Controller
                 'status' => 'publish',
             ]);
 
-            return redirect()->back()->with('success', __('Invoice has been published successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.invoice_published'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -542,10 +542,10 @@ class AdminInvoiceCustomerController extends Controller
                 'status' => 'revoke',
             ]);
 
-            return redirect()->back()->with('success', __('Invoice has been revoked successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.invoice_revoked'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -579,10 +579,10 @@ class AdminInvoiceCustomerController extends Controller
                 'status' => 'pay',
             ]);
 
-            return redirect()->back()->with('success', __('Invoice has been set to paid successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.invoice_paid'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -616,10 +616,10 @@ class AdminInvoiceCustomerController extends Controller
                 'status' => 'unpay',
             ]);
 
-            return redirect()->back()->with('success', __('Invoice has been set to unpaid successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.invoice_unpaid'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -652,10 +652,10 @@ class AdminInvoiceCustomerController extends Controller
                 'status' => 'refund',
             ]);
 
-            return redirect()->route('admin.invoices.customers.details', $revokationInvoice->id)->with('success', __('Invoice has been set refunded successfully.'));
+            return redirect()->route('admin.invoices.customers.details', $revokationInvoice->id)->with('success', __('interface.messages.invoice_refunded'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -681,10 +681,10 @@ class AdminInvoiceCustomerController extends Controller
         ) {
             $invoice->sendInvoiceNotification();
 
-            return redirect()->back()->with('success', __('Invoice has been sent to the customer successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.invoice_sent'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -736,10 +736,10 @@ class AdminInvoiceCustomerController extends Controller
                 'ended_at' => ! empty($request->service_runtime) ? Carbon::parse($request->ended_at) : null,
             ]);
 
-            return redirect()->back()->with('success', __('Invoice position has been added successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.invoice_position_added'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -789,10 +789,10 @@ class AdminInvoiceCustomerController extends Controller
                 'ended_at' => ! empty($request->service_runtime) ? Carbon::parse($request->ended_at) : null,
             ]);
 
-            return redirect()->back()->with('success', __('Invoice position has been updated successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.invoice_position_updated'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -823,10 +823,10 @@ class AdminInvoiceCustomerController extends Controller
             $position->position->delete();
             $position->delete();
 
-            return redirect()->back()->with('success', __('Invoice position has been deleted successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.invoice_position_deleted'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -882,29 +882,29 @@ class AdminInvoiceCustomerController extends Controller
                 ->transform(function (InvoiceHistory $history) {
                     switch ($history->status) {
                         case 'publish':
-                            $status = '<span class="badge badge-success badge-pill">' . __('Published') . '</span>';
+                            $status = '<span class="badge badge-success">' . __('interface.status.published') . '</span>';
                             break;
                         case 'revoke':
-                            $status = '<span class="badge badge-secondary badge-pill">' . __('Revoked') . '</span>';
+                            $status = '<span class="badge badge-secondary">' . __('interface.status.revoked') . '</span>';
                             break;
                         case 'refund':
-                            $status = '<span class="badge badge-info badge-pill text-white">' . __('Refund') . '</span>';
+                            $status = '<span class="badge badge-info text-white">' . __('interface.actions.refund') . '</span>';
                             break;
                         case 'unpay':
-                            $status = '<span class="badge badge-warning badge-pill">' . __('Unpaid') . '</span>';
+                            $status = '<span class="badge badge-warning">' . __('interface.status.unpaid') . '</span>';
                             break;
                         case 'pay':
-                            $status = '<span class="badge badge-success badge-pill">' . __('Paid') . '</span>';
+                            $status = '<span class="badge badge-success">' . __('interface.status.paid') . '</span>';
                             break;
                         default:
-                            $status = '<span class="badge badge-secondary badge-pill">' . __('Unknown') . '</span>';
+                            $status = '<span class="badge badge-secondary">' . __('interface.status.unknown') . '</span>';
                             break;
                     }
 
                     return (object) [
                         'id' => $history->id,
                         'date' => $history->created_at->format('d.m.Y, H:i'),
-                        'name' => ! empty($history->user) && ! empty($history->user->realName) ? '<i class="bi bi-person mr-2"></i> ' . $history->user->realName : '<i class="bi bi-robot mr-2""></i> ' . __('System'),
+                        'name' => ! empty($history->user) && ! empty($history->user->realName) ? '<i class="bi bi-person mr-2"></i> ' . $history->user->realName : '<i class="bi bi-robot mr-2""></i> ' . __('interface.data.system'),
                         'status' => $status,
                     ];
                 })
@@ -982,14 +982,14 @@ class AdminInvoiceCustomerController extends Controller
                 ->transform(function (InvoiceType $type) use ($discounts) {
                     switch ($type->type) {
                         case 'prepaid':
-                            $receiptType = __('Prepaid Receipt');
+                            $receiptType = __('interface.misc.prepaid_receipt');
                             break;
                         case 'auto_revoke':
-                            $receiptType = __('Auto-revoked Invoice');
+                            $receiptType = __('interface.misc.auto_revoked_invoice');
                             break;
                         case 'normal':
                         default:
-                            $receiptType = __('Invoice');
+                            $receiptType = __('interface.misc.invoice');
                             break;
                     }
 
@@ -1005,7 +1005,7 @@ class AdminInvoiceCustomerController extends Controller
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-warning">
-                <h5 class="modal-title" id="editPaymentType' . $type->id . 'Label">' . __('Edit') . ' (' . $type->name . ')</h5>
+                <h5 class="modal-title" id="editPaymentType' . $type->id . 'Label">' . __('interface.actions.edit') . ' (' . $type->name . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -1015,45 +1015,45 @@ class AdminInvoiceCustomerController extends Controller
                     <input type="hidden" name="_token" value="' . csrf_token() . '" />
                     <input type="hidden" name="type_id" value="' . $type->id . '" />
                     <div class="form-group row">
-                        <label for="name" class="col-md-4 col-form-label text-md-right">' . __('Name') . '</label>
+                        <label for="name" class="col-md-4 col-form-label text-md-right">' . __('interface.data.name') . '</label>
 
                         <div class="col-md-8">
                             <input id="name" type="text" class="form-control" name="name" value="' . $type->name . '">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="description" class="col-md-4 col-form-label text-md-right">' . __('Description') . '</label>
+                        <label for="description" class="col-md-4 col-form-label text-md-right">' . __('interface.data.description') . '</label>
 
                         <div class="col-md-8">
                             <input id="description" type="text" class="form-control" name="description" value="' . $type->description . '">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="type" class="col-md-4 col-form-label text-md-right">' . __('Type') . '</label>
+                        <label for="type" class="col-md-4 col-form-label text-md-right">' . __('interface.data.type') . '</label>
 
                         <div class="col-md-8">
                             <select id="type" type="text" class="form-control type" name="type" data-id="' . $type->id . '">
-                                <option value="normal"' . ($type->type == 'normal' ? ' selected' : '') . '>' . __('Basic') . '</option>
-                                <option value="auto_revoke"' . ($type->type == 'auto_revoke' ? ' selected' : '') . '>' . __('Auto-revoke if overdue') . '</option>
-                                <option value="prepaid"' . ($type->type == 'prepaid' ? ' selected' : '') . '>' . __('Prepaid receipt') . '</option>
+                                <option value="normal"' . ($type->type == 'normal' ? ' selected' : '') . '>' . __('interface.misc.basic') . '</option>
+                                <option value="auto_revoke"' . ($type->type == 'auto_revoke' ? ' selected' : '') . '>' . __('interface.misc.autorevoke_overdue') . '</option>
+                                <option value="prepaid"' . ($type->type == 'prepaid' ? ' selected' : '') . '>' . __('interface.misc.prepaid_receipt') . '</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="period" class="col-md-4 col-form-label text-md-right">' . __('Payment Period') . '</label>
+                        <label for="period" class="col-md-4 col-form-label text-md-right">' . __('interface.data.payment_period') . '</label>
 
                         <div class="col-md-8">
                             <div class="input-group">
                                 <input id="period" type="number" step="0.01" min="0.01" class="form-control trigger-dunning" name="period" value="' . $type->period . '">
                                 <div class="input-group-append">
-                                    <span class="input-group-text" id="basic-addon2">' . __('Days') . '</span>
+                                    <span class="input-group-text" id="basic-addon2">' . __('interface.units.days') . '</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div id="hiddenDunning' . $type->id . '"' . ($type->type !== 'normal' ? ' style="display: none"' : '') . '>
                         <div class="form-group row align-items-center">
-                            <label for="dunning" class="col-md-4 col-form-label text-md-right">' . __('Enable Dunning') . '</label>
+                            <label for="dunning" class="col-md-4 col-form-label text-md-right">' . __('interface.actions.enable_dunning') . '</label>
 
                             <div class="col-md-8">
                                 <input id="dunning' . $type->id . '" type="checkbox" class="form-control" name="dunning" value="true" ' . ($type->dunning ? ' checked' : '') . '>
@@ -1061,19 +1061,19 @@ class AdminInvoiceCustomerController extends Controller
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="discount_id" class="col-md-4 col-form-label text-md-right">' . __('Discount') . '</label>
+                        <label for="discount_id" class="col-md-4 col-form-label text-md-right">' . __('interface.data.discount') . '</label>
 
                         <div class="col-md-8">
                             <select id="discount_id" type="text" class="form-control" name="discount_id">
-                                <option value=""' . (empty($type->id) ? ' selected' : '') . '>' . __('None') . '</option>
+                                <option value=""' . (empty($type->id) ? ' selected' : '') . '>' . __('interface.misc.none') . '</option>
                                 ' . $discount . '
                             </select>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-warning"><i class="bi bi-pencil-square"></i> ' . __('Edit') . '</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('Close') . '</button>
+                    <button type="submit" class="btn btn-warning"><i class="bi bi-pencil-square"></i> ' . __('interface.actions.edit') . '</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('interface.actions.close') . '</button>
                 </div>
             </form>
         </div>
@@ -1085,9 +1085,9 @@ class AdminInvoiceCustomerController extends Controller
                         'id' => $type->id,
                         'name' => $type->name,
                         'description' => $type->description,
-                        'period' => $type->period . ' ' . __('Days'),
+                        'period' => $type->period . ' ' . __('interface.units.days'),
                         'type' => $receiptType,
-                        'dunning' => $type->dunning ? '<span class="badge badge-success badge-pill">' . __('Enabled') . '</span>' : '<span class="badge badge-warning badge-pill">' . __('Disabled') . '</span>',
+                        'dunning' => $type->dunning ? '<span class="badge badge-success">' . __('interface.status.enabled') . '</span>' : '<span class="badge badge-warning">' . __('interface.status.disabled') . '</span>',
                         'view' => '<a href="' . route('admin.invoices.types.details', $type->id) . '" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>',
                         'edit' => $edit,
                         'delete' => '<a href="' . route('admin.invoices.types.delete', $type->id) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>',
@@ -1140,7 +1140,7 @@ class AdminInvoiceCustomerController extends Controller
             'discount_id' => $request->discount_id ?? null,
         ]);
 
-        return redirect()->back()->with('success', __('Invoice type has been added successfully.'));
+        return redirect()->back()->with('success', __('interface.messages.invoice_type_added'));
     }
 
     /**
@@ -1174,10 +1174,10 @@ class AdminInvoiceCustomerController extends Controller
                 'discount_id' => $request->discount_id ?? null,
             ]);
 
-            return redirect()->back()->with('success', __('Invoice type has been updated successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.invoice_type_updated'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -1202,7 +1202,7 @@ class AdminInvoiceCustomerController extends Controller
             $type->delete();
         }
 
-        return redirect()->back()->with('success', __('Invoice type has been deleted successfully.'));
+        return redirect()->back()->with('success', __('interface.messages.invoice_type_deleted'));
     }
 
     /**
@@ -1268,7 +1268,7 @@ class AdminInvoiceCustomerController extends Controller
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-warning">
-                <h5 class="modal-title" id="editPaymentType' . $type->id . 'Label">' . __('Edit') . ' (#' . $type->id . ')</h5>
+                <h5 class="modal-title" id="editPaymentType' . $type->id . 'Label">' . __('interface.actions.edit') . ' (#' . $type->id . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -1278,62 +1278,62 @@ class AdminInvoiceCustomerController extends Controller
                     <input type="hidden" name="_token" value="' . csrf_token() . '" />
                     <input type="hidden" name="dunning_id" value="' . $type->id . '" />
                     <div class="form-group row">
-                        <label for="after" class="col-md-4 col-form-label text-md-right">' . __('After') . '</label>
+                        <label for="after" class="col-md-4 col-form-label text-md-right">' . __('interface.data.after') . '</label>
 
                         <div class="col-md-8">
                             <div class="input-group">
                                 <input id="after" type="number" step="0.01" min="0.01" class="form-control" name="after" value="' . $type->after . '">
                                 <div class="input-group-append">
-                                    <span class="input-group-text" id="basic-addon2">' . __('Days') . '</span>
+                                    <span class="input-group-text" id="basic-addon2">' . __('interface.units.days') . '</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="period" class="col-md-4 col-form-label text-md-right">' . __('Payment Period') . '</label>
+                        <label for="period" class="col-md-4 col-form-label text-md-right">' . __('interface.data.payment_period') . '</label>
 
                         <div class="col-md-8">
                             <div class="input-group">
                                 <input id="period" type="number" step="0.01" min="0.01" class="form-control" name="period" value="' . $type->period . '">
                                 <div class="input-group-append">
-                                    <span class="input-group-text" id="basic-addon2">' . __('Days') . '</span>
+                                    <span class="input-group-text" id="basic-addon2">' . __('interface.units.days') . '</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="fixed_amount" class="col-md-4 col-form-label text-md-right">' . __('Fees') . '</label>
+                        <label for="fixed_amount" class="col-md-4 col-form-label text-md-right">' . __('interface.data.fees') . '</label>
 
                         <div class="col-md-8">
                             <div class="input-group">
                                 <input id="fixed_amount" type="number" step="0.01" min="0.01" class="form-control" name="fixed_amount" value="' . $type->fixed_amount . '">
                                 <div class="input-group-append">
-                                    <span class="input-group-text" id="basic-addon2">' . __('€') . '</span>
+                                    <span class="input-group-text" id="basic-addon2">€</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="percentage_amount" class="col-md-4 col-form-label text-md-right">' . __('Interest Charges') . '</label>
+                        <label for="percentage_amount" class="col-md-4 col-form-label text-md-right">' . __('interface.data.interest_charges') . '</label>
 
                         <div class="col-md-8">
                             <div class="input-group">
                                 <input id="percentage_amount" type="number" step="0.01" min="0.01" class="form-control" name="percentage_amount" value="' . $type->percentage_amount . '">
                                 <div class="input-group-append">
-                                    <span class="input-group-text" id="basic-addon2">' . __('%') . '</span>
+                                    <span class="input-group-text" id="basic-addon2">%</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="form-group row align-items-center">
-                        <label for="cancel_contract_regular" class="col-md-4 col-form-label text-md-right">' . __('Cancel contract regularly') . '</label>
+                        <label for="cancel_contract_regular" class="col-md-4 col-form-label text-md-right">' . __('interface.actions.cancel_regularly') . '</label>
 
                         <div class="col-md-8">
                             <input id="cancel_contract_regular" type="checkbox" class="form-control" name="cancel_contract_regular" value="true"' . ($type->cancel_contract_regular ? ' checked' : '') . '>
                         </div>
                     </div>
                     <div class="form-group row align-items-center">
-                        <label for="cancel_contract_instant" class="col-md-4 col-form-label text-md-right">' . __('Cancel contract instantly') . '</label>
+                        <label for="cancel_contract_instant" class="col-md-4 col-form-label text-md-right">' . __('interface.actions.cancel_instantly') . '</label>
 
                         <div class="col-md-8">
                             <input id="cancel_contract_instant" type="checkbox" class="form-control" name="cancel_contract_instant" value="true"' . ($type->cancel_contract_instant ? ' checked' : '') . '>
@@ -1341,8 +1341,8 @@ class AdminInvoiceCustomerController extends Controller
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-warning"><i class="bi bi-pencil-square"></i> ' . __('Edit') . '</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('Close') . '</button>
+                    <button type="submit" class="btn btn-warning"><i class="bi bi-pencil-square"></i> ' . __('interface.actions.edit') . '</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('interface.actions.close') . '</button>
                 </div>
             </form>
         </div>
@@ -1352,8 +1352,8 @@ class AdminInvoiceCustomerController extends Controller
 
                     return (object) [
                         'id' => $type->id,
-                        'after' => $type->after . ' ' . __('Days'),
-                        'period' => $type->period . ' ' . __('Days'),
+                        'after' => $type->after . ' ' . __('interface.units.days'),
+                        'period' => $type->period . ' ' . __('interface.units.days'),
                         'fees' => $type->fixed_amount . ' €',
                         'interest' => $type->percentage_amount . ' %',
                         'edit' => $edit,
@@ -1395,10 +1395,10 @@ class AdminInvoiceCustomerController extends Controller
                 'cancel_contract_instant' => ! empty($request->cancel_contract_instant),
             ]);
 
-            return redirect()->back()->with('success', __('Payment type dunning has been added.'));
+            return redirect()->back()->with('success', __('interface.messages.payment_type_dunning_added'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -1432,10 +1432,10 @@ class AdminInvoiceCustomerController extends Controller
                 'cancel_contract_instant' => ! empty($request->cancel_contract_instant),
             ]);
 
-            return redirect()->back()->with('success', __('Payment type dunning has been updated.'));
+            return redirect()->back()->with('success', __('interface.messages.payment_type_dunning_updated'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -1461,10 +1461,10 @@ class AdminInvoiceCustomerController extends Controller
         if (! empty($dunning = InvoiceDunning::find($type_id))) {
             $dunning->delete();
 
-            return redirect()->back()->with('success', __('Payment type dunning has been deleted.'));
+            return redirect()->back()->with('success', __('interface.messages.payment_type_dunning_deleted'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -1540,13 +1540,13 @@ class AdminInvoiceCustomerController extends Controller
                 ->transform(function (PositionDiscount $type) {
                     switch ($type->type) {
                         case 'percentage':
-                            $typeString = __('Percentage');
-                            $typeSuffix = __('%');
+                            $typeString = __('interface.units.percentage');
+                            $typeSuffix = '%';
                             break;
                         case 'fixed':
                         default:
-                            $typeString = __('Fixed');
-                            $typeSuffix = __('€');
+                            $typeString = __('interface.units.fixed');
+                            $typeSuffix = '€';
                             break;
                     }
 
@@ -1556,7 +1556,7 @@ class AdminInvoiceCustomerController extends Controller
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-warning">
-                <h5 class="modal-title" id="editDiscount' . $type->id . 'Label">' . __('Edit') . ' (' . $type->name . ')</h5>
+                <h5 class="modal-title" id="editDiscount' . $type->id . 'Label">' . __('interface.actions.edit') . ' (' . $type->name . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -1566,31 +1566,31 @@ class AdminInvoiceCustomerController extends Controller
                     <input type="hidden" name="_token" value="' . csrf_token() . '" />
                     <input type="hidden" name="discount_id" value="' . $type->id . '" />
                     <div class="form-group row">
-                        <label for="name" class="col-md-4 col-form-label text-md-right">' . __('Name') . '</label>
+                        <label for="name" class="col-md-4 col-form-label text-md-right">' . __('interface.data.name') . '</label>
 
                         <div class="col-md-8">
                             <input id="name" type="text" class="form-control" name="name" value="' . $type->name . '">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="description" class="col-md-4 col-form-label text-md-right">' . __('Description') . '</label>
+                        <label for="description" class="col-md-4 col-form-label text-md-right">' . __('interface.data.description') . '</label>
 
                         <div class="col-md-8">
                             <input id="description" type="text" class="form-control" name="description" value="' . $type->description . '">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="type_dynamic' . $type->id . '" class="col-md-4 col-form-label text-md-right">' . __('Type') . '</label>
+                        <label for="type_dynamic' . $type->id . '" class="col-md-4 col-form-label text-md-right">' . __('interface.data.type') . '</label>
 
                         <div class="col-md-8">
                             <select id="type_dynamic' . $type->id . '" type="text" class="form-control type_dynamic" data-id="' . $type->id . '" name="type">
-                                <option value="fixed"' . ($type->type == 'fixed' ? ' selected' : '') . '>' . __('Fixed') . '</option>
-                                <option value="percentage"' . ($type->type == 'percentage' ? ' selected' : '') . '>' . __('Percentage') . '</option>
+                                <option value="fixed"' . ($type->type == 'fixed' ? ' selected' : '') . '>' . __('interface.units.fixed') . '</option>
+                                <option value="percentage"' . ($type->type == 'percentage' ? ' selected' : '') . '>' . __('interface.units.percentage') . '</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="amount" class="col-md-4 col-form-label text-md-right">' . __('Amount') . '</label>
+                        <label for="amount" class="col-md-4 col-form-label text-md-right">' . __('interface.data.amount') . '</label>
 
                         <div class="col-md-8">
                             <div class="input-group">
@@ -1603,8 +1603,8 @@ class AdminInvoiceCustomerController extends Controller
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-warning"><i class="bi bi-pencil-square"></i> ' . __('Edit') . '</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('Close') . '</button>
+                    <button type="submit" class="btn btn-warning"><i class="bi bi-pencil-square"></i> ' . __('interface.actions.edit') . '</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('interface.actions.close') . '</button>
                 </div>
             </form>
         </div>
@@ -1650,7 +1650,7 @@ class AdminInvoiceCustomerController extends Controller
             'amount' => $request->amount,
         ]);
 
-        return redirect()->back()->with('success', __('Discount has been added successfully.'));
+        return redirect()->back()->with('success', __('interface.messages.discount_added'));
     }
 
     /**
@@ -1680,10 +1680,10 @@ class AdminInvoiceCustomerController extends Controller
                 'amount' => $request->amount,
             ]);
 
-            return redirect()->back()->with('success', __('Discount has been updated successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.discount_updated'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -1710,10 +1710,10 @@ class AdminInvoiceCustomerController extends Controller
         ) {
             $discount->delete();
 
-            return redirect()->back()->with('success', __('Discount has been deleted successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.discount_deleted'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -1793,7 +1793,7 @@ class AdminInvoiceCustomerController extends Controller
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-warning">
-                <h5 class="modal-title" id="editPaymentType' . $discount->id . 'Label">' . __('Edit') . ' (' . $discount->name . ')</h5>
+                <h5 class="modal-title" id="editPaymentType' . $discount->id . 'Label">' . __('interface.actions.edit') . ' (' . $discount->name . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -1803,47 +1803,47 @@ class AdminInvoiceCustomerController extends Controller
                     <input type="hidden" name="_token" value="' . csrf_token() . '" />
                     <input type="hidden" name="discount_id" value="' . $discount->id . '" />
                     <div class="form-group row">
-                        <label for="name" class="col-md-4 col-form-label text-md-right">' . __('Name') . '</label>
+                        <label for="name" class="col-md-4 col-form-label text-md-right">' . __('interface.data.name') . '</label>
 
                         <div class="col-md-8">
                             <input id="name" type="text" class="form-control" name="name" value="' . $discount->name . '">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="description" class="col-md-4 col-form-label text-md-right">' . __('Description') . '</label>
+                        <label for="description" class="col-md-4 col-form-label text-md-right">' . __('interface.data.description') . '</label>
 
                         <div class="col-md-8">
                             <input id="description" type="text" class="form-control" name="description" value="' . $discount->description . '">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="period" class="col-md-4 col-form-label text-md-right">' . __('Discount Period') . '</label>
+                        <label for="period" class="col-md-4 col-form-label text-md-right">' . __('interface.data.discount_period') . '</label>
 
                         <div class="col-md-8">
                             <div class="input-group">
                                 <input id="period" type="number" step="0.01" min="0.01" class="form-control trigger-dunning" name="period" value="' . $discount->period . '">
                                 <div class="input-group-append">
-                                    <span class="input-group-text" id="basic-addon2">' . __('Days') . '</span>
+                                    <span class="input-group-text" id="basic-addon2">' . __('interface.units.days') . '</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="percentage_amount" class="col-md-4 col-form-label text-md-right">' . __('Discount Percentage') . '</label>
+                        <label for="percentage_amount" class="col-md-4 col-form-label text-md-right">' . __('interface.data.discount_percentage') . '</label>
 
                         <div class="col-md-8">
                             <div class="input-group">
                                 <input id="percentage_amount" type="number" step="0.01" min="0.01" class="form-control" name="percentage_amount" value="' . $discount->percentage_amount . '">
                                 <div class="input-group-append">
-                                    <span class="input-group-text" id="basic-addon2">' . __('%') . '</span>
+                                    <span class="input-group-text" id="basic-addon2">%</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-warning"><i class="bi bi-pencil-square"></i> ' . __('Edit') . '</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('Close') . '</button>
+                    <button type="submit" class="btn btn-warning"><i class="bi bi-pencil-square"></i> ' . __('interface.actions.edit') . '</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('interface.actions.close') . '</button>
                 </div>
             </form>
         </div>
@@ -1855,8 +1855,8 @@ class AdminInvoiceCustomerController extends Controller
                         'id' => $discount->id,
                         'name' => $discount->name,
                         'description' => $discount->description,
-                        'period' => $discount->period . ' ' . __('Days'),
-                        'percentage_amount' => $discount->percentage_amount . ' ' . __('%'),
+                        'period' => $discount->period . ' ' . __('interface.units.days'),
+                        'percentage_amount' => $discount->percentage_amount . ' %',
                         'edit' => $edit,
                         'delete' => '<a href="' . route('admin.invoices.discounts.delete', $discount->id) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>',
                     ];
@@ -1889,7 +1889,7 @@ class AdminInvoiceCustomerController extends Controller
             'percentage_amount' => $request->percentage_amount,
         ]);
 
-        return redirect()->back()->with('success', __('Invoice type has been added successfully.'));
+        return redirect()->back()->with('success', __('interface.messages.invoice_discount_added'));
     }
 
     /**
@@ -1919,10 +1919,10 @@ class AdminInvoiceCustomerController extends Controller
                 'percentage_amount' => $request->percentage_amount,
             ]);
 
-            return redirect()->back()->with('success', __('Invoice discount has been updated successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.invoice_discount_updated'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -1946,6 +1946,6 @@ class AdminInvoiceCustomerController extends Controller
             $discount->delete();
         }
 
-        return redirect()->back()->with('success', __('Invoice discount has been deleted successfully.'));
+        return redirect()->back()->with('success', __('interface.messages.invoice_discount_deleted'));
     }
 }

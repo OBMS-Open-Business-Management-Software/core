@@ -4,7 +4,7 @@
     <div class="container-fluid my-4">
         <div class="row">
             <div class="col-md-12">
-                <a href="{{ route('admin.invoices.types') }}" class="btn btn-outline-primary mb-4"><i class="bi bi-arrow-left-circle"></i> {{ __('Back to list') }}</a>
+                <a href="{{ route('admin.invoices.types') }}" class="btn btn-outline-primary mb-4"><i class="bi bi-arrow-left-circle"></i> {{ __('interface.actions.back_to_list') }}</a>
                 <a class="btn btn-warning mb-4 float-right" data-toggle="modal" data-target="#editPaymentType"><i class="bi bi-pencil-square"></i> {{ __('interface.actions.edit') }}</a>
             </div>
         </div>
@@ -12,7 +12,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <i class="bi bi-info-circle"></i> {{ __('Payment Type') }}
+                        <i class="bi bi-info-circle"></i> {{ __('interface.data.payment_type') }}
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -30,7 +30,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('Payment Period') }}</label>
+                            <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('interface.data.payment_period') }}</label>
 
                             <div class="col-md-9 col-form-label">
                                 {{ $type->period }} {{ __('interface.units.days') }}
@@ -42,26 +42,26 @@
                             <div class="col-md-9 col-form-label">
                                 @switch ($type->type)
                                     @case ('prepaid')
-                                        {{ __('Prepaid Receipt') }}
+                                        {{ __('interface.misc.prepaid_receipt') }}
                                         @break
                                     @case ('auto_revoke')
-                                        {{ __('Auto-revoked Invoice') }}
+                                        {{ __('interface.misc.auto_revoked_invoice') }}
                                         @break
                                     @case ('normal')
                                     @default
-                                        {{ __('Invoice') }}
+                                        {{ __('interface.misc.invoice') }}
                                         @break
                                 @endswitch
                             </div>
                         </div>
                         <div class="row">
-                            <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('Dunning') }}</label>
+                            <label class="col-md-3 col-form-label text-md-right font-weight-bold">{{ __('interface.data.dunning') }}</label>
 
                             <div class="col-md-9 col-form-label">
                                 @if ($type->dunning)
-                                    <span class="badge badge-success badge-pill">{{ __('Enabled') }}</span>
+                                    <span class="badge badge-success">{{ __('interface.status.enabled') }}</span>
                                 @else
-                                    <span class="badge badge-success badge-pill">{{ __('Disabled') }}</span>
+                                    <span class="badge badge-success">{{ __('interface.status.disabled') }}</span>
                                 @endif
                             </div>
                         </div>
@@ -72,24 +72,24 @@
         @if ($type->dunning)
             <div class="row">
                 <div class="col-md-12">
-                    <a class="btn btn-primary float-right my-4" data-toggle="modal" data-target="#add"><i class="bi bi-plus-circle"></i> {{ __('Create Reminder') }}</a>
+                    <a class="btn btn-primary float-right my-4" data-toggle="modal" data-target="#add"><i class="bi bi-plus-circle"></i> {{ __('interface.reminder.create') }}</a>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <i class="bi bi-exclamation-triangle"></i> {{ __('Payment Reminders') }}
+                            <i class="bi bi-exclamation-triangle"></i> {{ __('interface.misc.payment_reminders') }}
                         </div>
                         <div class="card-body">
                             <table id="dunnings" class="table mt-4 w-100">
                                 <thead>
                                 <tr>
                                     <td>{{ __('interface.data.id') }}</td>
-                                    <td>{{ __('After') }}</td>
-                                    <td>{{ __('Payment Period') }}</td>
-                                    <td>{{ __('Fees') }}</td>
-                                    <td>{{ __('Interest Charges') }}</td>
+                                    <td>{{ __('interface.data.after') }}</td>
+                                    <td>{{ __('interface.data.payment_period') }}</td>
+                                    <td>{{ __('interface.data.fees') }}</td>
+                                    <td>{{ __('interface.data.interest_charges') }}</td>
                                     <td>{{ __('interface.actions.edit') }}</td>
                                     <td>{{ __('interface.actions.delete') }}</td>
                                 </tr>
@@ -137,14 +137,14 @@
 
                             <div class="col-md-8">
                                 <select id="type" type="text" class="form-control type" name="type">
-                                    <option value="normal"{{ $type->type == 'normal' ? ' selected' : '' }}>{{ __('Basic') }}</option>
-                                    <option value="auto_revoke"{{ $type->type == 'auto_revoke' ? ' selected' : '' }}>{{ __('Auto-revoke if overdue') }}</option>
-                                    <option value="prepaid"{{ $type->type == 'prepaid' ? ' selected' : '' }}>{{ __('Prepaid receipt') }}</option>
+                                    <option value="normal"{{ $type->type == 'normal' ? ' selected' : '' }}>{{ __('interface.misc.basic') }}</option>
+                                    <option value="auto_revoke"{{ $type->type == 'auto_revoke' ? ' selected' : '' }}>{{ __('interface.misc.autorevoke_overdue') }}</option>
+                                    <option value="prepaid"{{ $type->type == 'prepaid' ? ' selected' : '' }}>{{ __('interface.misc.prepaid_receipt') }}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="period" class="col-md-4 col-form-label text-md-right">{{ __('Payment Period') }}</label>
+                            <label for="period" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.payment_period') }}</label>
 
                             <div class="col-md-8">
                                 <div class="input-group">
@@ -157,7 +157,7 @@
                         </div>
                         <div id="hiddenDunning"{!!  $type->type !== 'normal' ? ' style="display: none"' : '' !!}>
                             <div class="form-group row align-items-center">
-                                <label for="dunning" class="col-md-4 col-form-label text-md-right">{{ __('Enable Dunning') }}</label>
+                                <label for="dunning" class="col-md-4 col-form-label text-md-right">{{ __('interface.actions.enable_dunning') }}</label>
 
                                 <div class="col-md-8">
                                     <input id="dunning" type="checkbox" class="form-control" name="dunning" value="true"{{ $type->dunning ? ' checked' : '' }}>
@@ -178,7 +178,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="addLabel"><i class="bi bi-plus-circle"></i> {{ __('Create Payment Type') }}</h5>
+                    <h5 class="modal-title" id="addLabel"><i class="bi bi-plus-circle"></i> {{ __('interface.payment_type.create') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -188,7 +188,7 @@
                     <input type="hidden" name="type_id" value="{{ $type->id }}" />
                     <div class="modal-body">
                         <div class="form-group row">
-                            <label for="after" class="col-md-4 col-form-label text-md-right">{{ __('After') }}</label>
+                            <label for="after" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.after') }}</label>
 
                             <div class="col-md-8">
                                 <div class="input-group">
@@ -206,7 +206,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="period" class="col-md-4 col-form-label text-md-right">{{ __('Payment Period') }}</label>
+                            <label for="period" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.payment_period') }}</label>
 
                             <div class="col-md-8">
                                 <div class="input-group">
@@ -224,7 +224,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="fixed_amount" class="col-md-4 col-form-label text-md-right">{{ __('Fees') }}</label>
+                            <label for="fixed_amount" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.fees') }}</label>
 
                             <div class="col-md-8">
                                 <div class="input-group">
@@ -242,7 +242,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="percentage_amount" class="col-md-4 col-form-label text-md-right">{{ __('Interest Charges') }}</label>
+                            <label for="percentage_amount" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.interest_charges') }}</label>
 
                             <div class="col-md-8">
                                 <div class="input-group">
@@ -260,7 +260,7 @@
                             </div>
                         </div>
                         <div class="form-group row align-items-center">
-                            <label for="cancel_contract_regular" class="col-md-4 col-form-label text-md-right">{{ __('Cancel contract regularly') }}</label>
+                            <label for="cancel_contract_regular" class="col-md-4 col-form-label text-md-right">{{ __('interface.actions.cancel_regularly') }}</label>
 
                             <div class="col-md-8">
                                 <input id="cancel_contract_regular" type="checkbox" class="form-control @error('cancel_contract_regular') is-invalid @enderror" name="cancel_contract_regular" value="true">
@@ -273,7 +273,7 @@
                             </div>
                         </div>
                         <div class="form-group row align-items-center">
-                            <label for="cancel_contract_instant" class="col-md-4 col-form-label text-md-right">{{ __('Cancel contract instantly') }}</label>
+                            <label for="cancel_contract_instant" class="col-md-4 col-form-label text-md-right">{{ __('interface.actions.cancel_instantly') }}</label>
 
                             <div class="col-md-8">
                                 <input id="cancel_contract_instant" type="checkbox" class="form-control @error('cancel_contract_instant') is-invalid @enderror" name="cancel_contract_instant" value="true">

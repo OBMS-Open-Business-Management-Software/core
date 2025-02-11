@@ -70,7 +70,16 @@ return [
     |
     */
 
-    'middleware' => ['web'],
+    'middleware' => [
+        'web',
+        'tenant.prohibit',
+        'auth',
+        'verified',
+        'unlocked',
+        'password.check_reset',
+        'role.employee',
+        'role.admin',
+    ],
 
     /*
     |--------------------------------------------------------------------------

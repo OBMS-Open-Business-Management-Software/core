@@ -116,17 +116,17 @@ class AdminContractController extends Controller
                 ->transform(function (Contract $contract) {
                     switch ($contract->status) {
                         case 'cancelled':
-                            $status = '<span class="badge badge-danger badge-pill">' . __('Cancelled') . '</span>';
+                            $status = '<span class="badge badge-danger">' . __('interface.status.cancelled') . '</span>';
                             break;
                         case 'expires':
-                            $status = '<span class="badge badge-warning badge-pill">' . __('Expires') . '</span>';
+                            $status = '<span class="badge badge-warning">' . __('interface.status.expires') . '</span>';
                             break;
                         case 'started':
-                            $status = '<span class="badge badge-success badge-pill">' . __('Active') . '</span>';
+                            $status = '<span class="badge badge-success">' . __('interface.status.active') . '</span>';
                             break;
                         case 'template':
                         default:
-                            $status = '<span class="badge badge-primary badge-pill">' . __('Draft') . '</span>';
+                            $status = '<span class="badge badge-primary">' . __('interface.status.draft') . '</span>';
                             break;
                     }
 
@@ -147,7 +147,7 @@ class AdminContractController extends Controller
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-warning">
-                <h5 class="modal-title" id="editContract' . $contract->id . 'Label">' . __('Edit') . ' (' . $contract->number . ')</h5>
+                <h5 class="modal-title" id="editContract' . $contract->id . 'Label">' . __('interface.actions.edit') . ' (' . $contract->number . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -157,7 +157,7 @@ class AdminContractController extends Controller
                     <input type="hidden" name="_token" value="' . csrf_token() . '" />
                     <input type="hidden" name="contract_id" value="' . $contract->id . '" />
                     <div class="form-group row">
-                        <label for="user_id" class="col-md-4 col-form-label text-md-right">' . __('User ID') . '</label>
+                        <label for="user_id" class="col-md-4 col-form-label text-md-right">' . __('interface.data.user_id') . '</label>
 
                         <div class="col-md-8">
                             <input id="user_id" type="number" class="form-control" name="user_id" value="' . $contract->user_id . '">
@@ -165,7 +165,7 @@ class AdminContractController extends Controller
                     </div>
 
                     <div class="form-group row">
-                        <label for="type_id" class="col-md-4 col-form-label text-md-right">' . __('Type') . '</label>
+                        <label for="type_id" class="col-md-4 col-form-label text-md-right">' . __('interface.data.type') . '</label>
 
                         <div class="col-md-8">
                             <select id="type_id" class="form-control" name="type_id">
@@ -175,8 +175,8 @@ class AdminContractController extends Controller
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-warning"><i class="bi bi-pencil-square"></i> ' . __('Edit') . '</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('Close') . '</button>
+                    <button type="submit" class="btn btn-warning"><i class="bi bi-pencil-square"></i> ' . __('interface.actions.edit') . '</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('interface.actions.close') . '</button>
                 </div>
             </form>
         </div>
@@ -187,9 +187,9 @@ class AdminContractController extends Controller
 
                     return (object) [
                         'id' => $contract->number,
-                        'user' => $contract->user->realName ?? __('N/A'),
+                        'user' => $contract->user->realName ?? __('interface.misc.not_available'),
                         'status' => $status,
-                        'type' => $contract->type->name ?? __('N/A'),
+                        'type' => $contract->type->name ?? __('interface.misc.not_available'),
                         'view' => '<a href="' . route('admin.contracts.details', $contract->id) . '" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>',
                         'edit' => ! $contract->started ? $edit : '<button type="button" class="btn btn-warning btn-sm" disabled><i class="bi bi-pencil-square"></i></button>',
                         'delete' => ! $contract->started ? '<a href="' . route('admin.contracts.delete', $contract->id) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>' : '<button type="button" class="btn btn-danger btn-sm" disabled><i class="bi bi-trash"></i></button>',
@@ -223,10 +223,10 @@ class AdminContractController extends Controller
                 'type_id' => $request->type_id,
             ]);
 
-            return redirect()->route('admin.contracts.details', $contract->id)->with('success', __('Contract has been added successfully.'));
+            return redirect()->route('admin.contracts.details', $contract->id)->with('success', __('interface.messages.contract_added'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -256,10 +256,10 @@ class AdminContractController extends Controller
                 'type_id' => $request->type_id,
             ]);
 
-            return redirect()->back()->with('success', __('Contract has been updated successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.contract_updated'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -286,10 +286,10 @@ class AdminContractController extends Controller
         ) {
             $contract->delete();
 
-            return redirect()->route('admin.invoices.customers')->with('success', __('Contract has been deleted successfully.'));
+            return redirect()->route('admin.invoices.customers')->with('success', __('interface.messages.contract_deleted'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -314,10 +314,10 @@ class AdminContractController extends Controller
             ! empty($contract = Contract::find($id)) &&
             $contract->start()
         ) {
-            return redirect()->back()->with('success', __('Contract has been started successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.contract_started'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -442,10 +442,10 @@ class AdminContractController extends Controller
                 'status' => 'pay',
             ]);
 
-            return redirect()->back()->with('success', __('Contract has been extended successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.contract_extended'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -724,10 +724,10 @@ class AdminContractController extends Controller
                 'cancelled_to' => Carbon::now(),
             ]);
 
-            return redirect()->back()->with('success', __('Contract has been stopped successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.contract_stopped'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -778,11 +778,11 @@ class AdminContractController extends Controller
                     'cancelled_to' => $cancelledTo,
                 ]);
 
-                return redirect()->back()->with('success', __('Contract has been stopped successfully.'));
+                return redirect()->back()->with('success', __('interface.messages.contract_stopped'));
             }
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -817,10 +817,10 @@ class AdminContractController extends Controller
                 'cancelled_to' => null,
             ]);
 
-            return redirect()->back()->with('success', __('Contract has been restarted successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.contract_restarted'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -852,10 +852,10 @@ class AdminContractController extends Controller
                 'cancelled_to' => null,
             ]);
 
-            return redirect()->back()->with('success', __('Contract cancellation has been revoked successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.contract_cancellation_revoked'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -925,10 +925,10 @@ class AdminContractController extends Controller
                     ->delete();
             }
 
-            return redirect()->back()->with('success', __('Contract position has been added successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.contract_position_added'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -995,10 +995,10 @@ class AdminContractController extends Controller
                     ->delete();
             }
 
-            return redirect()->back()->with('success', __('Contract position has been updated successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.contract_position_updated'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -1029,10 +1029,10 @@ class AdminContractController extends Controller
             $position->position->delete();
             $position->delete();
 
-            return redirect()->back()->with('success', __('Contract position has been deleted successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.contract_position_deleted'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -1114,20 +1114,20 @@ class AdminContractController extends Controller
                 ->transform(function (ContractType $type) {
                     switch ($type->type) {
                         case 'contract_pre_pay':
-                            $receiptType = __('Contract (pre-paid)');
+                            $receiptType = __('interface.billing.contract_pre');
                             break;
                         case 'contract_post_pay':
-                            $receiptType = __('Contract (post-paid)');
+                            $receiptType = __('interface.billing.contract_post');
                             break;
                         case 'prepaid_auto':
-                            $receiptType = __('Prepaid (auto-renew)');
+                            $receiptType = __('interface.billing.prepaid_auto');
                             break;
                         case 'prepaid_manual':
-                            $receiptType = __('Prepaid (manual renew)');
+                            $receiptType = __('interface.billing.prepaid_manual');
                             break;
                         case 'normal':
                         default:
-                            $receiptType = __('Unknown');
+                            $receiptType = __('interface.status.unknown');
                             break;
                     }
 
@@ -1143,7 +1143,7 @@ class AdminContractController extends Controller
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-warning">
-                <h5 class="modal-title" id="editPaymentType' . $type->id . 'Label">' . __('Edit') . ' (' . $type->name . ')</h5>
+                <h5 class="modal-title" id="editPaymentType' . $type->id . 'Label">' . __('interface.actions.edit') . ' (' . $type->name . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -1153,33 +1153,33 @@ class AdminContractController extends Controller
                     <input type="hidden" name="_token" value="' . csrf_token() . '" />
                     <input type="hidden" name="type_id" value="' . $type->id . '" />
                     <div class="form-group row">
-                        <label for="name" class="col-md-4 col-form-label text-md-right">' . __('Name') . '</label>
+                        <label for="name" class="col-md-4 col-form-label text-md-right">' . __('interface.data.name') . '</label>
 
                         <div class="col-md-8">
                             <input id="name" type="text" class="form-control" name="name" value="' . $type->name . '">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="description" class="col-md-4 col-form-label text-md-right">' . __('Description') . '</label>
+                        <label for="description" class="col-md-4 col-form-label text-md-right">' . __('interface.data.description') . '</label>
 
                         <div class="col-md-8">
                             <input id="description" type="text" class="form-control" name="description" value="' . $type->description . '">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="type" class="col-md-4 col-form-label text-md-right">' . __('Type') . '</label>
+                        <label for="type" class="col-md-4 col-form-label text-md-right">' . __('interface.data.type') . '</label>
 
                         <div class="col-md-8">
                             <select id="type" type="text" class="form-control type" name="type" data-id="' . $type->id . '">
-                                <option value="contract_pre_pay"' . ($type->type == 'contract_pre_pay' ? ' selected' : '') . '>' . __('Contract (pre-paid)') . '</option>
-                                <option value="contract_post_pay"' . ($type->type == 'contract_post_pay' ? ' selected' : '') . '>' . __('Contract (post-paid)') . '</option>
-                                <option value="prepaid_auto"' . ($type->type == 'prepaid_auto' ? ' selected' : '') . '>' . __('Prepaid (auto-renew)') . '</option>
-                                <option value="prepaid_manual"' . ($type->type == 'prepaid_manual' ? ' selected' : '') . '>' . __('Prepaid (manual renew)') . '</option>
+                                <option value="contract_pre_pay"' . ($type->type == 'contract_pre_pay' ? ' selected' : '') . '>' . __('interface.billing.contract_pre') . '</option>
+                                <option value="contract_post_pay"' . ($type->type == 'contract_post_pay' ? ' selected' : '') . '>' . __('interface.billing.contract_post') . '</option>
+                                <option value="prepaid_auto"' . ($type->type == 'prepaid_auto' ? ' selected' : '') . '>' . __('interface.billing.prepaid_auto') . '</option>
+                                <option value="prepaid_manual"' . ($type->type == 'prepaid_manual' ? ' selected' : '') . '>' . __('interface.billing.prepaid_manual') . '</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="invoice_type_id" class="col-md-4 col-form-label text-md-right">' . __('Invoice Type') . '</label>
+                        <label for="invoice_type_id" class="col-md-4 col-form-label text-md-right">' . __('interface.data.invoice_type') . '</label>
 
                         <div class="col-md-8">
                             <select id="invoice_type_id" type="text" class="form-control type" name="invoice_type_id">
@@ -1188,33 +1188,33 @@ class AdminContractController extends Controller
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="invoice_period" class="col-md-4 col-form-label text-md-right">' . __('Invoice Period') . '</label>
+                        <label for="invoice_period" class="col-md-4 col-form-label text-md-right">' . __('interface.data.invoice_period') . '</label>
 
                         <div class="col-md-8">
                             <div class="input-group">
                                 <input id="invoice_period" type="number" step="0.01" min="0.01" class="form-control" name="invoice_period" value="' . $type->invoice_period . '">
                                 <div class="input-group-append">
-                                    <span class="input-group-text" id="basic-addon2">' . __('Days') . '</span>
+                                    <span class="input-group-text" id="basic-addon2">' . __('interface.units.days') . '</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="cancellation_period" class="col-md-4 col-form-label text-md-right">' . __('Cancellation Period') . '</label>
+                        <label for="cancellation_period" class="col-md-4 col-form-label text-md-right">' . __('interface.data.cancellation_period') . '</label>
 
                         <div class="col-md-8">
                             <div class="input-group">
                                 <input id="cancellation_period" type="number" step="0.01" min="0.01" class="form-control trigger-dunning" name="cancellation_period" value="' . $type->cancellation_period . '">
                                 <div class="input-group-append">
-                                    <span class="input-group-text" id="basic-addon2">' . __('Days') . '</span>
+                                    <span class="input-group-text" id="basic-addon2">' . __('interface.units.days') . '</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-warning"><i class="bi bi-pencil-square"></i> ' . __('Edit') . '</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('Close') . '</button>
+                    <button type="submit" class="btn btn-warning"><i class="bi bi-pencil-square"></i> ' . __('interface.actions.edit') . '</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('interface.actions.close') . '</button>
                 </div>
             </form>
         </div>
@@ -1226,9 +1226,9 @@ class AdminContractController extends Controller
                         'id' => $type->id,
                         'name' => $type->name,
                         'description' => $type->description,
-                        'invoice_period' => $type->invoice_period . ' ' . __('Days'),
-                        'invoice_type' => $type->invoiceType->name ?? __('Unknown'),
-                        'cancellation_period' => $type->cancellation_period . ' ' . __('Days'),
+                        'invoice_period' => $type->invoice_period . ' ' . __('interface.units.days'),
+                        'invoice_type' => $type->invoiceType->name ?? __('interface.status.unknown'),
+                        'cancellation_period' => $type->cancellation_period . ' ' . __('interface.units.days'),
                         'type' => $receiptType,
                         'edit' => $edit,
                         'delete' => '<a href="' . route('admin.contracts.types.delete', $type->id) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>',
@@ -1266,7 +1266,7 @@ class AdminContractController extends Controller
             'cancellation_period' => $request->cancellation_period,
         ]);
 
-        return redirect()->back()->with('success', __('Contract type has been added successfully.'));
+        return redirect()->back()->with('success', __('interface.messages.contract_type_added'));
     }
 
     /**
@@ -1300,10 +1300,10 @@ class AdminContractController extends Controller
                 'cancellation_period' => $request->cancellation_period,
             ]);
 
-            return redirect()->back()->with('success', __('Contract type has been updated successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.contract_type_updated'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -1327,7 +1327,7 @@ class AdminContractController extends Controller
             $type->delete();
         }
 
-        return redirect()->back()->with('success', __('Invoice type has been deleted successfully.'));
+        return redirect()->back()->with('success', __('interface.messages.contract_type_deleted'));
     }
 
     /**
@@ -1403,7 +1403,7 @@ class AdminContractController extends Controller
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-warning">
-                <h5 class="modal-title" id="editTracker' . $tracker->id . 'Label">' . __('Edit') . ' (' . $tracker->name . ')</h5>
+                <h5 class="modal-title" id="editTracker' . $tracker->id . 'Label">' . __('interface.actions.edit') . ' (' . $tracker->name . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -1413,33 +1413,33 @@ class AdminContractController extends Controller
                     <input type="hidden" name="_token" value="' . csrf_token() . '" />
                     <input type="hidden" name="tracker_id" value="' . $tracker->id . '" />
                     <div class="form-group row">
-                        <label for="name" class="col-md-4 col-form-label text-md-right">' . __('Name') . '</label>
+                        <label for="name" class="col-md-4 col-form-label text-md-right">' . __('interface.data.name') . '</label>
 
                         <div class="col-md-8">
                             <input id="name" type="text" class="form-control" name="name" value="' . $tracker->name . '">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="description" class="col-md-4 col-form-label text-md-right">' . __('Description') . '</label>
+                        <label for="description" class="col-md-4 col-form-label text-md-right">' . __('interface.data.description') . '</label>
 
                         <div class="col-md-8">
                             <input id="description" type="text" class="form-control" name="description" value="' . $tracker->description . '">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="vat_type" class="col-md-4 col-form-label text-md-right">' . __('Type') . '</label>
+                        <label for="vat_type" class="col-md-4 col-form-label text-md-right">' . __('interface.data.type') . '</label>
 
                         <div class="col-md-8">
                             <select id="vat_type" type="text" class="form-control type" name="vat_type">
-                                <option value="basic"' . ($tracker->vat_type == 'basic' ? ' selected' : '') . '>' . __('Basic') . '</option>
-                                <option value="reduced"' . ($tracker->vat_type == 'reduced' ? ' selected' : '') . '>' . __('Reduced') . '</option>
+                                <option value="basic"' . ($tracker->vat_type == 'basic' ? ' selected' : '') . '>' . __('interface.misc.basic') . '</option>
+                                <option value="reduced"' . ($tracker->vat_type == 'reduced' ? ' selected' : '') . '>' . __('interface.misc.reduced') . '</option>
                             </select>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-warning"><i class="bi bi-pencil-square"></i> ' . __('Edit') . '</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('Close') . '</button>
+                    <button type="submit" class="btn btn-warning"><i class="bi bi-pencil-square"></i> ' . __('interface.actions.edit') . '</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('interface.actions.close') . '</button>
                 </div>
             </form>
         </div>
@@ -1482,7 +1482,7 @@ class AdminContractController extends Controller
             'vat_type' => $request->vat_type,
         ]);
 
-        return redirect()->back()->with('success', __('Usage tracker has been added successfully.'));
+        return redirect()->back()->with('success', __('interface.messages.usage_tracker_added'));
     }
 
     /**
@@ -1510,10 +1510,10 @@ class AdminContractController extends Controller
                 'vat_type' => $request->vat_type,
             ]);
 
-            return redirect()->back()->with('success', __('Usage tracker has been updated successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.usage_tracker_updated'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -1542,7 +1542,7 @@ class AdminContractController extends Controller
             $tracker->delete();
         }
 
-        return redirect()->back()->with('success', __('Usage tracker has been deleted successfully.'));
+        return redirect()->back()->with('success', __('interface.messages.usage_tracker_deleted'));
     }
 
     /**
@@ -1626,61 +1626,61 @@ class AdminContractController extends Controller
                 ->transform(function (TrackerItem $item) {
                     switch ($item->type) {
                         case 'integer':
-                            $type = __('Integer');
+                            $type = __('interface.data_type.integer');
                             break;
                         case 'double':
-                            $type = __('Double');
+                            $type = __('interface.data_type.double');
                             break;
                         case 'string':
                         default:
-                            $type = __('String');
+                            $type = __('interface.data_type.string');
                             break;
                     }
 
                     switch ($item->process) {
                         case 'min':
-                            $processType = __('Minimum');
+                            $processType = __('interface.data_processing.minimum');
                             break;
                         case 'median':
-                            $processType = __('Median');
+                            $processType = __('interface.data_processing.median');
                             break;
                         case 'average':
-                            $processType = __('Average');
+                            $processType = __('interface.data_processing.average');
                             break;
                         case 'max':
-                            $processType = __('Maximum');
+                            $processType = __('interface.data_processing.maximum');
                             break;
                         case 'equals':
                         default:
-                            $processType = __('Equals');
+                            $processType = __('interface.data_processing.equals');
                             break;
                     }
 
                     $numberSetting = '';
-                    $availableOptions = '<option value="equals" selected>' . __('Equals') . '</option>';
+                    $availableOptions = '<option value="equals" selected>' . __('interface.data_processing.equals') . '</option>';
 
                     if ($type !== 'string') {
                         $numberSetting = '
 <div class="form-group row">
-    <label for="round" class="col-md-4 col-form-label text-md-right">' . __('Round Number') . '</label>
+    <label for="round" class="col-md-4 col-form-label text-md-right">' . __('interface.data.round_number') . '</label>
 
     <div class="col-md-8">
         <select id="round" type="text" class="form-control" name="round">
-            <option value="up"' . ($item->round == 'up' ? ' selected' : '') . '>' . __('Up') . '</option>
-            <option value="down"' . ($item->round == 'down' ? ' selected' : '') . '>' . __('Down') . '</option>
-            <option value="regular"' . ($item->round == 'regular' ? ' selected' : '') . '>' . __('Regular') . '</option>
-            <option value="none"' . ($item->round == 'none' ? ' selected' : '') . '>' . __('None') . '</option>
+            <option value="up"' . ($item->round == 'up' ? ' selected' : '') . '>' . __('interface.data_processing.round_up') . '</option>
+            <option value="down"' . ($item->round == 'down' ? ' selected' : '') . '>' . __('interface.data_processing.round_down') . '</option>
+            <option value="regular"' . ($item->round == 'regular' ? ' selected' : '') . '>' . __('interface.data_processing.round_regular') . '</option>
+            <option value="none"' . ($item->round == 'none' ? ' selected' : '') . '>' . __('interface.misc.none') . '</option>
         </select>
     </div>
 </div>
 ';
 
                         $availableOptions = '
-<option value="min"' . ($item->process == 'min' ? ' selected' : '') . '>' . __('Minimum') . '</option>
-<option value="median"' . ($item->process == 'median' ? ' selected' : '') . '>' . __('Median') . '</option>
-<option value="average"' . ($item->process == 'average' ? ' selected' : '') . '>' . __('Average') . '</option>
-<option value="max"' . ($item->process == 'max' ? ' selected' : '') . '>' . __('Maximum') . '</option>
-<option value="equals"' . ($item->process == 'equals' ? ' selected' : '') . '>' . __('Equals') . '</option>
+<option value="min"' . ($item->process == 'min' ? ' selected' : '') . '>' . __('interface.data_processing.minimum') . '</option>
+<option value="median"' . ($item->process == 'median' ? ' selected' : '') . '>' . __('interface.data_processing.median') . '</option>
+<option value="average"' . ($item->process == 'average' ? ' selected' : '') . '>' . __('interface.data_processing.average') . '</option>
+<option value="max"' . ($item->process == 'max' ? ' selected' : '') . '>' . __('interface.data_processing.maximum') . '</option>
+<option value="equals"' . ($item->process == 'equals' ? ' selected' : '') . '>' . __('interface.data_processing.equals') . '</option>
 ';
                     }
 
@@ -1690,7 +1690,7 @@ class AdminContractController extends Controller
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-warning">
-                <h5 class="modal-title" id="editTrackerItem' . $item->id . 'Label">' . __('Edit') . ' (#' . $item->id . ')</h5>
+                <h5 class="modal-title" id="editTrackerItem' . $item->id . 'Label">' . __('interface.actions.edit') . ' (#' . $item->id . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -1700,7 +1700,7 @@ class AdminContractController extends Controller
                     <input type="hidden" name="_token" value="' . csrf_token() . '" />
                     <input type="hidden" name="item_id" value="' . $item->id . '" />
                     <div class="form-group row">
-                        <label for="process" class="col-md-4 col-form-label text-md-right">' . __('Process Type') . '</label>
+                        <label for="process" class="col-md-4 col-form-label text-md-right">' . __('interface.data.process_type') . '</label>
 
                         <div class="col-md-8">
                             <select id="process" type="text" class="form-control" name="process">
@@ -1710,28 +1710,28 @@ class AdminContractController extends Controller
                     </div>
                     ' . $numberSetting . '
                     <div class="form-group row">
-                        <label for="step" class="col-md-4 col-form-label text-md-right">' . __('Step') . '</label>
+                        <label for="step" class="col-md-4 col-form-label text-md-right">' . __('interface.data.step') . '</label>
 
                         <div class="col-md-8">
                             <input id="step" type="text" class="form-control" name="step" value="' . $item->step . '">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="amount" class="col-md-4 col-form-label text-md-right">' . __('Amount Per Step') . '</label>
+                        <label for="amount" class="col-md-4 col-form-label text-md-right">' . __('interface.data.amount_per_step') . '</label>
 
                         <div class="col-md-8">
                             <div class="input-group">
                                 <input id="amount" type="number" name="amount" step="0.01" min="0.01" class="form-control" value="' . $item->amount . '">
                                 <div class="input-group-append">
-                                    <span class="input-group-text" id="typeSuffix">' . __('€') . '</span>
+                                    <span class="input-group-text" id="typeSuffix">€</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-warning"><i class="bi bi-pencil-square"></i> ' . __('Edit') . '</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('Close') . '</button>
+                    <button type="submit" class="btn btn-warning"><i class="bi bi-pencil-square"></i> ' . __('interface.actions.edit') . '</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('interface.actions.close') . '</button>
                 </div>
             </form>
         </div>
@@ -1745,7 +1745,7 @@ class AdminContractController extends Controller
                         'process' => $processType,
                         'round' => __(ucfirst($item->round)),
                         'step' => $item->step,
-                        'amount' => number_format($item->amount, 2) . ' ' . __('€'),
+                        'amount' => number_format($item->amount, 2) . ' €',
                         'edit' => $edit,
                         'delete' => '<a href="' . route('admin.contracts.trackers.items.delete', ['id' => $item->tracker_id, 'item_id' => $item->id]) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>',
                     ];
@@ -1782,7 +1782,7 @@ class AdminContractController extends Controller
             'amount' => $request->amount,
         ]);
 
-        return redirect()->back()->with('success', __('Usage tracker item has been added successfully.'));
+        return redirect()->back()->with('success', __('interface.messages.usage_tracker_item_added'));
     }
 
     /**
@@ -1812,10 +1812,10 @@ class AdminContractController extends Controller
                 'amount' => $request->amount,
             ]);
 
-            return redirect()->back()->with('success', __('Usage tracker item has been updated successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.usage_tracker_item_updated'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -1840,6 +1840,6 @@ class AdminContractController extends Controller
             $item->delete();
         }
 
-        return redirect()->back()->with('success', __('Usage tracker item has been deleted successfully.'));
+        return redirect()->back()->with('success', __('interface.messages.usage_tracker_item_deleted'));
     }
 }

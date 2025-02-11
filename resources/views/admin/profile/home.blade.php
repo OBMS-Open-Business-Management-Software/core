@@ -6,19 +6,19 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <i class="bi bi-info-circle"></i> {{ __('User Details') }}
+                        <i class="bi bi-info-circle"></i> {{ __('interface.data.user_details') }}
                     </div>
                     <div class="card-body">
-                        <label class="font-weight-bold">{{ __('Name:') }}</label> {{ Auth::user()->name }}<br>
-                        <label class="font-weight-bold mb-0">{{ __('Email:') }}</label> {{ Auth::user()->email }} <span class="badge badge-success badge-pill">{{ __('Verified') }}</span><br>
+                        <label class="font-weight-bold">{{ __('interface.data.name') }}:</label> {{ Auth::user()->name }}<br>
+                        <label class="font-weight-bold mb-0">{{ __('interface.data.email') }}:</label> {{ Auth::user()->email }} <span class="badge badge-success">{{ __('interface.status.verified') }}</span><br>
                         <br>
-                        <a class="btn btn-primary" data-toggle="modal" data-target="#edit"><i class="bi bi-pencil-square"></i> {{ __('Edit user details') }}</a>
-                        <a class="btn btn-warning" data-toggle="modal" data-target="#password"><i class="bi bi-key-fill"></i> {{ __('Change password') }}</a>
+                        <a class="btn btn-primary" data-toggle="modal" data-target="#edit"><i class="bi bi-pencil-square"></i> {{ __('interface.misc.edit_user_details') }}</a>
+                        <a class="btn btn-warning" data-toggle="modal" data-target="#password"><i class="bi bi-key-fill"></i> {{ __('interface.actions.change_password') }}</a>
                     </div>
                 </div>
                 <div class="card mt-4">
                     <div class="card-header">
-                        <i class="bi bi-qr-code"></i> {{ __('2-Factor Authentication') }}
+                        <i class="bi bi-qr-code"></i> {{ __('interface.misc.2fa_long') }}
                     </div>
                     <div class="card-body">
                         @if(Auth::user()->two_factor_confirmed)
@@ -27,7 +27,7 @@
                                 @method('delete')
                                 <div class="dropdown d-inline-block">
                                     <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
-                                        <i class="bi bi-eye"></i> {{ __('Recovery codes') }}
+                                        <i class="bi bi-eye"></i> {{ __('interface.data.recovery_codes') }}
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         @foreach(Auth::user()->recoveryCodes() as $code)
@@ -35,22 +35,22 @@
                                         @endforeach
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-danger"><i class="bi bi-x-circle"></i> {{ __('Disable 2FA') }}</button>
+                                <button type="submit" class="btn btn-danger"><i class="bi bi-x-circle"></i> {{ __('interface.actions.disable_2fa') }}</button>
                             </form>
                         @elseif(Auth::user()->two_factor_secret)
-                            <p>{{ __('Validate 2FA by scanning the following QRcode and entering the TOTP') }}</p>
+                            <p>{{ __('interface.misc.2fa_validation_notice') }}</p>
                             {!! Auth::user()->twoFactorQrCodeSvg() !!}
                             <form action="{{ route('two-factor.confirm.admin') }}" method="post">
                                 @csrf
                                 <div class="input-group mt-3">
                                     <input name="code" class="form-control" required />
-                                    <button type="submit" class="btn btn-primary"><i class="bi bi-check-circle"></i> {{ __('Validate 2FA') }}</button>
+                                    <button type="submit" class="btn btn-primary"><i class="bi bi-check-circle"></i> {{ __('interface.actions.validate_2fa') }}</button>
                                 </div>
                             </form>
                         @else
                             <form action="{{ route('two-factor.enable') }}" method="post">
                                 @csrf
-                                <button type="submit" class="btn btn-success"><i class="bi bi-check-circle"></i> {{ __('Activate 2FA') }}</button>
+                                <button type="submit" class="btn btn-success"><i class="bi bi-check-circle"></i> {{ __('interface.actions.activate_2fa') }}</button>
                             </form>
                         @endif
                     </div>
@@ -63,7 +63,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="editLabel"><i class="bi bi-pencil-square"></i> {{ __('Edit User Details') }}</h5>
+                    <h5 class="modal-title" id="editLabel"><i class="bi bi-pencil-square"></i> {{ __('interface.misc.edit_user_details') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -88,13 +88,13 @@
                         <div class="form-group row">
                             <div class="col-md-8 offset-md-4">
                                 <div class="alert alert-primary mt-4 mb-1">
-                                    <i class="bi bi-info-circle"></i> The email address only needs to be confirmed if it has changed.
+                                    <i class="bi bi-info-circle"></i> {{ __('interface.misc.email_change_notice') }}
                                 </div>
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Email') }}</label>
+                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.email') }}</label>
 
                             <div class="col-md-8">
                                 <input id="email" type="email" class="form-control @error('name') is-invalid @enderror" name="email" value="{{ old('email') ?? Auth::user()->email }}">
@@ -108,7 +108,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="email-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Email') }}</label>
+                            <label for="email-confirm" class="col-md-4 col-form-label text-md-right">{{ __('interface.actions.confirm_email') }}</label>
 
                             <div class="col-md-8">
                                 <input id="email-confirm" type="email" class="form-control" name="email_confirmation">
@@ -128,7 +128,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header bg-warning">
-                    <h5 class="modal-title" id="passwordLabel"><i class="bi bi-key-fill"></i> {{ __('Change Password') }}</h5>
+                    <h5 class="modal-title" id="passwordLabel"><i class="bi bi-key-fill"></i> {{ __('interface.actions.change_password') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -137,7 +137,7 @@
                     @csrf
                     <div class="modal-body">
                         <div class="form-group row">
-                            <label for="password-current" class="col-md-4 col-form-label text-md-right">{{ __('Current Password') }}</label>
+                            <label for="password-current" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.current_password') }}</label>
 
                             <div class="col-md-8">
                                 <input id="password-current" type="password" class="form-control @error('password_current') is-invalid @enderror" name="password_current">
@@ -151,7 +151,7 @@
                         </div>
 
                         <div class="form-group row mt-5">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('New Password') }}</label>
+                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.new_password') }}</label>
 
                             <div class="col-md-8">
                                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password">
@@ -165,7 +165,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm New Password') }}</label>
+                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.confirm_new_password') }}</label>
 
                             <div class="col-md-8">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation">
@@ -173,7 +173,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-warning"><i class="bi bi-key-fill"></i> {{ __('Change') }}</button>
+                        <button type="submit" class="btn btn-warning"><i class="bi bi-key-fill"></i> {{ __('interface.actions.change') }}</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('interface.actions.close') }}</button>
                     </div>
                 </form>
