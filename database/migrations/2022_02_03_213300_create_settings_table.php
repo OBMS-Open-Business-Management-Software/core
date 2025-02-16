@@ -5,7 +5,6 @@ use Carbon\Carbon;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Str;
 
 class CreateSettingsTable extends Migration
 {
@@ -29,12 +28,12 @@ class CreateSettingsTable extends Migration
         Setting::insert([
             [
                 'setting' => 'app.name',
-                'value' => encrypt('New instance'),
+                'value' => encrypt('OBMS'),
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,
             ], [
                 'setting' => 'app.url',
-                'value' => encrypt('https://localhost:8000'),
+                'value' => encrypt('http://localhost'),
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,
             ], [

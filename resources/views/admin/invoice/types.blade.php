@@ -4,14 +4,14 @@
     <div class="container-fluid my-4">
         <div class="row">
             <div class="col-md-12">
-                <a class="btn btn-primary float-right mb-4" data-toggle="modal" data-target="#add"><i class="bi bi-plus-circle"></i> {{ __('Create Payment Type') }}</a>
+                <a class="btn btn-primary float-right mb-4" data-toggle="modal" data-target="#add"><i class="bi bi-plus-circle"></i> {{ __('interface.payment_type.create') }}</a>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <i class="bi bi-list"></i> {{ __('Payment Types') }}
+                        <i class="bi bi-list"></i> {{ __('interface.data.payment_types') }}
                     </div>
                     <div class="card-body">
                         <table id="categories" class="table mt-4 w-100">
@@ -20,9 +20,9 @@
                                 <td>{{ __('interface.data.id') }}</td>
                                 <td>{{ __('interface.data.name') }}</td>
                                 <td>{{ __('interface.data.description') }}</td>
-                                <td>{{ __('Payment Period') }}</td>
+                                <td>{{ __('interface.data.payment_period') }}</td>
                                 <td>{{ __('interface.data.type') }}</td>
-                                <td>{{ __('Dunning') }}</td>
+                                <td>{{ __('interface.data.dunning') }}</td>
                                 <td>{{ __('interface.actions.view') }}</td>
                                 <td>{{ __('interface.actions.edit') }}</td>
                                 <td>{{ __('interface.actions.delete') }}</td>
@@ -42,7 +42,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="addLabel"><i class="bi bi-plus-circle"></i> {{ __('Create Payment Type') }}</h5>
+                    <h5 class="modal-title" id="addLabel"><i class="bi bi-plus-circle"></i> {{ __('interface.payment_type.create') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -81,9 +81,9 @@
 
                             <div class="col-md-8">
                                 <select id="type" type="text" class="form-control @error('type') is-invalid @enderror" name="type">
-                                    <option value="normal"{{ old('type') == 'normal' ? ' selected' : '' }}>{{ __('Basic') }}</option>
-                                    <option value="auto_revoke"{{ old('type') == 'auto_revoke' ? ' selected' : '' }}>{{ __('Auto-revoke if overdue') }}</option>
-                                    <option value="prepaid"{{ old('type') == 'prepaid' ? ' selected' : '' }}>{{ __('Prepaid receipt') }}</option>
+                                    <option value="normal"{{ old('type') == 'normal' ? ' selected' : '' }}>{{ __('interface.misc.basic') }}</option>
+                                    <option value="auto_revoke"{{ old('type') == 'auto_revoke' ? ' selected' : '' }}>{{ __('interface.misc.autorevoke_overdue') }}</option>
+                                    <option value="prepaid"{{ old('type') == 'prepaid' ? ' selected' : '' }}>{{ __('interface.misc.prepaid_receipt') }}</option>
                                 </select>
 
                                 @error('type')
@@ -94,7 +94,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="period" class="col-md-4 col-form-label text-md-right">{{ __('Payment Period') }}</label>
+                            <label for="period" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.payment_period') }}</label>
 
                             <div class="col-md-8">
                                 <div class="input-group">
@@ -113,7 +113,7 @@
                         </div>
                         <div id="hiddenDunning">
                             <div class="form-group row align-items-center">
-                                <label for="dunning" class="col-md-4 col-form-label text-md-right">{{ __('Enable Dunning') }}</label>
+                                <label for="dunning" class="col-md-4 col-form-label text-md-right">{{ __('interface.actions.enable_dunning') }}</label>
 
                                 <div class="col-md-8">
                                     <input id="dunning" type="checkbox" class="form-control @error('dunning') is-invalid @enderror" name="dunning" value="true">
@@ -127,11 +127,11 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="discount_id" class="col-md-4 col-form-label text-md-right">{{ __('Discount') }}</label>
+                            <label for="discount_id" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.discount') }}</label>
 
                             <div class="col-md-8">
                                 <select id="discount_id" type="text" class="form-control @error('discount_id') is-invalid @enderror" name="discount_id">
-                                    <option value=""{{ empty(old('discount_id')) ? ' selected' : '' }}>{{ __('None') }}</option>
+                                    <option value=""{{ empty(old('discount_id')) ? ' selected' : '' }}>{{ __('interface.misc.none') }}</option>
                                     @foreach ($discounts as $discount)
                                         <option value="{{ $discount->id }}"{{ old('discount_id') == $discount->id ? ' selected' : '' }}>{{ __($discount->name) }}</option>
                                     @endforeach

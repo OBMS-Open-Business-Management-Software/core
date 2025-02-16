@@ -98,8 +98,8 @@ class AdminCustomerController extends Controller
                     return (object) [
                         'id' => $user->number,
                         'name' => $user->realName,
-                        'type' => $user->validProfile ? '<span class="badge badge-success badge-pill">' . __('Full') . '</span>' : '<span class="badge badge-warning badge-pill">' . __('Prepaid') . '</span>',
-                        'status' => $user->locked ? '<span class="badge badge-warning badge-pill">' . __('Locked') . '</span>' : '<span class="badge badge-success badge-pill">' . __('Unlocked') . '</span>',
+                        'type' => $user->validProfile ? '<span class="badge badge-success">' . __('interface.data.full') . '</span>' : '<span class="badge badge-warning">' . __('interface.misc.prepaid') . '</span>',
+                        'status' => $user->locked ? '<span class="badge badge-warning">' . __('interface.status.locked') . '</span>' : '<span class="badge badge-success">' . __('interface.status.unlocked') . '</span>',
                         'view' => '<a href="' . route('admin.customers.profile', $user->id) . '" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>',
                     ];
                 })
@@ -131,7 +131,7 @@ class AdminCustomerController extends Controller
             ]);
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -156,10 +156,10 @@ class AdminCustomerController extends Controller
                 'two_factor_confirmed' => false,
             ]);
 
-            return redirect()->back()->with('success', __('The two factor authentication has been removed successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.2fa_removed'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -185,13 +185,13 @@ class AdminCustomerController extends Controller
             ]);
 
             if ($status) {
-                return redirect()->back()->with('success', __('The customer account has been locked successfully.'));
+                return redirect()->back()->with('success', __('interface.messages.customer_locked'));
             } else {
-                return redirect()->back()->with('success', __('The customer account has been unlocked successfully.'));
+                return redirect()->back()->with('success', __('interface.messages.customer_unlocked'));
             }
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -231,10 +231,10 @@ class AdminCustomerController extends Controller
                 $user->sendEmailVerificationNotification();
             }
 
-            return redirect()->route('admin.customers.profile', $user->id)->with('success', __('The customer account has been created successfully.'));
+            return redirect()->route('admin.customers.profile', $user->id)->with('success', __('interface.messages.customer_created'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -277,10 +277,10 @@ class AdminCustomerController extends Controller
                 ]);
             }
 
-            return redirect()->back()->with('success', __('The user details have been changed successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.profile_updated'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -318,11 +318,11 @@ class AdminCustomerController extends Controller
                     'vat_id' => $request->vat_id ?? null,
                 ]);
 
-                return redirect()->back()->with('success', __('The profile has been updated successfully.'));
+                return redirect()->back()->with('success', __('interface.messages.profile_details_completed'));
             }
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -351,10 +351,10 @@ class AdminCustomerController extends Controller
                 'password' => Hash::make($request->password),
             ]);
 
-            return redirect()->back()->with('success', __('The password has been changed successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.password_changed'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -437,10 +437,10 @@ class AdminCustomerController extends Controller
                 $email->sendEmailVerificationNotification();
             }
 
-            return redirect()->back()->with('success', __('The profile has been completed successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.profile_completed'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -510,10 +510,10 @@ class AdminCustomerController extends Controller
                     ->transform(function (ProfileEmail $email) use ($user, $totalCount) {
                         switch ($email->email_verified_at) {
                             case ! null:
-                                $status = '<span class="badge badge-success badge-pill">' . __('Verified') . '</span>';
+                                $status = '<span class="badge badge-success">' . __('interface.status.verified') . '</span>';
                                 break;
                             default:
-                                $status = '<span class="badge badge-danger badge-pill">' . __('Unverified') . '</span>';
+                                $status = '<span class="badge badge-danger">' . __('interface.status.unverified') . '</span>';
                                 break;
                         }
 
@@ -523,7 +523,7 @@ class AdminCustomerController extends Controller
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-warning">
-                <h5 class="modal-title" id="editEmail' . $email->id . 'Label">' . __('Edit') . ' (' . $email->email . ')</h5>
+                <h5 class="modal-title" id="editEmail' . $email->id . 'Label">' . __('interface.actions.edit') . ' (' . $email->email . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -534,28 +534,28 @@ class AdminCustomerController extends Controller
                     <input type="hidden" name="email_id" value="' . $email->id . '" />
                     <input type="hidden" name="user_id" value="' . $user->id . '" />
                     <div class="form-group row">
-                        <label for="all" class="col-md-4 col-form-label text-md-right">' . __('All') . '</label>
+                        <label for="all" class="col-md-4 col-form-label text-md-right">' . __('interface.misc.all') . '</label>
 
                         <div class="col-md-8">
                             <input id="all" type="radio" class="form-control" name="email_type_' . $email->id . '" value="all" ' . (($email->type ?? null) == 'all' ? 'checked' : '') . '>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="billing" class="col-md-4 col-form-label text-md-right">' . __('Billing') . '</label>
+                        <label for="billing" class="col-md-4 col-form-label text-md-right">' . __('interface.data.billing') . '</label>
 
                         <div class="col-md-8">
                             <input id="billing" type="radio" class="form-control" name="email_type_' . $email->id . '" value="billing" ' . (($email->type ?? null) == 'billing' ? 'checked' : '') . ' ' . ($totalCount <= 1 ? 'disabled' : '') . '>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="contact" class="col-md-4 col-form-label text-md-right">' . __('Contact') . '</label>
+                        <label for="contact" class="col-md-4 col-form-label text-md-right">' . __('interface.data.contact') . '</label>
 
                         <div class="col-md-8">
                             <input id="contact" type="radio" class="form-control" name="email_type_' . $email->id . '" value="contact" ' . (($email->type ?? null) == 'contact' ? 'checked' : '') . ' ' . ($totalCount <= 1 ? 'disabled' : '') . '>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="none" class="col-md-4 col-form-label text-md-right">' . __('None') . '</label>
+                        <label for="none" class="col-md-4 col-form-label text-md-right">' . __('interface.misc.none') . '</label>
 
                         <div class="col-md-8">
                             <input id="none" type="radio" class="form-control" name="email_type_' . $email->id . '" value="none" ' . (($email->type ?? '') == '' ? 'checked' : '') . ' ' . ($totalCount <= 1 ? 'disabled' : '') . '>
@@ -563,8 +563,8 @@ class AdminCustomerController extends Controller
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-warning"><i class="bi bi-pencil-square"></i> ' . __('Edit') . '</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('Close') . '</button>
+                    <button type="submit" class="btn btn-warning"><i class="bi bi-pencil-square"></i> ' . __('interface.actions.edit') . '</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('interface.actions.close') . '</button>
                 </div>
             </form>
         </div>
@@ -574,7 +574,7 @@ class AdminCustomerController extends Controller
 
                         return (object) [
                             'email' => $email->email,
-                            'type' => ! empty($email->type) ? __(ucfirst($email->type)) : __('None'),
+                            'type' => ! empty($email->type) ? __(ucfirst($email->type)) : __('interface.misc.none'),
                             'status' => $status,
                             'resend' => empty($email->email_verified_at) ? '<a href="' . route('admin.customers.profile.email.resend', ['user_id' => $user->id, 'id' => $email->id]) . '" class="btn btn-primary btn-sm"><i class="bi bi-envelope"></i></a>' : '<button type="button" class="btn btn-primary btn-sm" disabled><i class="bi bi-envelope"></i></button>',
                             'edit' => $edit,
@@ -625,11 +625,11 @@ class AdminCustomerController extends Controller
                     'type' => $request->type,
                 ]);
 
-                return redirect()->back()->with('success', __('The email address has been added to the profile successfully.'));
+                return redirect()->back()->with('success', __('interface.messages.profile_email_added'));
             }
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -703,12 +703,12 @@ class AdminCustomerController extends Controller
                         'type' => $request->{'email_type_' . $email->id},
                     ]);
 
-                    return redirect()->back()->with('success', __('The email address has been updated successfully.'));
+                    return redirect()->back()->with('success', __('interface.messages.profile_email_updated'));
                 }
             }
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -742,11 +742,11 @@ class AdminCustomerController extends Controller
             ) {
                 $email->delete();
 
-                return redirect()->back()->with('success', __('The email address has been deleted successfully.'));
+                return redirect()->back()->with('success', __('interface.messages.profile_email_deleted'));
             }
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -779,11 +779,11 @@ class AdminCustomerController extends Controller
             ) {
                 $email->sendEmailVerificationNotification();
 
-                return redirect()->back()->with('success', __('The verification email has been resent successfully.'));
+                return redirect()->back()->with('success', __('interface.messages.email_verification_resent'));
             }
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -854,7 +854,7 @@ class AdminCustomerController extends Controller
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-warning">
-                <h5 class="modal-title" id="editPhone' . $phone->id . 'Label">' . __('Edit') . ' (' . $phone->phone . ')</h5>
+                <h5 class="modal-title" id="editPhone' . $phone->id . 'Label">' . __('interface.actions.edit') . ' (' . $phone->phone . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -865,28 +865,28 @@ class AdminCustomerController extends Controller
                     <input type="hidden" name="phone_id" value="' . $phone->id . '" />
                     <input type="hidden" name="user_id" value="' . $user->id . '" />
                     <div class="form-group row">
-                        <label for="all" class="col-md-4 col-form-label text-md-right">' . __('All') . '</label>
+                        <label for="all" class="col-md-4 col-form-label text-md-right">' . __('interface.misc.all') . '</label>
 
                         <div class="col-md-8">
                             <input id="all" type="radio" class="form-control" name="phone_type_' . $phone->id . '" value="all" ' . (($phone->type ?? null) == 'all' ? 'checked' : '') . '>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="billing" class="col-md-4 col-form-label text-md-right">' . __('Billing') . '</label>
+                        <label for="billing" class="col-md-4 col-form-label text-md-right">' . __('interface.data.billing') . '</label>
 
                         <div class="col-md-8">
                             <input id="billing" type="radio" class="form-control" name="phone_type_' . $phone->id . '" value="billing" ' . (($phone->type ?? null) == 'billing' ? 'checked' : '') . ' ' . ($totalCount <= 1 ? 'disabled' : '') . '>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="contact" class="col-md-4 col-form-label text-md-right">' . __('Contact') . '</label>
+                        <label for="contact" class="col-md-4 col-form-label text-md-right">' . __('interface.data.contact') . '</label>
 
                         <div class="col-md-8">
                             <input id="contact" type="radio" class="form-control" name="phone_type_' . $phone->id . '" value="contact" ' . (($phone->type ?? null) == 'contact' ? 'checked' : '') . ' ' . ($totalCount <= 1 ? 'disabled' : '') . '>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="none" class="col-md-4 col-form-label text-md-right">' . __('None') . '</label>
+                        <label for="none" class="col-md-4 col-form-label text-md-right">' . __('interface.misc.none') . '</label>
 
                         <div class="col-md-8">
                             <input id="none" type="radio" class="form-control" name="phone_type_' . $phone->id . '" value="none" ' . (($phone->type ?? '') == '' ? 'checked' : '') . ' ' . ($totalCount <= 1 ? 'disabled' : '') . '>
@@ -894,8 +894,8 @@ class AdminCustomerController extends Controller
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-warning"><i class="bi bi-pencil-square"></i> ' . __('Edit') . '</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('Close') . '</button>
+                    <button type="submit" class="btn btn-warning"><i class="bi bi-pencil-square"></i> ' . __('interface.actions.edit') . '</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('interface.actions.close') . '</button>
                 </div>
             </form>
         </div>
@@ -905,7 +905,7 @@ class AdminCustomerController extends Controller
 
                         return (object) [
                             'phone' => $phone->phone,
-                            'type' => ! empty($phone->type) ? __(ucfirst($phone->type)) : __('None'),
+                            'type' => ! empty($phone->type) ? __(ucfirst($phone->type)) : __('interface.misc.none'),
                             'edit' => $edit,
                             'delete' => $totalCount > 1 && empty($phone->type) ? '<a href="' . route('admin.customers.profile.phone.delete', ['user_id' => $user->id, 'id' => $phone->id]) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>' : '<button type="button" class="btn btn-danger btn-sm" disabled><i class="bi bi-trash"></i></button>',
                         ];
@@ -954,11 +954,11 @@ class AdminCustomerController extends Controller
                     'type' => $request->type,
                 ]);
 
-                return redirect()->back()->with('success', __('The phone number has been added to the profile successfully.'));
+                return redirect()->back()->with('success', __('interface.messages.phone_number_added'));
             }
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -1032,12 +1032,12 @@ class AdminCustomerController extends Controller
                         'type' => $request->{'phone_type_' . $phone->id},
                     ]);
 
-                    return redirect()->back()->with('success', __('The phone number has been updated successfully.'));
+                    return redirect()->back()->with('success', __('interface.messages.phone_number_updated'));
                 }
             }
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -1059,9 +1059,9 @@ class AdminCustomerController extends Controller
 
         if (
             ! empty(
-            $user = User::where('id', '=', $user_id)
-                ->where('role', '=', 'customer')
-                ->first()
+                $user = User::where('id', '=', $user_id)
+                    ->where('role', '=', 'customer')
+                    ->first()
             )
         ) {
             if (
@@ -1071,11 +1071,11 @@ class AdminCustomerController extends Controller
             ) {
                 $phone->delete();
 
-                return redirect()->back()->with('success', __('The phone number has been deleted successfully.'));
+                return redirect()->back()->with('success', __('interface.messages.phone_number_deleted'));
             }
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -1151,7 +1151,7 @@ class AdminCustomerController extends Controller
                     ->get()
                     ->transform(function (ProfileAddress $address) use ($user, $totalCount) {
                         $addition = ! empty($address->address->addition) ? $address->address->addition . '<br>' : '';
-                        $addressString = $address->address->street . ' ' . $address->address->housenumber . '<br>' . $addition . $address->address->postalcode . ' ' . $address->address->city . '<br>' . $addition . $address->address->state . ' ' . ($address->address->country->name ?? __('Unknown')) . '<br>';
+                        $addressString = $address->address->street . ' ' . $address->address->housenumber . '<br>' . $addition . $address->address->postalcode . ' ' . $address->address->city . '<br>' . $addition . $address->address->state . ' ' . ($address->address->country->name ?? __('interface.status.unknown')) . '<br>';
 
                         $edit = '
 <a class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editAddress' . $address->id . '"><i class="bi bi-pencil-square"></i></a>
@@ -1159,7 +1159,7 @@ class AdminCustomerController extends Controller
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-warning">
-                <h5 class="modal-title" id="editAddress' . $address->id . 'Label">' . __('Edit') . ' (#' . $address->id . ')</h5>
+                <h5 class="modal-title" id="editAddress' . $address->id . 'Label">' . __('interface.actions.edit') . ' (#' . $address->id . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -1170,28 +1170,28 @@ class AdminCustomerController extends Controller
                     <input type="hidden" name="address_link_id" value="' . $address->id . '" />
                     <input type="hidden" name="user_id" value="' . $user->id . '" />
                     <div class="form-group row">
-                        <label for="all" class="col-md-4 col-form-label text-md-right">' . __('All') . '</label>
+                        <label for="all" class="col-md-4 col-form-label text-md-right">' . __('interface.misc.all') . '</label>
 
                         <div class="col-md-8">
                             <input id="all" type="radio" class="form-control" name="address_type_' . $address->id . '" value="all" ' . (($address->type ?? null) == 'all' ? 'checked' : '') . '>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="billing" class="col-md-4 col-form-label text-md-right">' . __('Billing') . '</label>
+                        <label for="billing" class="col-md-4 col-form-label text-md-right">' . __('interface.data.billing') . '</label>
 
                         <div class="col-md-8">
                             <input id="billing" type="radio" class="form-control" name="address_type_' . $address->id . '" value="billing" ' . (($address->type ?? null) == 'billing' ? 'checked' : '') . ' ' . ($totalCount <= 1 ? 'disabled' : '') . '>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="contact" class="col-md-4 col-form-label text-md-right">' . __('Contact') . '</label>
+                        <label for="contact" class="col-md-4 col-form-label text-md-right">' . __('interface.data.contact') . '</label>
 
                         <div class="col-md-8">
                             <input id="contact" type="radio" class="form-control" name="address_type_' . $address->id . '" value="contact" ' . (($address->type ?? null) == 'contact' ? 'checked' : '') . ' ' . ($totalCount <= 1 ? 'disabled' : '') . '>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="none" class="col-md-4 col-form-label text-md-right">' . __('None') . '</label>
+                        <label for="none" class="col-md-4 col-form-label text-md-right">' . __('interface.misc.none') . '</label>
 
                         <div class="col-md-8">
                             <input id="none" type="radio" class="form-control" name="address_type_' . $address->id . '" value="none" ' . (($address->type ?? '') == '' ? 'checked' : '') . ' ' . ($totalCount <= 1 ? 'disabled' : '') . '>
@@ -1199,8 +1199,8 @@ class AdminCustomerController extends Controller
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-warning"><i class="bi bi-pencil-square"></i> ' . __('Edit') . '</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('Close') . '</button>
+                    <button type="submit" class="btn btn-warning"><i class="bi bi-pencil-square"></i> ' . __('interface.actions.edit') . '</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('interface.actions.close') . '</button>
                 </div>
             </form>
         </div>
@@ -1210,7 +1210,7 @@ class AdminCustomerController extends Controller
 
                         return (object) [
                             'address' => $addressString,
-                            'type' => ! empty($address->type) ? __(ucfirst($address->type)) : __('None'),
+                            'type' => ! empty($address->type) ? __(ucfirst($address->type)) : __('interface.misc.none'),
                             'edit' => $edit,
                             'delete' => $totalCount > 1 && empty($address->type) ? '<a href="' . route('admin.customers.profile.address.delete', ['user_id' => $user->id, 'id' => $address->id]) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>' : '<button type="button" class="btn btn-danger btn-sm" disabled><i class="bi bi-trash"></i></button>',
                         ];
@@ -1275,11 +1275,11 @@ class AdminCustomerController extends Controller
                     'type' => $request->type,
                 ]);
 
-                return redirect()->back()->with('success', __('The postal address has been added to the profile successfully.'));
+                return redirect()->back()->with('success', __('interface.messages.postal_address_added'));
             }
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -1353,12 +1353,12 @@ class AdminCustomerController extends Controller
                         'type' => $request->{'address_type_' . $address->id},
                     ]);
 
-                    return redirect()->back()->with('success', __('The postal address has been updated successfully.'));
+                    return redirect()->back()->with('success', __('interface.messages.postal_address_updated'));
                 }
             }
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -1393,11 +1393,11 @@ class AdminCustomerController extends Controller
                 $address->address()->delete();
                 $address->delete();
 
-                return redirect()->back()->with('success', __('The postal address has been deleted successfully.'));
+                return redirect()->back()->with('success', __('interface.messages.postal_address_deleted'));
             }
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -1470,7 +1470,7 @@ class AdminCustomerController extends Controller
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-primary">
-                <h5 class="modal-title text-white" id="sepaMandate' . $account->id . 'Label">' . __('Accept SEPA Mandate') . ' (' . $account->iban . ')</h5>
+                <h5 class="modal-title text-white" id="sepaMandate' . $account->id . 'Label">' . __('interface.actions.accept_sepa_mandate') . ' (' . $account->iban . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -1484,10 +1484,10 @@ class AdminCustomerController extends Controller
                         <div class="col-md-2 text-md-right">
                             <input id="accept" type="checkbox" class="form-control" name="accept" value="true">
                         </div>
-                        <label for="accept" class="col-md-10 col-form-label">' . __('I hereby authorize the IPvX UG (haftungsbeschränkt), Westring 1, 33378 Rheda-Wiedenbrück, Nordrhein-Westphalia, Germany to collect any outstanding amounts from my account.') . '</label>
+                        <label for="accept" class="col-md-10 col-form-label">' . __('interface.misc.sepa_confirmation') . '</label>
                     </div>
                     <div class="form-group row">
-                        <label for="name" class="col-md-3 col-form-label text-md-right">' . __('Signature') . '*</label>
+                        <label for="name" class="col-md-3 col-form-label text-md-right">' . __('interface.data.signature') . '*</label>
 
                         <div class="col-md-9">
                             <input id="name" type="text" class="form-control" name="name">
@@ -1495,8 +1495,8 @@ class AdminCustomerController extends Controller
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary"><i class="bi bi-check-circle"></i> ' . __('Accept') . '</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('Close') . '</button>
+                    <button type="submit" class="btn btn-primary"><i class="bi bi-check-circle"></i> ' . __('interface.actions.accept') . '</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('interface.actions.close') . '</button>
                 </div>
             </form>
         </div>
@@ -1563,11 +1563,11 @@ class AdminCustomerController extends Controller
                     'primary' => $primary
                 ]);
 
-                return redirect()->back()->with('success', __('The postal address has been added to the profile successfully.'));
+                return redirect()->back()->with('success', __('interface.messages.bank_added'));
             }
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -1604,11 +1604,11 @@ class AdminCustomerController extends Controller
                     'sepa_mandate_signature' => Hash::make($request->name),
                 ]);
 
-                return redirect()->back()->with('success', __('The bank account SEPA mandate has been digitally signed successfully.'));
+                return redirect()->back()->with('success', __('interface.messages.bank_sepa_signed'));
             }
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -1651,11 +1651,11 @@ class AdminCustomerController extends Controller
                     'primary' => true,
                 ]);
 
-                return redirect()->back()->with('success', __('The bank account has been set as primary successfully.'));
+                return redirect()->back()->with('success', __('interface.messages.bank_primary'));
             }
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -1688,11 +1688,11 @@ class AdminCustomerController extends Controller
             ) {
                 $account->delete();
 
-                return redirect()->back()->with('success', __('The bank account has been deleted successfully.'));
+                return redirect()->back()->with('success', __('interface.messages.bank_deleted'));
             }
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -1777,7 +1777,7 @@ class AdminCustomerController extends Controller
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-warning">
-                <h5 class="modal-title" id="editTransaction' . $entry->id . 'Label">' . __('Edit') . ' (#' . $entry->id . ')</h5>
+                <h5 class="modal-title" id="editTransaction' . $entry->id . 'Label">' . __('interface.actions.edit') . ' (#' . $entry->id . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -1787,35 +1787,35 @@ class AdminCustomerController extends Controller
                 <input type="hidden" name="booking_id" value="' . $entry->id . '" />
                 <div class="modal-body">
                     <div class="form-group row">
-                        <label for="contract_id" class="col-md-4 col-form-label text-md-right">' . __('Contract ID') . '</label>
+                        <label for="contract_id" class="col-md-4 col-form-label text-md-right">' . __('interface.data.contract_id') . '</label>
 
                         <div class="col-md-8">
                             <input id="contract_id" type="number" class="form-control" name="contract_id" value="' . $entry->contract_id . '">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="invoice_id" class="col-md-4 col-form-label text-md-right">' . __('Invoice ID') . '</label>
+                        <label for="invoice_id" class="col-md-4 col-form-label text-md-right">' . __('interface.data.invoice_id') . '</label>
 
                         <div class="col-md-8">
                             <input id="invoice_id" type="number" class="form-control" name="invoice_id" value="' . $entry->invoice_id . '">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="amount" class="col-md-4 col-form-label text-md-right">' . __('Amount') . '</label>
+                        <label for="amount" class="col-md-4 col-form-label text-md-right">' . __('interface.data.amount') . '</label>
 
                         <div class="col-md-8">
                             <div class="input-group">
                                 <input id="amount" type="number" step="0.01" class="form-control" name="amount" value="' . $entry->amount . '">
                                 <div class="input-group-append">
-                                    <span class="input-group-text" id="basic-addon2">' . __('€') . '</span>
+                                    <span class="input-group-text" id="basic-addon2">€</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-warning"><i class="bi bi-pencil-square"></i> ' . __('Edit') . '</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('Close') . '</button>
+                    <button type="submit" class="btn btn-warning"><i class="bi bi-pencil-square"></i> ' . __('interface.actions.edit') . '</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('interface.actions.close') . '</button>
                 </div>
             </form>
         </div>
@@ -1825,11 +1825,11 @@ class AdminCustomerController extends Controller
 
                         return (object) [
                             'date' => $entry->created_at->format('d.m.Y, H:i'),
-                            'contract_id' => ! empty($contract = $entry->contract) ? $contract->number : __('N/A'),
-                            'invoice_id' => ! empty($invoice = $entry->invoice) ? $invoice->number : __('N/A'),
-                            'amount' => number_format($entry->amount, 2) . ' ' . __('€'),
-                            'transaction_method' => empty($transactionMethod) ? (empty($entry->creator) ? '<i class="bi bi-robot mr-2"></i> ' . __('System') : '<i class="bi bi-pencil-square mr-2"></i> ' . __('Manual') . ' (' . $entry->creator->realName . ')') : $entry->transaction_method,
-                            'transaction_id' => (empty($transactionId = $entry->transaction_id) ? __('N/A') : $transactionId) . ' (#' . $entry->id . ')',
+                            'contract_id' => ! empty($contract = $entry->contract) ? $contract->number : __('interface.misc.not_available'),
+                            'invoice_id' => ! empty($invoice = $entry->invoice) ? $invoice->number : __('interface.misc.not_available'),
+                            'amount' => number_format($entry->amount, 2) . ' €',
+                            'transaction_method' => empty($transactionMethod) ? (empty($entry->creator) ? '<i class="bi bi-robot mr-2"></i> ' . __('interface.data.system') : '<i class="bi bi-pencil-square mr-2"></i> ' . __('interface.data.manual') . ' (' . $entry->creator->realName . ')') : $entry->transaction_method,
+                            'transaction_id' => (empty($transactionId = $entry->transaction_id) ? __('interface.misc.not_available') : $transactionId) . ' (#' . $entry->id . ')',
                             'edit' => $edit,
                             'delete' => '<a href="' . route('admin.customers.transactions.delete', ['user_id' => $entry->user_id, 'id' => $entry->id]) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>',
                         ];
@@ -1863,7 +1863,7 @@ class AdminCustomerController extends Controller
             'amount' => $request->amount,
         ]);
 
-        return redirect()->back()->with('success', __('Transaction has been added successfully.'));
+        return redirect()->back()->with('success', __('interface.messages.transaction_added'));
     }
 
     /**
@@ -1893,10 +1893,10 @@ class AdminCustomerController extends Controller
                 'amount' => $request->amount,
             ]);
 
-            return redirect()->back()->with('success', __('Contract has been updated successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.transaction_updated'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -1920,9 +1920,9 @@ class AdminCustomerController extends Controller
         if (! empty($entry = PrepaidHistory::find($id))) {
             $entry->delete();
 
-            return redirect()->back()->with('success', __('Transaction has been deleted successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.transaction_deleted'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 }

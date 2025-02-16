@@ -200,7 +200,7 @@ class TrackerInstance extends Model
 
                         $amount += $factor * $item->amount;
 
-                        $description .= '<li>' . __('Tracker Item :id', ['id' => $item->id]) . ' (' . __('Value: :value', ['value' => $value]) . ' | ' . __('Price: :price €', ['price' => number_format($amount, 2)]) . ')</li>';
+                        $description .= '<li>' . __('interface.data.tracker_item_id', ['id' => $item->id]) . ' (' . __('interface.data.value_value', ['value' => $value]) . ' | ' . __('interface.data.price_price', ['price' => number_format($amount, 2)]) . ')</li>';
 
                         break;
                 }

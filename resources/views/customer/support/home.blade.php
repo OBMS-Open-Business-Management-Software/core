@@ -4,19 +4,19 @@
     <div class="container-fluid my-4">
         <div class="row">
             <div class="col-md-12">
-                <a class="btn btn-primary float-right mb-4" data-toggle="modal" data-target="#add"><i class="bi bi-pencil-square"></i> {{ __('Create Ticket') }}</a>
+                <a class="btn btn-primary float-right mb-4" data-toggle="modal" data-target="#add"><i class="bi bi-pencil-square"></i> {{ __('interface.support.create') }}</a>
                 <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link active" id="pills-open-tab" data-toggle="pill" href="#pills-open" role="tab" aria-controls="pills-open" aria-selected="true">{{ __('Open') }}</a>
+                        <a class="nav-link active" id="pills-open-tab" data-toggle="pill" href="#pills-open" role="tab" aria-controls="pills-open" aria-selected="true">{{ __('interface.status.open') }}</a>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="pills-closed-tab" data-toggle="pill" href="#pills-closed" role="tab" aria-controls="pills-closed" aria-selected="false">{{ __('Closed') }}</a>
+                        <a class="nav-link" id="pills-closed-tab" data-toggle="pill" href="#pills-closed" role="tab" aria-controls="pills-closed" aria-selected="false">{{ __('interface.status.closed') }}</a>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="pills-unknown-tab" data-toggle="pill" href="#pills-unknown" role="tab" aria-controls="pills-unknown" aria-selected="false">{{ __('Locked') }}</a>
+                        <a class="nav-link" id="pills-unknown-tab" data-toggle="pill" href="#pills-unknown" role="tab" aria-controls="pills-unknown" aria-selected="false">{{ __('interface.status.locked') }}</a>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="pills-all-tab" data-toggle="pill" href="#pills-all" role="tab" aria-controls="pills-all" aria-selected="false">{{ __('All') }}</a>
+                        <a class="nav-link" id="pills-all-tab" data-toggle="pill" href="#pills-all" role="tab" aria-controls="pills-all" aria-selected="false">{{ __('interface.misc.all') }}</a>
                     </li>
                 </ul>
             </div>
@@ -27,17 +27,17 @@
                     <div class="tab-pane fade show active" id="pills-open" role="tabpanel" aria-labelledby="pills-open-tab">
                         <div class="card">
                             <div class="card-header">
-                                <i class="bi bi-question-circle"></i> {{ __('Open') }}
+                                <i class="bi bi-question-circle"></i> {{ __('interface.status.open') }}
                             </div>
                             <div class="card-body">
                                 <table id="open-tickets" class="table mt-4 w-100">
                                     <thead>
                                     <tr>
                                         <td>{{ __('interface.data.id') }}</td>
-                                        <td>{{ __('Subject') }}</td>
-                                        <td>{{ __('Category') }}</td>
-                                        <td>{{ __('Status') }}</td>
-                                        <td>{{ __('Priority') }}</td>
+                                        <td>{{ __('interface.data.subject') }}</td>
+                                        <td>{{ __('interface.data.category') }}</td>
+                                        <td>{{ __('interface.data.status') }}</td>
+                                        <td>{{ __('interface.data.priority') }}</td>
                                         <td>{{ __('interface.actions.view') }}</td>
                                     </tr>
                                     </thead>
@@ -51,17 +51,17 @@
                     <div class="tab-pane fade" id="pills-closed" role="tabpanel" aria-labelledby="pills-closed-tab">
                         <div class="card">
                             <div class="card-header">
-                                <i class="bi bi-check-circle"></i> {{ __('Closed') }}
+                                <i class="bi bi-check-circle"></i> {{ __('interface.status.closed') }}
                             </div>
                             <div class="card-body">
                                 <table id="closed-tickets" class="table mt-4 w-100">
                                     <thead>
                                     <tr>
                                         <td>{{ __('interface.data.id') }}</td>
-                                        <td>{{ __('Subject') }}</td>
-                                        <td>{{ __('Category') }}</td>
-                                        <td>{{ __('Status') }}</td>
-                                        <td>{{ __('Priority') }}</td>
+                                        <td>{{ __('interface.data.subject') }}</td>
+                                        <td>{{ __('interface.data.category') }}</td>
+                                        <td>{{ __('interface.data.status') }}</td>
+                                        <td>{{ __('interface.data.priority') }}</td>
                                         <td>{{ __('interface.actions.view') }}</td>
                                     </tr>
                                     </thead>
@@ -75,17 +75,17 @@
                     <div class="tab-pane fade" id="pills-unknown" role="tabpanel" aria-labelledby="pills-unknown-tab">
                         <div class="card">
                             <div class="card-header">
-                                <i class="bi bi-exclamation-circle"></i> {{ __('Locked') }}
+                                <i class="bi bi-exclamation-circle"></i> {{ __('interface.status.locked') }}
                             </div>
                             <div class="card-body">
                                 <table id="locked-tickets" class="table mt-4 w-100">
                                     <thead>
                                     <tr>
                                         <td>{{ __('interface.data.id') }}</td>
-                                        <td>{{ __('Subject') }}</td>
-                                        <td>{{ __('Category') }}</td>
-                                        <td>{{ __('Status') }}</td>
-                                        <td>{{ __('Priority') }}</td>
+                                        <td>{{ __('interface.data.subject') }}</td>
+                                        <td>{{ __('interface.data.category') }}</td>
+                                        <td>{{ __('interface.data.status') }}</td>
+                                        <td>{{ __('interface.data.priority') }}</td>
                                         <td>{{ __('interface.actions.view') }}</td>
                                     </tr>
                                     </thead>
@@ -99,17 +99,17 @@
                     <div class="tab-pane fade" id="pills-all" role="tabpanel" aria-labelledby="pills-all-tab">
                         <div class="card">
                             <div class="card-header">
-                                <i class="bi bi-info-circle"></i> {{ __('All') }}
+                                <i class="bi bi-info-circle"></i> {{ __('interface.misc.all') }}
                             </div>
                             <div class="card-body">
                                 <table id="all-tickets" class="table mt-4 w-100">
                                     <thead>
                                     <tr>
                                         <td>{{ __('interface.data.id') }}</td>
-                                        <td>{{ __('Subject') }}</td>
-                                        <td>{{ __('Category') }}</td>
-                                        <td>{{ __('Status') }}</td>
-                                        <td>{{ __('Priority') }}</td>
+                                        <td>{{ __('interface.data.subject') }}</td>
+                                        <td>{{ __('interface.data.category') }}</td>
+                                        <td>{{ __('interface.data.status') }}</td>
+                                        <td>{{ __('interface.data.priority') }}</td>
                                         <td>{{ __('interface.actions.view') }}</td>
                                     </tr>
                                     </thead>
@@ -129,7 +129,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="addLabel"><i class="bi bi-pencil-square"></i> {{ __('Create Ticket') }}</h5>
+                    <h5 class="modal-title" id="addLabel"><i class="bi bi-pencil-square"></i> {{ __('interface.support.create') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -138,7 +138,7 @@
                     @csrf
                     <div class="modal-body">
                         <div class="form-group row">
-                            <label for="subject" class="col-md-4 col-form-label text-md-right">{{ __('Subject') }}</label>
+                            <label for="subject" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.subject') }}</label>
 
                             <div class="col-md-8">
                                 <input id="subject" type="text" class="form-control @error('subject') is-invalid @enderror" name="subject" value="{{ old('subject') }}">
@@ -151,11 +151,11 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="subject" class="col-md-4 col-form-label text-md-right">{{ __('Category') }}</label>
+                            <label for="subject" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.category') }}</label>
 
                             <div class="col-md-8">
                                 <select id="category_id" class="form-control @error('category_id') is-invalid @enderror" name="category_id">
-                                    <option value="0"{{ old('category_id') == '0' ? ' selected' : '' }}>{{ __('Uncategorized') }}</option>
+                                    <option value="0"{{ old('category_id') == '0' ? ' selected' : '' }}>{{ __('interface.status.uncategorized') }}</option>
                                     @foreach ($categories as $catgory)
                                         <option value="{{ $catgory->id }}"{{ old('category_id') == $catgory->id ? ' selected' : '' }}>{{ $catgory->name }}</option>
                                     @endforeach
@@ -169,14 +169,14 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="subject" class="col-md-4 col-form-label text-md-right">{{ __('Priority') }}</label>
+                            <label for="subject" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.priority') }}</label>
 
                             <div class="col-md-8">
                                 <select id="priority" class="form-control @error('priority') is-invalid @enderror" name="priority">
-                                    <option value="low"{{ old('priority') == 'low' ? ' selected' : '' }}>{{ __('Low') }}</option>
-                                    <option value="medium"{{ old('priority') == 'medium' ? ' selected' : '' }}>{{ __('Medium') }}</option>
-                                    <option value="high"{{ old('priority') == 'high' ? ' selected' : '' }}>{{ __('High') }}</option>
-                                    <option value="emergency"{{ old('priority') == 'emergency' ? ' selected' : '' }}>{{ __('Emergency') }}</option>
+                                    <option value="low"{{ old('priority') == 'low' ? ' selected' : '' }}>{{ __('interface.priorities.low') }}</option>
+                                    <option value="medium"{{ old('priority') == 'medium' ? ' selected' : '' }}>{{ __('interface.priorities.medium') }}</option>
+                                    <option value="high"{{ old('priority') == 'high' ? ' selected' : '' }}>{{ __('interface.priorities.high') }}</option>
+                                    <option value="emergency"{{ old('priority') == 'emergency' ? ' selected' : '' }}>{{ __('interface.priorities.emergency') }}</option>
                                 </select>
 
                                 @error('priority')
@@ -187,7 +187,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="subject" class="col-md-4 col-form-label text-md-right">{{ __('Message') }}</label>
+                            <label for="subject" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.message') }}</label>
 
                             <div class="col-md-8">
                                 <textarea id="message" class="form-control @error('message') is-invalid @enderror" name="message" style="height: 15rem">{{ old('message') }}</textarea>
@@ -200,12 +200,12 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('File') }}</label>
+                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.file') }}</label>
 
                             <div class="col-md-8">
                                 <div class="custom-file">
                                     <input type="file" class="custom-file-input" id="customFile" name="file">
-                                    <label class="custom-file-label" for="customFile">{{ __('Choose file') }}</label>
+                                    <label class="custom-file-label" for="customFile">{{ __('interface.actions.choose_file') }}</label>
                                 </div>
 
                                 @error('file')

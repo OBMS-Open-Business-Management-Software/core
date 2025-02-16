@@ -2,7 +2,6 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\Project;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,7 +19,7 @@ class PasswordChangeRequired
     public function handle(Request $request, Closure $next)
     {
         if (Auth::user()->must_change_password) {
-            return Redirect::route('password-set')->with('info', __('The account has been activated successfully. Please change your password before using it'));
+            return Redirect::route('password-set')->with('info', __('interface.messages.password_update_required'));
         }
 
         return $next($request);

@@ -29,10 +29,9 @@ body {
 }
 
 .bg-image {
-    background-image: url('../../public/images/dark.background.svg');
-    background-size: 100vw;
+    background-blend-mode: color-dodge;
+    background-image: url('/images/dark.background.svg');
     background-position: center;
-    background-blend-mode: screen;
 }
 
 .mt-10 {

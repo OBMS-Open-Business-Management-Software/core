@@ -25,7 +25,7 @@ trait Encryptable
 
         if (
             in_array($key, $this->encryptable) &&
-            $value !== ''
+            !empty($value)
         ) {
             $value = decrypt($value);
         }

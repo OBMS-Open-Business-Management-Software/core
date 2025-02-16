@@ -104,44 +104,44 @@ class CustomerSupportController extends Controller
 
                     switch ($ticket->status) {
                         case 'open':
-                            $status = '<span class="badge badge-primary badge-pill">' . __('Open') . '</span>';
+                            $status = '<span class="badge badge-primary">' . __('interface.status.open') . '</span>';
                             break;
                         case 'closed':
-                            $status = '<span class="badge badge-secondary badge-pill">' . __('Closed') . '</span>';
+                            $status = '<span class="badge badge-secondary">' . __('interface.status.closed') . '</span>';
                             break;
                         case 'locked':
-                            $status = '<span class="badge badge-danger badge-pill">' . __('Locked') . '</span>';
+                            $status = '<span class="badge badge-danger">' . __('interface.status.locked') . '</span>';
                             break;
                     }
 
                     if ($ticket->escalated) {
-                        $status .= (! empty($status) ? ' ' : '') . '<span class="badge badge-warning badge-pill">' . __('Escalated') . '</span>';
+                        $status .= (! empty($status) ? ' ' : '') . '<span class="badge badge-warning">' . __('interface.status.escalated') . '</span>';
                     }
 
                     if ($ticket->hold) {
-                        $status .= (! empty($status) ? ' ' : '') . '<span class="badge badge-secondary badge-pill">' . __('On-Hold') . '</span>';
+                        $status .= (! empty($status) ? ' ' : '') . '<span class="badge badge-secondary">' . __('interface.status.on_hold') . '</span>';
                     }
 
                     switch ($ticket->priority) {
                         case 'low':
                         default:
-                            $priority = '<span class="badge badge-secondary badge-pill">' . __('Low') . '</span>';
+                            $priority = '<span class="badge badge-secondary">' . __('interface.priorities.low') . '</span>';
                             break;
                         case 'medium':
-                            $priority = '<span class="badge badge-success badge-pill">' . __('Medium') . '</span>';
+                            $priority = '<span class="badge badge-success">' . __('interface.priorities.medium') . '</span>';
                             break;
                         case 'high':
-                            $priority = '<span class="badge badge-warning badge-pill">' . __('High') . '</span>';
+                            $priority = '<span class="badge badge-warning">' . __('interface.priorities.high') . '</span>';
                             break;
                         case 'emergency':
-                            $priority = '<span class="badge badge-danger badge-pill">' . __('Emergency') . '</span>';
+                            $priority = '<span class="badge badge-danger">' . __('interface.priorities.emergency') . '</span>';
                             break;
                     }
 
                     return (object) [
                         'id' => $ticket->id,
                         'subject' => $ticket->subject,
-                        'category' => ! empty($ticket->category) ? $ticket->category->name : __('Uncategorized'),
+                        'category' => ! empty($ticket->category) ? $ticket->category->name : __('interface.status.uncategorized'),
                         'status' => $status,
                         'priority' => $priority,
                         'view' => '<a href="' . route('customer.support.details', $ticket->id) . '" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>',
@@ -168,7 +168,7 @@ class CustomerSupportController extends Controller
             ]);
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -253,7 +253,7 @@ class CustomerSupportController extends Controller
 
         $ticket->sendEmailCreationNotification();
 
-        return redirect()->back()->with('success', __('The ticket has been opened successfully.'));
+        return redirect()->back()->with('success', __('interface.messages.ticket_opened'));
     }
 
     /**
@@ -315,10 +315,10 @@ class CustomerSupportController extends Controller
                 }
             }
 
-            return redirect()->back()->with('success', __('The ticket has been answered successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.ticket_added'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -360,10 +360,10 @@ class CustomerSupportController extends Controller
 
             $ticket->sendEmailCloseNotification();
 
-            return redirect()->back()->with('success', __('The ticket has been closed successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.ticket_closed'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -405,10 +405,10 @@ class CustomerSupportController extends Controller
 
             $ticket->sendEmailReopenNotification();
 
-            return redirect()->back()->with('success', __('The ticket has been re-opened successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.ticket_reopened'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -454,7 +454,7 @@ class CustomerSupportController extends Controller
                 ->output();
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -503,10 +503,10 @@ class CustomerSupportController extends Controller
             $fileLink->file()->delete();
             $fileLink->delete();
 
-            return redirect()->back()->with('success', __('The ticket attachment has been removed successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.ticket_attachment_removed'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -558,10 +558,10 @@ class CustomerSupportController extends Controller
                     'reference' => $file->id,
                 ]);
 
-                return redirect()->back()->with('success', __('The attachment has been uploaded successfully.'));
+                return redirect()->back()->with('success', __('interface.messages.ticket_attachment_uploaded'));
             }
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 }

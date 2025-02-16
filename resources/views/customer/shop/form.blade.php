@@ -4,30 +4,30 @@
     <div class="container-fluid my-4">
         @if (empty($user = Auth::user()))
             <div class="alert alert-warning mb-4">
-                <i class="bi bi-exclamation-triangle"></i> {{ __('You are currently logged out. Only logged in users can order new products.') }}<br>
+                <i class="bi bi-exclamation-triangle"></i> {{ __('interface.misc.product_anonymous_notice') }}<br>
                 <br>
-                <a href="{{ route('login') }}" class="btn btn-primary"><i class="bi bi-box-arrow-in-right"></i> {{ __('Log in') }}</a>
+                <a href="{{ route('login') }}" class="btn btn-primary"><i class="bi bi-box-arrow-in-right"></i> {{ __('interface.actions.login') }}</a>
             </div>
         @elseif ($user->role !== 'customer')
             <div class="alert alert-warning mb-4">
-                <i class="bi bi-exclamation-triangle"></i> {{ __('You don\'t have the proper role to place an order. Only customers can order new products.') }}<br>
+                <i class="bi bi-exclamation-triangle"></i> {{ __('interface.misc.order_role_missing_hint') }}<br>
                 <br>
                 <form action="{{ route('logout') }}" method="post">
                     @csrf
-                    <button type="submit" class="btn btn-primary"><i class="bi bi-box-arrow-in-left"></i> {{ __('Log out') }}</button>
+                    <button type="submit" class="btn btn-primary"><i class="bi bi-box-arrow-in-left"></i> {{ __('interface.actions.logout') }}</button>
                 </form>
             </div>
         @endif
         @if (! empty($category = $form->category) && ! empty($parent = $category->category))
             <div class="row mb-4">
                 <div class="col-md-12">
-                    <a href="{{ $parent->fullRoute }}" class="btn btn-outline-primary"><i class="bi bi-arrow-left-circle"></i> {{ __('Back to category') }}</a>
+                    <a href="{{ $parent->fullRoute }}" class="btn btn-outline-primary"><i class="bi bi-arrow-left-circle"></i> {{ __('interface.actions.back_to_category') }}</a>
                 </div>
             </div>
         @else
             <div class="row mb-4">
                 <div class="col-md-12">
-                    <a href="{{ route('public.shop') }}" class="btn btn-outline-primary"><i class="bi bi-arrow-left-circle"></i> {{ __('Back to category') }}</a>
+                    <a href="{{ route('public.shop') }}" class="btn btn-outline-primary"><i class="bi bi-arrow-left-circle"></i> {{ __('interface.actions.back_to_category') }}</a>
                 </div>
             </div>
         @endif
@@ -48,7 +48,7 @@
                         @if ($form->type == 'form')
                             <div class="card mb-4">
                                 <div class="card-header text-decoration-none">
-                                    <i class="bi bi-wrench"></i> {{ __('Configuration') }}
+                                    <i class="bi bi-wrench"></i> {{ __('interface.misc.configuration') }}
                                 </div>
                                 <div class="card-body mb-0">
                                     @foreach ($form->fields as $field)
@@ -56,7 +56,7 @@
                                             'input_checkbox',
                                             'input_hidden',
                                         ]))
-                                            <label class="mt-2" for="input_{{ $field->id }}">{{ __($field->label) }} {{ $field->required ? __('*') : '' }}</label>
+                                            <label class="mt-2" for="input_{{ $field->id }}">{{ __($field->label) }} {{ $field->required ? '*' : '' }}</label>
                                         @endif
                                         @switch ($field->type)
                                             @case ('input_text')
@@ -75,7 +75,7 @@
                                                             <div class="col-md-1">
                                                                 <input id="{{ $field->key }}{{ $option->id }}" type="radio" class="form-control @error($field->key) is-invalid @enderror" name="{{ $field->key }}" value="{{ $option->value }}" {{ $option->default ? ' checked' : '' }}>
                                                             </div>
-                                                            <label for="{{ $field->key }}{{ $option->id }}" class="col-md-11 col-form-label text-md-left">{{ __($option->label) }} <span class="small">[{{ __('+') }} {{ number_format($option->amount, 2) }} €]</span></label>
+                                                            <label for="{{ $field->key }}{{ $option->id }}" class="col-md-11 col-form-label text-md-left">{{ __($option->label) }} <span class="small">[+ {{ number_format($option->amount, 2) }} €]</span></label>
                                                         </div>
                                                         @error($field->key)
                                                         <span class="invalid-feedback d-block" role="alert">
@@ -109,7 +109,7 @@
                                                     <div class="col-md-1">
                                                         <input id="{{ $field->key }}" type="checkbox" class="form-control @error($field->key) is-invalid @enderror" name="{{ $field->key }}" value="{{ $field->value }}">
                                                     </div>
-                                                    <label for="{{ $field->key }}" class="col-md-11 col-form-label text-md-left">{{ __($field->label) }} <span class="small">[{{ __('+') }} {{ number_format($field->amount, 2) }} €]</span> {{ $field->required ? __('*') : '' }}</label>
+                                                    <label for="{{ $field->key }}" class="col-md-11 col-form-label text-md-left">{{ __($field->label) }} <span class="small">[+ {{ number_format($field->amount, 2) }} €]</span> {{ $field->required ? '*' : '' }}</label>
                                                 </div>
                                                 @error($field->key)
                                                 <span class="invalid-feedback d-block mb-3" role="alert">
@@ -123,7 +123,7 @@
                                             @case ('select')
                                                 <select class="form-control" id="input_{{ $field->id }}" name="{{ $field->key }}">
                                                     @foreach ($field->options as $option)
-                                                        <option value="{{ $option->value }}"{{ $option->default ? ' selected' : '' }}>{{ $option->label }} [{{ __('+') }} {{ number_format($option->amount, 2) }} €]</option>
+                                                        <option value="{{ $option->value }}"{{ $option->default ? ' selected' : '' }}>{{ $option->label }} [+ {{ number_format($option->amount, 2) }} €]</option>
                                                     @endforeach
                                                 </select>
                                                 @break
@@ -133,11 +133,11 @@
                                         @endswitch
                                         @if ($field->type == 'input_range' || $field->type == 'input_radio' || $field->type == 'input_radio_image' || ($field->type == 'input_checkbox' && $field->amount > 0) || $field->type == 'select')
                                             @if ($field->type !== 'input_checkbox')
-                                                <span class="badge badge-light badge-pill">{{ __('+') }} <span id="field{{ $field->key }}Amount">{{ ! empty($field->defaultOption) ? number_format($field->defaultOption->amount, 2) : number_format($field->amount, 2) }} €</span></span>
-                                                <span class="badge badge-primary badge-pill">{{ __($field->value_prefix) }}<span id="field{{ $field->key }}Value">{{ ! empty($field->defaultOption) ? $field->defaultOption->value : $field->value }}</span>{{ __($field->value_suffix) }}</span>
+                                                <span class="badge badge-light">+ <span id="field{{ $field->key }}Amount">{{ ! empty($field->defaultOption) ? number_format($field->defaultOption->amount, 2) : number_format($field->amount, 2) }} €</span></span>
+                                                <span class="badge badge-primary">{{ __($field->value_prefix) }}<span id="field{{ $field->key }}Value">{{ ! empty($field->defaultOption) ? $field->defaultOption->value : $field->value }}</span>{{ __($field->value_suffix) }}</span>
                                             @else
-                                                <span class="badge badge-light badge-pill">{{ __('+') }} <span id="field{{ $field->key }}Amount">0.00 €</span></span>
-                                                <span class="badge badge-primary badge-pill">{{ __($field->value_prefix) }}<span id="field{{ $field->key }}Value">{{ $field->type == 'input_checkbox' ? __('No') : __('N/A') }}</span>{{ __($field->value_suffix) }}</span>
+                                                <span class="badge badge-light">+ <span id="field{{ $field->key }}Amount">0.00 €</span></span>
+                                                <span class="badge badge-primary">{{ __($field->value_prefix) }}<span id="field{{ $field->key }}Value">{{ $field->type == 'input_checkbox' ? __('interface.misc.no') : __('interface.misc.not_available') }}</span>{{ __($field->value_suffix) }}</span>
                                             @endif
                                             <br>
                                             <br>
@@ -146,13 +146,13 @@
                                         @endif
                                     @endforeach
                                     <span class="d-block small">
-                                        {{ __('* Required field') }}
+                                        *{{ __('interface.misc.required_field') }}
                                     </span>
                                 </div>
                             </div>
                         @elseif ($form->type)
                             <div class="alert alert-primary mb-0">
-                                <i class="bi bi-info-circle"></i> {{ __('This product is pre-configured.') }}
+                                <i class="bi bi-info-circle"></i> {{ __('interface.misc.product_preconfigured_hint') }}
                             </div>
                             @foreach ($form->fields as $field)
                                 <input type="hidden" id="input_{{ $field->id }}" name="{{ $field->key }}" value="{{ $field->value }}">
@@ -162,12 +162,12 @@
                     <div class="col-md-4">
                         <div class="card mb-4">
                             <div class="card-header text-decoration-none">
-                                <i class="bi bi-file-earmark-text"></i> {{ __('Contract') }}
+                                <i class="bi bi-file-earmark-text"></i> {{ __('interface.misc.contract') }}
                             </div>
                             <div class="card-body mb-0">
                                 @if ($form->contractType->type == 'prepaid_auto')
                                     <div class="alert alert-primary mb-3">
-                                        <i class="bi bi-info-circle"></i> {{ __('A prepaid contract automatically renews for as long as you have sufficient funds on your account. It automatically ends as soon as your account has insufficient funds.') }}
+                                        <i class="bi bi-info-circle"></i> {{ __('interface.misc.prepaid_auto_hint') }}
                                     </div>
                                 @endif
                                 <div class="row">
@@ -175,20 +175,20 @@
 
                                     <div class="col-md-7 col-form-label">
                                         @if ($form->contractType->type == 'contract_pre_pay')
-                                            {{ __('Contract (pre-paid)') }}
+                                            {{ __('interface.billing.contract_pre') }}
                                         @elseif ($form->contractType->type == 'contract_post_pay')
-                                            {{ __('Contract (post-paid)') }}
+                                            {{ __('interface.billing.contract_post') }}
                                         @elseif ($form->contractType->type == 'prepaid_auto')
-                                            {{ __('Prepaid (auto-renew)') }}
+                                            {{ __('interface.billing.prepaid_auto') }}
                                         @elseif ($form->contractType->type == 'prepaid_manual')
-                                            {{ __('Prepaid (manual renew)') }}
+                                            {{ __('interface.billing.prepaid_manual') }}
                                         @else
-                                            {{ __('Unknown') }}
+                                            {{ __('interface.status.unknown') }}
                                         @endif
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <label class="col-md-5 col-form-label text-md-right font-weight-bold">{{ __('Payment Cycle') }}</label>
+                                    <label class="col-md-5 col-form-label text-md-right font-weight-bold">{{ __('interface.data.payment_cycle') }}</label>
 
                                     <div class="col-md-7 col-form-label">
                                         {{ $form->contractType->invoice_period }} {{ __('interface.units.days') }}
@@ -196,7 +196,7 @@
                                 </div>
                                 @if ($form->contractType->type == 'contract_pre_pay' || $form->contractType->type == 'contract_post_pay')
                                     <div class="row">
-                                        <label class="col-md-5 col-form-label text-md-right font-weight-bold">{{ __('Notice Period') }}</label>
+                                        <label class="col-md-5 col-form-label text-md-right font-weight-bold">{{ __('interface.data.notice_period') }}</label>
 
                                         <div class="col-md-7 col-form-label">
                                             {{ $form->contractType->cancellation_period }} {{ __('interface.units.days') }}
@@ -207,14 +207,14 @@
                         </div>
                         <div class="card mb-4">
                             <div class="card-header text-decoration-none">
-                                <i class="bi bi-list"></i> {{ __('Summary') }}
+                                <i class="bi bi-list"></i> {{ __('interface.misc.summary') }}
                             </div>
                             <div class="card-body mb-0">
                                 <table class="table">
                                     <thead class="font-weight-bold">
                                     <tr>
                                         <td>{{ __('interface.data.description') }}</td>
-                                        <td>{{ __('Price') }}</td>
+                                        <td>{{ __('interface.data.price') }}</td>
                                     </tr>
                                     </thead>
                                     <tbody id="positions">
@@ -239,15 +239,15 @@
                                     </tbody>
                                     <tfoot id="summary" class="bg-primary text-white">
                                     <tr>
-                                        <td>{{ __('Net Amount') }}</td>
+                                        <td>{{ __('interface.data.net_amount') }}</td>
                                         <td id="netAmount">{{ number_format($form->defaultAmount, 2) }} €</td>
                                     </tr>
                                     <tr>
-                                        <td class="border-0">{{ __('VAT Amount') }} ({{ $form->vatRate }} %)</td>
+                                        <td class="border-0">{{ __('interface.data.vat_amount') }} ({{ $form->vatRate }} %)</td>
                                         <td id="vatAmount" class="border-0">{{ number_format($form->defaultAmount * ($form->vatRate / 100), 2) }} €</td>
                                     </tr>
                                     <tr>
-                                        <td class="border-0">{{ __('Gross Amount') }}</td>
+                                        <td class="border-0">{{ __('interface.data.gross_amount') }}</td>
                                         <td id="grossAmount" class="border-0">{{ number_format($form->defaultAmount * ((100 + $form->vatRate) / 100), 2) }} €</td>
                                     </tr>
                                     </tfoot>
@@ -267,7 +267,7 @@
                                                                 <input id="accept_{{ $accept->id }}" type="checkbox" class="form-control" name="accept_{{ $accept->id }}" value="true">
                                                             </div>
 
-                                                            <label for="accept_{{ $accept->id }}" class="col-md-10 col-form-label">{!! __('I confirm that I have read, understood the :link (Date: :date) and I agree to be bound to it.', ['link' => '<a href="' . (Route::has($accept->route) ? route($accept->route) : $accept->route) . '" target="_blank">' . __($accept->title) . '</a>', 'date' => $accept->latest->created_at->format('d.m.Y, H:i')]) !!} {{ __('*') }}</label>
+                                                            <label for="accept_{{ $accept->id }}" class="col-md-10 col-form-label">{!! __('interface.misc.accept_notice', ['link' => '<a href="' . (Route::has($accept->route) ? route($accept->route) : $accept->route) . '" target="_blank">' . __($accept->title) . '</a>', 'date' => $accept->latest->created_at->format('d.m.Y, H:i')]) !!} *</label>
                                                         </div>
                                                         @error('accept_' . $accept->id)
                                                         <span class="invalid-feedback" role="alert">
@@ -280,7 +280,7 @@
                                         @endforeach
                                     @endif
                                     <button type="submit" class="btn btn-primary w-100">
-                                        <i class="bi bi-cart"></i> {{ __('Order now') }}
+                                        <i class="bi bi-cart"></i> {{ __('interface.actions.order_now') }}
                                     </button>
                                 @endif
                             </div>
@@ -292,7 +292,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="alert alert-warning mb-0">
-                        <i class="bi bi-exclamation-triangle"></i> {{ __('This product has no fields linked yet. It cannot be ordered.') }}
+                        <i class="bi bi-exclamation-triangle"></i> {{ __('interface.misc.product_unorderable_notice') }}
                     </div>
                 </div>
             </div>
@@ -332,11 +332,11 @@
                     if (typeof field{{ $field->key }}Value !== 'undefined' && {{ $field->amount }} > 0) {
                         $('#positions').append('<tr class="position"><td><span class="d-block font-weight-bold">{{ __($field->label) }}</span></td><td>' + ({{ $field->amount }}).toFixed(2) + ' €</td></tr>');
                         $('#field{{ $field->key }}Amount').html(({{ $field->amount }}).toFixed(2) + ' €');
-                        $('#field{{ $field->key }}Value').html('{{ __('Yes') }}');
+                        $('#field{{ $field->key }}Value').html('{{ __("interface.misc.yes") }}');
                         netAmount = netAmount + {{ $field->amount }};
                     } else {
                         $('#field{{ $field->key }}Amount').html((0).toFixed(2) + ' €');
-                        $('#field{{ $field->key }}Value').html('{{ __('No') }}');
+                        $('#field{{ $field->key }}Value').html('{{ __("interface.misc.no") }}');
                     }
                 @else
                     @if ($field->options->isNotEmpty())
@@ -373,7 +373,6 @@
 
                     @if ($field->type == 'input_range')
                         $('[name="{{ $field->key }}"]').on('input', function () {
-                            console.log('SLIDE');
                             regenerateSummary();
                         });
                     @endif

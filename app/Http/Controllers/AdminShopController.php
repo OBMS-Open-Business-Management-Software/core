@@ -106,7 +106,7 @@ class AdminShopController extends Controller
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-warning">
-                <h5 class="modal-title" id="editCategory' . $category->id . 'Label">' . __('Edit') . ' (' . $category->name . ')</h5>
+                <h5 class="modal-title" id="editCategory' . $category->id . 'Label">' . __('interface.actions.edit') . ' (' . $category->name . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -116,7 +116,7 @@ class AdminShopController extends Controller
                     <input type="hidden" name="_token" value="' . csrf_token() . '" />
                     <input type="hidden" name="category_id" value="' . $category->id . '" />
                     <div class="form-group row">
-                        <label for="route" class="col-md-4 col-form-label text-md-right">' . __('Route') . '</label>
+                        <label for="route" class="col-md-4 col-form-label text-md-right">' . __('interface.data.route') . '</label>
 
                         <div class="col-md-8">
                             <div class="input-group">
@@ -128,21 +128,21 @@ class AdminShopController extends Controller
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="name" class="col-md-4 col-form-label text-md-right">' . __('Name') . '</label>
+                        <label for="name" class="col-md-4 col-form-label text-md-right">' . __('interface.data.name') . '</label>
 
                         <div class="col-md-8">
                             <input id="name" type="text" class="form-control" name="name" value="' . $category->name . '">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="description" class="col-md-4 col-form-label text-md-right">' . __('Description') . '</label>
+                        <label for="description" class="col-md-4 col-form-label text-md-right">' . __('interface.data.description') . '</label>
 
                         <div class="col-md-8">
                             <input id="description" type="text" class="form-control" name="description" value="' . $category->description . '">
                         </div>
                     </div>
                     <div class="form-group row align-items-center">
-                        <label for="public" class="col-md-4 col-form-label text-md-right">' . __('Category publicly visible') . '</label>
+                        <label for="public" class="col-md-4 col-form-label text-md-right">' . __('interface.misc.category_publicly_visible') . '</label>
 
                         <div class="col-md-8">
                             <input id="public" type="checkbox" class="form-control" name="public" value="true"' . ($category->public ? ' checked' : '') . '>
@@ -150,8 +150,8 @@ class AdminShopController extends Controller
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-warning"><i class="bi bi-pencil-square"></i> ' . __('Edit') . '</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('Close') . '</button>
+                    <button type="submit" class="btn btn-warning"><i class="bi bi-pencil-square"></i> ' . __('interface.actions.edit') . '</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('interface.actions.close') . '</button>
                 </div>
             </form>
         </div>
@@ -164,7 +164,7 @@ class AdminShopController extends Controller
                         'route' => $category->fullRoute,
                         'name' => $category->name,
                         'description' => $category->description,
-                        'public' => $category->public ? '<span class="badge badge-success badge-pill">' . __('Yes') . '</span>' : '<span class="badge badge-warning badge-pill">' . __('No') . '</span>',
+                        'public' => $category->public ? '<span class="badge badge-success">' . __('interface.misc.yes') . '</span>' : '<span class="badge badge-warning">' . __('interface.misc.no') . '</span>',
                         'view' => '<a href="' . route('admin.shop.categories.details', $category->id) . '" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>',
                         'edit' => $edit,
                         'delete' => '<a href="' . route('admin.shop.categories.delete', $category->id) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>',
@@ -200,7 +200,7 @@ class AdminShopController extends Controller
             'public' => ! empty($request->public),
         ]);
 
-        return redirect()->route('admin.shop.categories.details', $category->id)->with('success', __('Shop category has been added successfully.'));
+        return redirect()->route('admin.shop.categories.details', $category->id)->with('success', __('interface.messages.shop_category_added'));
     }
 
     /**
@@ -231,10 +231,10 @@ class AdminShopController extends Controller
                 'public' => ! empty($request->public),
             ]);
 
-            return redirect()->back()->with('success', __('Shop category has been updated successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.shop_category_updated'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -261,10 +261,10 @@ class AdminShopController extends Controller
 
             // TODO: Extend, so forms in and subcategories themselves are being deleted as well
 
-            return redirect()->back()->with('success', __('Shop category has been deleted successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.shop_category_deleted'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -359,7 +359,7 @@ class AdminShopController extends Controller
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-warning">
-                <h5 class="modal-title" id="editForm' . $form->id . 'Label">' . __('Edit') . ' (' . $form->name . ')</h5>
+                <h5 class="modal-title" id="editForm' . $form->id . 'Label">' . __('interface.actions.edit') . ' (' . $form->name . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -369,7 +369,7 @@ class AdminShopController extends Controller
                     <input type="hidden" name="_token" value="' . csrf_token() . '" />
                     <input type="hidden" name="form_id" value="' . $form->id . '" />
                     <div class="form-group row">
-                        <label for="route" class="col-md-4 col-form-label text-md-right">' . __('Route') . '</label>
+                        <label for="route" class="col-md-4 col-form-label text-md-right">' . __('interface.data.route') . '</label>
 
                         <div class="col-md-8">
                             <div class="input-group">
@@ -381,38 +381,38 @@ class AdminShopController extends Controller
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="name" class="col-md-4 col-form-label text-md-right">' . __('Name') . '</label>
+                        <label for="name" class="col-md-4 col-form-label text-md-right">' . __('interface.data.name') . '</label>
 
                         <div class="col-md-8">
                             <input id="name" type="text" class="form-control" name="name" value="' . $form->name . '">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="description" class="col-md-4 col-form-label text-md-right">' . __('Description') . '</label>
+                        <label for="description" class="col-md-4 col-form-label text-md-right">' . __('interface.data.description') . '</label>
 
                         <div class="col-md-8">
                             <input id="description" type="text" class="form-control" name="description" value="' . $form->description . '">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="product_type" class="col-md-4 col-form-label text-md-right">' . __('Product Type') . '</label>
+                        <label for="product_type" class="col-md-4 col-form-label text-md-right">' . __('interface.data.product_type') . '</label>
 
                         <div class="col-md-8">
                             <input id="product_type" type="text" class="form-control" name="product_type" value="' . $form->product_type . '">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="vat_type" class="col-md-4 col-form-label text-md-right">' . __('VAT Type') . '</label>
+                        <label for="vat_type" class="col-md-4 col-form-label text-md-right">' . __('interface.data.vat_type') . '</label>
 
                         <div class="col-md-8">
                             <select id="vat_type" type="text" class="form-control" name="vat_type">
-                                <option value="basic"' . ($form->vat_type == 'basic' ? ' selected' : '') . '>' . __('Basic') . '</option>
-                                <option value="reduced"' . ($form->vat_type == 'reduced' ? ' selected' : '') . '>' . __('Reduced') . '</option>
+                                <option value="basic"' . ($form->vat_type == 'basic' ? ' selected' : '') . '>' . __('interface.misc.basic') . '</option>
+                                <option value="reduced"' . ($form->vat_type == 'reduced' ? ' selected' : '') . '>' . __('interface.misc.reduced') . '</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="contract_type_id" class="col-md-4 col-form-label text-md-right">' . __('Contract Type') . '</label>
+                        <label for="contract_type_id" class="col-md-4 col-form-label text-md-right">' . __('interface.data.contract_type') . '</label>
 
                         <div class="col-md-8">
                             <select id="contract_type_id" type="text" class="form-control" name="contract_type_id">
@@ -421,24 +421,24 @@ class AdminShopController extends Controller
                         </div>
                     </div>
                     <div class="form-group row">
-                            <label for="tracker_id" class="col-md-4 col-form-label text-md-right">' . __('Usage Tracker') . '</label>
+                            <label for="tracker_id" class="col-md-4 col-form-label text-md-right">' . __('interface.misc.usage_tracker') . '</label>
 
                             <div class="col-md-8">
                                 <select id="tracker_id" type="text" class="form-control" name="tracker_id">
-                                    <option value="">' . __('None') . '</option>
+                                    <option value="">' . __('interface.misc.none') . '</option>
                                     ' . $trackerTypes . '
                                 </select>
                             </div>
                         </div>
                     <div class="form-group row align-items-center">
-                        <label for="approval" class="col-md-4 col-form-label text-md-right">' . __('Require manual approval') . '</label>
+                        <label for="approval" class="col-md-4 col-form-label text-md-right">' . __('interface.misc.require_manual_approval') . '</label>
 
                         <div class="col-md-8">
                             <input id="approval" type="checkbox" class="form-control" name="approval" value="true"' . ($form->approval ? ' checked' : '') . '>
                         </div>
                     </div>
                     <div class="form-group row align-items-center">
-                        <label for="public" class="col-md-4 col-form-label text-md-right">' . __('Form publicly visible') . '</label>
+                        <label for="public" class="col-md-4 col-form-label text-md-right">' . __('interface.misc.form_publicly_visible') . '</label>
 
                         <div class="col-md-8">
                             <input id="public" type="checkbox" class="form-control" name="public" value="true"' . ($form->public ? ' checked' : '') . '>
@@ -446,8 +446,8 @@ class AdminShopController extends Controller
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-warning"><i class="bi bi-pencil-square"></i> ' . __('Edit') . '</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('Close') . '</button>
+                    <button type="submit" class="btn btn-warning"><i class="bi bi-pencil-square"></i> ' . __('interface.actions.edit') . '</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('interface.actions.close') . '</button>
                 </div>
             </form>
         </div>
@@ -457,13 +457,13 @@ class AdminShopController extends Controller
 
                     switch ($form->type) {
                         case 'form':
-                            $type = __('Form');
+                            $type = __('interface.data.form');
                             break;
                         case 'package':
-                            $type = __('Package');
+                            $type = __('interface.data.package');
                             break;
                         default:
-                            $type = __('N/A');
+                            $type = __('interface.misc.not_available');
                             break;
                     }
 
@@ -473,8 +473,8 @@ class AdminShopController extends Controller
                         'type' => $type,
                         'name' => $form->name,
                         'description' => $form->description,
-                        'approval' => $form->approval ? '<span class="badge badge-success badge-pill">' . __('Yes') . '</span>' : '<span class="badge badge-warning badge-pill">' . __('No') . '</span>',
-                        'public' => $form->public ? '<span class="badge badge-success badge-pill">' . __('Yes') . '</span>' : '<span class="badge badge-warning badge-pill">' . __('No') . '</span>',
+                        'approval' => $form->approval ? '<span class="badge badge-success">' . __('interface.misc.yes') . '</span>' : '<span class="badge badge-warning">' . __('interface.misc.no') . '</span>',
+                        'public' => $form->public ? '<span class="badge badge-success">' . __('interface.misc.yes') . '</span>' : '<span class="badge badge-warning">' . __('interface.misc.no') . '</span>',
                         'view' => '<a href="' . route('admin.shop.forms', $form->id) . '" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>',
                         'edit' => $edit,
                         'delete' => '<a href="' . route('admin.shop.forms.delete', $form->id) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>',
@@ -523,10 +523,10 @@ class AdminShopController extends Controller
         ]);
 
         if (! empty($form->category_id)) {
-            return redirect()->route('admin.shop.forms', $form->id)->with('success', __('Shop form has been added successfully.'));
+            return redirect()->route('admin.shop.forms', $form->id)->with('success', __('interface.messages.shop_form_added'));
         }
 
-        return redirect()->route('admin.shop.forms', $form->id)->with('success', __('Shop form has been added successfully.'));
+        return redirect()->route('admin.shop.forms', $form->id)->with('success', __('interface.messages.shop_form_added'));
     }
 
     /**
@@ -567,10 +567,10 @@ class AdminShopController extends Controller
                 'vat_type' => $request->vat_type,
             ]);
 
-            return redirect()->back()->with('success', __('Shop form has been updated successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.shop_form_updated'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -598,10 +598,10 @@ class AdminShopController extends Controller
             $form->fields()->delete();
             $form->delete();
 
-            return redirect()->back()->with('success', __('Shop form has been deleted successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.shop_form_deleted'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     public function shop_forms_index(int $id): Renderable
@@ -708,7 +708,7 @@ class AdminShopController extends Controller
                 break;
         }
 
-        return redirect()->back()->with('success', __('Shop form field has been added successfully.'));
+        return redirect()->back()->with('success', __('interface.messages.shop_form_field_added'));
     }
 
     /**
@@ -804,10 +804,10 @@ class AdminShopController extends Controller
                     break;
             }
 
-            return redirect()->back()->with('success', __('Shop form field has been updated successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.shop_form_field_updated'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -832,10 +832,10 @@ class AdminShopController extends Controller
             $field->options()->delete();
             $field->delete();
 
-            return redirect()->back()->with('success', __('Shop form field has been deleted successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.shop_form_field_deleted'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -905,41 +905,41 @@ class AdminShopController extends Controller
                 ->transform(function (ShopConfiguratorField $field) {
                     switch ($field->type) {
                         case 'input_text':
-                            $type = __('Text');
+                            $type = __('interface.data.text');
                             break;
                         case 'input_number':
-                            $type = __('Number');
+                            $type = __('interface.data.number');
                             break;
                         case 'input_range':
-                            $type = __('Range');
+                            $type = __('interface.data.range');
                             break;
                         case 'input_radio':
-                            $type = __('Radio Select (Text)');
+                            $type = __('interface.data.radio_text');
                             break;
                         case 'input_radio_image':
-                            $type = __('Radio Select (Image)');
+                            $type = __('interface.data.radio_image');
                             break;
                         case 'input_checkbox':
-                            $type = __('Checkbox');
+                            $type = __('interface.data.checkbox');
                             break;
                         case 'input_hidden':
-                            $type = __('Hidden Text');
+                            $type = __('interface.data.hidden_text');
                             break;
                         case 'select':
-                            $type = __('Select');
+                            $type = __('interface.data.select');
                             break;
                         case 'textarea':
-                            $type = __('Textarea');
+                            $type = __('interface.data.textarea');
                             break;
                         default:
-                            $type = __('Unknown');
+                            $type = __('interface.status.unknown');
                             break;
                     }
 
                     $options = '';
 
                     $field->options->each(function (ShopConfiguratorFieldOption $option) use (&$options) {
-                        $options .= '<tr><td><input type="text" class="form-control" name="options[old' . $option->id . '][label]" value="' . $option->label . '"></td><td><input type="text" class="form-control" name="options[old' . $option->id . '][value]" value="' . $option->value . '"></td><td><div class="input-group"><input type="number" step="0.01" min="0.01" class="form-control" name="options[old' . $option->id . '][amount]" value="' . $option->amount . '"><div class="input-group-append"><span class="input-group-text" id="basic-addon2">' . __('€') . '</span></div></div></td><td><input type="checkbox" class="form-control" name="options[old' . $option->id . '][default]" value="true"' . ($option->default ? ' checked' : '') . '></td><td><button type="button" class="btn btn-danger fieldDelete"><i class="bi bi-trash"></i></button></td></tr>';
+                        $options .= '<tr><td><input type="text" class="form-control" name="options[old' . $option->id . '][label]" value="' . $option->label . '"></td><td><input type="text" class="form-control" name="options[old' . $option->id . '][value]" value="' . $option->value . '"></td><td><div class="input-group"><input type="number" step="0.01" min="0.01" class="form-control" name="options[old' . $option->id . '][amount]" value="' . $option->amount . '"><div class="input-group-append"><span class="input-group-text" id="basic-addon2">€</span></div></div></td><td><input type="checkbox" class="form-control" name="options[old' . $option->id . '][default]" value="true"' . ($option->default ? ' checked' : '') . '></td><td><button type="button" class="btn btn-danger fieldDelete"><i class="bi bi-trash"></i></button></td></tr>';
                     });
 
                     $showOptions = $field->type == 'input_radio' || $field->type == 'input_radio_image' || $field->type == 'select';
@@ -951,7 +951,7 @@ class AdminShopController extends Controller
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header bg-warning">
-                <h5 class="modal-title" id="editField' . $field->id . 'Label">' . __('Edit') . ' (' . $field->label . ')</h5>
+                <h5 class="modal-title" id="editField' . $field->id . 'Label">' . __('interface.actions.edit') . ' (' . $field->label . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -962,92 +962,92 @@ class AdminShopController extends Controller
                     <input type="hidden" name="field_id" value="' . $field->id . '" />
 
                     <div class="form-group row">
-                        <label for="label' . $field->id . '" class="col-md-4 col-form-label text-md-right">' . __('Label') . '</label>
+                        <label for="label' . $field->id . '" class="col-md-4 col-form-label text-md-right">' . __('interface.data.label') . '</label>
 
                         <div class="col-md-8">
                             <input id="label' . $field->id . '" type="text" class="form-control" name="label" value="' . $field->amount . '">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="key' . $field->id . '" class="col-md-4 col-form-label text-md-right">' . __('Key') . '</label>
+                        <label for="key' . $field->id . '" class="col-md-4 col-form-label text-md-right">' . __('interface.data.key') . '</label>
 
                         <div class="col-md-8">
                             <input id="key' . $field->id . '" type="text" class="form-control" name="key" value="' . $field->key . '">
                         </div>
                     </div>
                     <div class="form-group row" id="value">
-                        <label for="value' . $field->id . '" class="col-md-4 col-form-label text-md-right">' . __('Default Value') . '</label>
+                        <label for="value' . $field->id . '" class="col-md-4 col-form-label text-md-right">' . __('interface.data.default_value') . '</label>
 
                         <div class="col-md-8">
                             <input id="value' . $field->id . '" type="text" class="form-control" name="value" value="' . $field->value . '">
                         </div>
                     </div>
                     <div class="form-group row" id="value">
-                        <label for="value_prefix' . $field->id . '" class="col-md-4 col-form-label text-md-right">' . __('Value Output Prefix') . '</label>
+                        <label for="value_prefix' . $field->id . '" class="col-md-4 col-form-label text-md-right">' . __('interface.data.value_output_prefix') . '</label>
 
                         <div class="col-md-8">
                             <input id="value_prefix' . $field->id . '" type="text" class="form-control" name="value_prefix" value="' . $field->value_prefix . '">
                         </div>
                     </div>
                     <div class="form-group row" id="value">
-                        <label for="value_suffix' . $field->id . '" class="col-md-4 col-form-label text-md-right">' . __('Value Output Suffix') . '</label>
+                        <label for="value_suffix' . $field->id . '" class="col-md-4 col-form-label text-md-right">' . __('interface.data.value_output_suffix') . '</label>
 
                         <div class="col-md-8">
                             <input id="value_suffix' . $field->id . '" type="text" class="form-control" name="value_suffix" value="' . $field->value_suffix . '">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="amount' . $field->id . '" class="col-md-4 col-form-label text-md-right">' . __('Fees') . '</label>
+                        <label for="amount' . $field->id . '" class="col-md-4 col-form-label text-md-right">' . __('interface.data.fees') . '</label>
 
                         <div class="col-md-8">
                             <div class="input-group">
                                 <input id="amount' . $field->id . '" type="number" step="0.01" min="0.01" class="form-control" name="amount" value="' . $field->amount . '">
                                 <div class="input-group-append">
-                                    <span class="input-group-text" id="basic-addon2">' . __('€') . '</span>
+                                    <span class="input-group-text" id="basic-addon2">€</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="form-group row" id="min' . $field->id . '"' . (! $showNumbers ? ' style="display: none"' : '') . '>
-                        <label for="min' . $field->id . '" class="col-md-4 col-form-label text-md-right">' . __('Minimum') . '</label>
+                        <label for="min' . $field->id . '" class="col-md-4 col-form-label text-md-right">' . __('interface.data_processing.minimum') . '</label>
 
                         <div class="col-md-8">
                             <input id="min' . $field->id . '" type="number" class="form-control" name="min" min="' . $field->min . '">
                         </div>
                     </div>
                     <div class="form-group row" id="max' . $field->id . '"' . (! $showNumbers ? ' style="display: none"' : '') . '>
-                        <label for="max' . $field->id . '" class="col-md-4 col-form-label text-md-right">' . __('Maximum') . '</label>
+                        <label for="max' . $field->id . '" class="col-md-4 col-form-label text-md-right">' . __('interface.data_processing.maximum') . '</label>
 
                         <div class="col-md-8">
                             <input id="max' . $field->id . '" type="number" class="form-control" name="max" max="' . $field->max . '">
                         </div>
                     </div>
                     <div class="form-group row" id="step' . $field->id . '"' . (! $showNumbers ? ' style="display: none"' : '') . '>
-                        <label for="step' . $field->id . '" class="col-md-4 col-form-label text-md-right">' . __('Step Size') . '</label>
+                        <label for="step' . $field->id . '" class="col-md-4 col-form-label text-md-right">' . __('interface.data.step_size') . '</label>
 
                         <div class="col-md-8">
                             <input id="step' . $field->id . '" type="number" class="form-control" name="step" step="' . $field->step . '">
                         </div>
                     </div>
                     <div class="form-group row align-items-center">
-                        <label for="required' . $field->id . '" class="col-md-4 col-form-label text-md-right">' . __('Required') . '</label>
+                        <label for="required' . $field->id . '" class="col-md-4 col-form-label text-md-right">' . __('interface.misc.required') . '</label>
 
                         <div class="col-md-8">
                             <input id="required' . $field->id . '" type="checkbox" class="form-control" name="required" value="true"' . ($field->required ? ' checked' : '') . '>
                         </div>
                     </div>
                     <div class="form-group row" id="options' . $field->id . '"' . (! $showOptions ? ' style="display: none"' : '') . '>
-                        <label for="options' . $field->id . '" class="col-md-12 col-form-label text-md-center">' . __('Options') . '</label>
+                        <label for="options' . $field->id . '" class="col-md-12 col-form-label text-md-center">' . __('interface.data.options') . '</label>
 
                         <div class="col-md-12 mt-3">
                             <table class="table w-100 options_table">
                                 <thead>
                                 <tr>
-                                    <td>' . __('Label') . '</td>
-                                    <td>' . __('Value') . '</td>
-                                    <td>' . __('Fees') . '</td>
-                                    <td width="1%">' . __('Default Value') . '</td>
-                                    <td width="1%">' . __('Action') . '</td>
+                                    <td>' . __('interface.data.label') . '</td>
+                                    <td>' . __('interface.data.value') . '</td>
+                                    <td>' . __('interface.data.fees') . '</td>
+                                    <td width="1%">' . __('interface.data.default_value') . '</td>
+                                    <td width="1%">' . __('interface.misc.action') . '</td>
                                 </tr>
                                 </thead>
                                 <tbody class="options_tbody">
@@ -1065,7 +1065,7 @@ class AdminShopController extends Controller
                                         <div class="input-group">
                                             <input type="number" step="0.01" min="0.01" class="form-control fieldFees">
                                             <div class="input-group-append">
-                                                <span class="input-group-text" id="basic-addon2">' . __('€') . '</span>
+                                                <span class="input-group-text" id="basic-addon2">€</span>
                                             </div>
                                         </div>
                                     </td>
@@ -1082,8 +1082,8 @@ class AdminShopController extends Controller
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-warning"><i class="bi bi-pencil-square"></i> ' . __('Edit') . '</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('Close') . '</button>
+                    <button type="submit" class="btn btn-warning"><i class="bi bi-pencil-square"></i> ' . __('interface.actions.edit') . '</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('interface.actions.close') . '</button>
                 </div>
             </form>
         </div>
@@ -1097,7 +1097,7 @@ class AdminShopController extends Controller
                         'key' => $field->key,
                         'label' => $field->label,
                         'value' => $field->value,
-                        'required' => $field->required ? '<span class="badge badge-success badge-pill">' . __('Yes') . '</span>' : '<span class="badge badge-warning badge-pill">' . __('No') . '</span>',
+                        'required' => $field->required ? '<span class="badge badge-success">' . __('interface.misc.yes') . '</span>' : '<span class="badge badge-warning">' . __('interface.misc.no') . '</span>',
                         'edit' => $edit,
                         'delete' => '<a href="' . route('admin.shop.fields.delete', $field->id) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>',
                     ];
@@ -1218,7 +1218,7 @@ class AdminShopController extends Controller
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header bg-warning">
-                <h5 class="modal-title" id="editQueueItem' . $queue->id . 'Label">' . __('Edit') . ' (' . $queue->number . ')</h5>
+                <h5 class="modal-title" id="editQueueItem' . $queue->id . 'Label">' . __('interface.actions.edit') . ' (' . $queue->number . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -1229,38 +1229,38 @@ class AdminShopController extends Controller
                     <input type="hidden" name="order_id" value="' . $queue->id . '" />
 
                     <div class="form-group row" id="value">
-                        <label for="product_type' . $queue->id . '" class="col-md-4 col-form-label text-md-right">' . __('Product Type') . '</label>
+                        <label for="product_type' . $queue->id . '" class="col-md-4 col-form-label text-md-right">' . __('interface.data.product_type') . '</label>
 
                         <div class="col-md-8">
                             <input id="product_type' . $queue->id . '" type="text" class="form-control" name="product_type" value="' . $queue->product_type . '">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="amount' . $queue->id . '" class="col-md-4 col-form-label text-md-right">' . __('Fees (Net)') . '</label>
+                        <label for="amount' . $queue->id . '" class="col-md-4 col-form-label text-md-right">' . __('interface.data.fees_net') . '</label>
 
                         <div class="col-md-8">
                             <div class="input-group">
                                 <input id="amount' . $queue->id . '" type="number" step="0.01" min="0.01" class="form-control" name="amount" value="' . $queue->amount . '">
                                 <div class="input-group-append">
-                                    <span class="input-group-text" id="basic-addon2">' . __('€') . '</span>
+                                    <span class="input-group-text" id="basic-addon2">€</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="vat_percentage' . $queue->id . '" class="col-md-4 col-form-label text-md-right">' . __('VAT Percentage') . '</label>
+                        <label for="vat_percentage' . $queue->id . '" class="col-md-4 col-form-label text-md-right">' . __('interface.data.vat_percentage') . '</label>
 
                         <div class="col-md-8">
                             <div class="input-group">
                                 <input id="vat_percentage' . $queue->id . '" type="number" step="0.01" min="0.01" class="form-control" name="vat_percentage" value="' . $queue->vat_percentage . '">
                                 <div class="input-group-append">
-                                    <span class="input-group-text" id="basic-addon2">' . __('%') . '</span>
+                                    <span class="input-group-text" id="basic-addon2">%</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="form-group row align-items-center">
-                        <label for="reverse_charge' . $queue->id . '" class="col-md-4 col-form-label text-md-right">' . __('Reverse Charge') . '</label>
+                        <label for="reverse_charge' . $queue->id . '" class="col-md-4 col-form-label text-md-right">' . __('interface.data.reverse_charge') . '</label>
 
                         <div class="col-md-8">
                             <input id="reverse_charge' . $queue->id . '" type="checkbox" class="form-control" name="reverse_charge" value="true"' . ($queue->reverse_charge ? ' checked' : '') . '>
@@ -1270,9 +1270,9 @@ class AdminShopController extends Controller
                     <table class="table w-100 options_table">
                         <thead>
                             <tr>
-                                <td>' . __('Key') . '</td>
-                                <td>' . __('Value') . '</td>
-                                <td>' . __('Action') . '</td>
+                                <td>' . __('interface.data.key') . '</td>
+                                <td>' . __('interface.data.value') . '</td>
+                                <td>' . __('interface.misc.action') . '</td>
                             </tr>
                         </thead>
                         <tbody class="options_tbody">
@@ -1294,8 +1294,8 @@ class AdminShopController extends Controller
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-warning"><i class="bi bi-pencil-square"></i> ' . __('Edit') . '</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('Close') . '</button>
+                    <button type="submit" class="btn btn-warning"><i class="bi bi-pencil-square"></i> ' . __('interface.actions.edit') . '</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('interface.actions.close') . '</button>
                 </div>
             </form>
         </div>
@@ -1342,8 +1342,8 @@ class AdminShopController extends Controller
     <thead>
         <tr>
             <td width="1%"></td>
-            <td>' . __('Date') . '</td>
-            <td>' . __('Message') . '</td>
+            <td>' . __('interface.data.date') . '</td>
+            <td>' . __('interface.data.message') . '</td>
         </tr>
     </thead>
     <tbody class="options_tbody">
@@ -1352,7 +1352,7 @@ class AdminShopController extends Controller
 </table>
 ';
                     } else {
-                        $historyItems = '<div class="alert alert-warning mb-0"><i class="bi bi-exclamation-triangle"></i> ' . __('No history entries found. Has the setup been approved?') . '</div>';
+                        $historyItems = '<div class="alert alert-warning mb-0"><i class="bi bi-exclamation-triangle"></i> ' . __('interface.messages.no_history_unapproved') . '</div>';
                     }
 
                     $history = '
@@ -1361,7 +1361,7 @@ class AdminShopController extends Controller
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title" id="historyQueueItem' . $queue->id . 'Label">' . __('History') . ' (' . $queue->number . ')</h5>
+                <h5 class="modal-title" id="historyQueueItem' . $queue->id . 'Label">' . __('interface.data.history') . ' (' . $queue->number . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -1370,7 +1370,7 @@ class AdminShopController extends Controller
                 ' . $historyItems . '
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('Close') . '</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('interface.actions.close') . '</button>
             </div>
         </div>
     </div>
@@ -1380,45 +1380,45 @@ class AdminShopController extends Controller
                     $status = '';
 
                     if ($queue->approved) {
-                        $status .= '<span class="badge badge-success"><i class="bi bi-check-circle"></i> ' . __('Approved') . '</span>';
+                        $status .= '<span class="badge badge-success"><i class="bi bi-check-circle"></i> ' . __('interface.status.approved') . '</span>';
 
                         if ($queue->verified) {
-                            $status .= '<br><span class="badge badge-success"><i class="bi bi-check-circle"></i> ' . __('Verified') . '</span>';
+                            $status .= '<br><span class="badge badge-success"><i class="bi bi-check-circle"></i> ' . __('interface.status.verified') . '</span>';
 
                             if ($queue->setup) {
-                                $status .= '<br><span class="badge badge-success"><i class="bi bi-check-circle"></i> ' . __('Completed') . '</span>';
+                                $status .= '<br><span class="badge badge-success"><i class="bi bi-check-circle"></i> ' . __('interface.status.completed') . '</span>';
                             } else {
                                 if ($queue->fails < 3) {
-                                    $status .= '<br><span class="badge badge-success"><i class="bi bi-play-circle"></i> ' . __('Running') . '</span>';
+                                    $status .= '<br><span class="badge badge-success"><i class="bi bi-play-circle"></i> ' . __('interface.status.running') . '</span>';
                                 } else {
-                                    $status .= '<br><span class="badge badge-danger"><i class="bi bi-stop-circle"></i> ' . __('Failed') . '</span>';
+                                    $status .= '<br><span class="badge badge-danger"><i class="bi bi-stop-circle"></i> ' . __('interface.status.failed') . '</span>';
                                 }
                             }
 
                             if ($queue->fails > 0) {
-                                $status .= '<span class="badge badge-warning ml-1"><i class="bi bi-exclamation-triangle"></i> ' . __('Fails: :num', [
+                                $status .= '<span class="badge badge-warning ml-1"><i class="bi bi-exclamation-triangle"></i> ' . __('interface.data.fails_num', [
                                     'num' => $queue->fails,
                                 ]) . '</span>';
                             }
                         } else {
                             if ($queue->invalid) {
-                                $status .= '<br><span class="badge badge-warning"><i class="bi bi-exclamation-triangle"></i> ' . __('Invalid') . '</span>';
+                                $status .= '<br><span class="badge badge-warning"><i class="bi bi-exclamation-triangle"></i> ' . __('interface.status.invalid') . '</span>';
                             } else {
-                                $status .= '<br><span class="badge badge-success"><i class="bi bi-play-circle"></i> ' . __('Verifying') . '</span>';
+                                $status .= '<br><span class="badge badge-success"><i class="bi bi-play-circle"></i> ' . __('interface.status.verifying') . '</span>';
                             }
                         }
                     } elseif ($queue->disapproved) {
-                        $status .= '<span class="badge badge-danger"><i class="bi bi-x-circle"></i> ' . __('Disapproved') . '</span>';
+                        $status .= '<span class="badge badge-danger"><i class="bi bi-x-circle"></i> ' . __('interface.status.disapproved') . '</span>';
                     } else {
-                        $status .= '<span class="badge badge-warning"><i class="bi bi-play-circle"></i> ' . __('Approval') . '</span>';
+                        $status .= '<span class="badge badge-warning"><i class="bi bi-play-circle"></i> ' . __('interface.data.approval') . '</span>';
                     }
 
                     return (object) [
                         'id' => $queue->number,
-                        'user' => ! empty($user = $queue->user) ? '<a href="' . route('admin.customers.profile', $user->id) . '" class="text-decoration-none" target="_blank">' . $user->realName . ' <i class="bi bi-box-arrow-up-right"></i></a>' : __('N/A'),
+                        'user' => ! empty($user = $queue->user) ? '<a href="' . route('admin.customers.profile', $user->id) . '" class="text-decoration-none" target="_blank">' . $user->realName . ' <i class="bi bi-box-arrow-up-right"></i></a>' : __('interface.misc.not_available'),
                         'form' => __($queue->form->name),
                         'product_type' => ! empty($handler = $queue->handler) ? $handler->name() : '&lt;' . $queue->product_type . '&gt;',
-                        'amount' => number_format($queue->amount, 2) . ' ' . __('€') . '<span class="d-block small">' . number_format($queue->amount * (100 + $queue->vat_percentage) / 100, 2) . ' ' . __('€') . '</span>',
+                        'amount' => number_format($queue->amount, 2) . ' €<span class="d-block small">' . number_format($queue->amount * (100 + $queue->vat_percentage) / 100, 2) . ' €</span>',
                         'status' => $status,
                         'history' => $history,
                         'approve' => ! $queue->approved && ! $queue->disapproved ? '<a href="' . route('admin.shop.orders.approve', $queue->id) . '" class="btn btn-success btn-sm"><i class="bi bi-check-circle"></i></a>' : '<button type="button" class="btn btn-success btn-sm" disabled><i class="bi bi-check-circle"></i></button>',
@@ -1465,10 +1465,10 @@ class AdminShopController extends Controller
 
             $order->sendEmailSuccessfulApprovalNotification();
 
-            return redirect()->back()->with('success', __('Shop order has been approved successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.order_approved'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -1517,10 +1517,10 @@ class AdminShopController extends Controller
 
             $order->sendEmailUnsuccessfulApprovalNotification();
 
-            return redirect()->back()->with('success', __('Shop order has been disapproved successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.order_disapproved'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -1559,10 +1559,10 @@ class AdminShopController extends Controller
 
             $order->delete();
 
-            return redirect()->back()->with('success', __('Shop order has been deleted successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.order_deleted'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -1632,10 +1632,10 @@ class AdminShopController extends Controller
                 }
             }
 
-            return redirect()->back()->with('success', __('Shop order has been updated successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.order_updated'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -1693,9 +1693,9 @@ class AdminShopController extends Controller
                 }
             });
 
-            return redirect()->back()->with('success', __('Product type has been updated successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.product_type_updated'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 }

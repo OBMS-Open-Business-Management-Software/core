@@ -9,13 +9,13 @@
                         {{ number_format(Auth::user()->prepaidAccountBalance, 2) }} €
                     </div>
                     <div class="card-footer text-decoration-none">
-                        <i class="bi bi-bank2"></i> {{ __('Account Balance') }}
+                        <i class="bi bi-bank2"></i> {{ __('interface.data.account_balance') }}
                         <i class="bi bi-arrow-right float-right"></i>
                     </div>
                 </div>
                 <div class="card mt-4">
                     <div class="card-header">
-                        <i class="bi bi-plus-circle"></i> {{ __('Deposit Money') }}
+                        <i class="bi bi-plus-circle"></i> {{ __('interface.actions.deposit_money') }}
                     </div>
                     <div class="card-body">
                         <form action="{{ route('customer.profile.transactions.deposit') }}" method="post">
@@ -48,7 +48,7 @@
                                     @endif
                                 </div>
                             @endforeach
-                            <button type="submit" class="btn btn-primary"><i class="bi bi-plus-circle"></i> {{ __('Deposit') }}</button>
+                            <button type="submit" class="btn btn-primary"><i class="bi bi-plus-circle"></i> {{ __('interface.actions.deposit') }}</button>
                         </form>
                     </div>
                 </div>
@@ -58,18 +58,18 @@
             <div class="col-md-12">
                 <div class="card mt-4">
                     <div class="card-header">
-                        <i class="bi bi-list"></i> {{ __('Account Transactions') }}
+                        <i class="bi bi-list"></i> {{ __('interface.data.account_transactions') }}
                     </div>
                     <div class="card-body">
                         <table id="transactions" class="table mt-4 w-100">
                             <thead>
                             <tr>
-                                <td>{{ __('Date') }}</td>
-                                <td>{{ __('Contract No.') }}</td>
-                                <td>{{ __('Invoice No.') }}</td>
+                                <td>{{ __('interface.data.date') }}</td>
+                                <td>{{ __('interface.data.contract_number') }}</td>
+                                <td>{{ __('interface.misc.invoice_no') }}</td>
                                 <td>{{ __('interface.data.amount') }}</td>
-                                <td>{{ __('Transaction Method') }}</td>
-                                <td>{{ __('Transaction No.') }}</td>
+                                <td>{{ __('interface.data.transaction_method') }}</td>
+                                <td>{{ __('interface.data.transaction_no') }}</td>
                             </tr>
                             </thead>
                             <tbody>

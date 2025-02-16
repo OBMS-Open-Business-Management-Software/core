@@ -2,6 +2,8 @@
 
 namespace App\Products\Sample\Models;
 
+use App\Products\CanServiceStart;
+use App\Products\HasServiceStatistics;
 use App\Products\Service;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -22,6 +24,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Sample extends Service
 {
+    use CanServiceStart;
+    use HasServiceStatistics;
     use SoftDeletes;
 
     /**
@@ -39,4 +43,60 @@ class Sample extends Service
     protected $guarded = [
         'id',
     ];
+
+    /**
+     * Get the product instance status.
+     *
+     * @return bool
+     */
+    public function status(): bool
+    {
+        sleep(2);
+
+        return true;
+    }
+
+    /**
+     * Start the product instance.
+     *
+     * @return bool
+     */
+    public function start(): bool
+    {
+        sleep(2);
+
+        return true;
+    }
+
+    /**
+     * Stop the product instance.
+     *
+     * @return bool
+     */
+    public function stop(): bool
+    {
+        sleep(2);
+
+        return true;
+    }
+
+    /**
+     * Restart the product instance.
+     *
+     * @return bool
+     */
+    public function restart(): bool
+    {
+        sleep(2);
+
+        return true;
+    }
+
+    /**
+     * Get the service status.
+     */
+    public function statistics()
+    {
+        return null;
+    }
 }

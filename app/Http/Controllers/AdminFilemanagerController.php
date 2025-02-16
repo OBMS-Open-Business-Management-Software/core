@@ -145,7 +145,7 @@ class AdminFilemanagerController extends Controller
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-warning">
-                <h5 class="modal-title" id="editFolder' . $fileOrFolder->id . 'Label">' . __('Edit') . ' (' . $fileOrFolder->name . ')</h5>
+                <h5 class="modal-title" id="editFolder' . $fileOrFolder->id . 'Label">' . __('interface.actions.edit') . ' (' . $fileOrFolder->name . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -155,7 +155,7 @@ class AdminFilemanagerController extends Controller
                     <input type="hidden" name="_token" value="' . csrf_token() . '" />
                     <input type="hidden" name="folder_id" value="' . $fileOrFolder->id . '" />
                     <div class="form-group row">
-                        <label for="name" class="col-md-4 col-form-label text-md-right">' . __('Name') . '</label>
+                        <label for="name" class="col-md-4 col-form-label text-md-right">' . __('interface.data.name') . '</label>
 
                         <div class="col-md-8">
                             <input id="name" type="text" class="form-control" name="name" value="' . $fileOrFolder->name . '">
@@ -163,7 +163,7 @@ class AdminFilemanagerController extends Controller
                     </div>
 
                     <div class="form-group row">
-                        <label for="private" class="col-md-4 col-form-label text-md-right">' . __('Private') . '</label>
+                        <label for="private" class="col-md-4 col-form-label text-md-right">' . __('interface.misc.private') . '</label>
 
                         <div class="col-md-8">
                             <input id="private" type="checkbox" class="form-control" name="private" value="true" ' . ($fileOrFolder->user_id > 0 ? 'checked' : '') . '>
@@ -171,8 +171,8 @@ class AdminFilemanagerController extends Controller
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-warning"><i class="bi bi-pencil-square"></i> ' . __('Edit') . '</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('Close') . '</button>
+                    <button type="submit" class="btn btn-warning"><i class="bi bi-pencil-square"></i> ' . __('interface.actions.edit') . '</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('interface.actions.close') . '</button>
                 </div>
             </form>
         </div>
@@ -196,7 +196,7 @@ class AdminFilemanagerController extends Controller
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-warning">
-                <h5 class="modal-title" id="editFile' . $fileOrFolder->id . 'Label">' . __('Edit') . ' (' . $fileOrFolder->name . ')</h5>
+                <h5 class="modal-title" id="editFile' . $fileOrFolder->id . 'Label">' . __('interface.actions.edit') . ' (' . $fileOrFolder->name . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -206,7 +206,7 @@ class AdminFilemanagerController extends Controller
                     <input type="hidden" name="_token" value="' . csrf_token() . '" />
                     <input type="hidden" name="file_id" value="' . $fileOrFolder->id . '" />
                     <div class="form-group row">
-                        <label for="name" class="col-md-4 col-form-label text-md-right">' . __('Name') . '</label>
+                        <label for="name" class="col-md-4 col-form-label text-md-right">' . __('interface.data.name') . '</label>
 
                         <div class="col-md-8">
                             <input id="name" type="text" class="form-control" name="name" value="' . $fileOrFolder->name . '">
@@ -214,7 +214,7 @@ class AdminFilemanagerController extends Controller
                     </div>
 
                     <div class="form-group row">
-                        <label for="private" class="col-md-4 col-form-label text-md-right">' . __('Private') . '</label>
+                        <label for="private" class="col-md-4 col-form-label text-md-right">' . __('interface.misc.private') . '</label>
 
                         <div class="col-md-8">
                             <input id="private" type="checkbox" class="form-control" name="private" value="true" ' . ($fileOrFolder->user_id > 0 ? 'checked' : '') . '>
@@ -222,8 +222,8 @@ class AdminFilemanagerController extends Controller
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-warning"><i class="bi bi-pencil-square"></i> ' . __('Edit') . '</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('Close') . '</button>
+                    <button type="submit" class="btn btn-warning"><i class="bi bi-pencil-square"></i> ' . __('interface.actions.edit') . '</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('interface.actions.close') . '</button>
                 </div>
             </form>
         </div>
@@ -232,7 +232,7 @@ class AdminFilemanagerController extends Controller
 ';
 
                         return (object) [
-                            'icon' => '<i class="bi bi-file-earmark"></i> ' . (! empty($fileOrFolder->mime) ? '<span class="badge badge-secondary badge-pill ml-2 font-weight-normal">' . $fileOrFolder->mime . '</span>' : ''),
+                            'icon' => '<i class="bi bi-file-earmark"></i> ' . (! empty($fileOrFolder->mime) ? '<span class="badge badge-secondary ml-2 font-weight-normal">' . $fileOrFolder->mime . '</span>' : ''),
                             'name' => $fileOrFolder->name,
                             'private' => $fileOrFolder->user_id > 0 ? '<i class="bi bi-lock"></i>' : '',
                             'size' => $fileOrFolder->size . 'B',
@@ -284,7 +284,7 @@ class AdminFilemanagerController extends Controller
             return redirect()->back()->with('success', 'The folder has been created successfully.');
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -323,7 +323,7 @@ class AdminFilemanagerController extends Controller
             return redirect()->back()->with('success', 'The folder has been updated successfully.');
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -356,7 +356,7 @@ class AdminFilemanagerController extends Controller
             return redirect()->back()->with('success', 'The file has been deleted successfully.');
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -397,7 +397,7 @@ class AdminFilemanagerController extends Controller
             return redirect()->back()->with('success', 'The file has been uploaded successfully.');
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -437,7 +437,7 @@ class AdminFilemanagerController extends Controller
             return redirect()->back()->with('success', 'The file has been updated successfully.');
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -470,7 +470,7 @@ class AdminFilemanagerController extends Controller
             return redirect()->back()->with('success', 'The file has been deleted successfully.');
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -505,7 +505,7 @@ class AdminFilemanagerController extends Controller
                 ->output();
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**

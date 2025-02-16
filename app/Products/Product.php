@@ -2,7 +2,6 @@
 
 namespace App\Products;
 
-use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
@@ -38,6 +37,13 @@ interface Product
     public function technicalName(): string;
 
     /**
+     * Get product folder name.
+     *
+     * @return string
+     */
+    public function folderName(): string;
+
+    /**
      * Get product name.
      *
      * @return string
@@ -52,11 +58,18 @@ interface Product
     public function icon(): ?string;
 
     /**
-     * Get product status.
+     * Get product shop status.
      *
      * @return bool
      */
     public function status(): bool;
+
+    /**
+     * Enable user interface capabilities.
+     *
+     * @return object
+     */
+    public function ui(): object;
 
     /**
      * Get an existing product instance.
@@ -127,4 +140,11 @@ interface Product
      * @return int
      */
     public function grace(): ?int;
+
+    /**
+     * Get an existing product instance capabilities.
+     *
+     * @return Collection
+     */
+    public function capabilities(): Collection;
 }

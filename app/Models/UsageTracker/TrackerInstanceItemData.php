@@ -2,7 +2,6 @@
 
 namespace App\Models\UsageTracker;
 
-use App\Models\Accounting\Contract\Contract;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;

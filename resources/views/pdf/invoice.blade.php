@@ -156,15 +156,15 @@
                     {{ config('company.address.state') }}, {{ config('company.address.country') }}<br>
                 </td>
                 <td>
-                    <span class="font-weight-bold">{{ __('Register Court:') }}</span> {{ config('company.register_court') }}<br>
-                    <span class="font-weight-bold">{{ __('Register No.:') }}</span> {{ config('company.register_number') }}<br>
-                    <span class="font-weight-bold">{{ __('Tax No.:') }}</span> {{ config('company.tax_id') }}<br>
-                    <span class="font-weight-bold">{{ __('VAT No.:') }}</span> {{ config('company.vat_id') }}
+                    <span class="font-weight-bold">{{ __('interface.documents.register_court') }}:</span> {{ config('company.register_court') }}<br>
+                    <span class="font-weight-bold">{{ __('interface.documents.register_number') }}:</span> {{ config('company.register_number') }}<br>
+                    <span class="font-weight-bold">{{ __('interface.documents.tax_number') }}:</span> {{ config('company.tax_id') }}<br>
+                    <span class="font-weight-bold">{{ __('interface.documents.vat_number') }}:</span> {{ config('company.vat_id') }}
                 </td>
                 <td>
-                    <span class="font-weight-bold">{{ __('IBAN:') }}</span> {{ config('company.bank.iban') }}<br>
-                    <span class="font-weight-bold">{{ __('BIC:') }}</span> {{ config('company.bank.bic') }}<br>
-                    <span class="font-weight-bold">{{ __('Institute:') }}</span> {{ config('company.bank.institute') }}
+                    <span class="font-weight-bold">{{ __('interface.bank_account.iban') }}:</span> {{ config('company.bank.iban') }}<br>
+                    <span class="font-weight-bold">{{ __('interface.bank_account.bic') }}:</span> {{ config('company.bank.bic') }}<br>
+                    <span class="font-weight-bold">{{ __('interface.bank_account.institute') }}:</span> {{ config('company.bank.institute') }}
                 </td>
             </tr>
             </tbody>
@@ -194,13 +194,13 @@
                 <br>
             </address>
         @endif
-        <h1>{{ $invoice->status == 'refund' ? __('Refund Invoice') : __('Invoice') }} {{ $invoice->number }}</h1>
+        <h1>{{ $invoice->status == 'refund' ? __('interface.misc.refund_invoice') : __('interface.misc.invoice') }} {{ $invoice->number }}</h1>
         <p class="top">
-            <span class="font-weight-bold">{{ __('Date:') }}</span> {{ $invoice->archived_at->format('d.m.Y') }}
+            <span class="font-weight-bold">{{ __('interface.units.date') }}:</span> {{ $invoice->archived_at->format('d.m.Y') }}
             @if (! empty($invoice->original) && $invoice->status == 'refund')
                 <br>
-                <span class="font-weight-bold">{{ __('Invoice Number:') }}</span> {{ $invoice->original->number }}<br>
-                <span class="font-weight-bold">{{ __('Invoice Date:') }}</span> {{ $invoice->original->archived_at->format('d.m.Y') }}
+                <span class="font-weight-bold">{{ __('interface.documents.invoice_number') }}:</span> {{ $invoice->original->number }}<br>
+                <span class="font-weight-bold">{{ __('interface.documents.invoice_date') }}:</span> {{ $invoice->original->archived_at->format('d.m.Y') }}
             @endif
         </p>
         <table id="dunnings" class="table mt-4 w-100">
@@ -222,13 +222,13 @@
                         {{ $link->position->description }}
                         <small class="d-block">
                             @if (isset($link->started_at))
-                                {{ __('From:') }} {{ $link->started_at->format('d.m.Y H:i') }}
+                                {{ __('interface.time.from') }}: {{ $link->started_at->format('d.m.Y H:i') }}
                             @endif
                             @if (isset($link->started_at, $link->ended_at))
                                 |
                             @endif
                             @if (isset($link->ended_at))
-                                {{ __('To:') }} {{ $link->ended_at->format('d.m.Y H:i') }}
+                                {{ __('interface.time.to') }}: {{ $link->ended_at->format('d.m.Y H:i') }}
                             @endif
                         </small>
                     </td>
@@ -243,7 +243,7 @@
                         @case ('percentage')
                         <tr>
                             <td>
-                                <span class="font-weight-bold">{{ __('Discount') }}</span><br>
+                                <span class="font-weight-bold">{{ __('interface.data.discount') }}</span><br>
                                 {{ number_format($discount->amount, 2) }} %
                             </td>
                             <td style="width: 10%">- {{ number_format($link->position->amount * ($discount->amount / 100), 2) }} €</td>
@@ -257,7 +257,7 @@
                         @default
                         <tr>
                             <td>
-                                <span class="font-weight-bold">{{ __('Discount') }}</span><br>
+                                <span class="font-weight-bold">{{ __('interface.data.discount') }}</span><br>
                                 {{ number_format($discount->amount, 2) }} €
                             </td>
                             <td style="width: 10%">- {{ number_format($discount->amount, 2) }} €</td>
@@ -300,13 +300,13 @@
             </tfoot>
         </table>
         <p class="bottom">
-            <span class="font-weight-bold">{{ __('Deadline:') }}</span> {{ $invoice->type->period }} {{ __('interface.units.days') }}<br>
-            <span class="font-weight-bold">{{ $invoice->status == 'refund' ? __('Refunded until:') : __('Payable until:') }}</span> {{ $invoice->archived_at->addDays($invoice->type->period)->format('d.m.Y') }}<br>
+            <span class="font-weight-bold">{{ __('interface.documents.deadline') }}:</span> {{ $invoice->type->period }} {{ __('interface.units.days') }}<br>
+            <span class="font-weight-bold">{{ $invoice->status == 'refund' ? __('interface.documents.refunded_until') : __('interface.documents.payable_until') }}</span> {{ $invoice->archived_at->addDays($invoice->type->period)->format('d.m.Y') }}<br>
             @if (! empty($discount = $invoice->type->discount))
-                <span class="font-weight-bold">{{ __('Discount:') }}</span> {{ $discount->percentage_amount }} % {{ __('when payed within') }} {{ $discount->period }} {{ __('interface.units.days') }}<br>
+                <span class="font-weight-bold">{{ __('interface.data.discount') }}</span> {{ $discount->percentage_amount }} % {{ __('interface.documents.invoice_discount_when') }} {{ $discount->period }} {{ __('interface.units.days') }}<br>
             @endif
             @if ($invoice->reverse_charge)
-                <br><span class="font-weight-bold">{{ __('Reverse charge notice:') }}</span> {{ __('Tax liability of the beneficiary') }}<br>
+                <br><span class="font-weight-bold">{{ __('interface.documents.reverse_charge_notice') }}:</span> {{ __('interface.documents.reverse_charge_liability') }}<br>
             @endif
         </p>
         @if (! empty($sepaQr))
@@ -315,12 +315,12 @@
                     <tr>
                         <td class="sepa-qr-col"><img src="{{ $sepaQr }}" class="image"></td>
                         <td>
-                            <span class="font-weight-bold">{{ __('IBAN:') }}</span> {{ config('company.bank.iban') }}<br>
-                            <span class="font-weight-bold">{{ __('BIC:') }}</span> {{ config('company.bank.bic') }}<br>
-                            <span class="font-weight-bold">{{ __('Institute:') }}</span> {{ config('company.bank.institute') }}<br>
-                            <span class="font-weight-bold">{{ __('Recipient:') }}</span> {{ config('company.bank.owner') }}<br>
-                            <span class="font-weight-bold">{{ __('Purpose of use:') }}</span> {{ $invoice->number }}<br>
-                            <span class="font-weight-bold">{{ __('Amount:') }}</span> {{ number_format($invoice->grossSum, 2) }} €
+                            <span class="font-weight-bold">{{ __('interface.bank_account.iban') }}:</span> {{ config('company.bank.iban') }}<br>
+                            <span class="font-weight-bold">{{ __('interface.bank_account.bic') }}:</span> {{ config('company.bank.bic') }}<br>
+                            <span class="font-weight-bold">{{ __('interface.bank_account.institute') }}:</span> {{ config('company.bank.institute') }}<br>
+                            <span class="font-weight-bold">{{ __('interface.bank_account.recipient') }}:</span> {{ config('company.bank.owner') }}<br>
+                            <span class="font-weight-bold">{{ __('interface.bank_account.purpose') }}:</span> {{ $invoice->number }}<br>
+                            <span class="font-weight-bold">{{ __('interface.data.amount') }}:</span> {{ number_format($invoice->grossSum, 2) }} €
                         </td>
                     </tr>
                 </table>

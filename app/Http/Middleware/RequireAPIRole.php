@@ -25,7 +25,7 @@ class RequireAPIRole
     public function handle(Request $request, Closure $next)
     {
         if (Auth::user()->role !== 'api') {
-            return redirect()->route('login')->with('warning', __('You don\'t have the permission to view this page.'));
+            return redirect()->route('login')->with('warning', __('interface.misc.no_permission_hint'));
         }
 
         return $next($request);

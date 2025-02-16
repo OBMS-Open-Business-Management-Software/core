@@ -4,14 +4,14 @@
     <div class="container-fluid my-4">
         <div class="row">
             <div class="col-md-12">
-                <a class="btn btn-primary float-right mb-4" data-toggle="modal" data-target="#add"><i class="bi bi-plus-circle"></i> {{ __('Create Importer') }}</a>
+                <a class="btn btn-primary float-right mb-4" data-toggle="modal" data-target="#add"><i class="bi bi-plus-circle"></i> {{ __('interface.importer.create') }}</a>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <i class="bi bi-list"></i> {{ __('Importers') }}
+                        <i class="bi bi-list"></i> {{ __('interface.misc.importers') }}
                     </div>
                     <div class="card-body">
                         <table id="importers" class="table mt-4 w-100">
@@ -20,7 +20,7 @@
                                 <td>{{ __('interface.data.id') }}</td>
                                 <td>{{ __('interface.data.name') }}</td>
                                 <td>{{ __('interface.data.description') }}</td>
-                                <td>{{ __('Log') }}</td>
+                                <td>{{ __('interface.data.log') }}</td>
                                 <td>{{ __('interface.actions.edit') }}</td>
                                 <td>{{ __('interface.actions.delete') }}</td>
                             </tr>
@@ -39,7 +39,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="addLabel"><i class="bi bi-plus-circle"></i> {{ __('Create Category') }}</h5>
+                    <h5 class="modal-title" id="addLabel"><i class="bi bi-plus-circle"></i> {{ __('interface.category.create') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -74,7 +74,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="imap_host" class="col-md-4 col-form-label text-md-right">{{ __('Host') }}</label>
+                            <label for="imap_host" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.host') }}</label>
 
                             <div class="col-md-8">
                                 <input id="imap_host" type="text" class="form-control @error('imap[host]') is-invalid @enderror" name="imap[host]" value="{{ old('imap[host]') }}">
@@ -87,7 +87,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="imap_port" class="col-md-4 col-form-label text-md-right">{{ __('Port') }}</label>
+                            <label for="imap_port" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.port') }}</label>
 
                             <div class="col-md-8">
                                 <input id="imap_port" type="text" class="form-control @error('imap[port]') is-invalid @enderror" name="imap[port]" value="{{ old('imap[port]') }}">
@@ -100,13 +100,13 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="imap_protocol" class="col-md-4 col-form-label text-md-right">{{ __('Protocol') }}</label>
+                            <label for="imap_protocol" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.protocol') }}</label>
 
                             <div class="col-md-8">
                                 <select id="imap_protocol" type="text" class="form-control @error('imap[protocol]') is-invalid @enderror" name="imap[protocol]">
-                                    <option value="none"{{ ((old('imap[protocol]') ?? '') == 'none' ? ' selected' : '') }}>{{ __('None') }}</option>
-                                    <option value="tls"{{ ((old('imap[protocol]') ?? '') == 'tls' ? ' selected' : '') }}>{{ __('TLS') }}</option>
-                                    <option value="ssl"{{ ((old('imap[protocol]') ?? '') == 'ssl' ? ' selected' : '') }}>{{ __('SSL') }}</option>
+                                    <option value="none"{{ ((old('imap[protocol]') ?? '') == 'none' ? ' selected' : '') }}>{{ __('interface.misc.none') }}</option>
+                                    <option value="tls"{{ ((old('imap[protocol]') ?? '') == 'tls' ? ' selected' : '') }}>{{ __('interface.misc.tls') }}</option>
+                                    <option value="ssl"{{ ((old('imap[protocol]') ?? '') == 'ssl' ? ' selected' : '') }}>{{ __('interface.misc.ssl') }}</option>
                                 </select>
 
                                 @error('imap[protocol]')
@@ -117,7 +117,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="imap_username" class="col-md-4 col-form-label text-md-right">{{ __('Username') }}</label>
+                            <label for="imap_username" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.username') }}</label>
 
                             <div class="col-md-8">
                                 <input id="imap_username" type="text" class="form-control @error('imap[username]') is-invalid @enderror" name="imap[username]" value="{{ old('imap[username]') }}">
@@ -130,7 +130,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="imap_password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+                            <label for="imap_password" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.password') }}</label>
 
                             <div class="col-md-8">
                                 <input id="imap_password" type="password" class="form-control @error('imap[password]') is-invalid @enderror" name="imap[password]">
@@ -143,7 +143,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="imap_folder" class="col-md-4 col-form-label text-md-right">{{ __('Folder') }}</label>
+                            <label for="imap_folder" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.folder') }}</label>
 
                             <div class="col-md-8">
                                 <input id="imap_folder" type="text" class="form-control @error('imap[folder]') is-invalid @enderror" name="imap[folder]" value="{{ old('imap[folder]') ?? 'INBOX' }}">
@@ -156,7 +156,7 @@
                             </div>
                         </div>
                         <div class="form-group row align-items-center">
-                            <label for="imap_validate_cert" class="col-md-4 col-form-label text-md-right">{{ __('Validate certificate') }}</label>
+                            <label for="imap_validate_cert" class="col-md-4 col-form-label text-md-right">{{ __('interface.misc.validate_certificate') }}</label>
 
                             <div class="col-md-8">
                                 <input id="imap_validate_cert" type="checkbox" class="form-control @error('imap[validate_cert]') is-invalid @enderror" name="imap[validate_cert]" value="true" checked>
@@ -169,7 +169,7 @@
                             </div>
                         </div>
                         <div class="form-group row align-items-center">
-                            <label for="delete_after_import" class="col-md-4 col-form-label text-md-right">{{ __('Delete message after import') }}</label>
+                            <label for="delete_after_import" class="col-md-4 col-form-label text-md-right">{{ __('interface.misc.delete_after_import') }}</label>
 
                             <div class="col-md-8">
                                 <input id="delete_after_import" type="checkbox" class="form-control @error('imap[delete_after_import]') is-invalid @enderror" name="imap[delete_after_import]" value="true" checked>

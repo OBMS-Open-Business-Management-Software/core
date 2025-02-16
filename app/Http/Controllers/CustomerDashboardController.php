@@ -84,7 +84,7 @@ class CustomerDashboardController extends Controller
             });
 
             if (Validator::make($request->toArray(), $validationRules)->fails()) {
-                return redirect()->back()->with('warning', __('Please accept all of the current page versions before continuing.'));
+                return redirect()->back()->with('warning', __('interface.messages.accept_pages'));
             }
 
             $signedAt = Carbon::now();
@@ -106,9 +106,9 @@ class CustomerDashboardController extends Controller
                 ]);
             });
 
-            return redirect()->route('customer.home')->with('success', __('The current page versions have been accepted successfully. Your acceptance has been logged.'));
+            return redirect()->route('customer.home')->with('success', __('interface.messages.accept_success'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 }

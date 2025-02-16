@@ -6,7 +6,7 @@
         <div class="col-md-8">
             <div class="card mb-4">
                 <div class="card-header text-decoration-none">
-                    <i class="bi bi-key"></i> {{ __('Register') }}
+                    <i class="bi bi-key"></i> {{ __('interface.actions.register') }}
                 </div>
                 <div class="card-body mb-0">
                     <form method="POST" action="{{ route('register') }}">
@@ -16,7 +16,7 @@
                             <div class="col-md-8 offset-md-4">
                                 @if (Route::has('login'))
                                     <a class="btn btn-outline-primary w-100 mb-4" href="{{ route('login') }}">
-                                        {{ __('Already have an account? Log in!') }}
+                                        {{ __('interface.misc.existing_account_prompt') }}
                                     </a>
                                 @endif
                             </div>
@@ -37,7 +37,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.email_address') }}</label>
 
                             <div class="col-md-8">
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
@@ -51,7 +51,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.password') }}</label>
 
                             <div class="col-md-8">
                                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
@@ -65,7 +65,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
+                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.confirm_password') }}</label>
 
                             <div class="col-md-8">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
@@ -86,7 +86,7 @@
                                                     <input id="accept_{{ $accept->id }}" type="checkbox" class="form-control" name="accept_{{ $accept->id }}" value="true">
                                                 </div>
 
-                                                <label for="accept_{{ $accept->id }}" class="col-md-10 col-form-label">{!! __('I confirm that I have read, understood the :link (Date: :date) and I agree to be bound to it.', ['link' => '<a href="' . (Route::has($accept->route) ? route($accept->route) : $accept->route) . '" target="_blank">' . __($accept->title) . '</a>', 'date' => $accept->latest->created_at->format('d.m.Y, H:i')]) !!}</label>
+                                                <label for="accept_{{ $accept->id }}" class="col-md-10 col-form-label">{!! __('interface.misc.accept_notice', ['link' => '<a href="' . (Route::has($accept->route) ? route($accept->route) : $accept->route) . '" target="_blank">' . __($accept->title) . '</a>', 'date' => $accept->latest->created_at->format('d.m.Y, H:i')]) !!}</label>
                                             </div>
                                             @error('accept_' . $accept->id)
                                                 <span class="invalid-feedback" role="alert">
@@ -102,7 +102,7 @@
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-4">
                                 <button type="submit" class="btn btn-primary w-100">
-                                    {{ __('Register') }}
+                                    {{ __('interface.actions.register') }}
                                 </button>
                             </div>
                         </div>

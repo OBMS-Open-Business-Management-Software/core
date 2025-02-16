@@ -4,14 +4,14 @@
     <div class="container-fluid my-4">
         <div class="row">
             <div class="col-md-12">
-                <a class="btn btn-primary float-right mb-4" data-toggle="modal" data-target="#add"><i class="bi bi-plus-circle"></i> {{ __('Create API OAUTH Client') }}</a>
+                <a class="btn btn-primary float-right mb-4" data-toggle="modal" data-target="#add"><i class="bi bi-plus-circle"></i> {{ __('interface.api.create_oauth_client') }}</a>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <i class="bi bi-person"></i> {{ __('API OAUTH Clients') }}
+                        <i class="bi bi-person"></i> {{ __('interface.misc.api_oauth_clients') }} }}
                     </div>
                     <div class="card-body">
                         <table id="apiclients" class="table mt-4 w-100">
@@ -19,7 +19,7 @@
                             <tr>
                                 <td>{{ __('interface.data.id') }}</td>
                                 <td>{{ __('interface.data.name') }}</td>
-                                <td>{{ __('Secret') }}</td>
+                                <td>{{ __('interface.data.secret') }} }}</td>
                                 <td>{{ __('interface.data.type') }}</td>
                                 <td>{{ __('interface.actions.delete') }}</td>
                             </tr>
@@ -38,7 +38,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="addLabel"><i class="bi bi-plus-circle"></i> {{ __('Create API OAUTH Client') }}</h5>
+                    <h5 class="modal-title" id="addLabel"><i class="bi bi-plus-circle"></i> {{ __('interface.api.create_oauth_client') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -60,13 +60,13 @@
                             </div>
                         </div>
                         <div class="form-group row mt-4">
-                            <label for="personal" class="col-md-6 col-form-label text-md-right">{{ __('Personal') }}</label>
+                            <label for="personal" class="col-md-6 col-form-label text-md-right">{{ __('interface.data.personal') }}</label>
 
                             <div class="col-md-2">
                                 <input id="personal" type="radio" class="form-control" name="type" value="personal" checked>
                             </div>
 
-                            <label for="password" class="col-md-2 col-form-label text-md-right">{{ __('Password') }}</label>
+                            <label for="password" class="col-md-2 col-form-label text-md-right">{{ __('interface.data.password') }}</label>
 
                             <div class="col-md-2">
                                 <input id="password" type="radio" class="form-control" name="type" value="password">

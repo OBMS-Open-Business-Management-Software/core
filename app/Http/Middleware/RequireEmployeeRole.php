@@ -2,12 +2,9 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\Tenant;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Config;
-use PDO;
 
 /**
  * Class RequireEmployeeRole
@@ -33,7 +30,7 @@ class RequireEmployeeRole
                 'employee',
             ])
         ) {
-            return redirect()->route('customer.home')->with('warning', __('You don\'t have the permission to view this page.'));
+            return redirect()->route('customer.home')->with('warning', __('interface.misc.no_permission_hint'));
         }
 
         return $next($request);

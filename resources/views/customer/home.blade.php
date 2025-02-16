@@ -10,7 +10,7 @@
                             {{ $contracts }}
                         </div>
                         <div class="card-footer text-decoration-none">
-                            <i class="bi bi-file-earmark-text-fill"></i> {{ __('Active Contracts') }}
+                            <i class="bi bi-file-earmark-text-fill"></i> {{ __('interface.misc.active_contracts') }}
                         </div>
                     </div>
                 </a>
@@ -22,7 +22,7 @@
                             {{ $invoices }}
                         </div>
                         <div class="card-footer text-decoration-none">
-                            <i class="bi bi-file-earmark-text"></i> {{ __('Unpaid Invoices') }}
+                            <i class="bi bi-file-earmark-text"></i> {{ __('interface.misc.unpaid_invoices') }}
                         </div>
                     </div>
                 </a>
@@ -34,7 +34,7 @@
                             {{ $tickets }}
                         </div>
                         <div class="card-footer text-decoration-none">
-                            <i class="bi bi-ticket-fill"></i> {{ __('Open Tickets') }}
+                            <i class="bi bi-ticket-fill"></i> {{ __('interface.misc.open_tickets') }}
                         </div>
                     </div>
                 </a>
@@ -46,7 +46,7 @@
                             {{ number_format(Auth::user()->prepaidAccountBalance, 2) }} €
                         </div>
                         <div class="card-footer text-decoration-none">
-                            <i class="bi bi-bank2"></i> {{ __('Account Balance') }}
+                            <i class="bi bi-bank2"></i> {{ __('interface.data.account_balance') }}
                         </div>
                     </div>
                 </a>
@@ -60,7 +60,7 @@
                             {{ $ordersOpen }}
                         </div>
                         <div class="card-footer text-decoration-none">
-                            <i class="bi bi-cart-fill"></i> {{ __('Open Orders') }}
+                            <i class="bi bi-cart-fill"></i> {{ __('interface.misc.open_orders') }}
                         </div>
                     </div>
                 </a>
@@ -72,7 +72,7 @@
                             {{ $ordersSetup }}
                         </div>
                         <div class="card-footer text-decoration-none">
-                            <i class="bi bi-check-circle-fill"></i> {{ __('Active Products') }}
+                            <i class="bi bi-check-circle-fill"></i> {{ __('interface.misc.active_products') }}
                         </div>
                     </div>
                 </a>
@@ -84,7 +84,7 @@
                             {{ $ordersLocked }}
                         </div>
                         <div class="card-footer text-decoration-none">
-                            <i class="bi bi-lock-fill"></i> {{ __('Locked Products') }}
+                            <i class="bi bi-lock-fill"></i> {{ __('interface.misc.locked_products') }}
                         </div>
                     </div>
                 </a>

@@ -26,10 +26,10 @@
                         <div class="col-md-12">
                             <div class="card{{ $categories->isNotEmpty() ? ' mb-4' : '' }}">
                                 <div class="card-header text-decoration-none">
-                                    <i class="bi bi-info-circle"></i> {{ __('Shop Information') }}
+                                    <i class="bi bi-info-circle"></i> {{ __('interface.misc.shop_information') }}
                                 </div>
                                 <div class="card-body mb-0">
-                                    {{ __('Welcome. Have fun shopping!') }}
+                                    {{ __('interface.misc.shop_welcome') }}
                                 </div>
                             </div>
                         </div>
@@ -40,13 +40,13 @@
         @if (! empty($category) && ! empty($parent = $category->category))
             <div class="row my-4">
                 <div class="col-md-12">
-                    <a href="{{ $parent->fullRoute }}" class="btn btn-outline-primary"><i class="bi bi-arrow-left-circle"></i> {{ __('Previous category') }}</a>
+                    <a href="{{ $parent->fullRoute }}" class="btn btn-outline-primary"><i class="bi bi-arrow-left-circle"></i> {{ __('interface.misc.previous_category') }}</a>
                 </div>
             </div>
         @elseif (! empty($category))
             <div class="row my-4">
                 <div class="col-md-12">
-                    <a href="{{ route('public.shop') }}" class="btn btn-outline-primary"><i class="bi bi-arrow-left-circle"></i> {{ __('Previous category') }}</a>
+                    <a href="{{ route('public.shop') }}" class="btn btn-outline-primary"><i class="bi bi-arrow-left-circle"></i> {{ __('interface.misc.previous_category') }}</a>
                 </div>
             </div>
         @endif
@@ -56,9 +56,9 @@
                     <div class="alert alert-warning mb-0">
                         <i class="bi bi-exclamation-triangle"></i>
                         @if ($user->role == 'customer')
-                            {{ __('Your account is missing various personal data. Some features or payment types may be restricted. Click the button below to complete the profile.') }}
+                            {{ __('interface.misc.missing_data_notice') }}
                         @else
-                            {{ __('You don\'t have the proper role to place an order. Only customers can order new products.') }}
+                            {{ __('interface.misc.order_role_missing_hint') }}
                         @endif
                     </div>
                 </div>
@@ -70,7 +70,7 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header text-decoration-none">
-                                <i class="bi bi-list"></i> {{ __('Categories') }}
+                                <i class="bi bi-list"></i> {{ __('interface.misc.categories') }}
                             </div>
                             <div class="card-body py-3">
                                 @foreach ($categories as $category)
@@ -107,9 +107,9 @@
                                     {!! __($form->description) !!}
                                 </div>
                                 <div class="card-footer">
-                                     {{ __('From:') }}
+                                     {{ __('interface.time.from') }}:
                                     <span>{{ number_format($form->minAmount, 2) }} €</span>
-                                    {{ __('excl. VAT') }}
+                                    {{ __('interface.misc.excl_vat') }}
                                 </div>
                             </div>
                         </a>
@@ -123,7 +123,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="alert alert-warning mb-0">
-                        <i class="bi bi-exclamation-triangle"></i> {{ __('This category has no categories or products linked yet.') }}
+                        <i class="bi bi-exclamation-triangle"></i> {{ __('interface.misc.no_category_product_notice') }}
                     </div>
                 </div>
             </div>

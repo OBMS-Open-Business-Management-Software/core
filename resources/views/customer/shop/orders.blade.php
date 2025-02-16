@@ -6,19 +6,19 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <i class="bi bi-cart-fill"></i> {{ __('Orders') }}
+                        <i class="bi bi-cart-fill"></i> {{ __('interface.misc.orders') }}
                     </div>
                     <div class="card-body">
                         <table id="categories" class="table mt-4 w-100">
                             <thead>
                             <tr>
                                 <td>{{ __('interface.data.id') }}</td>
-                                <td>{{ __('User') }}</td>
-                                <td>{{ __('Form') }}</td>
-                                <td>{{ __('Product Type') }}</td>
+                                <td>{{ __('interface.data.user') }}</td>
+                                <td>{{ __('interface.data.form') }}</td>
+                                <td>{{ __('interface.data.product_type') }}</td>
                                 <td>{{ __('interface.data.amount') }}</td>
-                                <td>{{ __('Steps') }}</td>
-                                <td>{{ __('History') }}</td>
+                                <td>{{ __('interface.data.steps') }}</td>
+                                <td>{{ __('interface.data.history') }}</td>
                             </tr>
                             </thead>
                             <tbody>

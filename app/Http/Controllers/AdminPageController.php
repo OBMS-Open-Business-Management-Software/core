@@ -91,7 +91,7 @@ class AdminPageController extends Controller
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-warning">
-                <h5 class="modal-title" id="editPage' . $page->id . 'Label">' . __('Edit') . ' (' . __($page->title) . ')</h5>
+                <h5 class="modal-title" id="editPage' . $page->id . 'Label">' . __('interface.actions.edit') . ' (' . __($page->title) . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -101,28 +101,28 @@ class AdminPageController extends Controller
                     <input type="hidden" name="_token" value="' . csrf_token() . '" />
                     <input type="hidden" name="page_id" value="' . $page->id . '" />
                     <div class="form-group row">
-                            <label for="route" class="col-md-4 col-form-label text-md-right">' . __('Route') . '</label>
+                            <label for="route" class="col-md-4 col-form-label text-md-right">' . __('interface.data.route') . '</label>
 
                             <div class="col-md-8">
                                 <input id="route" type="text" class="form-control" name="route" value="' . $page->route . '">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="title" class="col-md-4 col-form-label text-md-right">' . __('Title') . '</label>
+                            <label for="title" class="col-md-4 col-form-label text-md-right">' . __('interface.data.title') . '</label>
 
                             <div class="col-md-8">
                                 <input id="title" type="text" class="form-control" name="title" value="' . $page->title . '">
                             </div>
                         </div>
                         <div class="form-group row align-items-center">
-                            <label for="must_accept" class="col-md-4 col-form-label text-md-right">' . __('Must be accepted') . '</label>
+                            <label for="must_accept" class="col-md-4 col-form-label text-md-right">' . __('interface.misc.must_be_accepted') . '</label>
 
                             <div class="col-md-8">
                                 <input id="must_accept" type="checkbox" class="form-control" name="must_accept" value="true"' . ($page->must_accept ? ' checked' : '') . '>
                             </div>
                         </div>
                         <div class="form-group row align-items-center">
-                            <label for="navigation_item" class="col-md-4 col-form-label text-md-right">' . __('Display in navigation') . '</label>
+                            <label for="navigation_item" class="col-md-4 col-form-label text-md-right">' . __('interface.misc.display_in_navigation') . '</label>
 
                             <div class="col-md-8">
                                 <input id="navigation_item" type="checkbox" class="form-control" name="navigation_item" value="true"' . ($page->navigation_item ? ' checked' : '') . '>
@@ -130,8 +130,8 @@ class AdminPageController extends Controller
                         </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-warning"><i class="bi bi-pencil-square"></i> ' . __('Edit') . '</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('Close') . '</button>
+                    <button type="submit" class="btn btn-warning"><i class="bi bi-pencil-square"></i> ' . __('interface.actions.edit') . '</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('interface.actions.close') . '</button>
                 </div>
             </form>
         </div>
@@ -143,8 +143,8 @@ class AdminPageController extends Controller
                         'id' => $page->id,
                         'title' => __($page->title),
                         'route' => $page->route,
-                        'must_accept' => $page->must_accept ? '<span class="badge badge-success badge-pill">' . __('Yes') . '</span>' : '<span class="badge badge-warning badge-pill">' . __('No') . '</span>',
-                        'navigation_item' => $page->navigation_item ? '<span class="badge badge-success badge-pill">' . __('Yes') . '</span>' : '<span class="badge badge-warning badge-pill">' . __('No') . '</span>',
+                        'must_accept' => $page->must_accept ? '<span class="badge badge-success">' . __('interface.misc.yes') . '</span>' : '<span class="badge badge-warning">' . __('interface.misc.no') . '</span>',
+                        'navigation_item' => $page->navigation_item ? '<span class="badge badge-success">' . __('interface.misc.yes') . '</span>' : '<span class="badge badge-warning">' . __('interface.misc.no') . '</span>',
                         'view' => '<a href="' . route('admin.pages.details', $page->id) . '" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>',
                         'edit' => $edit,
                         'delete' => $page->acceptance->isEmpty() ? '<a href="' . route('admin.invoices.customers.delete', $page->id) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>' : '<button type="button" class="btn btn-danger btn-sm" disabled><i class="bi bi-trash"></i></button>',
@@ -195,11 +195,11 @@ class AdminPageController extends Controller
                     // TODO: Send an email to customers that they have to accept the new terms
                 }
 
-                return redirect()->back()->with('success', __('Page has been added successfully.'));
+                return redirect()->back()->with('success', __('interface.messages.page_added'));
             }
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -229,10 +229,10 @@ class AdminPageController extends Controller
                 'navigation_item' => ! empty($request->navigation_item),
             ]);
 
-            return redirect()->back()->with('success', __('Page has been updated successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.page_updated'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -260,10 +260,10 @@ class AdminPageController extends Controller
             $page->versions()->delete();
             $page->delete();
 
-            return redirect()->route('admin.invoices.customers')->with('success', __('Page has been deleted successfully.'));
+            return redirect()->route('admin.invoices.customers')->with('success', __('interface.messages.page_deleted'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -339,7 +339,7 @@ class AdminPageController extends Controller
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header bg-warning">
-                <h5 class="modal-title" id="editPageVersion' . $version->id . 'Label">' . __('Edit') . ' (#' . __($version->id) . ')</h5>
+                <h5 class="modal-title" id="editPageVersion' . $version->id . 'Label">' . __('interface.actions.edit') . ' (#' . __($version->id) . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -349,7 +349,7 @@ class AdminPageController extends Controller
                     <input type="hidden" name="_token" value="' . csrf_token() . '" />
                     <input type="hidden" name="page_version_id" value="' . $version->id . '" />
                     <div class="form-group row">
-                        <label for="page_content" class="col-md-4 col-form-label text-md-right">' . __('Content') . '</label>
+                        <label for="page_content" class="col-md-4 col-form-label text-md-right">' . __('interface.data.content') . '</label>
 
                         <div class="col-md-8">
                             <textarea id="page_content" type="text" class="form-control" name="page_content"' . ($version->acceptance->isNotEmpty() ? ' readonly' : '') . '>' . $version->content . '</textarea>
@@ -357,8 +357,8 @@ class AdminPageController extends Controller
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-warning"' . ($version->acceptance->isNotEmpty() ? ' disabled' : '') . '><i class="bi bi-pencil-square"></i> ' . __('Edit') . '</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('Close') . '</button>
+                    <button type="submit" class="btn btn-warning"' . ($version->acceptance->isNotEmpty() ? ' disabled' : '') . '><i class="bi bi-pencil-square"></i> ' . __('interface.actions.edit') . '</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('interface.actions.close') . '</button>
                 </div>
             </form>
         </div>
@@ -409,11 +409,11 @@ class AdminPageController extends Controller
                     // TODO: Send an email to customers that they have to accept the new terms
                 }
 
-                return redirect()->back()->with('success', __('Page version has been added successfully.'));
+                return redirect()->back()->with('success', __('interface.messages.page_version_added'));
             }
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -438,10 +438,10 @@ class AdminPageController extends Controller
                 'content' => $request->page_content,
             ]);
 
-            return redirect()->back()->with('success', __('Page version has been updated successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.page_version_updated'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -468,9 +468,9 @@ class AdminPageController extends Controller
         if (! empty($version = PageVersion::find($version_id))) {
             $version->delete();
 
-            return redirect()->back()->with('success', __('Page version has been deleted successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.page_version_deleted'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 }

@@ -19,6 +19,8 @@ use App\Http\Middleware\RequireUnlockedProfile;
 use App\Http\Middleware\TrimStrings;
 use App\Http\Middleware\TrustProxies;
 use App\Http\Middleware\IdentifyTenant;
+use App\Http\Middleware\IdentifyAdminProductLists;
+use App\Http\Middleware\IdentifyCustomerProductLists;
 use App\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Auth\Middleware\AuthenticateWithBasicAuth;
 use Illuminate\Auth\Middleware\Authorize;
@@ -51,6 +53,8 @@ class Kernel extends HttpKernel
         ValidatePostSize::class,
         TrimStrings::class,
         ConvertEmptyStringsToNull::class,
+        IdentifyTenant::class,
+        InjectNavigateables::class,
     ];
 
     /**
@@ -63,16 +67,12 @@ class Kernel extends HttpKernel
             EncryptCookies::class,
             AddQueuedCookiesToResponse::class,
             StartSession::class,
-            // \Illuminate\Session\Middleware\AuthenticateSession::class,
             ShareErrorsFromSession::class,
             VerifyCsrfToken::class,
             SubstituteBindings::class,
-            IdentifyTenant::class,
-            InjectNavigateables::class,
         ],
 
         'api' => [
-            // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             'throttle:api',
             SubstituteBindings::class,
             IdentifyTenant::class,
@@ -107,5 +107,7 @@ class Kernel extends HttpKernel
         'accepted' => RequireAcceptedPages::class,
         'navigateables' => InjectNavigateables::class,
         'shop.categoryOrProduct' => InjectShopCategoryOrProduct::class,
+        'products.admin' => IdentifyAdminProductLists::class,
+        'products.customer' => IdentifyCustomerProductLists::class,
     ];
 }

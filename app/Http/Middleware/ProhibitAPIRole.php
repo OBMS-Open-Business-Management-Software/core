@@ -5,7 +5,6 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
 
 /**
  * Class ProhibitAPIRole
@@ -28,7 +27,7 @@ class ProhibitAPIRole
         if (Auth::user()->role == 'api') {
             $request->session()->flush();
 
-            return redirect()->route('login')->with('warning', __('You don\'t have the permission to log in with this user account.'));
+            return redirect()->route('login')->with('warning', __('interface.messages.login_prohibited'));
         }
 
         return $next($request);

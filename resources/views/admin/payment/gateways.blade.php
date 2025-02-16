@@ -6,15 +6,15 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <i class="bi bi-currency-euro"></i> {{ __('Payment Gateways') }}
+                        <i class="bi bi-currency-euro"></i> {{ __('interface.misc.payment_gateways') }}
                     </div>
                     <div class="card-body">
                         <table id="categories" class="table mt-4 w-100">
                             <thead>
                             <tr>
-                                <td>{{ __('Gateway') }}</td>
+                                <td>{{ __('interface.data.gateway') }}</td>
                                 <td>{{ __('interface.data.name') }}</td>
-                                <td>{{ __('Status') }}</td>
+                                <td>{{ __('interface.data.status') }}</td>
                                 <td>{{ __('interface.actions.edit') }}</td>
                             </tr>
                             </thead>
@@ -23,7 +23,7 @@
                                     <tr>
                                         <td>{{ $gateway->technicalName() }}</td>
                                         <td>{{ $gateway->name() }}</td>
-                                        <td>{!! $gateway->status() ? '<span class="badge badge-success badge-pill">' . __('Enabled') . '</span>' : '<span class="badge badge-warning badge-pill">' . __('Disabled') . '</span>' !!}</td>
+                                        <td>{!! $gateway->status() ? '<span class="badge badge-success">' . __('interface.status.enabled') . '</span>' : '<span class="badge badge-warning">' . __('interface.status.disabled') . '</span>' !!}</td>
                                         <td><a class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit{{ $gateway->technicalName() }}"><i class="bi bi-pencil-square"></i></a></td>
                                     </tr>
                                     <div class="modal fade" id="edit{{ $gateway->technicalName() }}" tabindex="-1" aria-labelledby="edit{{ $gateway->technicalName() }}Label" aria-hidden="true">

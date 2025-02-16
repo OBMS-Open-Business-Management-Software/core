@@ -4,24 +4,24 @@
     <div class="container-fluid my-4">
         <div class="row">
             <div class="col-md-12">
-                <a class="btn btn-primary float-right mb-4" data-toggle="modal" data-target="#add"><i class="bi bi-plus-circle"></i> {{ __('Create Page') }}</a>
+                <a class="btn btn-primary float-right mb-4" data-toggle="modal" data-target="#add"><i class="bi bi-plus-circle"></i> {{ __('interface.page.create') }}</a>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <i class="bi bi-list"></i> {{ __('Pages') }}
+                        <i class="bi bi-list"></i> {{ __('interface.misc.pages') }}
                     </div>
                     <div class="card-body">
                         <table id="categories" class="table mt-4 w-100">
                             <thead>
                             <tr>
                                 <td>{{ __('interface.data.id') }}</td>
-                                <td>{{ __('Title') }}</td>
-                                <td>{{ __('Route') }}</td>
-                                <td>{{ __('Must Accept') }}</td>
-                                <td>{{ __('Navigation Item') }}</td>
+                                <td>{{ __('interface.data.title') }}</td>
+                                <td>{{ __('interface.data.route') }}</td>
+                                <td>{{ __('interface.data.must_accept') }}</td>
+                                <td>{{ __('interface.data.navigation_item') }}</td>
                                 <td>{{ __('interface.actions.view') }}</td>
                                 <td>{{ __('interface.actions.edit') }}</td>
                                 <td>{{ __('interface.actions.delete') }}</td>
@@ -41,7 +41,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="addLabel"><i class="bi bi-plus-circle"></i> {{ __('Create Page') }}</h5>
+                    <h5 class="modal-title" id="addLabel"><i class="bi bi-plus-circle"></i> {{ __('interface.page.create') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -50,7 +50,7 @@
                     @csrf
                     <div class="modal-body">
                         <div class="form-group row">
-                            <label for="route" class="col-md-4 col-form-label text-md-right">{{ __('Route') }}</label>
+                            <label for="route" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.route') }}</label>
 
                             <div class="col-md-8">
                                 <input id="route" type="text" class="form-control @error('route') is-invalid @enderror" name="route" value="{{ old('route') }}">
@@ -63,7 +63,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="title" class="col-md-4 col-form-label text-md-right">{{ __('Title') }}</label>
+                            <label for="title" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.title') }}</label>
 
                             <div class="col-md-8">
                                 <input id="title" type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="{{ old('title') }}">
@@ -76,7 +76,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="page_content" class="col-md-4 col-form-label text-md-right">{{ __('Content') }}</label>
+                            <label for="page_content" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.content') }}</label>
 
                             <div class="col-md-8">
                                 <textarea id="page_content" type="text" class="form-control @error('page_content') is-invalid @enderror" name="page_content">{{ old('page_content') }}</textarea>
@@ -89,7 +89,7 @@
                             </div>
                         </div>
                         <div class="form-group row align-items-center">
-                            <label for="must_accept" class="col-md-4 col-form-label text-md-right">{{ __('Must be accepted') }}</label>
+                            <label for="must_accept" class="col-md-4 col-form-label text-md-right">{{ __('interface.misc.must_be_accepted') }}</label>
 
                             <div class="col-md-8">
                                 <input id="must_accept" type="checkbox" class="form-control @error('must_accept') is-invalid @enderror" name="must_accept" value="true">
@@ -102,7 +102,7 @@
                             </div>
                         </div>
                         <div class="form-group row align-items-center">
-                            <label for="navigation_item" class="col-md-4 col-form-label text-md-right">{{ __('Display in navigation') }}</label>
+                            <label for="navigation_item" class="col-md-4 col-form-label text-md-right">{{ __('interface.misc.display_in_navigation') }}</label>
 
                             <div class="col-md-8">
                                 <input id="navigation_item" type="checkbox" class="form-control @error('navigation_item') is-invalid @enderror" name="navigation_item" value="true">

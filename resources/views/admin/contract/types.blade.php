@@ -4,14 +4,14 @@
     <div class="container-fluid my-4">
         <div class="row">
             <div class="col-md-12">
-                <a class="btn btn-primary float-right mb-4" data-toggle="modal" data-target="#add"><i class="bi bi-plus-circle"></i> {{ __('Create Contract Type') }}</a>
+                <a class="btn btn-primary float-right mb-4" data-toggle="modal" data-target="#add"><i class="bi bi-plus-circle"></i> {{ __('interface.contract_type.create') }}</a>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <i class="bi bi-list"></i> {{ __('Contract Types') }}
+                        <i class="bi bi-list"></i> {{ __('interface.data.contract_types') }}
                     </div>
                     <div class="card-body">
                         <table id="types" class="table mt-4 w-100">
@@ -20,9 +20,9 @@
                                 <td>{{ __('interface.data.id') }}</td>
                                 <td>{{ __('interface.data.name') }}</td>
                                 <td>{{ __('interface.data.description') }}</td>
-                                <td>{{ __('Invoice Type') }}</td>
-                                <td>{{ __('Invoice Period') }}</td>
-                                <td>{{ __('Cancellation Period') }}</td>
+                                <td>{{ __('interface.data.invoice_type') }}</td>
+                                <td>{{ __('interface.data.invoice_period') }}</td>
+                                <td>{{ __('interface.data.cancellation_period') }}</td>
                                 <td>{{ __('interface.data.type') }}</td>
                                 <td>{{ __('interface.actions.edit') }}</td>
                                 <td>{{ __('interface.actions.delete') }}</td>
@@ -42,7 +42,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="addLabel"><i class="bi bi-plus-circle"></i> {{ __('Create Contract Type') }}</h5>
+                    <h5 class="modal-title" id="addLabel"><i class="bi bi-plus-circle"></i> {{ __('interface.contract_type.create') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -81,10 +81,10 @@
 
                             <div class="col-md-8">
                                 <select id="type" type="text" class="form-control @error('type') is-invalid @enderror" name="type">
-                                    <option value="contract_pre_pay"{{ old('type') == 'contract_pre_pay' ? ' selected' : '' }}>{{ __('Contract (pre-paid)') }}</option>
-                                    <option value="contract_post_pay"{{ old('type') == 'contract_post_pay' ? ' selected' : '' }}>{{ __('Contract (post-paid)') }}</option>
-                                    <option value="prepaid_auto"{{ old('type') == 'prepaid_auto' ? ' selected' : '' }}>{{ __('Prepaid (auto-renew)') }}</option>
-                                    <option value="prepaid_manual"{{ old('type') == 'prepaid_manual' ? ' selected' : '' }}>{{ __('Prepaid (manual renew)') }}</option>
+                                    <option value="contract_pre_pay"{{ old('type') == 'contract_pre_pay' ? ' selected' : '' }}>{{ __('interface.billing.contract_pre') }}</option>
+                                    <option value="contract_post_pay"{{ old('type') == 'contract_post_pay' ? ' selected' : '' }}>{{ __('interface.billing.contract_post') }}</option>
+                                    <option value="prepaid_auto"{{ old('type') == 'prepaid_auto' ? ' selected' : '' }}>{{ __('interface.billing.prepaid_auto') }}</option>
+                                    <option value="prepaid_manual"{{ old('type') == 'prepaid_manual' ? ' selected' : '' }}>{{ __('interface.billing.prepaid_manual') }}</option>
                                 </select>
 
                                 @error('type')
@@ -95,7 +95,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="invoice_type_id" class="col-md-4 col-form-label text-md-right">{{ __('Invoice Type') }}</label>
+                            <label for="invoice_type_id" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.invoice_type') }}</label>
 
                             <div class="col-md-8">
                                 <select id="invoice_type_id" type="text" class="form-control @error('invoice_type_id') is-invalid @enderror" name="invoice_type_id">
@@ -112,7 +112,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="invoice_period" class="col-md-4 col-form-label text-md-right">{{ __('Invoice Period') }}</label>
+                            <label for="invoice_period" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.invoice_period') }}</label>
 
                             <div class="col-md-8">
                                 <div class="input-group">
@@ -130,7 +130,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="cancellation_period" class="col-md-4 col-form-label text-md-right">{{ __('Cancellation Period') }}</label>
+                            <label for="cancellation_period" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.cancellation_period') }}</label>
 
                             <div class="col-md-8">
                                 <div class="input-group">

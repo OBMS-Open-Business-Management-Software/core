@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Actions\Fortify\PasswordValidationRules;
-use App\Models\Project;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -47,7 +46,7 @@ class DashboardController extends Controller
             'must_change_password' => false,
         ]);
 
-        return Redirect::route('redirect')->with('success', __('The new password has been set'));
+        return Redirect::route('redirect')->with('success', __('interface.messages.password_set'));
     }
 
     /**

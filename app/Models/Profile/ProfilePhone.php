@@ -2,7 +2,6 @@
 
 namespace App\Models\Profile;
 
-use App\Models\Address\Address;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;

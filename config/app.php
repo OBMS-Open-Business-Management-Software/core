@@ -13,7 +13,8 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'OBMS'),
+    'slogan' => env('APP_SLOGAN', 'Open Business Management Software'),
 
     /*
     |--------------------------------------------------------------------------
@@ -176,6 +177,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\FortifyServiceProvider::class,
         App\Providers\QueueServiceProvider::class,
+        App\Providers\TranslationServiceProvider::class,
+        App\Providers\MigrationServiceProvider::class,
 
     ],
 

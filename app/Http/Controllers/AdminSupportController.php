@@ -122,44 +122,44 @@ class AdminSupportController extends Controller
 
                     switch ($ticket->status) {
                         case 'open':
-                            $status = '<span class="badge badge-primary badge-pill">' . __('Open') . '</span>';
+                            $status = '<span class="badge badge-primary">' . __('interface.status.open') . '</span>';
                             break;
                         case 'closed':
-                            $status = '<span class="badge badge-secondary badge-pill">' . __('Closed') . '</span>';
+                            $status = '<span class="badge badge-secondary">' . __('interface.status.closed') . '</span>';
                             break;
                         case 'locked':
-                            $status = '<span class="badge badge-danger badge-pill">' . __('Locked') . '</span>';
+                            $status = '<span class="badge badge-danger">' . __('interface.status.locked') . '</span>';
                             break;
                     }
 
                     if ($ticket->escalated) {
-                        $status .= (! empty($status) ? ' ' : '') . '<span class="badge badge-warning badge-pill">' . __('Escalated') . '</span>';
+                        $status .= (! empty($status) ? ' ' : '') . '<span class="badge badge-warning">' . __('interface.status.escalated') . '</span>';
                     }
 
                     if ($ticket->hold) {
-                        $status .= (! empty($status) ? ' ' : '') . '<span class="badge badge-secondary badge-pill">' . __('On-Hold') . '</span>';
+                        $status .= (! empty($status) ? ' ' : '') . '<span class="badge badge-secondary">' . __('interface.status.on_hold') . '</span>';
                     }
 
                     switch ($ticket->priority) {
                         case 'low':
                         default:
-                            $priority = '<span class="badge badge-secondary badge-pill">' . __('Low') . '</span>';
+                            $priority = '<span class="badge badge-secondary">' . __('interface.priorities.low') . '</span>';
                             break;
                         case 'medium':
-                            $priority = '<span class="badge badge-success badge-pill">' . __('Medium') . '</span>';
+                            $priority = '<span class="badge badge-success">' . __('interface.priorities.medium') . '</span>';
                             break;
                         case 'high':
-                            $priority = '<span class="badge badge-warning badge-pill">' . __('High') . '</span>';
+                            $priority = '<span class="badge badge-warning">' . __('interface.priorities.high') . '</span>';
                             break;
                         case 'emergency':
-                            $priority = '<span class="badge badge-danger badge-pill">' . __('Emergency') . '</span>';
+                            $priority = '<span class="badge badge-danger">' . __('interface.priorities.emergency') . '</span>';
                             break;
                     }
 
                     return (object) [
                         'id' => $ticket->id,
                         'subject' => $ticket->subject,
-                        'category' => ! empty($ticket->category) ? $ticket->category->name : __('Uncategorized'),
+                        'category' => ! empty($ticket->category) ? $ticket->category->name : __('interface.status.uncategorized'),
                         'status' => $status,
                         'priority' => $priority,
                         'view' => '<a href="' . route('admin.support.details', $ticket->id) . '" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>',
@@ -196,7 +196,7 @@ class AdminSupportController extends Controller
             ]);
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -278,13 +278,13 @@ class AdminSupportController extends Controller
                 ! empty($request->note) &&
                 $request->note == 'true'
             ) {
-                return redirect()->back()->with('success', __('The note has been added to the ticket successfully.'));
+                return redirect()->back()->with('success', __('interface.messages.ticket_note_added'));
             }
 
-            return redirect()->back()->with('success', __('The ticket has been answered successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.ticket_added'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -326,10 +326,10 @@ class AdminSupportController extends Controller
 
             $ticket->sendEmailCloseNotification();
 
-            return redirect()->back()->with('success', __('The ticket has been closed successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.ticket_closed'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -371,10 +371,10 @@ class AdminSupportController extends Controller
 
             $ticket->sendEmailReopenNotification();
 
-            return redirect()->back()->with('success', __('The ticket has been re-opened successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.ticket_reopened'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -396,11 +396,11 @@ class AdminSupportController extends Controller
 
         if (
             ! empty(
-            $ticket = SupportTicket::where('id', '=', $id)
-                ->whereHas('assignments', function (Builder $builder) {
-                    return $builder->where('user_id', '=', Auth::id());
-                })
-                ->first()
+                $ticket = SupportTicket::where('id', '=', $id)
+                    ->whereHas('assignments', function (Builder $builder) {
+                        return $builder->where('user_id', '=', Auth::id());
+                    })
+                    ->first()
             )
         ) {
             $ticket->update([
@@ -416,10 +416,10 @@ class AdminSupportController extends Controller
 
             $ticket->sendEmailLockNotification();
 
-            return redirect()->back()->with('success', __('The ticket has been locked successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.ticket_locked'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -461,10 +461,10 @@ class AdminSupportController extends Controller
 
             $ticket->sendEmailUnlockNotification();
 
-            return redirect()->back()->with('success', __('The ticket has been unlocked & opened successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.ticket_unlocked_opened'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -507,10 +507,10 @@ class AdminSupportController extends Controller
                 'reference' => Auth::id(),
             ]);
 
-            return redirect()->back()->with('success', __('The ticket has been joined successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.ticket_joined'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -551,10 +551,10 @@ class AdminSupportController extends Controller
                 'reference' => Auth::id(),
             ]);
 
-            return redirect()->back()->with('success', __('The ticket has been left successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.ticket_left'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -576,11 +576,11 @@ class AdminSupportController extends Controller
 
         if (
             ! empty(
-            $ticket = SupportTicket::where('id', '=', $id)
-                ->whereHas('assignments', function (Builder $builder) {
-                    return $builder->where('user_id', '=', Auth::id());
-                })
-                ->first()
+                $ticket = SupportTicket::where('id', '=', $id)
+                    ->whereHas('assignments', function (Builder $builder) {
+                        return $builder->where('user_id', '=', Auth::id());
+                    })
+                    ->first()
             )
         ) {
             $ticket->update([
@@ -596,10 +596,10 @@ class AdminSupportController extends Controller
 
             $ticket->sendEmailEscalationNotification();
 
-            return redirect()->back()->with('success', __('The ticket has been escalated successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.ticket_escalated'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -621,11 +621,11 @@ class AdminSupportController extends Controller
 
         if (
             ! empty(
-            $ticket = SupportTicket::where('id', '=', $id)
-                ->whereHas('assignments', function (Builder $builder) {
-                    return $builder->where('user_id', '=', Auth::id());
-                })
-                ->first()
+                $ticket = SupportTicket::where('id', '=', $id)
+                    ->whereHas('assignments', function (Builder $builder) {
+                        return $builder->where('user_id', '=', Auth::id());
+                    })
+                    ->first()
             )
         ) {
             $ticket->update([
@@ -641,10 +641,10 @@ class AdminSupportController extends Controller
 
             $ticket->sendEmailDeescalationNotification();
 
-            return redirect()->back()->with('success', __('The ticket has been deescalated successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.ticket_deescalated'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -702,13 +702,13 @@ class AdminSupportController extends Controller
                     'reference' => Auth::id(),
                 ]);
 
-                return redirect()->route('admin.support')->with('success', __('The ticket has been moved successfully. You were redirected to the overview since you don\'t have access to the target category.'));
+                return redirect()->route('admin.support')->with('success', __('interface.messages.ticket_moved_redirected'));
             }
 
-            return redirect()->back()->with('success', __('The ticket has been moved successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.ticket_moved'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -729,11 +729,11 @@ class AdminSupportController extends Controller
 
         if (
             ! empty(
-            $ticket = SupportTicket::where('id', '=', $request->ticket_id)
-                ->whereHas('assignments', function (Builder $builder) {
-                    return $builder->where('user_id', '=', Auth::id());
-                })
-                ->first()
+                $ticket = SupportTicket::where('id', '=', $request->ticket_id)
+                    ->whereHas('assignments', function (Builder $builder) {
+                        return $builder->where('user_id', '=', Auth::id());
+                    })
+                    ->first()
             )
         ) {
             $ticket->update([
@@ -750,10 +750,10 @@ class AdminSupportController extends Controller
 
             $ticket->sendEmailPriorityNotification();
 
-            return redirect()->back()->with('success', __('The ticket has been prioritized successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.ticket_prioritized'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -775,11 +775,11 @@ class AdminSupportController extends Controller
 
         if (
             ! empty(
-            $ticket = SupportTicket::where('id', '=', $id)
-                ->whereHas('assignments', function (Builder $builder) {
-                    return $builder->where('user_id', '=', Auth::id());
-                })
-                ->first()
+                $ticket = SupportTicket::where('id', '=', $id)
+                    ->whereHas('assignments', function (Builder $builder) {
+                        return $builder->where('user_id', '=', Auth::id());
+                    })
+                    ->first()
             )
         ) {
             $ticket->update([
@@ -795,10 +795,10 @@ class AdminSupportController extends Controller
 
             $ticket->sendEmailHoldNotification();
 
-            return redirect()->back()->with('success', __('The ticket has been hold successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.ticket_hold'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -820,11 +820,11 @@ class AdminSupportController extends Controller
 
         if (
             ! empty(
-            $ticket = SupportTicket::where('id', '=', $id)
-                ->whereHas('assignments', function (Builder $builder) {
-                    return $builder->where('user_id', '=', Auth::id());
-                })
-                ->first()
+                $ticket = SupportTicket::where('id', '=', $id)
+                    ->whereHas('assignments', function (Builder $builder) {
+                        return $builder->where('user_id', '=', Auth::id());
+                    })
+                    ->first()
             )
         ) {
             $ticket->update([
@@ -840,10 +840,10 @@ class AdminSupportController extends Controller
 
             $ticket->sendEmailUnholdNotification();
 
-            return redirect()->back()->with('success', __('The ticket has been unhold successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.ticket_unhold'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -897,13 +897,13 @@ class AdminSupportController extends Controller
                     'action' => 'start',
                 ]);
 
-                return redirect()->route('admin.support.details', $ticket->id)->with('success', __('The ticket run has been started successfully.'));
+                return redirect()->route('admin.support.details', $ticket->id)->with('success', __('interface.messages.ticket_run_started'));
             } else {
-                return redirect()->back()->with('warning', __('No applicable ticket found. Please try again later.'));
+                return redirect()->back()->with('warning', __('interface.messages.ticket_run_not_applicable'));
             }
         }
 
-        return redirect()->back()->with('warning', __('There is already an active ticket run for your user account. Please stop it before starting a new one.'));
+        return redirect()->back()->with('warning', __('interface.messages.ticket_run_active_error'));
     }
 
     /**
@@ -945,17 +945,17 @@ class AdminSupportController extends Controller
                     'ticket_id' => $nextTicket->id,
                 ]);
 
-                return redirect()->back()->with('success', __('Skipped to next ticket in ticket run queue.'));
+                return redirect()->back()->with('success', __('interface.messages.ticket_run_skipped'));
             } else {
                 $run->update([
                     'ended_at' => Carbon::now(),
                 ]);
 
-                return redirect()->back()->with('warning', __('No applicable ticket found. Please try again later.'));
+                return redirect()->back()->with('warning', __('interface.messages.ticket_run_not_applicable'));
             }
         }
 
-        return redirect()->back()->with('warning', __('No active ticket run found for your user account. Please start one.'));
+        return redirect()->back()->with('warning', __('interface.messages.ticket_run_not_active'));
     }
 
     /**
@@ -985,10 +985,10 @@ class AdminSupportController extends Controller
                 'action' => 'stop',
             ]);
 
-            return redirect()->back()->with('success', __('The ticket run has been stopped successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.ticket_run_stopped'));
         }
 
-        return redirect()->back()->with('warning', __('No active ticket run found for your user account. Please start one.'));
+        return redirect()->back()->with('warning', __('interface.messages.ticket_run_not_active'));
     }
 
     /**
@@ -1059,7 +1059,7 @@ class AdminSupportController extends Controller
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-warning">
-                <h5 class="modal-title" id="edit' . $category->id . 'Label">' . __('Edit') . ' (' . $category->name . ')</h5>
+                <h5 class="modal-title" id="edit' . $category->id . 'Label">' . __('interface.actions.edit') . ' (' . $category->name . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -1070,7 +1070,7 @@ class AdminSupportController extends Controller
                     <input type="hidden" name="category_id" value="' . $category->id . '" />
 
                     <div class="form-group row">
-                        <label for="name" class="col-md-4 col-form-label text-md-right">' . __('Name') . '</label>
+                        <label for="name" class="col-md-4 col-form-label text-md-right">' . __('interface.data.name') . '</label>
 
                         <div class="col-md-8">
                             <input id="name" type="text" class="form-control" name="name" value="' . $category->name . '">
@@ -1078,7 +1078,7 @@ class AdminSupportController extends Controller
                     </div>
 
                     <div class="form-group row">
-                        <label for="description" class="col-md-4 col-form-label text-md-right">' . __('Description') . '</label>
+                        <label for="description" class="col-md-4 col-form-label text-md-right">' . __('interface.data.description') . '</label>
 
                         <div class="col-md-8">
                             <input id="description" type="text" class="form-control" name="description" value="' . $category->description . '">
@@ -1086,7 +1086,7 @@ class AdminSupportController extends Controller
                     </div>
 
                     <div class="form-group row">
-                        <label for="email_address" class="col-md-4 col-form-label text-md-right">' . __('Email Address') . '</label>
+                        <label for="email_address" class="col-md-4 col-form-label text-md-right">' . __('interface.data.email_address') . '</label>
 
                         <div class="col-md-8">
                             <input id="email_address" type="text" class="form-control" name="email_address" value="' . $category->email_address . '">
@@ -1094,7 +1094,7 @@ class AdminSupportController extends Controller
                     </div>
 
                     <div class="form-group row">
-                        <label for="email_name" class="col-md-4 col-form-label text-md-right">' . __('Email Name') . '</label>
+                        <label for="email_name" class="col-md-4 col-form-label text-md-right">' . __('interface.data.email_name') . '</label>
 
                         <div class="col-md-8">
                             <input id="email_name" type="text" class="form-control" name="email_name" value="' . $category->email_name . '">
@@ -1102,7 +1102,7 @@ class AdminSupportController extends Controller
                     </div>
 
                     <div class="form-group row align-items-center">
-                        <label for="imap_enable" class="col-md-4 col-form-label text-md-right">' . __('Enable IMAP Import') . '</label>
+                        <label for="imap_enable" class="col-md-4 col-form-label text-md-right">' . __('interface.data.enable_imap_import') . '</label>
 
                         <div class="col-md-8">
                             <input type="checkbox" class="form-control imap_enable" data-id="' . $category->id . '" name="imap[enable]" value="true"' . (isset($category->imap_inbox_id) && $category->imap_inbox_id > 0 ? ' checked' : '') . '>
@@ -1111,60 +1111,60 @@ class AdminSupportController extends Controller
 
                     <div id="imap_import_' . $category->id . '"' . (isset($category->imap_inbox_id) && $category->imap_inbox_id > 0 ? '' : 'style="display: none"') . '>
                         <div class="form-group row">
-                            <label for="imap_host" class="col-md-4 col-form-label text-md-right">' . __('Host') . '</label>
+                            <label for="imap_host" class="col-md-4 col-form-label text-md-right">' . __('interface.data.host') . '</label>
 
                             <div class="col-md-8">
                                 <input id="imap_host" type="text" class="form-control" name="imap[host]" value="' . ($category->imapInbox->host ?? '') . '">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="imap_port" class="col-md-4 col-form-label text-md-right">' . __('Port') . '</label>
+                            <label for="imap_port" class="col-md-4 col-form-label text-md-right">' . __('interface.data.port') . '</label>
 
                             <div class="col-md-8">
                                 <input id="imap_port" type="text" class="form-control" name="imap[port]" value="' . ($category->imapInbox->port ?? '') . '">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="imap_protocol" class="col-md-4 col-form-label text-md-right">' . __('Protocol') . '</label>
+                            <label for="imap_protocol" class="col-md-4 col-form-label text-md-right">' . __('interface.data.protocol') . '</label>
 
                             <div class="col-md-8">
                                 <select id="imap_protocol" type="text" class="form-control" name="imap[protocol]">
-                                    <option value="none"' . (($category->imapInbox->protocol ?? '') == 'none' ? ' selected' : '') . '>' . __('None') . '</option>
-                                    <option value="tls"' . (($category->imapInbox->protocol ?? '') == 'tls' ? ' selected' : '') . '>' . __('TLS') . '</option>
-                                    <option value="ssl"' . (($category->imapInbox->protocol ?? '') == 'ssl' ? ' selected' : '') . '>' . __('SSL') . '</option>
+                                    <option value="none"' . (($category->imapInbox->protocol ?? '') == 'none' ? ' selected' : '') . '>' . __('interface.misc.none') . '</option>
+                                    <option value="tls"' . (($category->imapInbox->protocol ?? '') == 'tls' ? ' selected' : '') . '>' . __('interface.misc.tls') . '</option>
+                                    <option value="ssl"' . (($category->imapInbox->protocol ?? '') == 'ssl' ? ' selected' : '') . '>' . __('interface.misc.ssl') . '</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="imap_username" class="col-md-4 col-form-label text-md-right">' . __('Username') . '</label>
+                            <label for="imap_username" class="col-md-4 col-form-label text-md-right">' . __('interface.data.username') . '</label>
 
                             <div class="col-md-8">
                                 <input id="imap_username" type="text" class="form-control" name="imap[username]" value="' . ($category->imapInbox->username ?? '') . '">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="imap_password" class="col-md-4 col-form-label text-md-right">' . __('Password') . '</label>
+                            <label for="imap_password" class="col-md-4 col-form-label text-md-right">' . __('interface.data.password') . '</label>
 
                             <div class="col-md-8">
                                 <input id="imap_password" type="password" class="form-control" name="imap[password]">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="imap_folder" class="col-md-4 col-form-label text-md-right">' . __('Folder') . '</label>
+                            <label for="imap_folder" class="col-md-4 col-form-label text-md-right">' . __('interface.data.folder') . '</label>
 
                             <div class="col-md-8">
                                 <input id="imap_folder" type="text" class="form-control" name="imap[folder]" value="' . ($category->imapInbox->folder ?? 'INBOX') . '">
                             </div>
                         </div>
                         <div class="form-group row align-items-center">
-                            <label for="imap_validate_cert" class="col-md-4 col-form-label text-md-right">' . __('Validate certificate') . '</label>
+                            <label for="imap_validate_cert" class="col-md-4 col-form-label text-md-right">' . __('interface.misc.validate_certificate') . '</label>
 
                             <div class="col-md-8">
                                 <input id="imap_validate_cert" type="checkbox" class="form-control" name="imap[validate_cert]" value="true"' . (($category->imapInbox->validate_cert ?? false) ? ' checked' : '') . '>
                             </div>
                         </div>
                         <div class="form-group row align-items-center">
-                            <label for="delete_after_import" class="col-md-4 col-form-label text-md-right">' . __('Delete message after import') . '</label>
+                            <label for="delete_after_import" class="col-md-4 col-form-label text-md-right">' . __('interface.misc.delete_after_import') . '</label>
 
                             <div class="col-md-8">
                                 <input id="delete_after_import" type="checkbox" class="form-control" name="imap[delete_after_import]" value="true"' . (($category->imapInbox->delete_after_import ?? false) ? ' checked' : '') . '>
@@ -1172,14 +1172,14 @@ class AdminSupportController extends Controller
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-warning w-100"><i class="bi bi-pencil-square"></i> ' . __('Edit') . '</button>
+                    <button type="submit" class="btn btn-warning w-100"><i class="bi bi-pencil-square"></i> ' . __('interface.actions.edit') . '</button>
                 </form>
                 <div class="my-4">
                     <table id="category-users-' . $category->id . '" class="table">
                         <thead>
                             <tr>
-                                <td>' . __('User') . '</td>
-                                <td>' . __('Delete') . '</td>
+                                <td>' . __('interface.data.user') . '</td>
+                                <td>' . __('interface.actions.delete') . '</td>
                             </tr>
                         </thead>
                         <tbody>
@@ -1192,18 +1192,18 @@ class AdminSupportController extends Controller
                     <input type="hidden" name="category_id" value="' . $category->id . '" />
 
                     <div class="form-group row">
-                        <label for="user_id" class="col-md-4 col-form-label text-md-right">' . __('User ID') . '</label>
+                        <label for="user_id" class="col-md-4 col-form-label text-md-right">' . __('interface.data.user_id') . '</label>
 
                         <div class="col-md-8">
                             <input id="user_id" type="number" min="1" class="form-control" name="user_id">
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-success w-100"><i class="bi bi-link"></i> ' . __('Link') . '</button>
+                    <button type="submit" class="btn btn-success w-100"><i class="bi bi-link"></i> ' . __('interface.data.link') . '</button>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('Close') . '</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">' . __('interface.actions.close') . '</button>
             </div>
         </div>
     </div>
@@ -1282,7 +1282,7 @@ class AdminSupportController extends Controller
             }
         }
 
-        return redirect()->back()->with('success', __('Support category has been added successfully.'));
+        return redirect()->back()->with('success', __('interface.messages.ticket_category_added'));
     }
 
     /**
@@ -1370,10 +1370,10 @@ class AdminSupportController extends Controller
                 ]);
             }
 
-            return redirect()->back()->with('success', __('Support category has been updated successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.ticket_category_updated'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -1395,7 +1395,7 @@ class AdminSupportController extends Controller
 
         SupportCategory::where('id', '=', $id)->delete();
 
-        return redirect()->back()->with('success', __('Support category has been deleted successfully.'));
+        return redirect()->back()->with('success', __('interface.messages.ticket_category_deleted'));
     }
 
     /**
@@ -1480,10 +1480,10 @@ class AdminSupportController extends Controller
                 'role' => $user->role,
             ]);
 
-            return redirect()->back()->with('success', __('Support category user link has been added successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.ticket_category_user_link_added'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -1506,7 +1506,7 @@ class AdminSupportController extends Controller
 
         SupportCategoryAssignment::where('id', '=', $category_link_id)->delete();
 
-        return redirect()->back()->with('success', __('Support category user link has been deleted successfully.'));
+        return redirect()->back()->with('success', __('interface.messages.ticket_category_user_link_deleted'));
     }
 
     /**
@@ -1551,7 +1551,7 @@ class AdminSupportController extends Controller
                 ->output();
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -1599,10 +1599,10 @@ class AdminSupportController extends Controller
             $fileLink->file()->delete();
             $fileLink->delete();
 
-            return redirect()->back()->with('success', __('The ticket attachment has been removed successfully.'));
+            return redirect()->back()->with('success', __('interface.messages.ticket_attachment_removed'));
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**
@@ -1656,10 +1656,10 @@ class AdminSupportController extends Controller
 
                 $ticket->sendEmailFileUploadNotification();
 
-                return redirect()->back()->with('success', __('The attachment has been uploaded successfully.'));
+                return redirect()->back()->with('success', __('interface.messages.ticket_attachment_uploaded'));
             }
         }
 
-        return redirect()->back()->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
     }
 }

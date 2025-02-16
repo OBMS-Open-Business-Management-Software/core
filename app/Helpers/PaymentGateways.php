@@ -205,14 +205,14 @@ class PaymentGateways
                                 header("Location: " . $status["redirect"]);
                             } else {
                                 if ($status["payment_status"] == "success") {
-                                    return redirect()->route('customer.invoices')->with('success', __('Payment successful. It might take a couple minutes for the money to be booked.'));
+                                    return redirect()->route('customer.invoices')->with('success', __('interface.messages.payment_successful_booked'));
                                 } elseif (
                                     $status["payment_status"] == "revoked" ||
                                     $status["payment_status"] == "failed"
                                 ) {
-                                    return redirect()->route('customer.invoices')->with('warning', __('Payment failed. Please try again later.'));
+                                    return redirect()->route('customer.invoices')->with('warning', __('interface.messages.payment_failed'));
                                 } elseif ($status["payment_status"] == "waiting") {
-                                    return redirect()->route('customer.invoices')->with('success', __('Payment pending. It might take a couple minutes for the money to be booked.'));
+                                    return redirect()->route('customer.invoices')->with('success', __('interface.messages.payment_waiting_booked'));
                                 }
                             }
                         } else {
@@ -253,14 +253,14 @@ class PaymentGateways
                                     header("Location: " . $status["redirect"]);
                                 } else {
                                     if ($status["payment_status"] == "success") {
-                                        return redirect()->route('customer.profile.transactions')->with('success', __('Payment successful. It might take a couple minutes for the invoice to be updated.'));
+                                        return redirect()->route('customer.profile.transactions')->with('success', __('interface.messages.payment_successful'));
                                     } elseif (
                                         $status["payment_status"] == "revoked" ||
                                         $status["payment_status"] == "failed"
                                     ) {
-                                        return redirect()->route('customer.invoices')->with('warning', __('Payment failed. Please try again later.'));
+                                        return redirect()->route('customer.invoices')->with('warning', __('interface.messages.payment_failed'));
                                     } elseif ($status["payment_status"] == "waiting") {
-                                        return redirect()->route('customer.profile.transactions')->with('success', __('Payment pending. It might take a couple minutes for the invoice to be updated.'));
+                                        return redirect()->route('customer.profile.transactions')->with('success', __('interface.messages.payment_waiting'));
                                     }
                                 }
                             }
@@ -270,7 +270,7 @@ class PaymentGateways
             }
         }
 
-        return redirect()->route('customer.home')->with('warning', __('Ooops, something went wrong. Please try again later.'));
+        return redirect()->route('customer.home')->with('warning', __('interface.misc.something_wrong_notice'));
     }
 
     /**

@@ -4,23 +4,23 @@
     <div class="container-fluid my-4">
         <div class="row">
             <div class="col-md-12">
-                <a class="btn btn-primary float-right mb-4" data-toggle="modal" data-target="#add"><i class="bi bi-plus-circle"></i> {{ __('Create Contract') }}</a>
+                <a class="btn btn-primary float-right mb-4" data-toggle="modal" data-target="#add"><i class="bi bi-plus-circle"></i> {{ __('interface.contracts.create') }}</a>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <i class="bi bi-file-earmark-text"></i> {{ __('Contracts') }}
+                        <i class="bi bi-file-earmark-text"></i> {{ __('interface.misc.contracts') }}
                     </div>
                     <div class="card-body">
                         <table id="categories" class="table mt-4 w-100">
                             <thead>
                             <tr>
-                                <td>{{ __('Contract No.') }}</td>
-                                <td>{{ __('User') }}</td>
+                                <td>{{ __('interface.data.contract_number') }}</td>
+                                <td>{{ __('interface.data.user') }}</td>
                                 <td>{{ __('interface.data.type') }}</td>
-                                <td>{{ __('Status') }}</td>
+                                <td>{{ __('interface.data.status') }}</td>
                                 <td>{{ __('interface.actions.view') }}</td>
                                 <td>{{ __('interface.actions.edit') }}</td>
                                 <td>{{ __('interface.actions.delete') }}</td>
@@ -40,7 +40,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="addLabel"><i class="bi bi-plus-circle"></i> {{ __('Create Contract') }}</h5>
+                    <h5 class="modal-title" id="addLabel"><i class="bi bi-plus-circle"></i> {{ __('interface.contracts.create') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -49,7 +49,7 @@
                     @csrf
                     <div class="modal-body">
                         <div class="form-group row">
-                            <label for="user_id" class="col-md-4 col-form-label text-md-right">{{ __('User ID') }}</label>
+                            <label for="user_id" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.user_id') }}</label>
 
                             <div class="col-md-8">
                                 <input id="user_id" type="number" class="form-control @error('user_id') is-invalid @enderror" name="user_id" value="{{ old('user_id') }}">
@@ -63,7 +63,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="type_id" class="col-md-4 col-form-label text-md-right">{{ __('Contract Type') }}</label>
+                            <label for="type_id" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.contract_type') }}</label>
 
                             <div class="col-md-8">
                                 <select id="type_id" class="form-control @error('type_id') is-invalid @enderror" name="type_id">

@@ -13,15 +13,15 @@
                                     <input id="accept_{{ $accept->id }}" type="checkbox" class="form-control" name="accept_{{ $accept->id }}" value="true">
                                 </div>
 
-                                <label for="accept_{{ $accept->id }}" class="col-md-11 col-form-label">{!! __('I confirm that I have read, understood the :link (Date: :date) and I agree to be bound to it.', ['link' => '<a href="' . (Route::has($accept->route) ? route($accept->route) : $accept->route) . '" target="_blank">' . __($accept->title) . '</a>', 'date' => $accept->latest->created_at->format('d.m.Y, H:i')]) !!}</label>
+                                <label for="accept_{{ $accept->id }}" class="col-md-11 col-form-label">{!! __('interface.misc.accept_notice', ['link' => '<a href="' . (Route::has($accept->route) ? route($accept->route) : $accept->route) . '" target="_blank">' . __($accept->title) . '</a>', 'date' => $accept->latest->created_at->format('d.m.Y, H:i')]) !!}</label>
                             </div>
                         @endforeach
-                        <button type="submit" class="btn btn-primary"><i class="bi bi-check-circle"></i> {{ __('Accept and continue') }}</button>
+                        <button type="submit" class="btn btn-primary"><i class="bi bi-check-circle"></i> {{ __('interface.actions.accept_and_continue') }}</button>
                     @else
                         <div class="alert alert-success">
-                            <i class="bi bi-check-circle"></i> {{ __('Nothing to accept. Click the button below to continue.') }}
+                            <i class="bi bi-check-circle"></i> {{ __('interface.misc.no_documents_hint') }}
                         </div>
-                        <button type="submit" class="btn btn-primary"><i class="bi bi-arrow-right-circle"></i> {{ __('Continue') }}</button>
+                        <button type="submit" class="btn btn-primary"><i class="bi bi-arrow-right-circle"></i> {{ __('interface.actions.continue') }}</button>
                     @endif
                 </form>
             </div>
