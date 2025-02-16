@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.0](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.0.0...v1.1.0) (2025-02-16)
+
+
+### Features
+
+* logo from company configuration ([8fac443](https://github.com/OBMS-Open-Business-Management-Software/core/commit/8fac443bdaa2f4ea3a8e2549a0beda6947f93b10))
+
 ## 1.0.0 (2025-02-16)
 
 
