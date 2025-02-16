@@ -17,6 +17,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -42,8 +43,10 @@ class AdminSupplierController extends Controller
      * Get list of profile email addresses.
      *
      * @param Request $request
+     *
+     * @return JsonResponse
      */
-    public function supplier_list(Request $request): void
+    public function supplier_list(Request $request): JsonResponse
     {
         session_write_close();
 
@@ -88,8 +91,7 @@ class AdminSupplierController extends Controller
         $query = $query->offset($request->start)
             ->limit($request->length);
 
-        header('Content-type: application/json');
-        echo json_encode([
+        return response()->json([
             'draw' => (int) $request->draw,
             'recordsTotal' => $totalCount,
             'recordsFiltered' => $filteredCount,
@@ -351,8 +353,10 @@ class AdminSupplierController extends Controller
      * Get list of profile email addresses.
      *
      * @param Request $request
+     *
+     * @return JsonResponse
      */
-    public function supplier_profile_email_list(Request $request): void
+    public function supplier_profile_email_list(Request $request): JsonResponse
     {
         session_write_close();
 
@@ -404,8 +408,7 @@ class AdminSupplierController extends Controller
             $query = $query->offset($request->start)
                 ->limit($request->length);
 
-            header('Content-type: application/json');
-            echo json_encode([
+            return response()->json([
                 'draw' => (int) $request->draw,
                 'recordsTotal' => $totalCount,
                 'recordsFiltered' => $filteredCount,
@@ -487,6 +490,8 @@ class AdminSupplierController extends Controller
                     })
             ]);
         }
+
+        return response()->json(['error' => 'Server Error'], 500);
     }
 
     /**
@@ -694,8 +699,10 @@ class AdminSupplierController extends Controller
      * Get list of profile phone numbers.
      *
      * @param Request $request
+     *
+     * @return JsonResponse
      */
-    public function supplier_profile_phone_list(Request $request): void
+    public function supplier_profile_phone_list(Request $request): JsonResponse
     {
         session_write_close();
 
@@ -744,8 +751,7 @@ class AdminSupplierController extends Controller
             $query = $query->offset($request->start)
                 ->limit($request->length);
 
-            header('Content-type: application/json');
-            echo json_encode([
+            return response()->json([
                 'draw' => (int) $request->draw,
                 'recordsTotal' => $totalCount,
                 'recordsFiltered' => $filteredCount,
@@ -816,6 +822,8 @@ class AdminSupplierController extends Controller
                     })
             ]);
         }
+
+        return response()->json(['error' => 'Server Error'], 500);
     }
 
     /**
@@ -986,8 +994,10 @@ class AdminSupplierController extends Controller
      * Get list of profile phone numbers.
      *
      * @param Request $request
+     *
+     * @return JsonResponse
      */
-    public function supplier_profile_address_list(Request $request): void
+    public function supplier_profile_address_list(Request $request): JsonResponse
     {
         session_write_close();
 
@@ -1046,8 +1056,7 @@ class AdminSupplierController extends Controller
             $query = $query->offset($request->start)
                 ->limit($request->length);
 
-            header('Content-type: application/json');
-            echo json_encode([
+            return response()->json([
                 'draw' => (int) $request->draw,
                 'recordsTotal' => $totalCount,
                 'recordsFiltered' => $filteredCount,
@@ -1121,6 +1130,8 @@ class AdminSupplierController extends Controller
                     })
             ]);
         }
+
+        return response()->json(['error' => 'Server Error'], 500);
     }
 
     /**
@@ -1308,8 +1319,10 @@ class AdminSupplierController extends Controller
      * Get list of profile phone numbers.
      *
      * @param Request $request
+     *
+     * @return JsonResponse
      */
-    public function supplier_profile_bank_list(Request $request): void
+    public function supplier_profile_bank_list(Request $request): JsonResponse
     {
         session_write_close();
 
@@ -1360,8 +1373,7 @@ class AdminSupplierController extends Controller
             $query = $query->offset($request->start)
                 ->limit($request->length);
 
-            header('Content-type: application/json');
-            echo json_encode([
+            return response()->json([
                 'draw' => (int) $request->draw,
                 'recordsTotal' => $totalCount,
                 'recordsFiltered' => $filteredCount,
@@ -1420,6 +1432,8 @@ class AdminSupplierController extends Controller
                     })
             ]);
         }
+
+        return response()->json(['error' => 'Server Error'], 500);
     }
 
     /**
@@ -1603,8 +1617,10 @@ class AdminSupplierController extends Controller
      * Get list of profile phone numbers.
      *
      * @param Request $request
+     *
+     * @return JsonResponse
      */
-    public function supplier_transaction_list(Request $request): void
+    public function supplier_transaction_list(Request $request): JsonResponse
     {
         session_write_close();
 
@@ -1667,8 +1683,7 @@ class AdminSupplierController extends Controller
             $query = $query->offset($request->start)
                 ->limit($request->length);
 
-            header('Content-type: application/json');
-            echo json_encode([
+            return response()->json([
                 'draw' => (int) $request->draw,
                 'recordsTotal' => $totalCount,
                 'recordsFiltered' => $filteredCount,
@@ -1740,6 +1755,8 @@ class AdminSupplierController extends Controller
                     })
             ]);
         }
+
+        return response()->json(['error' => 'Server Error'], 500);
     }
 
     /**

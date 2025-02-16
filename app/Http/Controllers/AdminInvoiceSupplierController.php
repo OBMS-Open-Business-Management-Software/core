@@ -18,6 +18,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
@@ -59,8 +60,10 @@ class AdminInvoiceSupplierController extends Controller
      * Get list of invoices.
      *
      * @param Request $request
+     *
+     * @return JsonResponse
      */
-    public function invoice_list(Request $request): void
+    public function invoice_list(Request $request): JsonResponse
     {
         session_write_close();
 
@@ -103,8 +106,7 @@ class AdminInvoiceSupplierController extends Controller
         $query = $query->offset($request->start)
             ->limit($request->length);
 
-        header('Content-type: application/json');
-        echo json_encode([
+        return response()->json([
             'draw' => (int) $request->draw,
             'recordsTotal' => $totalCount,
             'recordsFiltered' => $filteredCount,
@@ -727,8 +729,10 @@ class AdminInvoiceSupplierController extends Controller
      * Get list of invoice history entries.
      *
      * @param Request $request
+     *
+     * @return JsonResponse
      */
-    public function invoice_history(Request $request): void
+    public function invoice_history(Request $request): JsonResponse
     {
         $query = InvoiceHistory::where('invoice_id', '=', $request->id);
 
@@ -766,8 +770,7 @@ class AdminInvoiceSupplierController extends Controller
         $query = $query->offset($request->start)
             ->limit($request->length);
 
-        header('Content-type: application/json');
-        echo json_encode([
+        return response()->json([
             'draw' => (int) $request->draw,
             'recordsTotal' => $totalCount,
             'recordsFiltered' => $filteredCount,
@@ -819,8 +822,10 @@ class AdminInvoiceSupplierController extends Controller
      * Get list of invoice importers.
      *
      * @param Request $request
+     *
+     * @return JsonResponse
      */
-    public function invoice_importers_list(Request $request): void
+    public function invoice_importers_list(Request $request): JsonResponse
     {
         session_write_close();
 
@@ -860,8 +865,7 @@ class AdminInvoiceSupplierController extends Controller
         $query = $query->offset($request->start)
             ->limit($request->length);
 
-        header('Content-type: application/json');
-        echo json_encode([
+        return response()->json([
             'draw' => (int) $request->draw,
             'recordsTotal' => $totalCount,
             'recordsFiltered' => $filteredCount,
@@ -1155,8 +1159,10 @@ class AdminInvoiceSupplierController extends Controller
      * Get list of invoice importer log entries.
      *
      * @param Request $request
+     *
+     * @return JsonResponse
      */
-    public function invoice_importers_log_list(Request $request): void
+    public function invoice_importers_log_list(Request $request): JsonResponse
     {
         session_write_close();
 
@@ -1204,8 +1210,7 @@ class AdminInvoiceSupplierController extends Controller
         $query = $query->offset($request->start)
             ->limit($request->length);
 
-        header('Content-type: application/json');
-        echo json_encode([
+        return response()->json([
             'draw' => (int) $request->draw,
             'recordsTotal' => $totalCount,
             'recordsFiltered' => $filteredCount,

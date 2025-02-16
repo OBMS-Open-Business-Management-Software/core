@@ -17,6 +17,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -41,8 +42,10 @@ class AdminCustomerController extends Controller
      * Get list of profile email addresses.
      *
      * @param Request $request
+     *
+     * @return JsonResponse
      */
-    public function customer_list(Request $request): void
+    public function customer_list(Request $request): JsonResponse
     {
         session_write_close();
 
@@ -87,8 +90,7 @@ class AdminCustomerController extends Controller
         $query = $query->offset($request->start)
             ->limit($request->length);
 
-        header('Content-type: application/json');
-        echo json_encode([
+        return response()->json([
             'draw' => (int) $request->draw,
             'recordsTotal' => $totalCount,
             'recordsFiltered' => $filteredCount,
@@ -447,8 +449,10 @@ class AdminCustomerController extends Controller
      * Get list of profile email addresses.
      *
      * @param Request $request
+     *
+     * @return JsonResponse
      */
-    public function customer_profile_email_list(Request $request): void
+    public function customer_profile_email_list(Request $request): JsonResponse
     {
         session_write_close();
 
@@ -500,8 +504,7 @@ class AdminCustomerController extends Controller
             $query = $query->offset($request->start)
                 ->limit($request->length);
 
-            header('Content-type: application/json');
-            echo json_encode([
+            return response()->json([
                 'draw' => (int) $request->draw,
                 'recordsTotal' => $totalCount,
                 'recordsFiltered' => $filteredCount,
@@ -583,6 +586,8 @@ class AdminCustomerController extends Controller
                     })
             ]);
         }
+
+        return response()->json(['error' => 'Server Error'], 500);
     }
 
     /**
@@ -790,8 +795,10 @@ class AdminCustomerController extends Controller
      * Get list of profile phone numbers.
      *
      * @param Request $request
+     *
+     * @return JsonResponse
      */
-    public function customer_profile_phone_list(Request $request): void
+    public function customer_profile_phone_list(Request $request): JsonResponse
     {
         session_write_close();
 
@@ -840,8 +847,7 @@ class AdminCustomerController extends Controller
             $query = $query->offset($request->start)
                 ->limit($request->length);
 
-            header('Content-type: application/json');
-            echo json_encode([
+            return response()->json([
                 'draw' => (int) $request->draw,
                 'recordsTotal' => $totalCount,
                 'recordsFiltered' => $filteredCount,
@@ -912,6 +918,8 @@ class AdminCustomerController extends Controller
                     })
             ]);
         }
+
+        return response()->json(['error' => 'Server Error'], 500);
     }
 
     /**
@@ -1082,8 +1090,10 @@ class AdminCustomerController extends Controller
      * Get list of profile phone numbers.
      *
      * @param Request $request
+     *
+     * @return JsonResponse
      */
-    public function customer_profile_address_list(Request $request): void
+    public function customer_profile_address_list(Request $request): JsonResponse
     {
         session_write_close();
 
@@ -1142,8 +1152,7 @@ class AdminCustomerController extends Controller
             $query = $query->offset($request->start)
                 ->limit($request->length);
 
-            header('Content-type: application/json');
-            echo json_encode([
+            return response()->json([
                 'draw' => (int) $request->draw,
                 'recordsTotal' => $totalCount,
                 'recordsFiltered' => $filteredCount,
@@ -1217,6 +1226,8 @@ class AdminCustomerController extends Controller
                     })
             ]);
         }
+
+        return response()->json(['error' => 'Server Error'], 500);
     }
 
     /**
@@ -1404,8 +1415,10 @@ class AdminCustomerController extends Controller
      * Get list of profile phone numbers.
      *
      * @param Request $request
+     *
+     * @return JsonResponse
      */
-    public function customer_profile_bank_list(Request $request): void
+    public function customer_profile_bank_list(Request $request): JsonResponse
     {
         session_write_close();
 
@@ -1456,8 +1469,7 @@ class AdminCustomerController extends Controller
             $query = $query->offset($request->start)
                 ->limit($request->length);
 
-            header('Content-type: application/json');
-            echo json_encode([
+            return response()->json([
                 'draw' => (int) $request->draw,
                 'recordsTotal' => $totalCount,
                 'recordsFiltered' => $filteredCount,
@@ -1516,6 +1528,8 @@ class AdminCustomerController extends Controller
                     })
             ]);
         }
+
+        return response()->json(['error' => 'Server Error'], 500);
     }
 
     /**
@@ -1699,8 +1713,10 @@ class AdminCustomerController extends Controller
      * Get list of profile phone numbers.
      *
      * @param Request $request
+     *
+     * @return JsonResponse
      */
-    public function customer_transaction_list(Request $request): void
+    public function customer_transaction_list(Request $request): JsonResponse
     {
         session_write_close();
 
@@ -1763,8 +1779,7 @@ class AdminCustomerController extends Controller
             $query = $query->offset($request->start)
                 ->limit($request->length);
 
-            header('Content-type: application/json');
-            echo json_encode([
+            return response()->json([
                 'draw' => (int) $request->draw,
                 'recordsTotal' => $totalCount,
                 'recordsFiltered' => $filteredCount,
@@ -1836,6 +1851,8 @@ class AdminCustomerController extends Controller
                     })
             ]);
         }
+
+        return response()->json(['error' => 'Server Error'], 500);
     }
 
     /**

@@ -16,6 +16,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
@@ -41,8 +42,10 @@ class CustomerSupportController extends Controller
      * Get list of support tickets.
      *
      * @param Request $request
+     *
+     * @return JsonResponse
      */
-    public function support_index_list(Request $request): void
+    public function support_index_list(Request $request): JsonResponse
     {
         session_write_close();
 
@@ -92,8 +95,7 @@ class CustomerSupportController extends Controller
         $query = $query->offset($request->start)
             ->limit($request->length);
 
-        header('Content-type: application/json');
-        echo json_encode([
+        return response()->json([
             'draw' => (int) $request->draw,
             'recordsTotal' => $totalCount,
             'recordsFiltered' => $filteredCount,

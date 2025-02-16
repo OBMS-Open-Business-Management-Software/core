@@ -16,6 +16,7 @@ use App\Models\Shop\OrderQueue\ShopOrderQueueHistory;
 use App\Models\UsageTracker\Tracker;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -37,8 +38,10 @@ class AdminShopController extends Controller
      * Get list of shop categories.
      *
      * @param Request $request
+     *
+     * @return JsonResponse
      */
-    public function shop_categories_list(Request $request): void
+    public function shop_categories_list(Request $request): JsonResponse
     {
         session_write_close();
 
@@ -92,8 +95,7 @@ class AdminShopController extends Controller
         $query = $query->offset($request->start)
             ->limit($request->length);
 
-        header('Content-type: application/json');
-        echo json_encode([
+        return response()->json([
             'draw' => (int) $request->draw,
             'recordsTotal' => $totalCount,
             'recordsFiltered' => $filteredCount,
@@ -271,8 +273,10 @@ class AdminShopController extends Controller
      * Get list of shop forms.
      *
      * @param Request $request
+     *
+     * @return JsonResponse
      */
-    public function shop_forms_list(Request $request): void
+    public function shop_forms_list(Request $request): JsonResponse
     {
         session_write_close();
 
@@ -333,8 +337,7 @@ class AdminShopController extends Controller
         $availableContractTypes = ContractType::all();
         $availableTrackerTypes = Tracker::all();
 
-        header('Content-type: application/json');
-        echo json_encode([
+        return response()->json([
             'draw' => (int) $request->draw,
             'recordsTotal' => $totalCount,
             'recordsFiltered' => $filteredCount,
@@ -842,8 +845,10 @@ class AdminShopController extends Controller
      * Get list of shop fields.
      *
      * @param Request $request
+     *
+     * @return JsonResponse
      */
-    public function shop_fields_list(Request $request): void
+    public function shop_fields_list(Request $request): JsonResponse
     {
         session_write_close();
 
@@ -895,8 +900,7 @@ class AdminShopController extends Controller
         $query = $query->offset($request->start)
             ->limit($request->length);
 
-        header('Content-type: application/json');
-        echo json_encode([
+        return response()->json([
             'draw' => (int) $request->draw,
             'recordsTotal' => $totalCount,
             'recordsFiltered' => $filteredCount,
@@ -1114,8 +1118,10 @@ class AdminShopController extends Controller
      * Get list of shop fields.
      *
      * @param Request $request
+     *
+     * @return JsonResponse
      */
-    public function shop_orders_list(Request $request): void
+    public function shop_orders_list(Request $request): JsonResponse
     {
         session_write_close();
 
@@ -1189,8 +1195,7 @@ class AdminShopController extends Controller
         $query = $query->offset($request->start)
             ->limit($request->length);
 
-        header('Content-type: application/json');
-        echo json_encode([
+        return response()->json([
             'draw' => (int) $request->draw,
             'recordsTotal' => $totalCount,
             'recordsFiltered' => $filteredCount,

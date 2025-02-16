@@ -22,6 +22,7 @@ use Endroid\QrCode\ErrorCorrectionLevel;
 use Exception;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -65,8 +66,10 @@ class AdminContractController extends Controller
      * Get list of contracts.
      *
      * @param Request $request
+     *
+     * @return JsonResponse
      */
-    public function contract_list(Request $request): void
+    public function contract_list(Request $request): JsonResponse
     {
         session_write_close();
 
@@ -106,8 +109,7 @@ class AdminContractController extends Controller
         $query = $query->offset($request->start)
             ->limit($request->length);
 
-        header('Content-type: application/json');
-        echo json_encode([
+        return response()->json([
             'draw' => (int) $request->draw,
             'recordsTotal' => $totalCount,
             'recordsFiltered' => $filteredCount,
@@ -1051,8 +1053,10 @@ class AdminContractController extends Controller
      * Get list of contract types.
      *
      * @param Request $request
+     *
+     * @return JsonResponse
      */
-    public function contract_types_list(Request $request): void
+    public function contract_types_list(Request $request): JsonResponse
     {
         session_write_close();
 
@@ -1104,8 +1108,7 @@ class AdminContractController extends Controller
         $query = $query->offset($request->start)
             ->limit($request->length);
 
-        header('Content-type: application/json');
-        echo json_encode([
+        return response()->json([
             'draw' => (int) $request->draw,
             'recordsTotal' => $totalCount,
             'recordsFiltered' => $filteredCount,
@@ -1344,8 +1347,10 @@ class AdminContractController extends Controller
      * Get list of usage trackers.
      *
      * @param Request $request
+     *
+     * @return JsonResponse
      */
-    public function contract_trackers_list(Request $request): void
+    public function contract_trackers_list(Request $request): JsonResponse
     {
         session_write_close();
 
@@ -1389,8 +1394,7 @@ class AdminContractController extends Controller
         $query = $query->offset($request->start)
             ->limit($request->length);
 
-        header('Content-type: application/json');
-        echo json_encode([
+        return response()->json([
             'draw' => (int) $request->draw,
             'recordsTotal' => $totalCount,
             'recordsFiltered' => $filteredCount,
@@ -1563,8 +1567,10 @@ class AdminContractController extends Controller
      * Get list of usage trackers.
      *
      * @param Request $request
+     *
+     * @return JsonResponse
      */
-    public function contract_trackers_items_list(Request $request): void
+    public function contract_trackers_items_list(Request $request): JsonResponse
     {
         session_write_close();
 
@@ -1616,8 +1622,7 @@ class AdminContractController extends Controller
         $query = $query->offset($request->start)
             ->limit($request->length);
 
-        header('Content-type: application/json');
-        echo json_encode([
+        return response()->json([
             'draw' => (int) $request->draw,
             'recordsTotal' => $totalCount,
             'recordsFiltered' => $filteredCount,

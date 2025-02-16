@@ -6,6 +6,7 @@ use App\Models\Content\Page;
 use App\Models\Content\PageVersion;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -28,8 +29,10 @@ class AdminPageController extends Controller
      * Get list of pages.
      *
      * @param Request $request
+     *
+     * @return JsonResponse
      */
-    public function page_list(Request $request): void
+    public function page_list(Request $request): JsonResponse
     {
         session_write_close();
 
@@ -77,8 +80,7 @@ class AdminPageController extends Controller
         $query = $query->offset($request->start)
             ->limit($request->length);
 
-        header('Content-type: application/json');
-        echo json_encode([
+        return response()->json([
             'draw' => (int) $request->draw,
             'recordsTotal' => $totalCount,
             'recordsFiltered' => $filteredCount,
@@ -284,8 +286,10 @@ class AdminPageController extends Controller
      * Get list of page versions.
      *
      * @param Request $request
+     *
+     * @return JsonResponse
      */
-    public function page_version_list(Request $request): void
+    public function page_version_list(Request $request): JsonResponse
     {
         session_write_close();
 
@@ -325,8 +329,7 @@ class AdminPageController extends Controller
         $query = $query->offset($request->start)
             ->limit($request->length);
 
-        header('Content-type: application/json');
-        echo json_encode([
+        return response()->json([
             'draw' => (int) $request->draw,
             'recordsTotal' => $totalCount,
             'recordsFiltered' => $filteredCount,
