@@ -1,0 +1,22 @@
+$primary: #00cecb;
+$secondary: #3C4858;
+$secondary-dark: #2B3747;
+$dark: $secondary;
+$white: #FFFFFF;
+$text-muted: $secondary;
+$body-color: $secondary;
+$gray: #F7FAFD;
+$border-radius: 0.2rem;
+$modal-content-border-radius: 0.2rem;
+$modal-content-border-width: 0;
+$input-disabled-bg: $gray;
+
+body {
+    --primary: #{$primary};
+    --secondary: #{$secondary};
+    --secondary-dark: #{$secondary-dark};
+    --gray: #{$gray};
+    --white: #{$white};
+    --input-disabled-bg: var(#{$input-disabled-bg}, var(--gray));
+    --modal-content-border-radius: #{$modal-content-border-radius};
+}

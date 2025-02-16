@@ -1,0 +1,157 @@
+<?php
+
+namespace App\Products\Sample;
+
+use App\Products\HasProductService;
+use App\Products\HasProductSettings;
+use App\Products\Product;
+use App\Products\Sample\Models\Sample;
+use Illuminate\Support\Collection;
+
+/**
+ * Class Handler.
+ *
+ * This class is a product handler sample.
+ *
+ * @author Marcel Menk <marcel.menk@ipvx.io>
+ */
+class Handler implements Product
+{
+    use HasProductSettings;
+    use HasProductService;
+
+    /**
+     * Register the parameters which are being used by the product
+     * (e.g. to authenticate against the API).
+     *
+     * @return Collection
+     */
+    public function parameters(): Collection
+    {
+        return collect([
+            "test" => __('Test'),
+        ]);
+    }
+
+    /**
+     * Get product technical name.
+     *
+     * @return string
+     */
+    public function technicalName(): string
+    {
+        return 'sample';
+    }
+
+    /**
+     * Get product name.
+     *
+     * @return string
+     */
+    public function name(): string
+    {
+        return __('Sample');
+    }
+
+    /**
+     * Get product icon src.
+     *
+     * @return string
+     */
+    public function icon(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * Get product method status.
+     *
+     * @return bool
+     */
+    public function status(): bool
+    {
+        return true;
+    }
+
+    /**
+     * Create a new product instance.
+     *
+     * @param Collection $data
+     *
+     * @return bool
+     */
+    public function create(Collection $data): bool
+    {
+        return false;
+    }
+
+    /**
+     * Update an existing product instance.
+     *
+     * @param int $id
+     * @param Collection $data
+     *
+     * @return bool
+     */
+    public function update(int $id, Collection $data): bool
+    {
+        return false;
+    }
+
+    /**
+     * Delete an existing product instance.
+     *
+     * @param int $id
+     *
+     * @return bool
+     */
+    public function delete(int $id): bool
+    {
+        return false;
+    }
+
+    /**
+     * Lock an existing product instance.
+     *
+     * @param int $id
+     *
+     * @return bool
+     */
+    public function lock(int $id): bool
+    {
+        return false;
+    }
+
+    /**
+     * Unlock an existing product instance.
+     *
+     * @param int $id
+     *
+     * @return bool
+     */
+    public function unlock(int $id): bool
+    {
+        return false;
+    }
+
+    /**
+     * Get the model attached to the service. The model is at least required
+     * to carry a locked_at, contract_id and user_id attribute to identify the contractual status.
+     *
+     * @return string
+     */
+    public function model(): string
+    {
+        return Sample::class;
+    }
+
+    /**
+     * Grace period in hours.
+     *
+     * @return int
+     */
+    public function grace(): ?int
+    {
+        return null;
+    }
+}

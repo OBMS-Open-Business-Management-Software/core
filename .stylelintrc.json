@@ -1,0 +1,72 @@
+{
+    "ignoreFiles": [
+        "**/*"
+    ],
+    "overrides": [
+        {
+            "files": [
+                "**/*.css"
+            ],
+            "extends": [
+                "stylelint-config-standard",
+                "stylelint-config-prettier"
+            ],
+            "rules": {}
+        },
+        {
+            "files": [
+                "**/*.scss"
+            ],
+            "extends": [
+                "stylelint-config-standard-scss",
+                "stylelint-config-prettier",
+                "stylelint-config-sass-guidelines"
+            ],
+            "rules": {
+                "max-line-length": 120,
+                "order/properties-alphabetical-order": true,
+                "string-quotes": "single",
+                "selector-max-id": 1,
+                "block-opening-brace-newline-after": "always-multi-line",
+                "max-nesting-depth": [
+                    5,
+                    {
+                        "ignore": [
+                            "blockless-at-rules"
+                        ]
+                    }
+                ],
+                "function-parentheses-newline-inside": "always-multi-line",
+                "function-parentheses-space-inside": "never-single-line",
+                "selector-max-compound-selectors": 5,
+                "scss/dollar-variable-empty-line-before": [
+                    "always",
+                    {
+                        "except": "first-nested"
+                    }
+                ],
+                "indentation": [
+                    2,
+                    {
+                        "ignore": "inside-parens"
+                    }
+                ],
+                "value-keyword-case": [
+                    "lower",
+                    {
+                        "ignoreKeywords": [
+                            "/^A[0-9]+$/"
+                        ]
+                    }
+                ],
+                "selector-no-qualifying-type": [
+                    true,
+                    {
+                        "ignore": "class"
+                    }
+                ]
+            }
+        }
+    ],
+    "rules": {}
+}
