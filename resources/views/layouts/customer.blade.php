@@ -21,7 +21,7 @@
         <nav class="navbar navbar-dark sticky-top bg-primary bg-image p-0">
             <a class="navbar-brand col-md-3 col-lg-2 bg-white py-3" href="{{ route('customer.home') }}">
                 <div class="logo">
-                    <img src="{{ asset('images/full.logo.svg') }}" class="px-3">
+                    <img src="{{ config('company.logo') ?? asset('images/full.logo.svg') }}" class="px-3">
                     @if (config('app.slogan'))
                         <div class="slogan small">{{ config('app.slogan', 'Open Business Management Software') }}</div>
                     @endif

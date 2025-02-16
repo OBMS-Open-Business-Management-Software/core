@@ -26,7 +26,7 @@
                             <div class="row justify-content-center">
                                 <div class="col-md-8 text-center">
                                     <div class="logo logo-lg logo-center logo-stacked">
-                                        <img src="{{ asset('images/full.logo.svg') }}">
+                                        <img src="{{ config('company.logo') ?? asset('images/full.logo.svg') }}">
                                         @if (config('app.slogan'))
                                             <div class="slogan-stacked small">{{ config('app.slogan', 'Open Business Management Software') }}</div>
                                         @endif
