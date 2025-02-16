@@ -17,6 +17,7 @@
 </p>
 
 # Status
-[![Build Status](https://img.shields.io/github/actions/workflow/status/twbs/bootstrap/js.yml?branch=main&label=Build)](https://github.com/OBMS-Open-Business-Management-Software/core/actions/workflows/release.yml)
-![Coverage](https://img.shields.io/coveralls/github/OBMS-Open-Business-Management-Software/core?label=Coverage)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/OBMS-Open-Business-Management-Software/core/release.yml?label=Release
+)](https://github.com/OBMS-Open-Business-Management-Software/core/actions/workflows/release.yml)
+![Coverage](https://img.shields.io/codecov/c/github/OBMS-Open-Business-Management-Software/core/main?label=Coverage)
 ![Latest Release](https://img.shields.io/github/v/release/OBMS-Open-Business-Management-Software/core?label=Latest%20Release)
