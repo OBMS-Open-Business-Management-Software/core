@@ -40,7 +40,7 @@ jobs:
       - name: Install Composer
         run: |
           curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-          composer install --ignore-platform-reqs
+          composer install --ignore-platform-reqs --no-scripts
 
       - name: Run Pint
         run: vendor/bin/pint --test
