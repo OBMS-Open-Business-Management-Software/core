@@ -1,9 +1,16 @@
 {
-    "name": "laravel/laravel",
+    "name": "obms/core",
     "type": "project",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
-    "license": "MIT",
+    "description": "The OBMS core application.",
+    "keywords": ["obms", "open business management software"],
+    "license": "BSL 1.1",
+    "homepage": "https://getobms.com",
+    "support": {
+        "docs": "https://docs.getobms.com",
+        "email": "support@getobms.com",
+        "issues": "https://github.com/OBMS-Open-Business-Management-Software/core/issues",
+        "source": "https://github.com/OBMS-Open-Business-Management-Software/core"
+    },
     "require": {
         "php": "^8.1",
         "ext-curl": "*",
