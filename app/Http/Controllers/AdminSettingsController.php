@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Setting;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -27,8 +28,10 @@ class AdminSettingsController extends Controller
      * Get list of settings.
      *
      * @param Request $request
+     *
+     * @return JsonResponse
      */
-    public function settings_list(Request $request): void
+    public function settings_list(Request $request): JsonResponse
     {
         session_write_close();
 
@@ -64,8 +67,7 @@ class AdminSettingsController extends Controller
         $query = $query->offset($request->start)
             ->limit($request->length);
 
-        header('Content-type: application/json');
-        echo json_encode([
+        return response()->json([
             'draw' => (int) $request->draw,
             'recordsTotal' => $totalCount,
             'recordsFiltered' => $filteredCount,

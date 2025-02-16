@@ -14,6 +14,7 @@ use App\Models\Profile\ProfilePhone;
 use Carbon\Carbon;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -208,8 +209,10 @@ class CustomerProfileController extends Controller
      * Get list of profile email addresses.
      *
      * @param Request $request
+     *
+     * @return JsonResponse
      */
-    public function profile_email_list(Request $request): void
+    public function profile_email_list(Request $request): JsonResponse
     {
         session_write_close();
 
@@ -254,8 +257,7 @@ class CustomerProfileController extends Controller
         $query = $query->offset($request->start)
             ->limit($request->length);
 
-        header('Content-type: application/json');
-        echo json_encode([
+        return response()->json([
             'draw' => (int) $request->draw,
             'recordsTotal' => $totalCount,
             'recordsFiltered' => $filteredCount,
@@ -510,8 +512,10 @@ class CustomerProfileController extends Controller
      * Get list of profile phone numbers.
      *
      * @param Request $request
+     *
+     * @return JsonResponse
      */
-    public function profile_phone_list(Request $request): void
+    public function profile_phone_list(Request $request): JsonResponse
     {
         session_write_close();
 
@@ -553,8 +557,7 @@ class CustomerProfileController extends Controller
         $query = $query->offset($request->start)
             ->limit($request->length);
 
-        header('Content-type: application/json');
-        echo json_encode([
+        return response()->json([
             'draw' => (int) $request->draw,
             'recordsTotal' => $totalCount,
             'recordsFiltered' => $filteredCount,
@@ -769,8 +772,10 @@ class CustomerProfileController extends Controller
      * Get list of profile phone numbers.
      *
      * @param Request $request
+     *
+     * @return JsonResponse
      */
-    public function profile_address_list(Request $request): void
+    public function profile_address_list(Request $request): JsonResponse
     {
         session_write_close();
 
@@ -822,8 +827,7 @@ class CustomerProfileController extends Controller
         $query = $query->offset($request->start)
             ->limit($request->length);
 
-        header('Content-type: application/json');
-        echo json_encode([
+        return response()->json([
             'draw' => (int) $request->draw,
             'recordsTotal' => $totalCount,
             'recordsFiltered' => $filteredCount,
@@ -1058,8 +1062,10 @@ class CustomerProfileController extends Controller
      * Get list of profile phone numbers.
      *
      * @param Request $request
+     *
+     * @return JsoneResponse
      */
-    public function profile_bank_list(Request $request): void
+    public function profile_bank_list(Request $request): JsonResponse
     {
         session_write_close();
 
@@ -1103,8 +1109,7 @@ class CustomerProfileController extends Controller
         $query = $query->offset($request->start)
             ->limit($request->length);
 
-        header('Content-type: application/json');
-        echo json_encode([
+        return response()->json([
             'draw' => (int) $request->draw,
             'recordsTotal' => $totalCount,
             'recordsFiltered' => $filteredCount,
@@ -1342,8 +1347,10 @@ class CustomerProfileController extends Controller
      * Get list of profile phone numbers.
      *
      * @param Request $request
+     *
+     * @return JsonResponse
      */
-    public function profile_transactions_list(Request $request): void
+    public function profile_transactions_list(Request $request): JsonResponse
     {
         session_write_close();
 
@@ -1400,8 +1407,7 @@ class CustomerProfileController extends Controller
             $query = $query->offset($request->start)
                 ->limit($request->length);
 
-            header('Content-type: application/json');
-            echo json_encode([
+            return response()->json([
                 'draw' => (int) $request->draw,
                 'recordsTotal' => $totalCount,
                 'recordsFiltered' => $filteredCount,
@@ -1419,5 +1425,7 @@ class CustomerProfileController extends Controller
                     })
             ]);
         }
+
+        return response()->json(['error' => 'Server Error'], 500);
     }
 }

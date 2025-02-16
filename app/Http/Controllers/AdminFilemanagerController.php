@@ -10,6 +10,7 @@ use App\Webdav\Directory as WebdavDirectory;
 use App\Webdav\Locks;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
@@ -53,8 +54,10 @@ class AdminFilemanagerController extends Controller
      * Get list of profile email addresses.
      *
      * @param Request $request
+     *
+     * @return JsonResponse
      */
-    public function filemanager_list(Request $request): void
+    public function filemanager_list(Request $request): JsonResponse
     {
         session_write_close();
 
@@ -130,8 +133,7 @@ class AdminFilemanagerController extends Controller
             ->limit($request->length);
 
         /* @var Folder|File $fileOrFolder */
-        header('Content-type: application/json');
-        echo json_encode([
+        return response()->json([
             'draw' => (int) $request->draw,
             'recordsTotal' => $totalCount,
             'recordsFiltered' => $filteredCount,

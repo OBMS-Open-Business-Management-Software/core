@@ -6,6 +6,7 @@ use App\Models\Tenant;
 use App\Models\User;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
@@ -32,8 +33,10 @@ class AdminTenantController extends Controller
      * Get list of tenants.
      *
      * @param Request $request
+     *
+     * @return JsonResponse
      */
-    public function tenant_list(Request $request): void
+    public function tenant_list(Request $request): JsonResponse
     {
         session_write_close();
 
@@ -77,8 +80,7 @@ class AdminTenantController extends Controller
         $query = $query->offset($request->start)
             ->limit($request->length);
 
-        header('Content-type: application/json');
-        echo json_encode([
+        return response()->json([
             'draw' => (int) $request->draw,
             'recordsTotal' => $totalCount,
             'recordsFiltered' => $filteredCount,

@@ -15,6 +15,7 @@ use App\Models\Shop\OrderQueue\ShopOrderQueueHistory;
 use Carbon\Carbon;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -371,8 +372,10 @@ class CustomerShopController extends Controller
      * Get list of shop fields.
      *
      * @param Request $request
+     *
+     * @return JsonResponse
      */
-    public function shop_orders_list(Request $request): void
+    public function shop_orders_list(Request $request): JsonResponse
     {
         session_write_close();
 
@@ -442,8 +445,7 @@ class CustomerShopController extends Controller
         $query = $query->offset($request->start)
             ->limit($request->length);
 
-        header('Content-type: application/json');
-        echo json_encode([
+        return response()->json([
             'draw' => (int) $request->draw,
             'recordsTotal' => $totalCount,
             'recordsFiltered' => $filteredCount,

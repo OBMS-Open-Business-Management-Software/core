@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Products\Product;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -33,8 +34,10 @@ class CustomerServiceController extends Controller
      * Get list of services.
      *
      * @param Request $request
+     *
+     * @return JsonResponse
      */
-    public function service_list(Request $request): void
+    public function service_list(Request $request): JsonResponse
     {
         session_write_close();
 
@@ -71,8 +74,7 @@ class CustomerServiceController extends Controller
         $query = $query->offset($request->start)
             ->limit($request->length);
 
-        header('Content-type: application/json');
-        echo json_encode([
+        return response()->json([
             'draw' => (int) $request->draw,
             'recordsTotal' => $totalCount,
             'recordsFiltered' => $filteredCount,
