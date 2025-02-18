@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTrackerTable extends Migration
+return new class () extends Migration
 {
     /**
      * Run the migrations.
@@ -83,4 +83,4 @@ class CreateTrackerTable extends Migration
         Schema::dropIfExists('trackers');
         Schema::dropIfExists('tracker_instances');
     }
-}
+};

@@ -4,7 +4,7 @@ use App\Models\Setting;
 use Carbon\Carbon;
 use Illuminate\Database\Migrations\Migration;
 
-class UpdateSettingsTable extends Migration
+return new class () extends Migration
 {
     /**
      * Run the migrations.
@@ -60,4 +60,4 @@ class UpdateSettingsTable extends Migration
                 ->orWhere('setting', '=', 'theme.gray');
         })->forceDelete();
     }
-}
+};

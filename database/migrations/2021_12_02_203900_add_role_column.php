@@ -7,7 +7,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
 
-class AddRoleColumn extends Migration
+return new class () extends Migration
 {
     /**
      * Run the migrations.
@@ -54,4 +54,4 @@ class AddRoleColumn extends Migration
             $table->dropColumn('role');
         });
     }
-}
+};

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePaymentGatewayTable extends Migration
+return new class () extends Migration
 {
     /**
      * Run the migrations.
@@ -32,4 +32,4 @@ class CreatePaymentGatewayTable extends Migration
     {
         Schema::dropIfExists('payment_gateway_settings');
     }
-}
+};
