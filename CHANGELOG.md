@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.1](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.2.0...v1.2.1) (2025-02-18)
+
+
+### Bug Fixes
+
+* navigatables injection limitation ([fc23e04](https://github.com/OBMS-Open-Business-Management-Software/core/commit/fc23e044ff87f226983beaa8d9b1d811a0e67f8a))
+
 ## [1.2.0](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.1.0...v1.2.0) (2025-02-18)
 
 
