@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Products;
+namespace App\Traints\Product;
 
 use App\Models\ProductSetting;
 use Illuminate\Support\Collection;
 
 /**
- * Trait HasProductSettings.
+ * Trait HasSettings.
  *
  * This trait defines the method to get settings.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  */
-trait HasProductSettings
+trait HasSettings
 {
     public static ?Collection $settings;
 

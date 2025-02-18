@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Products;
+namespace App\Traints\Product;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
 /**
- * Trait HasProductService.
+ * Trait HasService.
  *
  * This trait defines the method to get model instance.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  */
-trait HasProductService
+trait HasService
 {
     public static ?Collection $settings;
 

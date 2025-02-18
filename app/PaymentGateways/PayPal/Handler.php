@@ -3,7 +3,7 @@
 namespace App\PaymentGateways\PayPal;
 
 use App\PaymentGateways\Gateway;
-use App\PaymentGateways\HasGatewaySettings;
+use App\Traints\PaymentGateway\HasSettings;
 use App\PaymentGateways\PayPal\Helpers\PaypalIPNClient;
 use App\PaymentGateways\PayPal\Helpers\PaypalMerchantClient;
 use Exception;
@@ -18,7 +18,7 @@ use Illuminate\Support\Collection;
  */
 class Handler implements Gateway
 {
-    use HasGatewaySettings;
+    use HasSettings;
 
     /**
      * Register the parameters which are being used by the payment method

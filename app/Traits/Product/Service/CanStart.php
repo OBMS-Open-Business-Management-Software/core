@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Products;
+namespace App\Traints\Product\Service;
 
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Trait CanServiceStart.
+ * Trait CanStart.
  *
  * This trait allows a model instance to implement service start functionality.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  */
-trait CanServiceStart
+trait CanStart
 {
     /**
      * Get the service status.
