@@ -3,7 +3,7 @@
 namespace App\PaymentGateways\PayPal;
 
 use App\PaymentGateways\Gateway;
-use App\Traints\PaymentGateway\HasSettings;
+use App\Traits\PaymentGateway\HasSettings;
 use App\PaymentGateways\PayPal\Helpers\PaypalIPNClient;
 use App\PaymentGateways\PayPal\Helpers\PaypalMerchantClient;
 use Exception;

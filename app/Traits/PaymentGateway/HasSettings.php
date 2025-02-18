@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traints\PaymentGateway;
+namespace App\Traits\PaymentGateway;
 
 use App\Models\PaymentGatewaySetting;
 use Illuminate\Support\Collection;

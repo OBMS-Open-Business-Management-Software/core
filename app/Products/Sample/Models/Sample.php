@@ -2,8 +2,8 @@
 
 namespace App\Products\Sample\Models;
 
-use App\Traints\Product\Service\CanStart;
-use App\Traints\Product\Service\HasStatistics;
+use App\Traits\Product\Service\CanStart;
+use App\Traits\Product\Service\HasStatistics;
 use App\Products\Service;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\SoftDeletes;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traints\Product;
+namespace App\Traits\Product;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;

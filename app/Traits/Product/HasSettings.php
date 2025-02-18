@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traints\Product;
+namespace App\Traits\Product;
 
 use App\Models\ProductSetting;
 use Illuminate\Support\Collection;
