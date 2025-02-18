@@ -2,9 +2,9 @@
 
 namespace App\Products\Sample;
 
-use App\Products\HasProductCapabilities;
-use App\Products\HasProductService;
-use App\Products\HasProductSettings;
+use App\Traints\Product\HasCapabilities;
+use App\Traints\Product\HasService;
+use App\Traints\Product\HasSettings;
 use App\Products\Product;
 use App\Products\Sample\Models\Sample;
 use Illuminate\Support\Collection;
@@ -18,9 +18,9 @@ use Illuminate\Support\Collection;
  */
 class Handler implements Product
 {
-    use HasProductCapabilities;
-    use HasProductSettings;
-    use HasProductService;
+    use HasCapabilities;
+    use HasSettings;
+    use HasService;
 
     /**
      * Register the parameters which are being used by the product

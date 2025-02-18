@@ -2,8 +2,8 @@
 
 namespace App\Products\Sample\Models;
 
-use App\Products\CanServiceStart;
-use App\Products\HasServiceStatistics;
+use App\Traints\Product\Service\CanStart;
+use App\Traints\Product\Service\HasStatistics;
 use App\Products\Service;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -24,8 +24,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Sample extends Service
 {
-    use CanServiceStart;
-    use HasServiceStatistics;
+    use CanStart;
+    use HasStatistics;
     use SoftDeletes;
 
     /**

@@ -1,18 +1,18 @@
 <?php
 
-namespace App\PaymentGateways;
+namespace App\Traints\PaymentGateway;
 
 use App\Models\PaymentGatewaySetting;
 use Illuminate\Support\Collection;
 
 /**
- * Trait HasGatewaySettings.
+ * Trait HasSettings.
  *
  * This trait defines the method to get settings.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  */
-trait HasGatewaySettings
+trait HasSettings
 {
     public static ?Collection $settings;
 
