@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.0](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.0.1...v1.1.0) (2025-02-18)
+
+
+### Features
+
+* laravel sail update ([cc693a4](https://github.com/OBMS-Open-Business-Management-Software/core/commit/cc693a4528e230a3d372a422f860509254b00375))
+
+
+### Bug Fixes
+
+* config load exception handling ([67a5fd3](https://github.com/OBMS-Open-Business-Management-Software/core/commit/67a5fd389851233d6ea9b6f456b58661848c8a8d))
+* database migration anonymous class return ([4329250](https://github.com/OBMS-Open-Business-Management-Software/core/commit/4329250b3b5d12ecee12a7f7b55fa0f47b009838))
+
 ## [1.0.1](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.0.0...v1.0.1) (2025-02-18)
 
 
