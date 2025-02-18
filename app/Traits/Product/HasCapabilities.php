@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traints\Product;
+namespace App\Traits\Product;
 
 use Illuminate\Support\Collection;
 
@@ -23,21 +23,21 @@ trait HasCapabilities
     public function capabilities(): Collection
     {
         $capabilities = ['capabilities.reflect'];
-        $handlerTraints = collect(class_uses(self::class) ?: []);
+        $handlerTraits = collect(class_uses(self::class) ?: []);
 
-        if ($handlerTraints->contains('App\Traints\Product\HasService')) {
+        if ($handlerTraits->contains('App\Traits\Product\HasService')) {
             $capabilities[] = 'service';
 
-            $serviceTraints = collect(class_uses($this->model()) ?: []);
+            $serviceTraits = collect(class_uses($this->model()) ?: []);
 
-            if ($serviceTraints->contains('App\Traints\Product\Service\CanStart')) {
+            if ($serviceTraits->contains('App\Traits\Product\Service\CanStart')) {
                 $capabilities[] = 'service.status';
                 $capabilities[] = 'service.start';
                 $capabilities[] = 'service.stop';
                 $capabilities[] = 'service.restart';
             }
 
-            if ($serviceTraints->contains('App\Traints\Product\Service\HasStatistics')) {
+            if ($serviceTraits->contains('App\Traits\Product\Service\HasStatistics')) {
                 $capabilities[] = 'service.statistics';
             }
         }

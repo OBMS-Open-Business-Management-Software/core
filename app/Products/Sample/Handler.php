@@ -2,9 +2,9 @@
 
 namespace App\Products\Sample;
 
-use App\Traints\Product\HasCapabilities;
-use App\Traints\Product\HasService;
-use App\Traints\Product\HasSettings;
+use App\Traits\Product\HasCapabilities;
+use App\Traits\Product\HasService;
+use App\Traits\Product\HasSettings;
 use App\Products\Product;
 use App\Products\Sample\Models\Sample;
 use Illuminate\Support\Collection;
