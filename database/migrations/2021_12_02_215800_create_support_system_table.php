@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSupportSystemTable extends Migration
-{
+return new class () extends Migration {
     /**
      * Run the migrations.
      *
@@ -195,4 +194,4 @@ class CreateSupportSystemTable extends Migration
         Schema::dropIfExists('imap_inboxes');
         Schema::dropIfExists('support_categories');
     }
-}
+};

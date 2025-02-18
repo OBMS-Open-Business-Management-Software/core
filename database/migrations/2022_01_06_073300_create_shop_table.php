@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateShopTable extends Migration
-{
+return new class () extends Migration {
     /**
      * Run the migrations.
      *
@@ -140,4 +139,4 @@ class CreateShopTable extends Migration
         Schema::dropIfExists('shop_configurator_fields');
         Schema::dropIfExists('shop_configurator_categories');
     }
-}
+};
