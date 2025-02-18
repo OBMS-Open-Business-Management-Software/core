@@ -35,6 +35,7 @@ class AppServiceProvider extends ServiceProvider
                     Config::set($setting->setting, $setting->value);
                 }
             }
-        } catch (Exception $e) {}
+        } catch (Exception $e) {
+        }
     }
 }
