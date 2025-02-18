@@ -34,3 +34,33 @@ jobs:
             conventional-changelog-conventionalcommits@7.0.2
         env:
           GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
+      - name: Check if version was returned
+        id: check_version
+        run: |
+          if [ -z "${{ steps.semantic-release.outputs.version }}" ]; then
+            echo "No version returned, skipping build and push."
+            exit 1  # Fail gracefully, prevents docker build and push from running
+          fi
+          echo "Version: ${{ steps.semantic-release.outputs.version }}"
+      - name: Log in to GitHub Container Registry
+        if: success()
+        uses: docker/login-action@v2
+        with:
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build service Docker image
+        if: success()
+        run: |
+          docker build -t ghcr.io/${{ github.repository }}:${{ steps.semantic-release.outputs.version }}-service .
+      - name: Build worker Docker image
+        if: success()
+        run: |
+          docker build -t ghcr.io/${{ github.repository }}:${{ steps.semantic-release.outputs.version }}-worker .
+      - name: Push service Docker image
+        if: success()
+        run: |
+          docker push ghcr.io/${{ github.repository }}:${{ steps.semantic-release.outputs.version }}-service
+      - name: Push worker Docker image
+        if: success()
+        run: |
+          docker push ghcr.io/${{ github.repository }}:${{ steps.semantic-release.outputs.version }}-worker
