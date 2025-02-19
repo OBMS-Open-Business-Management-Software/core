@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.0](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.2.1...v1.3.0) (2025-02-19)
+
+
+### Features
+
+* theme support ([7668979](https://github.com/OBMS-Open-Business-Management-Software/core/commit/766897992abd2e979c835cf4c1d4e266c20cc7e8))
+
 ## [1.2.1](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.2.0...v1.2.1) (2025-02-18)
 
 
