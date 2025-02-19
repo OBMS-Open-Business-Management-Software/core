@@ -54,6 +54,7 @@ class Kernel extends HttpKernel
         TrimStrings::class,
         ConvertEmptyStringsToNull::class,
         IdentifyTenant::class,
+        InjectNavigateables::class,
     ];
 
     /**
@@ -69,7 +70,6 @@ class Kernel extends HttpKernel
             ShareErrorsFromSession::class,
             VerifyCsrfToken::class,
             SubstituteBindings::class,
-            InjectNavigateables::class,
         ],
 
         'api' => [

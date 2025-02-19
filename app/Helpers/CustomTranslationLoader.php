@@ -5,6 +5,7 @@ namespace App\Helpers;
 use Illuminate\Translation\FileLoader;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\File;
 
 /**
  * Class CustomTranslationLoader.
@@ -24,24 +25,26 @@ class CustomTranslationLoader extends FileLoader
     {
         $customTranslations = [];
 
-        collect(scandir(__DIR__ . '/../../resources/lang'))->reject(function (string $path) {
-            return $path == '.' || $path == '..' || str_contains($path, '.php');
-        })->each(function (string $lang) use ($locale, &$customTranslations) {
-            collect(scandir(__DIR__ . '/../../resources/lang/' . $lang))->reject(function (string $group) use ($locale) {
-                return !str_contains($group, '.php');
-            })->transform(function (string $group) {
-                return str_replace('.php', '', $group);
-            })->each(function (string $group) use ($lang, &$customTranslations) {
-                $customTranslations = [
-                    ...$customTranslations,
-                    ...collect(Arr::dot(require __DIR__ . '/../../resources/lang/' . $lang . '/' . $group . '.php'))->mapWithKeys(function ($value, string $key) use ($group) {
-                        return [
-                            $group . '.' . $key => $value,
-                        ];
-                    })->toArray()
-                ];
+        if (File::isDirectory(__DIR__ . '/../../resources/themes/' . config('app.theme') . '/lang')) {
+            collect(scandir(__DIR__ . '/../../resources/themes/' . config('app.theme') . '/lang'))->reject(function (string $path) {
+                return $path == '.' || $path == '..' || str_contains($path, '.php');
+            })->each(function (string $lang) use ($locale, &$customTranslations) {
+                collect(scandir(__DIR__ . '/../../resources/themes/' . config('app.theme') . '/lang/' . $lang))->reject(function (string $group) use ($locale) {
+                    return !str_contains($group, '.php');
+                })->transform(function (string $group) {
+                    return str_replace('.php', '', $group);
+                })->each(function (string $group) use ($lang, &$customTranslations) {
+                    $customTranslations = [
+                        ...$customTranslations,
+                        ...collect(Arr::dot(require __DIR__ . '/../../resources/themes/' . config('app.theme') . '/lang/' . $lang . '/' . $group . '.php'))->mapWithKeys(function ($value, string $key) use ($group) {
+                            return [
+                                $group . '.' . $key => $value,
+                            ];
+                        })->toArray()
+                    ];
+                });
             });
-        });
+        }
 
         collect(scandir(__DIR__ . '/../PaymentGateways'))->reject(function (string $path) {
             return $path == '.' || $path == '..' || str_contains($path, '.php');

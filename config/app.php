@@ -15,6 +15,7 @@ return [
 
     'name' => env('APP_NAME', 'OBMS'),
     'slogan' => env('APP_SLOGAN', 'Open Business Management Software'),
+    'theme' => env('APP_THEME', 'aurora'),
 
     /*
     |--------------------------------------------------------------------------
