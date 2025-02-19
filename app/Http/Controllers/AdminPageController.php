@@ -374,7 +374,7 @@ class AdminPageController extends Controller
                         'created_at' => $version->created_at->format('d.m.Y, H:i'),
                         'content' => substr($version->content, 0, 100) . (strlen($version->content) > 100 ? '...' : ''),
                         'acceptance' => $version->acceptance()->count(),
-                        'view' => '<a href="' . route('public.page.' . $version->page_id . '.version', $version->id) . '" class="btn btn-primary btn-sm" target="_blank"><i class="bi bi-eye"></i></a>',
+                        'view' => '<a href="' . route('cms.page.' . $version->page_id . '.version', $version->id) . '" class="btn btn-primary btn-sm" target="_blank"><i class="bi bi-eye"></i></a>',
                         'edit' => $edit,
                         'delete' => $version->acceptance->isEmpty() ? '<a href="' . route('admin.pages.versions.delete', ['id' => $version->page_id, 'version_id' => $version->id]) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>' : '<button type="button" class="btn btn-danger btn-sm" disabled><i class="bi bi-trash"></i></button>',
                     ];

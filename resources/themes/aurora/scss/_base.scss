@@ -1,0 +1,46 @@
+// Custom
+body {
+    font-family: "Space Grotesk", sans-serif;
+    background-color: var(--gray);
+}
+
+.bg-primary {
+    background-color: var(--primary) !important;
+}
+
+.text-primary {
+    color: var(--primary) !important;
+}
+
+.modal-title {
+    font-size: 0.9rem;
+}
+
+.bg-secondary-dark {
+    background-color: var(--secondary-dark);
+}
+
+.bg-gray {
+    background-color: var(--gray);
+}
+
+.bg-disabled {
+    background-color: var(--input-disabled-bg);
+}
+
+.bg-image {
+    background-blend-mode: color-dodge;
+    background-image: url('/themes/aurora/images/dark.background.svg');
+    background-position: center;
+}
+
+.mt-10 {
+    margin-top: 6.8rem;
+}
+
+.card {
+    .card-header,
+    .card-footer {
+        background-color: var(--gray);
+    }
+}

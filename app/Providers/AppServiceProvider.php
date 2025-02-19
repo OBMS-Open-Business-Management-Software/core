@@ -6,7 +6,9 @@ use Exception;
 use Illuminate\Support\ServiceProvider;
 use App\Models\Setting;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\View;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -36,6 +38,19 @@ class AppServiceProvider extends ServiceProvider
                 }
             }
         } catch (Exception $e) {
+        }
+
+        collect(scandir(resource_path('themes')))->reject(function (string $path) {
+            return $path == '.' || $path == '..' || str_contains($path, '.php') || file_exists(public_path('themes/' . $path));
+        })->each(function (string $theme) {
+            symlink(resource_path('themes/' . $theme . '/public'), public_path('themes/' . $theme));
+        });
+
+        $theme = config('app.theme', 'aurora');
+        $themePath = resource_path('themes/' . $theme);
+
+        if (File::isDirectory($themePath)) {
+            View::addLocation($themePath);
         }
     }
 }

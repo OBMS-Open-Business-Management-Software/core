@@ -8,9 +8,7 @@ use App\Models\Content\Page;
 use App\Models\Shop\Configurator\ShopConfiguratorCategory;
 use App\Models\Shop\Configurator\ShopConfiguratorForm;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
-use ScssPhp\ScssPhp\Compiler;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,25 +25,7 @@ Route::get('/', function () {
     return redirect('login');
 });
 
-Route::get('/css/app.css', function () {
-    $cacheKey = 'stylesheet-' . str_replace(['/', ':'], '_', str_replace(['http://', 'https://'], '', config('app.url')));
-
-    if ($stylesheet = Cache::get($cacheKey)) {
-        return Response::make($stylesheet, 200, ['Content-Type' => 'text/css']);
-    }
-
-    $scss = view('styles')->render();
-    $compiler = new Compiler();
-    $compiler->setImportPaths([
-        resource_path('sass/'),
-        base_path('node_modules/'),
-    ]);
-    $compiledCss = $compiler->compileString($scss)->getCss();
-
-    Cache::forever($cacheKey, $compiledCss);
-
-    return Response::make($compiledCss, 200, ['Content-Type' => 'text/css']);
-});
+Route::get('/css/app.css', App\Http\Controllers\DynamicStyles::class);
 
 Route::get('/email/verify/{id}/{hash}', function (AccountEmailVerificationRequest $request) {
     $request->fulfill();
@@ -527,8 +507,8 @@ try {
         ],
     ], function () {
         Page::query()->each(function (Page $page) {
-            Route::get(__($page->route), [App\Http\Controllers\PublicPageController::class, 'render'])->name('public.page.' . $page->id);
-            Route::get(__($page->route) . '/{id}', [App\Http\Controllers\PublicPageController::class, 'render_version'])->name('public.page.' . $page->id . '.version');
+            Route::get(__($page->route), [App\Http\Controllers\PublicPageController::class, 'render'])->name('cms.page.' . $page->id);
+            Route::get(__($page->route) . '/{id}', [App\Http\Controllers\PublicPageController::class, 'render_version'])->name('cms.page.' . $page->id . '.version');
         });
     });
 } catch (Exception $exception) {

@@ -2,12 +2,12 @@
     "private": true,
     "scripts": {
         "dev": "npm run development",
-        "development": "mix",
-        "watch": "mix watch",
-        "watch-poll": "mix watch -- --watch-options-poll=1000",
-        "hot": "mix watch --hot",
+        "development": "mix --mix-config=resources/themes/aurora/webpack.mix.js",
+        "watch": "mix watch --mix-config=resources/themes/aurora/webpack.mix.js",
+        "watch-poll": "mix watch --mix-config=resources/themes/aurora/webpack.mix.js -- --watch-options-poll=1000",
+        "hot": "mix watch --hot --mix-config=resources/themes/aurora/webpack.mix.js",
         "prod": "npm run production",
-        "production": "mix --production"
+        "production": "mix --production --mix-config=resources/themes/aurora/webpack.mix.js"
     },
     "devDependencies": {
         "@commitlint/cli": "^16.2.3",

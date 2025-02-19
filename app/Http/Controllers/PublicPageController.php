@@ -32,7 +32,7 @@ class PublicPageController extends Controller
             $page->latest = $page->latest;
         }
 
-        return view('public.page', [
+        return view('cms.page', [
             'page' => $page,
             'render' => function ($__php, $__data) {
                 $obLevel = ob_get_level();
@@ -80,7 +80,7 @@ class PublicPageController extends Controller
         $page->latest = PageVersion::find($id);
 
         if ($page->latest->page_id == $page->id) {
-            return view('public.page', [
+            return view('cms.page', [
                 'page' => $page,
                 'render' => function ($__php, $__data) {
                     $obLevel = ob_get_level();
