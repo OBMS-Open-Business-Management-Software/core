@@ -149,7 +149,7 @@ class AdminPageController extends Controller
                         'navigation_item' => $page->navigation_item ? '<span class="badge badge-success">' . __('interface.misc.yes') . '</span>' : '<span class="badge badge-warning">' . __('interface.misc.no') . '</span>',
                         'view' => '<a href="' . route('admin.pages.details', $page->id) . '" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>',
                         'edit' => $edit,
-                        'delete' => $page->acceptance->isEmpty() ? '<a href="' . route('admin.invoices.customers.delete', $page->id) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>' : '<button type="button" class="btn btn-danger btn-sm" disabled><i class="bi bi-trash"></i></button>',
+                        'delete' => $page->acceptance->isEmpty() ? '<a href="' . route('admin.pages.delete', $page->id) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>' : '<button type="button" class="btn btn-danger btn-sm" disabled><i class="bi bi-trash"></i></button>',
                     ];
                 })
         ]);
