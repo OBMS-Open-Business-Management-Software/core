@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.4.2](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.4.1...v1.4.2) (2025-02-21)
+
+
+### Bug Fixes
+
+* custom page deletion ([fbb5d0a](https://github.com/OBMS-Open-Business-Management-Software/core/commit/fbb5d0af1703842c820f680842097059ab18306f))
+
 ## [1.4.1](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.4.0...v1.4.1) (2025-02-21)
 
 
