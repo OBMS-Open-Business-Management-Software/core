@@ -9,11 +9,11 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
+use Laravel\Passport\ClientRepository;
 
 class AdminAPIController extends Controller
 {
@@ -350,7 +350,11 @@ class AdminAPIController extends Controller
                         $orderBy = 'name';
                         break;
                     case 'secret':
+                    case 'public':
                         $orderBy = 'secret';
+                        break;
+                    case 'redirect':
+                        $orderBy = 'redirect';
                         break;
                     case 'id':
                     default:
@@ -377,8 +381,10 @@ class AdminAPIController extends Controller
                     return (object) [
                         'id' => $client->id,
                         'name' => $client->name,
+                        'public' => !$client->secret ? '<i class="bi bi-check-circle text-success"></i>' : '<i class="bi bi-x-circle text-danger"></i>',
+                        'redirect' => $client->redirect,
                         'secret' => $client->secret,
-                        'type' => $client->personal_access_client ? '<span class="badge badge-primary">' . __('interface.data.personal') . '</span>' : ($client->password_client ? '<span class="badge badge-primary">' . __('interface.data.password') . '</span>' : '<span class="badge badge-secondary">' . __('interface.misc.not_available') . '</span>'),
+                        'type' => $client->personal_access_client ? '<span class="badge badge-primary">' . __('interface.data.personal') . '</span>' : ($client->password_client ? '<span class="badge badge-primary">' . __('interface.data.password') . '</span>' : '<span class="badge badge-primary">' . __('interface.data.client') . '</span>'),
                         'delete' => '<a href="' . route('admin.api.oauth-clients.delete', $client->id) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>',
                     ];
                 })
@@ -398,29 +404,56 @@ class AdminAPIController extends Controller
     {
         Validator::make($request->toArray(), [
             'name' => ['required', 'string', 'max:255'],
-            'type' => ['required', 'string']
+            'type' => ['required', 'string'],
+            'grant_type' => ['required', 'string'],
+            'redirect' => ['nullable', 'string'],
+            'public' => ['nullable', 'string'],
         ])->validate();
 
-        $exitCode = false;
+        $clientRepository = app(ClientRepository::class);
+        $client = false;
+        $public = ! empty($request->public) && $request->public == 'true';
 
         switch ($request->type) {
             case 'personal':
-                $exitCode = Artisan::call('passport:client', [
-                    '--personal' => true,
-                    '--name' => $request->name,
-                ]);
+                $client = $clientRepository->create(
+                    null,
+                    $request->name,
+                    $request->redirect, // Redirect URL
+                    $request->grant_type, // Grant Type
+                    true, // Personal Access Client
+                    false,  // Password Grant Client
+                    !$public, // Confidential Client
+                );
 
                 break;
             case 'password':
-                $exitCode = Artisan::call('passport:client', [
-                    '--password' => true,
-                    '--name' => $request->name,
-                ]);
+                $client = $clientRepository->create(
+                    null,
+                    $request->name,
+                    $request->redirect, // Redirect URL
+                    $request->grant_type, // Grant Type
+                    false, // Personal Access Client
+                    true,  // Password Grant Client
+                    !$public, // Confidential Client
+                );
+
+                break;
+            case 'client':
+                $client = $clientRepository->create(
+                    null,
+                    $request->name,
+                    $request->redirect, // Redirect URL
+                    $request->grant_type, // Grant Type
+                    false, // Personal Access Client
+                    false,  // Password Grant Client
+                    !$public, // Confidential Client
+                );
 
                 break;
         }
 
-        if ($exitCode === 0) {
+        if ($client) {
             return redirect()->route('admin.api.oauth-clients')->with('success', __('interface.messages.api_client_created'));
         }
 
