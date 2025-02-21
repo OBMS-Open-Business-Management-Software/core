@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.4.1](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.4.0...v1.4.1) (2025-02-21)
+
+
+### Bug Fixes
+
+* oauth client creation ([50da100](https://github.com/OBMS-Open-Business-Management-Software/core/commit/50da10007c3b235d6da3b1e2cb15942f7adf79e6))
+
 ## [1.4.0](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.3.0...v1.4.0) (2025-02-21)
 
 
