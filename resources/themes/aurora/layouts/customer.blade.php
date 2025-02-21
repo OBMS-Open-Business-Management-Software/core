@@ -11,7 +11,7 @@
     <title>{{ config('app.name', 'OBMS') }}</title>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="{{ asset('images/favicon.logo.svg') }}">
+    <link rel="icon" type="image/svg+xml" href="{{ config('company.favicon') ?? asset('themes/aurora/images/favicon.logo.svg') }}">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -198,7 +198,7 @@
     </div>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('themes/aurora/js/app.js') }}"></script>
 
     <script type="text/javascript">
         $('.custom-file input').change(function (e) {

@@ -343,6 +343,7 @@ return [
         'webdav_hint' => 'WebDAV is an easy way of connecting the virtual filesystem of the software directly to your computer. WebDAV filesystems can usually be connected by using the network drive functionality of the operating system.',
         'filemanager' => 'Filemanager',
         'prepaid_receipt' => 'Prepaid receipt',
+        'prepaid' => 'Prepaid',
         'autorevoke_overdue' => 'Auto-revoke if overdue',
         'basic' => 'Basic',
         'must_be_accepted' => 'Must be accepted',

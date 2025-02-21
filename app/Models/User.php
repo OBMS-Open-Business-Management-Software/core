@@ -16,6 +16,7 @@ use App\Models\Profile\ProfilePhone;
 use App\Models\Support\SupportTicket;
 use Carbon\Carbon;
 use Exception;
+use Error;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -148,7 +149,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         try {
             $this->notify(new AccountEmailVerification());
-        } catch (Exception $exception) {
+        } catch (Exception|Error $exception) {
         }
     }
 

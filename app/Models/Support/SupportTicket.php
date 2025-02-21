@@ -19,6 +19,7 @@ use App\Models\Support\Run\SupportRun;
 use App\Models\Support\Run\SupportRunHistory;
 use Carbon\Carbon;
 use Exception;
+use Error;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -295,7 +296,7 @@ class SupportTicket extends Model
     {
         try {
             $this->notify(new SupportTicketNew());
-        } catch (Exception $exception) {
+        } catch (Exception|Error $exception) {
         }
     }
 
@@ -308,7 +309,7 @@ class SupportTicket extends Model
     {
         try {
             $this->notify(new SupportTicketLock());
-        } catch (Exception $exception) {
+        } catch (Exception|Error $exception) {
         }
     }
 
@@ -321,7 +322,7 @@ class SupportTicket extends Model
     {
         try {
             $this->notify(new SupportTicketUnlock());
-        } catch (Exception $exception) {
+        } catch (Exception|Error $exception) {
         }
     }
 
@@ -334,7 +335,7 @@ class SupportTicket extends Model
     {
         try {
             $this->notify(new SupportTicketEscalation());
-        } catch (Exception $exception) {
+        } catch (Exception|Error $exception) {
         }
     }
 
@@ -347,7 +348,7 @@ class SupportTicket extends Model
     {
         try {
             $this->notify(new SupportTicketDeescalation());
-        } catch (Exception $exception) {
+        } catch (Exception|Error $exception) {
         }
     }
 
@@ -360,7 +361,7 @@ class SupportTicket extends Model
     {
         try {
             $this->notify(new SupportTicketHold());
-        } catch (Exception $exception) {
+        } catch (Exception|Error $exception) {
         }
     }
 
@@ -373,7 +374,7 @@ class SupportTicket extends Model
     {
         try {
             $this->notify(new SupportTicketUnhold());
-        } catch (Exception $exception) {
+        } catch (Exception|Error $exception) {
         }
     }
 
@@ -386,7 +387,7 @@ class SupportTicket extends Model
     {
         try {
             $this->notify(new SupportTicketFileUpload());
-        } catch (Exception $exception) {
+        } catch (Exception|Error $exception) {
         }
     }
 
@@ -399,7 +400,7 @@ class SupportTicket extends Model
     {
         try {
             $this->notify(new SupportTicketClose());
-        } catch (Exception $exception) {
+        } catch (Exception|Error $exception) {
         }
     }
 
@@ -412,7 +413,7 @@ class SupportTicket extends Model
     {
         try {
             $this->notify(new SupportTicketReopen());
-        } catch (Exception $exception) {
+        } catch (Exception|Error $exception) {
         }
     }
 
@@ -425,7 +426,7 @@ class SupportTicket extends Model
     {
         try {
             $this->notify(new SupportTicketPriority());
-        } catch (Exception $exception) {
+        } catch (Exception|Error $exception) {
         }
     }
 
