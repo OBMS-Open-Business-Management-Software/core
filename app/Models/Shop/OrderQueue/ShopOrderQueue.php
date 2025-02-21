@@ -24,6 +24,7 @@ use App\Models\UsageTracker\TrackerInstance;
 use App\Models\User;
 use Carbon\Carbon;
 use Exception;
+use Error;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -289,7 +290,7 @@ class ShopOrderQueue extends Model
     {
         try {
             $this->notify(new OrderNewPendingApproval());
-        } catch (Exception $exception) {
+        } catch (Exception|Error $exception) {
         }
     }
 
@@ -302,7 +303,7 @@ class ShopOrderQueue extends Model
     {
         try {
             $this->notify(new OrderNewSuccessfulApproval());
-        } catch (Exception $exception) {
+        } catch (Exception|Error $exception) {
         }
     }
 
@@ -315,7 +316,7 @@ class ShopOrderQueue extends Model
     {
         try {
             $this->notify(new OrderSuccessfulApproval());
-        } catch (Exception $exception) {
+        } catch (Exception|Error $exception) {
         }
     }
 
@@ -328,7 +329,7 @@ class ShopOrderQueue extends Model
     {
         try {
             $this->notify(new OrderUnsuccessfulApproval());
-        } catch (Exception $exception) {
+        } catch (Exception|Error $exception) {
         }
     }
 
@@ -341,7 +342,7 @@ class ShopOrderQueue extends Model
     {
         try {
             $this->notify(new OrderSetupFailed());
-        } catch (Exception $exception) {
+        } catch (Exception|Error $exception) {
         }
     }
 
@@ -354,7 +355,7 @@ class ShopOrderQueue extends Model
     {
         try {
             $this->notify(new OrderUpdatePendingApproval());
-        } catch (Exception $exception) {
+        } catch (Exception|Error $exception) {
         }
     }
 
@@ -367,7 +368,7 @@ class ShopOrderQueue extends Model
     {
         try {
             $this->notify(new OrderUpdateSuccessfulApproval());
-        } catch (Exception $exception) {
+        } catch (Exception|Error $exception) {
         }
     }
 
@@ -380,7 +381,7 @@ class ShopOrderQueue extends Model
     {
         try {
             $this->notify(new ProductRemovalSuccessful());
-        } catch (Exception $exception) {
+        } catch (Exception|Error $exception) {
         }
     }
 
@@ -393,7 +394,7 @@ class ShopOrderQueue extends Model
     {
         try {
             $this->notify(new ProductLockSuccessful());
-        } catch (Exception $exception) {
+        } catch (Exception|Error $exception) {
         }
     }
 
@@ -406,7 +407,7 @@ class ShopOrderQueue extends Model
     {
         try {
             $this->notify(new ProductLockFailure());
-        } catch (Exception $exception) {
+        } catch (Exception|Error $exception) {
         }
     }
 
@@ -419,7 +420,7 @@ class ShopOrderQueue extends Model
     {
         try {
             $this->notify(new ProductUnlockSuccessful());
-        } catch (Exception $exception) {
+        } catch (Exception|Error $exception) {
         }
     }
 
@@ -432,7 +433,7 @@ class ShopOrderQueue extends Model
     {
         try {
             $this->notify(new ProductUnlockFailure());
-        } catch (Exception $exception) {
+        } catch (Exception|Error $exception) {
         }
     }
 }

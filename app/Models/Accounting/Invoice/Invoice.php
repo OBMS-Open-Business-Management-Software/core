@@ -9,6 +9,7 @@ use App\Models\FileManager\File;
 use App\Models\User;
 use Carbon\Carbon;
 use Exception;
+use Error;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -308,7 +309,7 @@ class Invoice extends Model
             $this->notify(new AccountingInvoice());
 
             $status = true;
-        } catch (Exception $exception) {
+        } catch (Exception|Error $exception) {
         }
 
         $this->update([

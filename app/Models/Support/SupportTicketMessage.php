@@ -6,6 +6,7 @@ use App\Emails\Support\SupportTicketMessageNew;
 use App\Models\User;
 use Carbon\Carbon;
 use Exception;
+use Error;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -85,7 +86,7 @@ class SupportTicketMessage extends Model
     {
         try {
             $this->notify(new SupportTicketMessageNew());
-        } catch (Exception $exception) {
+        } catch (Exception|Error $exception) {
         }
     }
 

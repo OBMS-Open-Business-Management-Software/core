@@ -5,6 +5,7 @@ namespace App\Models\Profile;
 use App\Emails\ProfileEmailVerification;
 use Carbon\Carbon;
 use Exception;
+use Error;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -90,7 +91,7 @@ class ProfileEmail extends Model implements MustVerifyEmail
     {
         try {
             $this->notify(new ProfileEmailVerification());
-        } catch (Exception $exception) {
+        } catch (Exception|Error $exception) {
         }
     }
 

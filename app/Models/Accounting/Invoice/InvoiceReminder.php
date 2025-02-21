@@ -6,6 +6,7 @@ use App\Emails\Accounting\AccountingReminder;
 use App\Models\FileManager\File;
 use Carbon\Carbon;
 use Exception;
+use Error;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -122,7 +123,7 @@ class InvoiceReminder extends Model
             $this->notify(new AccountingReminder());
 
             $status = true;
-        } catch (Exception $exception) {
+        } catch (Exception|Error $exception) {
         }
 
         $this->update([
