@@ -104,6 +104,12 @@
                                     @endif
                                 </div>
                             </li>
+                            <li class="nav-item {{ str_contains(Request::route()?->getName(), 'admin.pages') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ route('admin.pages') }}" title="{{ __('interface.misc.custom_pages') }}">
+                                    <i class="bi bi-list"></i>
+                                    <span>{{ __('interface.misc.custom_pages') }}</span>
+                                </a>
+                            </li>
                         </ul>
                         <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mb-2 mt-3 text-primary">
                             <span>{{ __('interface.misc.sales') }}</span>
@@ -219,12 +225,6 @@
                                     </a>
                                 </li>
                             @endif
-                            <li class="nav-item {{ str_contains(Request::route()?->getName(), 'admin.pages') ? 'active' : '' }}">
-                                <a class="nav-link" href="{{ route('admin.pages') }}" title="{{ __('interface.misc.custom_pages') }}">
-                                    <i class="bi bi-list"></i>
-                                    <span>{{ __('interface.misc.custom_pages') }}</span>
-                                </a>
-                            </li>
                             @if (Auth::user()->role == 'admin')
                                 <li class="nav-item dropdown show {{ (str_contains(Request::route()?->getName(), 'admin.api.users') ? 'active' : '') }}">
                                     <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-expanded="false" title="{{ __('interface.misc.api') }}">
