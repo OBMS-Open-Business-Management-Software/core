@@ -65,7 +65,7 @@
     }
 }
 
-.row {
+.row:not(.form-group) {
     row-gap: 1.5rem;
 }
 
