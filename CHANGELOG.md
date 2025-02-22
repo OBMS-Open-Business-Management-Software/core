@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.5.0](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.4.2...v1.5.0) (2025-02-22)
+
+
+### Features
+
+* electronic invoice support ([a045325](https://github.com/OBMS-Open-Business-Management-Software/core/commit/a045325d21b57675b25f831b776d6579f89d169b))
+
+
+### Bug Fixes
+
+* invoice type dunning status display ([1127447](https://github.com/OBMS-Open-Business-Management-Software/core/commit/11274479fd31ab9687ea30385f50a1b7ce59a8ce))
+
 ## [1.4.2](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.4.1...v1.4.2) (2025-02-21)
 
 
