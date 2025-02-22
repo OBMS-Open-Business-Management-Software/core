@@ -1,0 +1,17 @@
+name: Documentation update
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger remote update
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          repository: OBMS-Open-Business-Management-Software/documentation
+          event-type: core-release
+          token: ${{ secrets.GITHUB_TOKEN }}
