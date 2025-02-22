@@ -33,6 +33,13 @@
     <script type="text/javascript">
         $(window).on('load', function () {
             $('#settings').DataTable({
+                stateSave: true,
+                stateLoadCallback: function (settings) {
+                    return JSON.parse(localStorage.getItem('DataTables_adminInstanceSettings'));
+                },
+                stateSaveCallback: function (settings, data) {
+                    localStorage.setItem('DataTables_adminInstanceSettings', JSON.stringify(data));
+                },
                 processing: true,
                 serverSide: true,
                 ajax: '/admin/settings/list',
