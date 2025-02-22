@@ -15,7 +15,7 @@
                         <div class="form-group row">
                             <div class="col-md-8 offset-md-4">
                                 @if (Route::has('login'))
-                                    <a class="btn btn-outline-primary w-100 mb-4" href="{{ route('login') }}">
+                                    <a class="btn btn-secondary w-100 mb-4" href="{{ route('login') }}">
                                         {{ __('interface.misc.existing_account_prompt') }}
                                     </a>
                                 @endif

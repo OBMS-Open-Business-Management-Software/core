@@ -30,7 +30,7 @@
                             <div>
                                 <i class="bi bi-file-earmark-text"></i> {{ __('interface.misc.unpaid_invoices') }}
                             </div>
-                            <span class="badge badge-warning d-flex align-items-center justify-content-center">{{ number_format($invoicesCustomers['amount'], 2) }}€</span>
+                            <span class="badge badge-secondary d-flex align-items-center justify-content-center">{{ number_format($invoicesCustomers['amount'], 2) }}€</span>
                         </div>
                     </div>
                 </a>
@@ -124,7 +124,7 @@
                             <div>
                                 <i class="bi bi-file-earmark-text"></i> {{ __('interface.misc.unpaid_invoices') }}
                             </div>
-                            <span class="badge badge-warning d-flex align-items-center justify-content-center">{{ number_format($invoicesSuppliers['amount'], 2) }}€</span>
+                            <span class="badge badge-secondary d-flex align-items-center justify-content-center">{{ number_format($invoicesSuppliers['amount'], 2) }}€</span>
                         </div>
                     </div>
                 </a>
