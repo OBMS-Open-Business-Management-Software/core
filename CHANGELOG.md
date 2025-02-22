@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.7.0](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.6.0...v1.7.0) (2025-02-22)
+
+
+### Features
+
+* extended theme color options ([bfb1104](https://github.com/OBMS-Open-Business-Management-Software/core/commit/bfb1104495a8fbb1b0cd8ab42d542f20a65e441b))
+
 ## [1.6.0](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.5.3...v1.6.0) (2025-02-22)
 
 
