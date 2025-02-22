@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.5.2](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.5.1...v1.5.2) (2025-02-22)
+
+
+### Bug Fixes
+
+* continuous integration logic ([08f67a2](https://github.com/OBMS-Open-Business-Management-Software/core/commit/08f67a23a9cb46c8063200ad60cde4fbc9346acd))
+
 ## [1.5.1](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.5.0...v1.5.1) (2025-02-22)
 
 
