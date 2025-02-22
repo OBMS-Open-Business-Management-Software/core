@@ -252,6 +252,7 @@ return [
         'revoked' => 'Revoked',
         'sent' => 'Sent',
         'enabled' => 'Enabled',
+        'disabled' => 'Disabled',
         'unassigned' => 'Unassigned',
         'published' => 'Published',
         'generated' => 'Generated',
