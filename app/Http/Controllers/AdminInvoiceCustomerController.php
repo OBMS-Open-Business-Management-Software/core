@@ -69,7 +69,9 @@ class AdminInvoiceCustomerController extends Controller
     {
         session_write_close();
 
-        $query = Invoice::query();
+        $query = Invoice::whereHas('user', function ($query) {
+            $query->where('role', '=', 'customer');
+        });
 
         if (! empty($request->user_id)) {
             $query = $query->where('user_id', '=', $request->user_id);
