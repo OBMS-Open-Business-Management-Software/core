@@ -428,6 +428,7 @@ return [
         'visit_helpcenter' => 'Visit our Help Page or contact us for support.',
         'try_again_later' => 'Try again later.',
         'products' => 'Products',
+        'payment_notice' => 'Payable within :days days gross without deductions.',
     ],
     'messages' => [
         'passwords_not_match' => 'The provided password does not match your current password.',

@@ -562,7 +562,7 @@ class AdminInvoiceSupplierController extends Controller
             ]);
 
             if ($file instanceof File) {
-                $revokationInvoice = $invoice->refund($file, $request->name, true);
+                $revokationInvoice = $invoice->refund('refunded', $file, $request->name, true);
 
                 InvoiceHistory::create([
                     'user_id' => Auth::id(),

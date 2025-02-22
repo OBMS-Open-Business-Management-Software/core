@@ -8,7 +8,7 @@
                 @if (! empty($invoice->original) && $invoice->status == 'refund')
                     <a href="{{ route('customer.invoices.details', $invoice->original->id) }}" class="btn btn-primary mb-4"><i class="bi bi-file-earmark-text"></i> {{ __('interface.actions.open_original') }}</a>
                 @endif
-                @if (! empty($invoice->refunded) && $invoice->status == 'refunded')
+                @if (! empty($invoice->refunded) && ($invoice->status == 'refunded' || $invoice->status == 'revoked'))
                     <a href="{{ route('customer.invoices.details', $invoice->refunded->id) }}" class="btn btn-primary mb-4"><i class="bi bi-file-earmark-text"></i> {{ __('interface.actions.open_refund') }}</a>
                 @endif
                 @if ($invoice->status !== 'template')

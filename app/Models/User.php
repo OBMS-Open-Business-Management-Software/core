@@ -536,6 +536,7 @@ class User extends Authenticatable implements MustVerifyEmail
             ! empty($billingAddress = $this->billingPostalAddress) &&
             ! empty($userCountry = $billingAddress->country) &&
             $userCountry->eu &&
-            $userCountry->reverse_charge;
+            $userCountry->reverse_charge &&
+            $userCountry->id !== config('company.default_country');
     }
 }

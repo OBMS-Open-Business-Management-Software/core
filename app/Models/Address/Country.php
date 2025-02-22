@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @property int $id
  * @property string $name
+ * @property string $iso2
  * @property bool $eu
  * @property bool $reverse_charge
  * @property double $vat_basic
