@@ -8,7 +8,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-lg-4 col-md-6">
                 <a href="{{ route('admin.contracts') }}" class="text-reset text-decoration-none">
                     <div class="card">
                         <div class="card-body h1 mb-0">
@@ -20,19 +20,22 @@
                     </div>
                 </a>
             </div>
-            <div class="col-md-4">
+            <div class="col-lg-4 col-md-6">
                 <a href="{{ route('admin.invoices.customers') }}" class="text-reset text-decoration-none">
                     <div class="card">
                         <div class="card-body h1 mb-0">
-                            {{ $invoicesCustomers }}
+                            {{ $invoicesCustomers['count'] }}
                         </div>
-                        <div class="card-footer text-decoration-none">
-                            <i class="bi bi-file-earmark-text"></i> {{ __('interface.misc.unpaid_invoices') }}
+                        <div class="card-footer text-decoration-none d-flex justify-content-between">
+                            <div>
+                                <i class="bi bi-file-earmark-text"></i> {{ __('interface.misc.unpaid_invoices') }}
+                            </div>
+                            <span class="badge badge-warning d-flex align-items-center justify-content-center">{{ number_format($invoicesCustomers['amount'], 2) }}€</span>
                         </div>
                     </div>
                 </a>
             </div>
-            <div class="col-md-4">
+            <div class="col-lg-4 col-md-6">
                 <a href="{{ route('admin.support') }}" class="text-reset text-decoration-none">
                     <div class="card">
                         <div class="card-body h1 mb-0">
@@ -44,9 +47,7 @@
                     </div>
                 </a>
             </div>
-        </div>
-        <div class="row mt-4">
-            <div class="col-md">
+            <div class="col-lg-4 col-md-6">
                 <a href="{{ route('admin.shop.orders') }}" class="text-reset text-decoration-none">
                     <div class="card">
                         <div class="card-body h1 mb-0">
@@ -58,7 +59,7 @@
                     </div>
                 </a>
             </div>
-            <div class="col-md">
+            <div class="col-lg-4 col-md-6">
                 <a href="{{ route('admin.shop.orders') }}" class="text-reset text-decoration-none">
                     <div class="card">
                         <div class="card-body h1 mb-0">
@@ -70,7 +71,7 @@
                     </div>
                 </a>
             </div>
-            <div class="col-md">
+            <div class="col-lg-4 col-md-6">
                 <a href="{{ route('admin.shop.orders') }}" class="text-reset text-decoration-none">
                     <div class="card">
                         <div class="card-body h1 mb-0">
@@ -82,7 +83,7 @@
                     </div>
                 </a>
             </div>
-            <div class="col-md">
+            <div class="col-lg-4 col-md-6">
                 <a href="{{ route('admin.shop.orders') }}" class="text-reset text-decoration-none">
                     <div class="card">
                         <div class="card-body h1 mb-0">
@@ -94,7 +95,7 @@
                     </div>
                 </a>
             </div>
-            <div class="col-md">
+            <div class="col-lg-4 col-md-6">
                 <a href="{{ route('admin.shop.orders') }}" class="text-reset text-decoration-none">
                     <div class="card">
                         <div class="card-body h1 mb-0">
@@ -113,14 +114,17 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-lg-4 col-md-6">
                 <a href="{{ route('admin.invoices.suppliers') }}" class="text-reset text-decoration-none">
                     <div class="card">
                         <div class="card-body h1 mb-0">
-                            {{ $invoicesSuppliers }}
+                            {{ $invoicesSuppliers['count'] }}
                         </div>
-                        <div class="card-footer text-decoration-none">
-                            <i class="bi bi-file-earmark-text"></i> {{ __('interface.misc.unpaid_invoices') }}
+                        <div class="card-footer text-decoration-none d-flex justify-content-between">
+                            <div>
+                                <i class="bi bi-file-earmark-text"></i> {{ __('interface.misc.unpaid_invoices') }}
+                            </div>
+                            <span class="badge badge-warning d-flex align-items-center justify-content-center">{{ number_format($invoicesSuppliers['amount'], 2) }}€</span>
                         </div>
                     </div>
                 </a>

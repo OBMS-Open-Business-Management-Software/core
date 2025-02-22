@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Accounting\Contract\Contract;
 use App\Models\Accounting\Invoice\Invoice;
+use App\Models\Accounting\Position;
 use App\Models\Shop\OrderQueue\ShopOrderQueue;
 use App\Models\Support\SupportTicket;
 use Carbon\Carbon;
@@ -32,22 +33,48 @@ class AdminDashboardController extends Controller
                         });
                 })
                 ->count(),
-            'invoicesCustomers' => Invoice::where('status', '=', 'unpaid')
-                ->whereDoesntHave('type', function (Builder $builder) {
-                    return $builder->where('type', '=', 'prepaid');
-                })
-                ->whereHas('user', function (Builder $builder) {
-                    return $builder->where('role', '=', 'customer');
-                })
-                ->count(),
-            'invoicesSuppliers' => Invoice::where('status', '=', 'unpaid')
-                ->whereDoesntHave('type', function (Builder $builder) {
-                    return $builder->where('type', '=', 'prepaid');
-                })
-                ->whereHas('user', function (Builder $builder) {
-                    return $builder->where('role', '=', 'supplier');
-                })
-                ->count(),
+            'invoicesCustomers' => [
+                'count' => Invoice::where('status', '=', 'unpaid')
+                    ->whereDoesntHave('type', function (Builder $builder) {
+                        return $builder->where('type', '=', 'prepaid');
+                    })
+                    ->whereHas('user', function (Builder $builder) {
+                        return $builder->where('role', '=', 'customer');
+                    })
+                    ->count(),
+                'amount' => Position::whereHas('invoicePositions', function (Builder $builder) {
+                    $builder->whereHas('invoice', function (Builder $builder) {
+                        $builder->where('status', '=', 'unpaid')
+                            ->whereDoesntHave('type', function (Builder $builder) {
+                                return $builder->where('type', '=', 'prepaid');
+                            })
+                            ->whereHas('user', function (Builder $builder) {
+                                return $builder->where('role', '=', 'customer');
+                            });
+                    });
+                })->sum('amount'),
+            ],
+            'invoicesSuppliers' => [
+                'count' => Invoice::where('status', '=', 'unpaid')
+                    ->whereDoesntHave('type', function (Builder $builder) {
+                        return $builder->where('type', '=', 'prepaid');
+                    })
+                    ->whereHas('user', function (Builder $builder) {
+                        return $builder->where('role', '=', 'supplier');
+                    })
+                    ->count(),
+                'amount' => Position::whereHas('invoicePositions', function (Builder $builder) {
+                    $builder->whereHas('invoice', function (Builder $builder) {
+                        $builder->where('status', '=', 'unpaid')
+                            ->whereDoesntHave('type', function (Builder $builder) {
+                                return $builder->where('type', '=', 'prepaid');
+                            })
+                            ->whereHas('user', function (Builder $builder) {
+                                return $builder->where('role', '=', 'supplier');
+                            });
+                    });
+                })->sum('amount'),
+            ],
             'contracts' => Contract::where('started_at', '>=', Carbon::now())
                 ->whereNotNull('last_invoice_at')
                 ->where(function (Builder $builder) {
