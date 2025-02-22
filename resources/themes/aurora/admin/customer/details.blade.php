@@ -27,13 +27,13 @@
                                 <label class="font-weight-bold mb-0">{{ __('interface.data.email') }}:</label> {{ $user->email }} {!! $user->hasVerifiedEmail() ? '<span class="badge badge-success">' . __('interface.status.verified') . '</span>' : '<span class="badge badge-warning">' . __('interface.status.unverified') . '</span>' !!}<br>
                                 <label class="font-weight-bold mb-0">{{ __('interface.data.account_status') }}:</label> {!! $user->locked ? '<span class="badge badge-warning">' . __('interface.status.locked') . '</span>' : '<span class="badge badge-success">' . __('interface.status.unlocked') . '</span>' !!}<br>
                                 <label class="font-weight-bold mb-0">{{ __('interface.data.account_balance') }}:</label> {{ number_format($user->prepaidAccountBalance, 2) }} €<br>
-                                <label class="font-weight-bold mb-0">{{ __('interface.data.internal_credit_score') }}</label>
+                                <label class="font-weight-bold mb-0">{{ __('interface.data.internal_credit_score') }}:</label>
                                 @if ($user->creditScore == 0)
-                                    {{ __('interface.status.neutral') }}: <span class="badge badge-secondary">{{ $user->creditScore }} {{ __('interface.data.points') }}</span>
+                                    {{ __('interface.status.neutral') }} <span class="badge badge-warning">{{ $user->creditScore }} {{ __('interface.data.points') }}</span>
                                 @elseif ($user->creditScore > 0)
-                                    {{ __('interface.status.good') }}: <span class="badge badge-secondary">{{ $user->creditScore }} {{ __('interface.data.points') }}</span>
+                                    {{ __('interface.status.good') }} <span class="badge badge-success">{{ $user->creditScore }} {{ __('interface.data.points') }}</span>
                                 @elseif ($user->creditScore < 0)
-                                    {{ __('interface.status.bad') }}: <span class="badge badge-danger">{{ $user->creditScore }} {{ __('interface.data.points') }}</span>
+                                    {{ __('interface.status.bad') }} <span class="badge badge-danger">{{ $user->creditScore }} {{ __('interface.data.points') }}</span>
                                 @endif
                             </div>
                         </div>
