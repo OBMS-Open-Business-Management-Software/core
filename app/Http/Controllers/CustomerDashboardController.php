@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Accounting\Contract\Contract;
 use App\Models\Accounting\Invoice\Invoice;
+use App\Models\Accounting\Position;
 use App\Models\Content\Page;
 use App\Models\Content\PageAcceptance;
 use App\Models\Shop\OrderQueue\ShopOrderQueue;
@@ -31,12 +32,23 @@ class CustomerDashboardController extends Controller
             })
                 ->where('status', '=', 'open')
                 ->count(),
-            'invoices' => Invoice::where('user_id', '=', Auth::id())
-                ->where('status', '=', 'unpaid')
-                ->whereDoesntHave('type', function (Builder $builder) {
-                    return $builder->where('type', '=', 'prepaid');
-                })
-                ->count(),
+            'invoices' => [
+                'count' => Invoice::where('user_id', '=', Auth::id())
+                    ->where('status', '=', 'unpaid')
+                    ->whereDoesntHave('type', function (Builder $builder) {
+                        return $builder->where('type', '=', 'prepaid');
+                    })
+                    ->count(),
+                'amount' => Position::whereHas('invoicePositions', function (Builder $builder) {
+                    $builder->whereHas('invoice', function (Builder $builder) {
+                        $builder->where('user_id', '=', Auth::id())
+                            ->where('status', '=', 'unpaid')
+                            ->whereDoesntHave('type', function (Builder $builder) {
+                                return $builder->where('type', '=', 'prepaid');
+                            });
+                    });
+                })->sum('amount'),
+            ],
             'contracts' => Contract::where('user_id', '=', Auth::id())
                 ->where('started_at', '>=', Carbon::now())
                 ->whereNotNull('last_invoice_at')
