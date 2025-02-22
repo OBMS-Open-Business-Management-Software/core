@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.5.3](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.5.2...v1.5.3) (2025-02-22)
+
+
+### Bug Fixes
+
+* invoice list filters ([2c8e6d3](https://github.com/OBMS-Open-Business-Management-Software/core/commit/2c8e6d33748a282aa319fba09528598ebc7f8cae))
+
 ## [1.5.2](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.5.1...v1.5.2) (2025-02-22)
 
 
