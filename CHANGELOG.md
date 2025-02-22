@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.6.0](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.5.3...v1.6.0) (2025-02-22)
+
+
+### Features
+
+* invoice sums on dashboard ([d2e8d40](https://github.com/OBMS-Open-Business-Management-Software/core/commit/d2e8d40e22cbab5b50a9082ca7462c7d8086351b))
+
 ## [1.5.3](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.5.2...v1.5.3) (2025-02-22)
 
 
