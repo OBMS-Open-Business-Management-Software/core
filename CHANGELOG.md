@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.7.1](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.7.0...v1.7.1) (2025-02-22)
+
+
+### Bug Fixes
+
+* mobile form field label offset ([509fa48](https://github.com/OBMS-Open-Business-Management-Software/core/commit/509fa48fd6cb2ed2c1c7e050b1e72f85c6108934))
+
 ## [1.7.0](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.6.0...v1.7.0) (2025-02-22)
 
 
