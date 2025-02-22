@@ -14,4 +14,4 @@ jobs:
         with:
           repository: OBMS-Open-Business-Management-Software/documentation
           event-type: core-release
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.DOCUMENTATION_REPOSITORY_TOKEN }}
