@@ -61,7 +61,7 @@
                                 @if ($type->dunning)
                                     <span class="badge badge-success">{{ __('interface.status.enabled') }}</span>
                                 @else
-                                    <span class="badge badge-success">{{ __('interface.status.disabled') }}</span>
+                                    <span class="badge badge-warning">{{ __('interface.status.disabled') }}</span>
                                 @endif
                             </div>
                         </div>

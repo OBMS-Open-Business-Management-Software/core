@@ -56,7 +56,7 @@
             padding: 0.75rem;
             vertical-align: top;
             border: none;
-            border-top: 1px solid #dee2e6;
+            border-top: 1px solid {{ config('theme.gray', '#F3F9FC') }};
         }
 
         table tfoot {
@@ -73,7 +73,7 @@
         }
 
         .bg-primary {
-            background-color: #00cecb;
+            background-color: {{ config('theme.primary', '#040E29') }};
         }
 
         .text-white {
@@ -85,7 +85,7 @@
         }
 
         .bg-disabled {
-            background-color: #e9ecef;
+            background-color: {{ config('theme.gray', '#F3F9FC') }};
         }
 
         .d-block {
@@ -123,12 +123,12 @@
         }
 
         .sepa-qr {
-            border-left: 1px solid #dee2e6;
-            border-right: 1px solid #dee2e6;
+            border-left: 1px solid {{ config('theme.gray', '#F3F9FC') }};
+            border-right: 1px solid {{ config('theme.gray', '#F3F9FC') }};
         }
 
         .sepa-qr tr td {
-            border-bottom: 1px solid #dee2e6;
+            border-bottom: 1px solid {{ config('theme.gray', '#F3F9FC') }};
             vertical-align: middle;
         }
     </style>
@@ -230,11 +230,11 @@
                             @endif
                         </small>
                     </td>
-                    <td style="width: 10%">{{ number_format($link->position->amount, 2) }} €</td>
+                    <td style="width: 10%">{{ $reminder->invoice->status !== 'refund' ? '' : '-' }}{{ number_format($link->position->amount, 2) }} €</td>
                     <td style="width: 10%">{{ $link->position->quantity }}</td>
-                    <td style="width: 10%">{{ number_format($link->position->netSum, 2) }} €</td>
+                    <td style="width: 10%">{{ $reminder->invoice->status !== 'refund' ? '' : '-' }}{{ number_format($link->position->netSum, 2) }} €</td>
                     <td style="width: 10%" class="bg-disabled">{{ $link->position->vat_percentage }} %</td>
-                    <td style="width: 10%" class="bg-disabled">{{ number_format($link->position->grossSum, 2) }} €</td>
+                    <td style="width: 10%" class="bg-disabled">{{ $reminder->invoice->status !== 'refund' ? '' : '-' }}{{ number_format($link->position->grossSum, 2) }} €</td>
                 </tr>
                 @if (! empty($discount = $link->position->discount))
                     @switch ($discount->type)
@@ -244,11 +244,11 @@
                                     <span class="font-weight-bold">{{ __('interface.data.discount') }}</span><br>
                                     {{ number_format($discount->amount, 2) }} %
                                 </td>
-                                <td style="width: 10%">- {{ number_format($link->position->amount * ($discount->amount / 100), 2) }} €</td>
+                                <td style="width: 10%">{{ $reminder->invoice->status == 'refund' ? '' : '-' }}{{ number_format($link->position->amount * ($discount->amount / 100), 2) }} €</td>
                                 <td style="width: 10%">{{ $link->position->quantity }}</td>
-                                <td style="width: 10%">- {{ number_format($link->position->netSum * ($discount->amount / 100), 2) }} €</td>
+                                <td style="width: 10%">{{ $reminder->invoice->status == 'refund' ? '' : '-' }}{{ number_format($link->position->netSum * ($discount->amount / 100), 2) }} €</td>
                                 <td style="width: 10%" class="bg-disabled">{{ $link->position->vat_percentage }} %</td>
-                                <td style="width: 10%" class="bg-disabled">- {{ number_format($link->position->grossSum * ($discount->amount / 100), 2) }} €</td>
+                                <td style="width: 10%" class="bg-disabled">{{ $reminder->invoice->status == 'refund' ? '' : '-' }}{{ number_format($link->position->grossSum * ($discount->amount / 100), 2) }} €</td>
                             </tr>
                         @break
                         @case ('fixed')
@@ -258,11 +258,11 @@
                                     <span class="font-weight-bold">{{ __('interface.data.discount') }}</span><br>
                                     {{ number_format($discount->amount, 2) }} €
                                 </td>
-                                <td style="width: 10%">- {{ number_format($discount->amount, 2) }} €</td>
+                                <td style="width: 10%">{{ $reminder->invoice->status == 'refund' ? '' : '-' }}{{ number_format($discount->amount, 2) }} €</td>
                                 <td style="width: 10%">{{ $link->position->quantity }}</td>
-                                <td style="width: 10%">- {{ number_format($discount->amount * $link->position->quantity, 2) }} €</td>
+                                <td style="width: 10%">{{ $reminder->invoice->status == 'refund' ? '' : '-' }}{{ number_format($discount->amount * $link->position->quantity, 2) }} €</td>
                                 <td style="width: 10%" class="bg-disabled">{{ $link->position->vat_percentage }} %</td>
-                                <td style="width: 10%" class="bg-disabled">- {{ number_format($discount->amount * $link->position->quantity * (1 + ($link->position->vat_percentage / 100)), 2) }} €</td>
+                                <td style="width: 10%" class="bg-disabled">{{ $reminder->invoice->status == 'refund' ? '' : '-' }}{{ number_format($discount->amount * $link->position->quantity * (1 + ($link->position->vat_percentage / 100)), 2) }} €</td>
                             </tr>
                         @break
                     @endswitch
@@ -301,7 +301,7 @@
                 <td colspan="2" class="bg-primary text-white">
                     {{ __('interface.documents.net_sum') }}
                 </td>
-                <td class="bg-primary text-white">{{ number_format($reminder->invoice->netSum + ($reminder->dunning->fixed_amount ?? 0) + (! empty($reminder->dunning->percentage_amount) ? $reminder->invoice->netSum * ($reminder->dunning->percentage_amount / 100) : 0), 2) }} €</td>
+                <td class="bg-primary text-white">{{ $invoice->status !== 'refund' ? '' : '-' }}{{ number_format($reminder->invoice->netSum + ($reminder->dunning->fixed_amount ?? 0) + (! empty($reminder->dunning->percentage_amount) ? $reminder->invoice->netSum * ($reminder->dunning->percentage_amount / 100) : 0), 2) }} €</td>
                 <td style="width: 10%"></td>
                 <td style="width: 10%"></td>
             </tr>
@@ -311,7 +311,7 @@
                     <td colspan="2" class="bg-primary text-white border-0">
                         {{ $percentage }} % {{ __('interface.documents.vat') }}
                     </td>
-                    <td class="bg-primary text-white border-0">{{ number_format($amount, 2) }} €</td>
+                    <td class="bg-primary text-white border-0">{{ $invoice->status !== 'refund' ? '' : '-' }}{{ number_format($amount, 2) }} €</td>
                 </tr>
             @endforeach
             <tr>
@@ -319,7 +319,7 @@
                 <td colspan="2" class="bg-primary text-white border-0">
                     {{ __('interface.documents.gross_sum') }}
                 </td>
-                <td class="bg-primary text-white border-0">{{ number_format($reminder->invoice->grossSum + ($reminder->dunning->fixed_amount ?? 0) + (! empty($reminder->dunning->percentage_amount) ? $reminder->invoice->netSum * ($reminder->dunning->percentage_amount / 100) : 0), 2) }} €</td>
+                <td class="bg-primary text-white border-0">{{ $invoice->status !== 'refund' ? '' : '-' }}{{ number_format($reminder->invoice->grossSum + ($reminder->dunning->fixed_amount ?? 0) + (! empty($reminder->dunning->percentage_amount) ? $reminder->invoice->netSum * ($reminder->dunning->percentage_amount / 100) : 0), 2) }} €</td>
             </tr>
             </tfoot>
         </table>
@@ -341,7 +341,7 @@
                             <span class="font-weight-bold">{{ __('interface.bank_account.institute') }}:</span> {{ config('company.bank.institute') }}<br>
                             <span class="font-weight-bold">{{ __('interface.bank_account.recipient') }}:</span> {{ config('company.bank.owner') }}<br>
                             <span class="font-weight-bold">{{ __('interface.bank_account.purpose') }}:</span> {{ $reminder->number }}<br>
-                            <span class="font-weight-bold">{{ __('interface.data.amount') }}:</span> {{ number_format($reminder->invoice->grossSum + ($reminder->dunning->fixed_amount ?? 0) + (! empty($reminder->dunning->percentage_amount) ? $reminder->invoice->netSum * ($reminder->dunning->percentage_amount / 100) : 0), 2) }} €
+                            <span class="font-weight-bold">{{ __('interface.data.amount') }}:</span> {{ $invoice->status !== 'refund' ? '' : '-' }}{{ number_format($reminder->invoice->grossSum + ($reminder->dunning->fixed_amount ?? 0) + (! empty($reminder->dunning->percentage_amount) ? $reminder->invoice->netSum * ($reminder->dunning->percentage_amount / 100) : 0), 2) }} €
                         </td>
                     </tr>
                 </table>

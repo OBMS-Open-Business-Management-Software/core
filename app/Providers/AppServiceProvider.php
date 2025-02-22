@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Exception;
 use Illuminate\Support\ServiceProvider;
+use App\Helpers\CustomPdfWrapper;
 use App\Models\Setting;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\File;
@@ -19,7 +20,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->extend('dompdf.wrapper', function ($pdf, $app) {
+            return new CustomPdfWrapper($pdf->getDomPDF(), $app['config'], $app['files'], $app['view']);
+        });
     }
 
     /**

@@ -296,6 +296,23 @@ class Invoice extends Model
         return $vat;
     }
 
+    public function getNetPositionsAttribute(): \Illuminate\Support\Collection
+    {
+        $net = collect();
+
+        if (! $this->reverse_charge) {
+            $this->positionLinks->each(function (InvoicePosition $link) use (&$net) {
+                if (! empty($position = $net->pull($link->position->vat_percentage))) {
+                    $net->put($link->position->vat_percentage, $position + $link->position->netSum - $link->position->discountNetSum);
+                } else {
+                    $net->put($link->position->vat_percentage, $link->position->netSum - $link->position->discountNetSum);
+                }
+            });
+        }
+
+        return $net;
+    }
+
     /**
      * Send reminder to customer via. mail.
      *
@@ -328,7 +345,7 @@ class Invoice extends Model
      *
      * @return Invoice
      */
-    public function refund(?File $file = null, ?string $name = null, bool $silent = false): Invoice
+    public function refund(string $status = 'refunded', ?File $file = null, ?string $name = null, bool $silent = false): Invoice
     {
         /* @var Invoice $revokationInvoice */
         $revokationInvoice = Invoice::create([
@@ -351,7 +368,7 @@ class Invoice extends Model
                 'discount_id' => $link->position->discount_id,
                 'name' => $link->position->name,
                 'description' => $link->position->description,
-                'amount' => $link->position->amount * (-1),
+                'amount' => $link->position->amount,
                 'vat_percentage' => $link->position->vat_percentage,
                 'quantity' => $link->position->quantity,
             ]);
@@ -402,7 +419,7 @@ class Invoice extends Model
         }
 
         $this->update([
-            'status' => 'refunded',
+            'status' => $status,
         ]);
 
         if (! $silent) {

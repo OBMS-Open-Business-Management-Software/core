@@ -534,9 +534,7 @@ class AdminInvoiceCustomerController extends Controller
             ! empty($invoice = Invoice::find($id)) &&
             $invoice->status == 'unpaid'
         ) {
-            $invoice->update([
-                'status' => 'revoked',
-            ]);
+            $revokationInvoice = $invoice->refund('revoked');
 
             InvoiceHistory::create([
                 'user_id' => Auth::id(),
@@ -544,7 +542,7 @@ class AdminInvoiceCustomerController extends Controller
                 'status' => 'revoke',
             ]);
 
-            return redirect()->back()->with('success', __('interface.messages.invoice_revoked'));
+            return redirect()->route('admin.invoices.customers.details', $revokationInvoice->id)->with('success', __('interface.messages.invoice_revoked'));
         }
 
         return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
@@ -646,7 +644,7 @@ class AdminInvoiceCustomerController extends Controller
             ! empty($invoice = Invoice::find($id)) &&
             $invoice->status == 'paid'
         ) {
-            $revokationInvoice = $invoice->refund();
+            $revokationInvoice = $invoice->refund('refunded');
 
             InvoiceHistory::create([
                 'user_id' => Auth::id(),
