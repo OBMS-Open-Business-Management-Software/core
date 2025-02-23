@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.8.0](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.7.1...v1.8.0) (2025-02-23)
+
+
+### Features
+
+* docker image dependency installation ([f5ef715](https://github.com/OBMS-Open-Business-Management-Software/core/commit/f5ef7151fa3110b2fbfe5f2e9430b36e07f79424))
+
 ## [1.7.1](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.7.0...v1.7.1) (2025-02-22)
 
 
