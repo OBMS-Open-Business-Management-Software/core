@@ -1,5 +1,6 @@
 FROM php:8.2.2-fpm-alpine
 
+# Prepare environment
 RUN apk --update add \
         wget \
         curl \
@@ -27,8 +28,8 @@ RUN apk --update add \
         gettext-dev \
         libxslt-dev \
         libgcrypt-dev \
-        linux-headers && \
-    pecl channel-update pecl.php.net && \
+        linux-headers
+RUN pecl channel-update pecl.php.net && \
     pecl install mcrypt redis-5.3.4 xmlrpc-1.0.0RC3 yaml-2.2.3 && \
     docker-php-ext-install \
         mysqli \
@@ -51,14 +52,18 @@ RUN apk --update add \
     docker-php-ext-enable xmlrpc && \
     docker-php-ext-enable mcrypt && \
     docker-php-ext-enable yaml && \
-    rm -rf /tmp/pear && \
+    docker-php-ext-enable pdo
+RUN rm -rf /tmp/pear && \
     rm /var/cache/apk/*
 
+# Copy application
 COPY . /var/www/html
 
+# Clean working directory
 RUN mkdir -p /var/www/html/storage/logs/ && \
     chown -R www-data:www-data /var/www/html && \
     rm -rf tests/ .git/ .github/ *.md && \
     rm -rf vendor/*/test/ vendor/*/tests/*
 
+# Set working directory
 WORKDIR /var/www/html
