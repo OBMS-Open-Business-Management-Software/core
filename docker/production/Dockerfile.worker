@@ -59,12 +59,6 @@ RUN rm -rf /tmp/pear && \
 # Copy application
 COPY . /var/www/html
 
-# Install dependencies
-RUN cd /var/www/html && \
-    composer install --ignore-platform-reqs && \
-    npm ci && \
-    npm run production
-
 # Clean working directory
 RUN mkdir -p /var/www/html/storage/logs/ && \
     chown -R www-data:www-data /var/www/html && \
