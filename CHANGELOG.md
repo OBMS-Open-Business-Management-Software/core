@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.8.2](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.8.1...v1.8.2) (2025-02-23)
+
+
+### Bug Fixes
+
+* ghcr image target ([7ea2ea9](https://github.com/OBMS-Open-Business-Management-Software/core/commit/7ea2ea93f59b0be49f24fdb8dfb98617bc22c040))
+
 ## [1.8.1](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.8.0...v1.8.1) (2025-02-23)
 
 
