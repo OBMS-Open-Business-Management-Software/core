@@ -35,13 +35,13 @@ jobs:
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
       - name: Build and push app image
         run: |
-          docker build -t ghcr.io/${{ github.repository_owner }}/core-app:${{ github.ref_name }} -f docker/production/Dockerfile.fpm .
-          docker push ghcr.io/${{ github.repository_owner }}/core-app:${{ github.ref_name }}
-          docker tag ghcr.io/${{ github.repository_owner }}/core-app:${{ github.ref_name }} ghcr.io/${{ github.repository_owner }}/core-app:latest
-          docker push ghcr.io/${{ github.repository_owner }}/core-app:latest
+          docker build -t ghcr.io/obms/core-app:${{ github.ref_name }} -f docker/production/Dockerfile.fpm .
+          docker push ghcr.io/obms/core-app:${{ github.ref_name }}
+          docker tag ghcr.io/obms/core-app:${{ github.ref_name }} ghcr.io/obms/core-app:latest
+          docker push ghcr.io/obms/core-app:latest
       - name: Build and push worker image
         run: |
-          docker build -t ghcr.io/${{ github.repository_owner }}/core-worker:${{ github.ref_name }} -f docker/production/Dockerfile.worker .
-          docker push ghcr.io/${{ github.repository_owner }}/core-worker:${{ github.ref_name }}
-          docker tag ghcr.io/${{ github.repository_owner }}/core-worker:${{ github.ref_name }} ghcr.io/${{ github.repository_owner }}/core-worker:latest
-          docker push ghcr.io/${{ github.repository_owner }}/core-worker:latest
+          docker build -t ghcr.io/obms/core-worker:${{ github.ref_name }} -f docker/production/Dockerfile.worker .
+          docker push ghcr.io/obms/core-worker:${{ github.ref_name }}
+          docker tag ghcr.io/obms/core-worker:${{ github.ref_name }} ghcr.io/obms/core-worker:latest
+          docker push ghcr.io/obms/core-worker:latest
