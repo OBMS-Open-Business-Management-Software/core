@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Helpers;
 
 /**
@@ -12,7 +14,9 @@ namespace App\Helpers;
 class Download
 {
     private string $name;
+
     private string $data;
+
     private int $size;
 
     /**

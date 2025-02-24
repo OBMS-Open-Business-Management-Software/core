@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\Support\Category;
 
 use App\Models\User;
@@ -9,22 +11,21 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class SupportCategoryAssignment
+ * Class SupportCategoryAssignment.
  *
  * This class is the model for linking users with ticket category metadata.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *
- * @property int $id
- * @property int $category_id
- * @property int $user_id
- * @property string $role
- * @property Carbon $created_at
- * @property Carbon $updated_at
- * @property Carbon $deleted_at
- *
+ * @property int                  $id
+ * @property int                  $category_id
+ * @property int                  $user_id
+ * @property string               $role
+ * @property Carbon               $created_at
+ * @property Carbon               $updated_at
+ * @property Carbon               $deleted_at
  * @property SupportCategory|null $category
- * @property User|null $user
+ * @property User|null            $user
  */
 class SupportCategoryAssignment extends Model
 {
@@ -33,7 +34,7 @@ class SupportCategoryAssignment extends Model
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var string[]|bool
+     * @var bool|string[]
      */
     protected $guarded = [
         'id',

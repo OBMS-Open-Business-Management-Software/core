@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\Address;
 
 use App\Models\Profile\ProfileAddress;
@@ -11,25 +13,24 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class Address
+ * Class Address.
  *
  * This class is the model for basic address metadata.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *
- * @property int $id
- * @property int $country_id
- * @property string $street
- * @property string $housenumber
- * @property string $addition
- * @property string $postalcode
- * @property string $city
- * @property string $state
- * @property Carbon $created_at
- * @property Carbon $updated_at
- * @property Carbon $deleted_at
- *
- * @property Country|null $country
+ * @property int                             $id
+ * @property int                             $country_id
+ * @property string                          $street
+ * @property string                          $housenumber
+ * @property string                          $addition
+ * @property string                          $postalcode
+ * @property string                          $city
+ * @property string                          $state
+ * @property Carbon                          $created_at
+ * @property Carbon                          $updated_at
+ * @property Carbon                          $deleted_at
+ * @property Country|null                    $country
  * @property Collection<ProfileAddress>|null $profileLinks
  */
 class Address extends Model
@@ -39,7 +40,7 @@ class Address extends Model
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var string[]|bool
+     * @var bool|string[]
      */
     protected $guarded = [
         'id',

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Jobs\Structure;
 
 use Illuminate\Bus\Queueable;
@@ -21,6 +23,7 @@ abstract class Job implements ShouldQueue
      * Identify jobs as queueable objects.
      */
     use DispatchesJobs;
+
     use Queueable;
     use InteractsWithQueue;
 }

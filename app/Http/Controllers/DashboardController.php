@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Actions\Fortify\PasswordValidationRules;
@@ -42,7 +44,7 @@ class DashboardController extends Controller
         ])->validate();
 
         Auth::user()->update([
-            'password' => Hash::make($request->password),
+            'password'             => Hash::make($request->password),
             'must_change_password' => false,
         ]);
 

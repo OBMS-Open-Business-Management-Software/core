@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
@@ -9,7 +11,9 @@ use Illuminate\Support\Facades\Auth;
 class APIAuthController extends APIBaseController
 {
     /**
-     * Login api
+     * Login api.
+     *
+     * @param Request $request
      *
      * @return Response
      */
@@ -17,7 +21,7 @@ class APIAuthController extends APIBaseController
     {
         if (
             Auth::attempt([
-                'email' => $request->email,
+                'email'    => $request->email,
                 'password' => $request->password,
             ])
         ) {
@@ -27,8 +31,8 @@ class APIAuthController extends APIBaseController
                 $user->role === 'api' &&
                 ! $user->locked
             ) {
-                $success['token'] =  $user->createToken('MyApp')-> accessToken;
-                $success['name'] =  $user->name;
+                $success['token'] = $user->createToken('MyApp')-> accessToken;
+                $success['name']  = $user->name;
 
                 return $this->sendResponse($success, 'User login successful.');
             } else {

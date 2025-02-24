@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\FileManager;
 
 use App\Models\Support\SupportTicketFile;
@@ -13,25 +15,24 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class File
+ * Class File.
  *
  * This class is the model for basic file metadata.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *
- * @property int $id
- * @property int|null $user_id
- * @property int|null $folder_id
- * @property string $name
- * @property string $data
- * @property string $mime
- * @property int $size
- * @property Carbon $created_at
- * @property Carbon $updated_at
- * @property Carbon $deleted_at
- *
- * @property User|null $user
- * @property Folder|null $folder
+ * @property int                           $id
+ * @property int|null                      $user_id
+ * @property int|null                      $folder_id
+ * @property string                        $name
+ * @property string                        $data
+ * @property string                        $mime
+ * @property int                           $size
+ * @property Carbon                        $created_at
+ * @property Carbon                        $updated_at
+ * @property Carbon                        $deleted_at
+ * @property User|null                     $user
+ * @property Folder|null                   $folder
  * @property Collection<SupportTicketFile> $ticketLinks
  */
 class File extends Model
@@ -58,7 +59,7 @@ class File extends Model
     /**
      * The attributes that are encryptable.
      *
-     * @var string[]|bool
+     * @var bool|string[]
      */
     protected $encryptable = [
         'data',
@@ -67,7 +68,7 @@ class File extends Model
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var string[]|bool
+     * @var bool|string[]
      */
     protected $guarded = [
         'id',

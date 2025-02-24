@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Helpers\Download;
@@ -52,8 +54,8 @@ class AdminInvoiceCustomerController extends Controller
     public function invoice_details(int $id): Renderable
     {
         return view('admin.invoice.customer.details', [
-            'invoice' => Invoice::find($id),
-            'types' => InvoiceType::all(),
+            'invoice'   => Invoice::find($id),
+            'types'     => InvoiceType::all(),
             'discounts' => PositionDiscount::all(),
         ]);
     }
@@ -94,10 +96,12 @@ class AdminInvoiceCustomerController extends Controller
                 switch ($request->columns[$order['column']]) {
                     case 'user':
                         $orderBy = 'user_id';
+
                         break;
                     case 'id':
                     default:
                         $orderBy = 'id';
+
                         break;
                 }
 
@@ -111,10 +115,10 @@ class AdminInvoiceCustomerController extends Controller
             ->limit($request->length);
 
         return response()->json([
-            'draw' => (int) $request->draw,
-            'recordsTotal' => $totalCount,
+            'draw'            => (int) $request->draw,
+            'recordsTotal'    => $totalCount,
             'recordsFiltered' => $filteredCount,
-            'data' => $query
+            'data'            => $query
                 ->get()
                 ->transform(function (Invoice $invoice) {
                     switch ($invoice->status) {
@@ -124,22 +128,28 @@ class AdminInvoiceCustomerController extends Controller
                             } else {
                                 $status = '<span class="badge badge-warning">' . __('interface.status.unpaid') . '</span>';
                             }
+
                             break;
                         case 'paid':
                             $status = '<span class="badge badge-success">' . __('interface.status.paid') . '</span>';
+
                             break;
                         case 'refunded':
                             $status = '<span class="badge badge-secondary">' . __('interface.status.refunded') . '</span>';
+
                             break;
                         case 'refund':
                             $status = '<span class="badge badge-info text-white">' . __('interface.actions.refund') . '</span>';
+
                             break;
                         case 'revoked':
                             $status = '<span class="badge badge-secondary">' . __('interface.status.revoked') . '</span>';
+
                             break;
                         case 'template':
                         default:
                             $status = '<span class="badge badge-primary">' . __('interface.status.draft') . '</span>';
+
                             break;
                     }
 
@@ -207,17 +217,17 @@ class AdminInvoiceCustomerController extends Controller
                     }
 
                     return (object) [
-                        'id' => $invoice->number,
-                        'user' => $invoice->user->realName ?? __('interface.misc.not_available'),
+                        'id'     => $invoice->number,
+                        'user'   => $invoice->user->realName ?? __('interface.misc.not_available'),
                         'status' => $status,
-                        'type' => $invoice->type->name ?? __('interface.misc.not_available'),
-                        'date' => ! empty($invoice->archived_at) ? $invoice->archived_at->format('d.m.Y, H:i') : __('interface.misc.not_available'),
-                        'due' => ! empty($invoice->archived_at) ? $invoice->archived_at->addDays($invoice->type->period)->format('d.m.Y') . ', 23:59' : __('interface.misc.not_available'),
-                        'view' => '<a href="' . route('admin.invoices.customers.details', $invoice->id) . '" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>',
-                        'edit' => $invoice->status == 'template' ? $edit : '<button type="button" class="btn btn-warning btn-sm" disabled><i class="bi bi-pencil-square"></i></button>',
+                        'type'   => $invoice->type->name ?? __('interface.misc.not_available'),
+                        'date'   => ! empty($invoice->archived_at) ? $invoice->archived_at->format('d.m.Y, H:i') : __('interface.misc.not_available'),
+                        'due'    => ! empty($invoice->archived_at) ? $invoice->archived_at->addDays($invoice->type->period)->format('d.m.Y') . ', 23:59' : __('interface.misc.not_available'),
+                        'view'   => '<a href="' . route('admin.invoices.customers.details', $invoice->id) . '" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>',
+                        'edit'   => $invoice->status == 'template' ? $edit : '<button type="button" class="btn btn-warning btn-sm" disabled><i class="bi bi-pencil-square"></i></button>',
                         'delete' => $invoice->status == 'template' ? '<a href="' . route('admin.invoices.customers.delete', $invoice->id) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>' : '<button type="button" class="btn btn-danger btn-sm" disabled><i class="bi bi-trash"></i></button>',
                     ];
-                })
+                }),
         ]);
     }
 
@@ -226,15 +236,15 @@ class AdminInvoiceCustomerController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function invoice_add(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
-            'user_id' => ['required', 'integer'],
-            'type_id' => ['required', 'integer'],
+            'user_id'     => ['required', 'integer'],
+            'type_id'     => ['required', 'integer'],
             'contract_id' => ['integer', 'nullable'],
         ])->validate();
 
@@ -243,9 +253,9 @@ class AdminInvoiceCustomerController extends Controller
             $user->role == 'customer'
         ) {
             $invoice = Invoice::create([
-                'user_id' => $request->user_id,
-                'type_id' => $request->type_id,
-                'contract_id' => $request->contract_id,
+                'user_id'        => $request->user_id,
+                'type_id'        => $request->type_id,
+                'contract_id'    => $request->contract_id,
                 'reverse_charge' => $user->reverseCharge,
             ]);
 
@@ -260,16 +270,16 @@ class AdminInvoiceCustomerController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function invoice_update(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
-            'invoice_id' => ['required', 'integer'],
-            'user_id' => ['required', 'integer'],
-            'type_id' => ['required', 'integer'],
+            'invoice_id'  => ['required', 'integer'],
+            'user_id'     => ['required', 'integer'],
+            'type_id'     => ['required', 'integer'],
             'contract_id' => ['integer', 'nullable'],
         ])->validate();
 
@@ -280,8 +290,8 @@ class AdminInvoiceCustomerController extends Controller
             $user->role == 'customer'
         ) {
             $invoice->update([
-                'user_id' => $request->user_id,
-                'type_id' => $request->type_id,
+                'user_id'     => $request->user_id,
+                'type_id'     => $request->type_id,
                 'contract_id' => $request->contract_id,
             ]);
 
@@ -296,9 +306,9 @@ class AdminInvoiceCustomerController extends Controller
      *
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function invoice_delete(int $id): RedirectResponse
     {
@@ -325,9 +335,9 @@ class AdminInvoiceCustomerController extends Controller
      *
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function invoice_publish(int $id): RedirectResponse
     {
@@ -366,31 +376,31 @@ class AdminInvoiceCustomerController extends Controller
 
             $pdf = App::make('dompdf.wrapper')->loadView('pdf.invoice', [
                 'invoice' => $invoice,
-                'sepaQr' => $sepaQr,
+                'sepaQr'  => $sepaQr,
             ]);
 
             $content = $pdf->output();
 
             $file = File::create([
-                'user_id' => null,
+                'user_id'   => null,
                 'folder_id' => null,
-                'name' => $invoice->number . '.pdf',
-                'data' => $content,
-                'mime' => 'application/pdf',
-                'size' => strlen($content),
+                'name'      => $invoice->number . '.pdf',
+                'data'      => $content,
+                'mime'      => 'application/pdf',
+                'size'      => strlen($content),
             ]);
 
             $invoice->update([
                 'file_id' => $file->id,
-                'status' => 'unpaid',
+                'status'  => 'unpaid',
             ]);
 
             $invoice->sendInvoiceNotification();
 
             InvoiceHistory::create([
-                'user_id' => Auth::id(),
+                'user_id'    => Auth::id(),
                 'invoice_id' => $invoice->id,
-                'status' => 'publish',
+                'status'     => 'publish',
             ]);
 
             return redirect()->back()->with('success', __('interface.messages.invoice_published'));
@@ -403,8 +413,6 @@ class AdminInvoiceCustomerController extends Controller
      * Download an existing invoice.
      *
      * @param int $id
-     *
-     * @return void
      *
      * @throws ValidationException
      */
@@ -447,7 +455,7 @@ class AdminInvoiceCustomerController extends Controller
 
                 $pdf = App::make('dompdf.wrapper')->loadView('pdf.invoice', [
                     'invoice' => $invoice,
-                    'sepaQr' => $sepaQr,
+                    'sepaQr'  => $sepaQr,
                 ]);
 
                 return $pdf->download($invoice->number . '.pdf');
@@ -461,17 +469,15 @@ class AdminInvoiceCustomerController extends Controller
      * @param int $id
      * @param int $reminder_id
      *
-     * @return void
-     *
      * @throws ValidationException
      */
     public function invoice_reminder_download(int $id, int $reminder_id)
     {
         Validator::make([
-            'invoice_id' => $id,
+            'invoice_id'  => $id,
             'reminder_id' => $reminder_id,
         ], [
-            'invoice_id' => ['required', 'integer'],
+            'invoice_id'  => ['required', 'integer'],
             'reminder_id' => ['required', 'integer'],
         ])->validate();
 
@@ -507,7 +513,7 @@ class AdminInvoiceCustomerController extends Controller
 
                 $pdf = App::make('dompdf.wrapper')->loadView('pdf.reminder', [
                     'reminder' => $reminder,
-                    'sepaQr' => $sepaQr,
+                    'sepaQr'   => $sepaQr,
                 ]);
 
                 return $pdf->download($reminder->number . '.pdf');
@@ -520,9 +526,9 @@ class AdminInvoiceCustomerController extends Controller
      *
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function invoice_revoke(int $id): RedirectResponse
     {
@@ -539,9 +545,9 @@ class AdminInvoiceCustomerController extends Controller
             $revokationInvoice = $invoice->refund('revoked');
 
             InvoiceHistory::create([
-                'user_id' => Auth::id(),
+                'user_id'    => Auth::id(),
                 'invoice_id' => $invoice->id,
-                'status' => 'revoke',
+                'status'     => 'revoke',
             ]);
 
             return redirect()->route('admin.invoices.customers.details', $revokationInvoice->id)->with('success', __('interface.messages.invoice_revoked'));
@@ -555,9 +561,9 @@ class AdminInvoiceCustomerController extends Controller
      *
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function invoice_paid(int $id): RedirectResponse
     {
@@ -576,9 +582,9 @@ class AdminInvoiceCustomerController extends Controller
             ]);
 
             InvoiceHistory::create([
-                'user_id' => Auth::id(),
+                'user_id'    => Auth::id(),
                 'invoice_id' => $invoice->id,
-                'status' => 'pay',
+                'status'     => 'pay',
             ]);
 
             return redirect()->back()->with('success', __('interface.messages.invoice_paid'));
@@ -592,9 +598,9 @@ class AdminInvoiceCustomerController extends Controller
      *
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function invoice_unpaid(int $id): RedirectResponse
     {
@@ -613,9 +619,9 @@ class AdminInvoiceCustomerController extends Controller
             ]);
 
             InvoiceHistory::create([
-                'user_id' => Auth::id(),
+                'user_id'    => Auth::id(),
                 'invoice_id' => $invoice->id,
-                'status' => 'unpay',
+                'status'     => 'unpay',
             ]);
 
             return redirect()->back()->with('success', __('interface.messages.invoice_unpaid'));
@@ -629,9 +635,9 @@ class AdminInvoiceCustomerController extends Controller
      *
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function invoice_refund(int $id): RedirectResponse
     {
@@ -649,9 +655,9 @@ class AdminInvoiceCustomerController extends Controller
             $revokationInvoice = $invoice->refund('refunded');
 
             InvoiceHistory::create([
-                'user_id' => Auth::id(),
+                'user_id'    => Auth::id(),
                 'invoice_id' => $invoice->id,
-                'status' => 'refund',
+                'status'     => 'refund',
             ]);
 
             return redirect()->route('admin.invoices.customers.details', $revokationInvoice->id)->with('success', __('interface.messages.invoice_refunded'));
@@ -665,9 +671,9 @@ class AdminInvoiceCustomerController extends Controller
      *
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function invoice_resend(int $id): RedirectResponse
     {
@@ -694,26 +700,26 @@ class AdminInvoiceCustomerController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function invoice_positions_add(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
-            'invoice_id' => ['required', 'integer'],
-            'name' => ['required', 'string'],
-            'description' => ['required', 'string'],
-            'amount' => ['required', 'numeric'],
+            'invoice_id'     => ['required', 'integer'],
+            'name'           => ['required', 'string'],
+            'description'    => ['required', 'string'],
+            'amount'         => ['required', 'numeric'],
             'vat_percentage' => ['nullable', 'numeric'],
-            'quantity' => ['required', 'numeric'],
-            'discount_id' => ['nullable', 'integer'],
+            'quantity'       => ['required', 'numeric'],
+            'discount_id'    => ['nullable', 'integer'],
         ])->validate();
 
         if (! empty($request->service_runtime)) {
             Validator::make($request->toArray(), [
                 'started_at' => ['required', 'string'],
-                'ended_at' => ['required', 'string'],
+                'ended_at'   => ['required', 'string'],
             ])->validate();
         }
 
@@ -723,19 +729,19 @@ class AdminInvoiceCustomerController extends Controller
             $invoice->status == 'template'
         ) {
             $position = Position::create([
-                'discount_id' => ! empty($request->discount_id) ? $request->discount_id : null,
-                'name' => $request->name,
-                'description' => $request->description,
-                'amount' => $request->amount,
+                'discount_id'    => ! empty($request->discount_id) ? $request->discount_id : null,
+                'name'           => $request->name,
+                'description'    => $request->description,
+                'amount'         => $request->amount,
                 'vat_percentage' => ! empty($request->vat_percentage) ? $request->vat_percentage : 0,
-                'quantity' => $request->quantity,
+                'quantity'       => $request->quantity,
             ]);
 
             InvoicePosition::create([
-                'invoice_id' => $request->invoice_id,
+                'invoice_id'  => $request->invoice_id,
                 'position_id' => $position->id,
-                'started_at' => ! empty($request->service_runtime) ? Carbon::parse($request->started_at) : null,
-                'ended_at' => ! empty($request->service_runtime) ? Carbon::parse($request->ended_at) : null,
+                'started_at'  => ! empty($request->service_runtime) ? Carbon::parse($request->started_at) : null,
+                'ended_at'    => ! empty($request->service_runtime) ? Carbon::parse($request->ended_at) : null,
             ]);
 
             return redirect()->back()->with('success', __('interface.messages.invoice_position_added'));
@@ -749,26 +755,26 @@ class AdminInvoiceCustomerController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function invoice_positions_update(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
-            'position_id' => ['required', 'integer'],
-            'name' => ['required', 'string'],
-            'description' => ['required', 'string'],
-            'amount' => ['required', 'numeric'],
+            'position_id'    => ['required', 'integer'],
+            'name'           => ['required', 'string'],
+            'description'    => ['required', 'string'],
+            'amount'         => ['required', 'numeric'],
             'vat_percentage' => ['nullable', 'numeric'],
-            'quantity' => ['required', 'numeric'],
-            'discount_id' => ['nullable', 'integer'],
+            'quantity'       => ['required', 'numeric'],
+            'discount_id'    => ['nullable', 'integer'],
         ])->validate();
 
         if (! empty($request->service_runtime)) {
             Validator::make($request->toArray(), [
                 'started_at' => ['required', 'string'],
-                'ended_at' => ['required', 'string'],
+                'ended_at'   => ['required', 'string'],
             ])->validate();
         }
 
@@ -778,17 +784,17 @@ class AdminInvoiceCustomerController extends Controller
             $position->invoice->status == 'template'
         ) {
             $position->position->update([
-                'discount_id' => ! empty($request->discount_id) ? $request->discount_id : null,
-                'name' => $request->name,
-                'description' => $request->description,
-                'amount' => $request->amount,
+                'discount_id'    => ! empty($request->discount_id) ? $request->discount_id : null,
+                'name'           => $request->name,
+                'description'    => $request->description,
+                'amount'         => $request->amount,
                 'vat_percentage' => ! empty($request->vat_percentage) ? $request->vat_percentage : 0,
-                'quantity' => $request->quantity,
+                'quantity'       => $request->quantity,
             ]);
 
             $position->update([
                 'started_at' => ! empty($request->service_runtime) ? Carbon::parse($request->started_at) : null,
-                'ended_at' => ! empty($request->service_runtime) ? Carbon::parse($request->ended_at) : null,
+                'ended_at'   => ! empty($request->service_runtime) ? Carbon::parse($request->ended_at) : null,
             ]);
 
             return redirect()->back()->with('success', __('interface.messages.invoice_position_updated'));
@@ -803,17 +809,17 @@ class AdminInvoiceCustomerController extends Controller
      * @param int $invoice_id
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function invoice_positions_delete(int $invoice_id, int $id): RedirectResponse
     {
         Validator::make([
-            'invoice_id' => $invoice_id,
+            'invoice_id'  => $invoice_id,
             'position_id' => $id,
         ], [
-            'invoice_id' => ['required', 'integer'],
+            'invoice_id'  => ['required', 'integer'],
             'position_id' => ['required', 'integer'],
         ])->validate();
 
@@ -857,13 +863,16 @@ class AdminInvoiceCustomerController extends Controller
                 switch ($request->columns[$order['column']]) {
                     case 'status':
                         $orderBy = 'status';
+
                         break;
                     case 'date':
                         $orderBy = 'created_at';
+
                         break;
                     case 'id':
                     default:
                         $orderBy = 'id';
+
                         break;
                 }
 
@@ -877,40 +886,46 @@ class AdminInvoiceCustomerController extends Controller
             ->limit($request->length);
 
         return response()->json([
-            'draw' => (int) $request->draw,
-            'recordsTotal' => $totalCount,
+            'draw'            => (int) $request->draw,
+            'recordsTotal'    => $totalCount,
             'recordsFiltered' => $filteredCount,
-            'data' => $query
+            'data'            => $query
                 ->get()
                 ->transform(function (InvoiceHistory $history) {
                     switch ($history->status) {
                         case 'publish':
                             $status = '<span class="badge badge-success">' . __('interface.status.published') . '</span>';
+
                             break;
                         case 'revoke':
                             $status = '<span class="badge badge-secondary">' . __('interface.status.revoked') . '</span>';
+
                             break;
                         case 'refund':
                             $status = '<span class="badge badge-info text-white">' . __('interface.actions.refund') . '</span>';
+
                             break;
                         case 'unpay':
                             $status = '<span class="badge badge-warning">' . __('interface.status.unpaid') . '</span>';
+
                             break;
                         case 'pay':
                             $status = '<span class="badge badge-success">' . __('interface.status.paid') . '</span>';
+
                             break;
                         default:
                             $status = '<span class="badge badge-secondary">' . __('interface.status.unknown') . '</span>';
+
                             break;
                     }
 
                     return (object) [
-                        'id' => $history->id,
-                        'date' => $history->created_at->format('d.m.Y, H:i'),
-                        'name' => ! empty($history->user) && ! empty($history->user->realName) ? '<i class="bi bi-person mr-2"></i> ' . $history->user->realName : '<i class="bi bi-robot mr-2""></i> ' . __('interface.data.system'),
+                        'id'     => $history->id,
+                        'date'   => $history->created_at->format('d.m.Y, H:i'),
+                        'name'   => ! empty($history->user) && ! empty($history->user->realName) ? '<i class="bi bi-person mr-2"></i> ' . $history->user->realName : '<i class="bi bi-robot mr-2""></i> ' . __('interface.data.system'),
                         'status' => $status,
                     ];
-                })
+                }),
         ]);
     }
 
@@ -956,13 +971,16 @@ class AdminInvoiceCustomerController extends Controller
                 switch ($request->columns[$order['column']]) {
                     case 'name':
                         $orderBy = 'name';
+
                         break;
                     case 'description':
                         $orderBy = 'description';
+
                         break;
                     case 'id':
                     default:
                         $orderBy = 'id';
+
                         break;
                 }
 
@@ -978,22 +996,25 @@ class AdminInvoiceCustomerController extends Controller
         $discounts = InvoiceDiscount::all();
 
         return response()->json([
-            'draw' => (int) $request->draw,
-            'recordsTotal' => $totalCount,
+            'draw'            => (int) $request->draw,
+            'recordsTotal'    => $totalCount,
             'recordsFiltered' => $filteredCount,
-            'data' => $query
+            'data'            => $query
                 ->get()
                 ->transform(function (InvoiceType $type) use ($discounts) {
                     switch ($type->type) {
                         case 'prepaid':
                             $receiptType = __('interface.misc.prepaid_receipt');
+
                             break;
                         case 'auto_revoke':
                             $receiptType = __('interface.misc.auto_revoked_invoice');
+
                             break;
                         case 'normal':
                         default:
                             $receiptType = __('interface.misc.invoice');
+
                             break;
                     }
 
@@ -1086,17 +1107,17 @@ class AdminInvoiceCustomerController extends Controller
 ';
 
                     return (object) [
-                        'id' => $type->id,
-                        'name' => $type->name,
+                        'id'          => $type->id,
+                        'name'        => $type->name,
                         'description' => $type->description,
-                        'period' => $type->period . ' ' . __('interface.units.days'),
-                        'type' => $receiptType,
-                        'dunning' => $type->dunning ? '<span class="badge badge-success">' . __('interface.status.enabled') . '</span>' : '<span class="badge badge-warning">' . __('interface.status.disabled') . '</span>',
-                        'view' => '<a href="' . route('admin.invoices.types.details', $type->id) . '" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>',
-                        'edit' => $edit,
-                        'delete' => '<a href="' . route('admin.invoices.types.delete', $type->id) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>',
+                        'period'      => $type->period . ' ' . __('interface.units.days'),
+                        'type'        => $receiptType,
+                        'dunning'     => $type->dunning ? '<span class="badge badge-success">' . __('interface.status.enabled') . '</span>' : '<span class="badge badge-warning">' . __('interface.status.disabled') . '</span>',
+                        'view'        => '<a href="' . route('admin.invoices.types.details', $type->id) . '" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>',
+                        'edit'        => $edit,
+                        'delete'      => '<a href="' . route('admin.invoices.types.delete', $type->id) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>',
                     ];
-                })
+                }),
         ]);
     }
 
@@ -1110,7 +1131,7 @@ class AdminInvoiceCustomerController extends Controller
     public function invoice_types_details(int $id): Renderable
     {
         return view('admin.invoice.types-details', [
-            'type' => InvoiceType::find($id),
+            'type'      => InvoiceType::find($id),
             'discounts' => InvoiceDiscount::all(),
         ]);
     }
@@ -1120,27 +1141,27 @@ class AdminInvoiceCustomerController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function invoice_types_add(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
-            'name' => ['required', 'string'],
+            'name'        => ['required', 'string'],
             'description' => ['required', 'string'],
-            'type' => ['required', 'string'],
-            'period' => ['required', 'integer'],
-            'dunning' => ['string', 'nullable'],
+            'type'        => ['required', 'string'],
+            'period'      => ['required', 'integer'],
+            'dunning'     => ['string', 'nullable'],
             'discount_id' => ['nullable', 'integer'],
         ])->validate();
 
         InvoiceType::create([
-            'name' => $request->name,
+            'name'        => $request->name,
             'description' => $request->description,
-            'type' => $request->type,
-            'period' => $request->period,
-            'dunning' => $request->type == 'normal' && isset($request->dunning) && $request->dunning == 'true',
+            'type'        => $request->type,
+            'period'      => $request->period,
+            'dunning'     => $request->type == 'normal' && isset($request->dunning) && $request->dunning == 'true',
             'discount_id' => $request->discount_id ?? null,
         ]);
 
@@ -1152,29 +1173,29 @@ class AdminInvoiceCustomerController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function invoice_types_update(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
-            'type_id' => ['required', 'integer'],
-            'name' => ['required', 'string'],
+            'type_id'     => ['required', 'integer'],
+            'name'        => ['required', 'string'],
             'description' => ['required', 'string'],
-            'type' => ['required', 'string'],
-            'period' => ['required', 'integer'],
-            'dunning' => ['string', 'nullable'],
+            'type'        => ['required', 'string'],
+            'period'      => ['required', 'integer'],
+            'dunning'     => ['string', 'nullable'],
             'discount_id' => ['nullable', 'integer'],
         ])->validate();
 
         if (! empty($type = InvoiceType::find($request->type_id))) {
             $type->update([
-                'name' => $request->name,
+                'name'        => $request->name,
                 'description' => $request->description,
-                'type' => $request->type,
-                'period' => $request->period,
-                'dunning' => $request->type == 'normal' && isset($request->dunning) && $request->dunning == 'true',
+                'type'        => $request->type,
+                'period'      => $request->period,
+                'dunning'     => $request->type == 'normal' && isset($request->dunning) && $request->dunning == 'true',
                 'discount_id' => $request->discount_id ?? null,
             ]);
 
@@ -1189,9 +1210,9 @@ class AdminInvoiceCustomerController extends Controller
      *
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function invoice_types_delete(int $id): RedirectResponse
     {
@@ -1238,16 +1259,20 @@ class AdminInvoiceCustomerController extends Controller
                 switch ($request->columns[$order['column']]) {
                     case 'after':
                         $orderBy = 'after';
+
                         break;
                     case 'fees':
                         $orderBy = 'fixed_amount';
+
                         break;
                     case 'interest':
                         $orderBy = 'percentage_amount';
+
                         break;
                     case 'id':
                     default:
                         $orderBy = 'id';
+
                         break;
                 }
 
@@ -1261,10 +1286,10 @@ class AdminInvoiceCustomerController extends Controller
             ->limit($request->length);
 
         return response()->json([
-            'draw' => (int) $request->draw,
-            'recordsTotal' => $totalCount,
+            'draw'            => (int) $request->draw,
+            'recordsTotal'    => $totalCount,
             'recordsFiltered' => $filteredCount,
-            'data' => $query
+            'data'            => $query
                 ->get()
                 ->transform(function (InvoiceDunning $type) {
                     $edit = '
@@ -1356,15 +1381,15 @@ class AdminInvoiceCustomerController extends Controller
 ';
 
                     return (object) [
-                        'id' => $type->id,
-                        'after' => $type->after . ' ' . __('interface.units.days'),
-                        'period' => $type->period . ' ' . __('interface.units.days'),
-                        'fees' => $type->fixed_amount . ' €',
+                        'id'       => $type->id,
+                        'after'    => $type->after . ' ' . __('interface.units.days'),
+                        'period'   => $type->period . ' ' . __('interface.units.days'),
+                        'fees'     => $type->fixed_amount . ' €',
                         'interest' => $type->percentage_amount . ' %',
-                        'edit' => $edit,
-                        'delete' => '<a href="' . route('admin.invoices.dunning.delete', ['id' => $type->type_id, 'dunning_id' => $type->id]) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>',
+                        'edit'     => $edit,
+                        'delete'   => '<a href="' . route('admin.invoices.dunning.delete', ['id' => $type->type_id, 'dunning_id' => $type->id]) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>',
                     ];
-                })
+                }),
         ]);
     }
 
@@ -1373,29 +1398,29 @@ class AdminInvoiceCustomerController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function invoice_dunning_add(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
-            'type_id' => ['required', 'integer'],
-            'after' => ['required', 'numeric'],
-            'period' => ['required', 'numeric'],
-            'fixed_amount' => ['numeric', 'nullable'],
-            'percentage_amount' => ['numeric', 'nullable'],
+            'type_id'                 => ['required', 'integer'],
+            'after'                   => ['required', 'numeric'],
+            'period'                  => ['required', 'numeric'],
+            'fixed_amount'            => ['numeric', 'nullable'],
+            'percentage_amount'       => ['numeric', 'nullable'],
             'cancel_contract_regular' => ['string', 'nullable'],
             'cancel_contract_instant' => ['string', 'nullable'],
         ])->validate();
 
         if (! empty($type = InvoiceType::find($request->type_id))) {
             InvoiceDunning::create([
-                'type_id' => $type->id,
-                'after' => $request->after,
-                'period' => $request->period,
-                'fixed_amount' => $request->fixed_amount,
-                'percentage_amount' => $request->percentage_amount,
+                'type_id'                 => $type->id,
+                'after'                   => $request->after,
+                'period'                  => $request->period,
+                'fixed_amount'            => $request->fixed_amount,
+                'percentage_amount'       => $request->percentage_amount,
                 'cancel_contract_regular' => ! empty($request->cancel_contract_regular),
                 'cancel_contract_instant' => ! empty($request->cancel_contract_instant),
             ]);
@@ -1411,28 +1436,28 @@ class AdminInvoiceCustomerController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function invoice_dunning_update(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
-            'dunning_id' => ['required', 'integer'],
-            'after' => ['required', 'numeric'],
-            'period' => ['required', 'numeric'],
-            'fixed_amount' => ['numeric', 'nullable'],
-            'percentage_amount' => ['numeric', 'nullable'],
+            'dunning_id'              => ['required', 'integer'],
+            'after'                   => ['required', 'numeric'],
+            'period'                  => ['required', 'numeric'],
+            'fixed_amount'            => ['numeric', 'nullable'],
+            'percentage_amount'       => ['numeric', 'nullable'],
             'cancel_contract_regular' => ['string', 'nullable'],
             'cancel_contract_instant' => ['string', 'nullable'],
         ])->validate();
 
         if (! empty($dunning = InvoiceDunning::find($request->dunning_id))) {
             $dunning->update([
-                'after' => $request->after,
-                'period' => $request->period,
-                'fixed_amount' => $request->fixed_amount,
-                'percentage_amount' => $request->percentage_amount,
+                'after'                   => $request->after,
+                'period'                  => $request->period,
+                'fixed_amount'            => $request->fixed_amount,
+                'percentage_amount'       => $request->percentage_amount,
                 'cancel_contract_regular' => ! empty($request->cancel_contract_regular),
                 'cancel_contract_instant' => ! empty($request->cancel_contract_instant),
             ]);
@@ -1449,17 +1474,17 @@ class AdminInvoiceCustomerController extends Controller
      * @param int $id
      * @param int $type_id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function invoice_dunning_delete(int $id, int $type_id): RedirectResponse
     {
         Validator::make([
-            'id' => $id,
+            'id'      => $id,
             'type_id' => $type_id,
         ], [
-            'id' => ['required', 'integer'],
+            'id'      => ['required', 'integer'],
             'type_id' => ['required', 'integer'],
         ])->validate();
 
@@ -1512,19 +1537,24 @@ class AdminInvoiceCustomerController extends Controller
                 switch ($request->columns[$order['column']]) {
                     case 'name':
                         $orderBy = 'name';
+
                         break;
                     case 'description':
                         $orderBy = 'description';
+
                         break;
                     case 'type':
                         $orderBy = 'type';
+
                         break;
                     case 'amount':
                         $orderBy = 'amount';
+
                         break;
                     case 'id':
                     default:
                         $orderBy = 'id';
+
                         break;
                 }
 
@@ -1538,21 +1568,23 @@ class AdminInvoiceCustomerController extends Controller
             ->limit($request->length);
 
         return response()->json([
-            'draw' => (int) $request->draw,
-            'recordsTotal' => $totalCount,
+            'draw'            => (int) $request->draw,
+            'recordsTotal'    => $totalCount,
             'recordsFiltered' => $filteredCount,
-            'data' => $query
+            'data'            => $query
                 ->get()
                 ->transform(function (PositionDiscount $type) {
                     switch ($type->type) {
                         case 'percentage':
                             $typeString = __('interface.units.percentage');
                             $typeSuffix = '%';
+
                             break;
                         case 'fixed':
                         default:
                             $typeString = __('interface.units.fixed');
                             $typeSuffix = '€';
+
                             break;
                     }
 
@@ -1619,15 +1651,15 @@ class AdminInvoiceCustomerController extends Controller
 ';
 
                     return (object) [
-                        'id' => $type->id,
-                        'name' => $type->name,
+                        'id'          => $type->id,
+                        'name'        => $type->name,
                         'description' => $type->description,
-                        'type' => $typeString,
-                        'amount' => $type->amount . ' ' . $typeSuffix,
-                        'edit' => empty($discount->positions) ? $edit : '<button type="button" class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i></button>',
-                        'delete' => empty($discount->positions) ? '<a href="' . route('admin.discounts.delete', $type->id) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>' : '<button type="button" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></button>',
+                        'type'        => $typeString,
+                        'amount'      => $type->amount . ' ' . $typeSuffix,
+                        'edit'        => empty($discount->positions) ? $edit : '<button type="button" class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i></button>',
+                        'delete'      => empty($discount->positions) ? '<a href="' . route('admin.discounts.delete', $type->id) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>' : '<button type="button" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></button>',
                     ];
-                })
+                }),
         ]);
     }
 
@@ -1636,24 +1668,24 @@ class AdminInvoiceCustomerController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function discount_add(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
-            'name' => ['required', 'string'],
+            'name'        => ['required', 'string'],
             'description' => ['required', 'string'],
-            'type' => ['required', 'string'],
-            'amount' => ['required', 'numeric'],
+            'type'        => ['required', 'string'],
+            'amount'      => ['required', 'numeric'],
         ])->validate();
 
         PositionDiscount::create([
-            'name' => $request->name,
+            'name'        => $request->name,
             'description' => $request->description,
-            'type' => $request->type,
-            'amount' => $request->amount,
+            'type'        => $request->type,
+            'amount'      => $request->amount,
         ]);
 
         return redirect()->back()->with('success', __('interface.messages.discount_added'));
@@ -1664,9 +1696,9 @@ class AdminInvoiceCustomerController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function discount_update(Request $request): RedirectResponse
     {
@@ -1680,10 +1712,10 @@ class AdminInvoiceCustomerController extends Controller
             $discount->positions->isEmpty()
         ) {
             $discount->update([
-                'name' => $request->name,
+                'name'        => $request->name,
                 'description' => $request->description,
-                'type' => $request->type,
-                'amount' => $request->amount,
+                'type'        => $request->type,
+                'amount'      => $request->amount,
             ]);
 
             return redirect()->back()->with('success', __('interface.messages.discount_updated'));
@@ -1697,9 +1729,9 @@ class AdminInvoiceCustomerController extends Controller
      *
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function discount_delete(int $id): RedirectResponse
     {
@@ -1762,19 +1794,24 @@ class AdminInvoiceCustomerController extends Controller
                 switch ($request->columns[$order['column']]) {
                     case 'name':
                         $orderBy = 'name';
+
                         break;
                     case 'description':
                         $orderBy = 'description';
+
                         break;
                     case 'period':
                         $orderBy = 'period';
+
                         break;
                     case 'percentage_amount':
                         $orderBy = 'percentage_amount';
+
                         break;
                     case 'id':
                     default:
                         $orderBy = 'id';
+
                         break;
                 }
 
@@ -1788,10 +1825,10 @@ class AdminInvoiceCustomerController extends Controller
             ->limit($request->length);
 
         return response()->json([
-            'draw' => (int) $request->draw,
-            'recordsTotal' => $totalCount,
+            'draw'            => (int) $request->draw,
+            'recordsTotal'    => $totalCount,
             'recordsFiltered' => $filteredCount,
-            'data' => $query
+            'data'            => $query
                 ->get()
                 ->transform(function (InvoiceDiscount $discount) {
                     $edit = '
@@ -1859,15 +1896,15 @@ class AdminInvoiceCustomerController extends Controller
 ';
 
                     return (object) [
-                        'id' => $discount->id,
-                        'name' => $discount->name,
-                        'description' => $discount->description,
-                        'period' => $discount->period . ' ' . __('interface.units.days'),
+                        'id'                => $discount->id,
+                        'name'              => $discount->name,
+                        'description'       => $discount->description,
+                        'period'            => $discount->period . ' ' . __('interface.units.days'),
                         'percentage_amount' => $discount->percentage_amount . ' %',
-                        'edit' => $edit,
-                        'delete' => '<a href="' . route('admin.invoices.discounts.delete', $discount->id) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>',
+                        'edit'              => $edit,
+                        'delete'            => '<a href="' . route('admin.invoices.discounts.delete', $discount->id) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>',
                     ];
-                })
+                }),
         ]);
     }
 
@@ -1876,23 +1913,23 @@ class AdminInvoiceCustomerController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function invoice_discounts_add(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
-            'name' => ['required', 'string'],
-            'description' => ['required', 'string'],
-            'period' => ['required', 'integer'],
+            'name'              => ['required', 'string'],
+            'description'       => ['required', 'string'],
+            'period'            => ['required', 'integer'],
             'percentage_amount' => ['required', 'numeric'],
         ])->validate();
 
         InvoiceDiscount::create([
-            'name' => $request->name,
-            'description' => $request->description,
-            'period' => $request->period,
+            'name'              => $request->name,
+            'description'       => $request->description,
+            'period'            => $request->period,
             'percentage_amount' => $request->percentage_amount,
         ]);
 
@@ -1904,25 +1941,25 @@ class AdminInvoiceCustomerController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function invoice_discounts_update(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
-            'discount_id' => ['required', 'integer'],
-            'name' => ['required', 'string'],
-            'description' => ['required', 'string'],
-            'period' => ['required', 'integer'],
+            'discount_id'       => ['required', 'integer'],
+            'name'              => ['required', 'string'],
+            'description'       => ['required', 'string'],
+            'period'            => ['required', 'integer'],
             'percentage_amount' => ['required', 'numeric'],
         ])->validate();
 
         if (! empty($discount = InvoiceDiscount::find($request->discount_id))) {
             $discount->update([
-                'name' => $request->name,
-                'description' => $request->description,
-                'period' => $request->period,
+                'name'              => $request->name,
+                'description'       => $request->description,
+                'period'            => $request->period,
                 'percentage_amount' => $request->percentage_amount,
             ]);
 
@@ -1937,9 +1974,9 @@ class AdminInvoiceCustomerController extends Controller
      *
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function invoice_discounts_delete(int $id): RedirectResponse
     {

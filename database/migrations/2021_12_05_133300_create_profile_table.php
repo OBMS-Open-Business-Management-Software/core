@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Models\Address\Country;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -8,8 +10,6 @@ use Illuminate\Support\Facades\Schema;
 return new class () extends Migration {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
@@ -98,11 +98,11 @@ return new class () extends Migration {
         });
 
         Country::create([
-            'name' => 'Germany',
-            'eu' => true,
+            'name'           => 'Germany',
+            'eu'             => true,
             'reverse_charge' => true,
-            'vat_basic' => 19,
-            'vat_reduced' => 7,
+            'vat_basic'      => 19,
+            'vat_reduced'    => 7,
         ]);
 
         Schema::create('user_profile_phone_numbers', function (Blueprint $table) {
@@ -135,8 +135,6 @@ return new class () extends Migration {
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {

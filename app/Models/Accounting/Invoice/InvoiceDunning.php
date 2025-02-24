@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\Accounting\Invoice;
 
 use Carbon\Carbon;
@@ -8,23 +10,23 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class InvoiceDunning
+ * Class InvoiceDunning.
  *
  * This class is the model for basic invoice dunning metadata.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *
- * @property int $id
- * @property int $type_id
- * @property int $after
- * @property double|null $period
- * @property double|null $fixed_amount
- * @property double|null $percentage_amount
- * @property bool $cancel_contract_regular
- * @property bool $cancel_contract_instant
- * @property Carbon $created_at
- * @property Carbon $updated_at
- * @property Carbon $deleted_at
+ * @property int        $id
+ * @property int        $type_id
+ * @property int        $after
+ * @property float|null $period
+ * @property float|null $fixed_amount
+ * @property float|null $percentage_amount
+ * @property bool       $cancel_contract_regular
+ * @property bool       $cancel_contract_instant
+ * @property Carbon     $created_at
+ * @property Carbon     $updated_at
+ * @property Carbon     $deleted_at
  */
 class InvoiceDunning extends Model
 {
@@ -40,7 +42,7 @@ class InvoiceDunning extends Model
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var string[]|bool
+     * @var bool|string[]
      */
     protected $guarded = [
         'id',

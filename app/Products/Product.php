@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Products;
 
 use Illuminate\Database\Eloquent\Model;
@@ -92,7 +94,7 @@ interface Product
     /**
      * Update an existing product instance.
      *
-     * @param int $id
+     * @param int        $id
      * @param Collection $data
      *
      * @return bool

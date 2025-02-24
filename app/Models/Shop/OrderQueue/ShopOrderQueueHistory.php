@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\Shop\OrderQueue;
 
 use Carbon\Carbon;
@@ -8,20 +10,19 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class ShopOrderQueueHistory
+ * Class ShopOrderQueueHistory.
  *
  * This class is the model for basic shop order history metadata.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *
- * @property int $id
- * @property int|null $order_id
- * @property string $type
- * @property string $message
- * @property Carbon $created_at
- * @property Carbon $updated_at
- * @property Carbon $deleted_at
- *
+ * @property int                 $id
+ * @property int|null            $order_id
+ * @property string              $type
+ * @property string              $message
+ * @property Carbon              $created_at
+ * @property Carbon              $updated_at
+ * @property Carbon              $deleted_at
  * @property ShopOrderQueue|null $order
  */
 class ShopOrderQueueHistory extends Model
@@ -38,7 +39,7 @@ class ShopOrderQueueHistory extends Model
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var string[]|bool
+     * @var bool|string[]
      */
     protected $guarded = [
         'id',

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Models\Accounting\Contract\ContractType;
@@ -72,13 +74,16 @@ class AdminSupplierController extends Controller
                 switch ($request->columns[$order['column']]) {
                     case 'name':
                         $orderBy = 'name';
+
                         break;
                     case 'status':
                         $orderBy = 'locked';
+
                         break;
                     case 'id':
                     default:
                         $orderBy = 'id';
+
                         break;
                 }
 
@@ -92,20 +97,20 @@ class AdminSupplierController extends Controller
             ->limit($request->length);
 
         return response()->json([
-            'draw' => (int) $request->draw,
-            'recordsTotal' => $totalCount,
+            'draw'            => (int) $request->draw,
+            'recordsTotal'    => $totalCount,
             'recordsFiltered' => $filteredCount,
-            'data' => $query
+            'data'            => $query
                 ->get()
-                ->transform(function (User $user) use ($totalCount) {
+                ->transform(function (User $user) {
                     return (object) [
-                        'id' => $user->number,
-                        'name' => $user->realName,
-                        'type' => $user->validProfile ? '<span class="badge badge-success">' . __('interface.data.full') . '</span>' : '<span class="badge badge-warning">' . __('interface.misc.prepaid') . '</span>',
+                        'id'     => $user->number,
+                        'name'   => $user->realName,
+                        'type'   => $user->validProfile ? '<span class="badge badge-success">' . __('interface.data.full') . '</span>' : '<span class="badge badge-warning">' . __('interface.misc.prepaid') . '</span>',
                         'status' => $user->locked ? '<span class="badge badge-warning">' . __('interface.status.locked') . '</span>' : '<span class="badge badge-success">' . __('interface.status.unlocked') . '</span>',
-                        'view' => '<a href="' . route('admin.suppliers.profile', $user->id) . '" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>',
+                        'view'   => '<a href="' . route('admin.suppliers.profile', $user->id) . '" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>',
                     ];
-                })
+                }),
         ]);
     }
 
@@ -114,7 +119,7 @@ class AdminSupplierController extends Controller
      *
      * @param int $user_id
      *
-     * @return Renderable|RedirectResponse
+     * @return RedirectResponse|Renderable
      */
     public function supplier_profile_index(int $user_id)
     {
@@ -126,11 +131,11 @@ class AdminSupplierController extends Controller
             )
         ) {
             return view('admin.supplier.details', [
-                'user' => $user,
-                'countries' => Country::all(),
+                'user'          => $user,
+                'countries'     => Country::all(),
                 'contractTypes' => ContractType::all(),
-                'invoiceTypes' => InvoiceType::all(),
-                'discounts' => PositionDiscount::all(),
+                'invoiceTypes'  => InvoiceType::all(),
+                'discounts'     => PositionDiscount::all(),
             ]);
         }
 
@@ -142,14 +147,14 @@ class AdminSupplierController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function supplier_create(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
-            'name' => ['required', 'string', 'max:255'],
+            'name'  => ['required', 'string', 'max:255'],
             'email' => [
                 'required',
                 'string',
@@ -162,10 +167,10 @@ class AdminSupplierController extends Controller
         if (
             ! empty(
                 $user = User::create([
-                    'name' => $request->name,
-                    'email' => $request->email,
+                    'name'     => $request->name,
+                    'email'    => $request->email,
                     'password' => Hash::make(Str::random()),
-                    'role' => 'supplier',
+                    'role'     => 'supplier',
                 ])
             )
         ) {
@@ -180,9 +185,9 @@ class AdminSupplierController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function supplier_profile_update(Request $request): RedirectResponse
     {
@@ -195,18 +200,18 @@ class AdminSupplierController extends Controller
         ) {
             if ($user->email !== $request->email) {
                 Validator::make($request->toArray(), [
-                    'name' => ['required', 'string', 'max:255'],
+                    'name'  => ['required', 'string', 'max:255'],
                     'email' => ['required', 'email', 'confirmed'],
                 ])->validate();
 
                 $user->update([
-                    'name' => $request->name,
-                    'email' => $request->email,
+                    'name'              => $request->name,
+                    'email'             => $request->email,
                     'email_verified_at' => null,
                 ]);
             } else {
                 Validator::make($request->toArray(), [
-                    'name' => ['required', 'string', 'max:255'],
+                    'name'  => ['required', 'string', 'max:255'],
                     'email' => ['required', 'email'],
                 ])->validate();
 
@@ -226,18 +231,18 @@ class AdminSupplierController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function supplier_profile_details_update(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
             'firstname' => ['required', 'string', 'max:255'],
-            'lastname' => ['required', 'string', 'max:255'],
-            'company' => ['string', 'max:255', 'nullable'],
-            'tax_id' => ['string', 'max:255', 'nullable'],
-            'vat_id' => ['string', 'max:255', 'nullable'],
+            'lastname'  => ['required', 'string', 'max:255'],
+            'company'   => ['string', 'max:255', 'nullable'],
+            'tax_id'    => ['string', 'max:255', 'nullable'],
+            'vat_id'    => ['string', 'max:255', 'nullable'],
         ])->validate();
 
         if (
@@ -250,10 +255,10 @@ class AdminSupplierController extends Controller
             if (! empty($profile = $user->profile)) {
                 $profile->update([
                     'firstname' => $request->firstname,
-                    'lastname' => $request->lastname,
-                    'company' => $request->company ?? null,
-                    'tax_id' => $request->tax_id ?? null,
-                    'vat_id' => $request->vat_id ?? null,
+                    'lastname'  => $request->lastname,
+                    'company'   => $request->company ?? null,
+                    'tax_id'    => $request->tax_id ?? null,
+                    'vat_id'    => $request->vat_id ?? null,
                 ]);
 
                 return redirect()->back()->with('success', __('interface.messages.profile_details_completed'));
@@ -268,27 +273,27 @@ class AdminSupplierController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function supplier_profile_complete(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
-            'firstname' => ['required', 'string', 'max:255'],
-            'lastname' => ['required', 'string', 'max:255'],
-            'company' => ['string', 'max:255', 'nullable'],
-            'tax_id' => ['string', 'max:255', 'nullable'],
-            'vat_id' => ['string', 'max:255', 'nullable'],
-            'street' => ['required', 'string', 'max:255'],
+            'firstname'   => ['required', 'string', 'max:255'],
+            'lastname'    => ['required', 'string', 'max:255'],
+            'company'     => ['string', 'max:255', 'nullable'],
+            'tax_id'      => ['string', 'max:255', 'nullable'],
+            'vat_id'      => ['string', 'max:255', 'nullable'],
+            'street'      => ['required', 'string', 'max:255'],
             'housenumber' => ['required', 'string', 'max:255'],
-            'addition' => ['string', 'max:255', 'nullable'],
-            'postalcode' => ['required', 'string', 'max:255'],
-            'city' => ['required', 'string', 'max:255'],
-            'state' => ['required', 'string', 'max:255'],
-            'country' => ['required', 'integer', 'min:1'],
-            'email' => ['required', 'email'],
-            'phone' => ['required', 'regex:/^(?:(?:\(?(?:00|\+)([1-4]\d\d|[1-9]\d?)\)?)?[\-\.\ \\\\\/]?)?((?:\(?\d{1,}\)?[\-\.\ \\\\\/]?){0,})(?:[\-\.\ \\\\\/]?(?:#|ext\.?|extension|x)[\-\.\ \\\\\/]?(\d+))?$/i'],
+            'addition'    => ['string', 'max:255', 'nullable'],
+            'postalcode'  => ['required', 'string', 'max:255'],
+            'city'        => ['required', 'string', 'max:255'],
+            'state'       => ['required', 'string', 'max:255'],
+            'country'     => ['required', 'integer', 'min:1'],
+            'email'       => ['required', 'email'],
+            'phone'       => ['required', 'regex:/^(?:(?:\(?(?:00|\+)([1-4]\d\d|[1-9]\d?)\)?)?[\-\.\ \\\\\/]?)?((?:\(?\d{1,}\)?[\-\.\ \\\\\/]?){0,})(?:[\-\.\ \\\\\/]?(?:#|ext\.?|extension|x)[\-\.\ \\\\\/]?(\d+))?$/i'],
         ])->validate();
 
         if (
@@ -299,44 +304,44 @@ class AdminSupplierController extends Controller
             )
         ) {
             $profile = Profile::create([
-                'user_id' => $user->id,
+                'user_id'   => $user->id,
                 'firstname' => $request->firstname,
-                'lastname' => $request->lastname,
-                'company' => $request->company ?? null,
-                'tax_id' => $request->tax_id ?? null,
-                'vat_id' => $request->vat_id ?? null,
-                'verified' => false,
-                'primary' => true,
+                'lastname'  => $request->lastname,
+                'company'   => $request->company ?? null,
+                'tax_id'    => $request->tax_id ?? null,
+                'vat_id'    => $request->vat_id ?? null,
+                'verified'  => false,
+                'primary'   => true,
             ]);
 
             $address = Address::create([
-                'country_id' => $request->country,
-                'street' => $request->street,
+                'country_id'  => $request->country,
+                'street'      => $request->street,
                 'housenumber' => $request->housenumber,
-                'addition' => $request->addition ?? null,
-                'postalcode' => $request->postalcode,
-                'city' => $request->city,
-                'state' => $request->state,
+                'addition'    => $request->addition ?? null,
+                'postalcode'  => $request->postalcode,
+                'city'        => $request->city,
+                'state'       => $request->state,
             ]);
 
             ProfileAddress::create([
                 'profile_id' => $profile->id,
                 'address_id' => $address->id,
-                'type' => 'all',
+                'type'       => 'all',
             ]);
 
             ProfilePhone::create([
                 'profile_id' => $profile->id,
-                'phone' => $request->phone,
-                'type' => 'all',
+                'phone'      => $request->phone,
+                'type'       => 'all',
             ]);
 
             if (
                 ! empty(
                     $email = ProfileEmail::create([
                         'profile_id' => $profile->id,
-                        'email' => $request->email,
-                        'type' => 'all',
+                        'email'      => $request->email,
+                        'type'       => 'all',
                     ])
                 )
             ) {
@@ -386,16 +391,20 @@ class AdminSupplierController extends Controller
                     switch ($request->columns[$order['column']]) {
                         case 'email':
                             $orderBy = 'email';
+
                             break;
                         case 'type':
                             $orderBy = 'type';
+
                             break;
                         case 'status':
                             $orderBy = 'email_verified_at';
+
                             break;
                         case 'id':
                         default:
                             $orderBy = 'id';
+
                             break;
                     }
 
@@ -409,18 +418,20 @@ class AdminSupplierController extends Controller
                 ->limit($request->length);
 
             return response()->json([
-                'draw' => (int) $request->draw,
-                'recordsTotal' => $totalCount,
+                'draw'            => (int) $request->draw,
+                'recordsTotal'    => $totalCount,
                 'recordsFiltered' => $filteredCount,
-                'data' => $query
+                'data'            => $query
                     ->get()
                     ->transform(function (ProfileEmail $email) use ($user, $totalCount) {
                         switch ($email->email_verified_at) {
                             case ! null:
                                 $status = '<span class="badge badge-success">' . __('interface.status.verified') . '</span>';
+
                                 break;
                             default:
                                 $status = '<span class="badge badge-danger">' . __('interface.status.unverified') . '</span>';
+
                                 break;
                         }
 
@@ -480,14 +491,14 @@ class AdminSupplierController extends Controller
 ';
 
                         return (object) [
-                            'email' => $email->email,
-                            'type' => ! empty($email->type) ? __(ucfirst($email->type)) : __('interface.misc.none'),
+                            'email'  => $email->email,
+                            'type'   => ! empty($email->type) ? __(ucfirst($email->type)) : __('interface.misc.none'),
                             'status' => $status,
                             'resend' => empty($email->email_verified_at) ? '<a href="' . route('admin.suppliers.profile.email.resend', ['user_id' => $user->id, 'id' => $email->id]) . '" class="btn btn-primary btn-sm"><i class="bi bi-envelope"></i></a>' : '<button type="button" class="btn btn-primary btn-sm" disabled><i class="bi bi-envelope"></i></button>',
-                            'edit' => $edit,
+                            'edit'   => $edit,
                             'delete' => $totalCount > 1 && empty($email->type) ? '<a href="' . route('admin.suppliers.profile.email.delete', ['user_id' => $user->id, 'id' => $email->id]) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>' : '<button type="button" class="btn btn-danger btn-sm" disabled><i class="bi bi-trash"></i></button>',
                         ];
-                    })
+                    }),
             ]);
         }
 
@@ -499,15 +510,15 @@ class AdminSupplierController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function supplier_profile_email_create(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
             'email' => ['required', 'email'],
-            'type' => ['required', 'string'],
+            'type'  => ['required', 'string'],
         ])->validate();
 
         if (
@@ -530,8 +541,8 @@ class AdminSupplierController extends Controller
 
                 ProfileEmail::create([
                     'profile_id' => $profile->id,
-                    'email' => $request->email,
-                    'type' => $request->type,
+                    'email'      => $request->email,
+                    'type'       => $request->type,
                 ]);
 
                 return redirect()->back()->with('success', __('interface.messages.profile_email_added'));
@@ -546,9 +557,9 @@ class AdminSupplierController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function supplier_profile_email_update(Request $request): RedirectResponse
     {
@@ -623,11 +634,12 @@ class AdminSupplierController extends Controller
     /**
      * Delete a profile email address.
      *
+     * @param int $user_id
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function supplier_profile_email_delete(int $user_id, int $id): RedirectResponse
     {
@@ -661,11 +673,12 @@ class AdminSupplierController extends Controller
     /**
      * Resend the verification email for a profile email address.
      *
+     * @param int $user_id
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function supplier_profile_email_resend(int $user_id, int $id): RedirectResponse
     {
@@ -732,13 +745,16 @@ class AdminSupplierController extends Controller
                     switch ($request->columns[$order['column']]) {
                         case 'phone':
                             $orderBy = 'phone';
+
                             break;
                         case 'type':
                             $orderBy = 'type';
+
                             break;
                         case 'id':
                         default:
                             $orderBy = 'id';
+
                             break;
                     }
 
@@ -752,10 +768,10 @@ class AdminSupplierController extends Controller
                 ->limit($request->length);
 
             return response()->json([
-                'draw' => (int) $request->draw,
-                'recordsTotal' => $totalCount,
+                'draw'            => (int) $request->draw,
+                'recordsTotal'    => $totalCount,
                 'recordsFiltered' => $filteredCount,
-                'data' => $query
+                'data'            => $query
                     ->get()
                     ->transform(function (ProfilePhone $phone) use ($user, $totalCount) {
                         $edit = '
@@ -814,12 +830,12 @@ class AdminSupplierController extends Controller
 ';
 
                         return (object) [
-                            'phone' => $phone->phone,
-                            'type' => ! empty($phone->type) ? __(ucfirst($phone->type)) : __('interface.misc.none'),
-                            'edit' => $edit,
+                            'phone'  => $phone->phone,
+                            'type'   => ! empty($phone->type) ? __(ucfirst($phone->type)) : __('interface.misc.none'),
+                            'edit'   => $edit,
                             'delete' => $totalCount > 1 && empty($phone->type) ? '<a href="' . route('admin.suppliers.profile.phone.delete', ['user_id' => $user->id, 'id' => $phone->id]) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>' : '<button type="button" class="btn btn-danger btn-sm" disabled><i class="bi bi-trash"></i></button>',
                         ];
-                    })
+                    }),
             ]);
         }
 
@@ -831,15 +847,15 @@ class AdminSupplierController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function supplier_profile_phone_create(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
             'phone' => ['required', 'regex:/^(?:(?:\(?(?:00|\+)([1-4]\d\d|[1-9]\d?)\)?)?[\-\.\ \\\\\/]?)?((?:\(?\d{1,}\)?[\-\.\ \\\\\/]?){0,})(?:[\-\.\ \\\\\/]?(?:#|ext\.?|extension|x)[\-\.\ \\\\\/]?(\d+))?$/i'],
-            'type' => ['required', 'string'],
+            'type'  => ['required', 'string'],
         ])->validate();
 
         if (
@@ -862,8 +878,8 @@ class AdminSupplierController extends Controller
 
                 ProfilePhone::create([
                     'profile_id' => $profile->id,
-                    'phone' => $request->phone,
-                    'type' => $request->type,
+                    'phone'      => $request->phone,
+                    'type'       => $request->type,
                 ]);
 
                 return redirect()->back()->with('success', __('interface.messages.phone_number_added'));
@@ -878,9 +894,9 @@ class AdminSupplierController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function supplier_profile_phone_update(Request $request): RedirectResponse
     {
@@ -955,11 +971,12 @@ class AdminSupplierController extends Controller
     /**
      * Delete a profile phone number.
      *
+     * @param int $user_id
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function supplier_profile_phone_delete(int $user_id, int $id): RedirectResponse
     {
@@ -1037,13 +1054,16 @@ class AdminSupplierController extends Controller
                     switch ($request->columns[$order['column']]) {
                         case 'address':
                             $orderBy = 'address_id';
+
                             break;
                         case 'type':
                             $orderBy = 'type';
+
                             break;
                         case 'id':
                         default:
                             $orderBy = 'id';
+
                             break;
                     }
 
@@ -1057,13 +1077,13 @@ class AdminSupplierController extends Controller
                 ->limit($request->length);
 
             return response()->json([
-                'draw' => (int) $request->draw,
-                'recordsTotal' => $totalCount,
+                'draw'            => (int) $request->draw,
+                'recordsTotal'    => $totalCount,
                 'recordsFiltered' => $filteredCount,
-                'data' => $query
+                'data'            => $query
                     ->get()
                     ->transform(function (ProfileAddress $address) use ($user, $totalCount) {
-                        $addition = ! empty($address->address->addition) ? $address->address->addition . '<br>' : '';
+                        $addition      = ! empty($address->address->addition) ? $address->address->addition . '<br>' : '';
                         $addressString = $address->address->street . ' ' . $address->address->housenumber . '<br>' . $addition . $address->address->postalcode . ' ' . $address->address->city . '<br>' . $addition . $address->address->state . ' ' . ($address->address->country->name ?? __('interface.status.unknown')) . '<br>';
 
                         $edit = '
@@ -1123,11 +1143,11 @@ class AdminSupplierController extends Controller
 
                         return (object) [
                             'address' => $addressString,
-                            'type' => ! empty($address->type) ? __(ucfirst($address->type)) : __('interface.misc.none'),
-                            'edit' => $edit,
-                            'delete' => $totalCount > 1 && empty($address->type) ? '<a href="' . route('admin.suppliers.profile.address.delete', ['user_id' => $user->id, 'id' => $address->id]) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>' : '<button type="button" class="btn btn-danger btn-sm" disabled><i class="bi bi-trash"></i></button>',
+                            'type'    => ! empty($address->type) ? __(ucfirst($address->type)) : __('interface.misc.none'),
+                            'edit'    => $edit,
+                            'delete'  => $totalCount > 1 && empty($address->type) ? '<a href="' . route('admin.suppliers.profile.address.delete', ['user_id' => $user->id, 'id' => $address->id]) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>' : '<button type="button" class="btn btn-danger btn-sm" disabled><i class="bi bi-trash"></i></button>',
                         ];
-                    })
+                    }),
             ]);
         }
 
@@ -1139,21 +1159,21 @@ class AdminSupplierController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function supplier_profile_address_create(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
-            'street' => ['required', 'string', 'max:255'],
+            'street'      => ['required', 'string', 'max:255'],
             'housenumber' => ['required', 'string', 'max:255'],
-            'addition' => ['string', 'max:255', 'nullable'],
-            'postalcode' => ['required', 'string', 'max:255'],
-            'city' => ['required', 'string', 'max:255'],
-            'state' => ['required', 'string', 'max:255'],
-            'country' => ['required', 'integer', 'min:1'],
-            'type' => ['required', 'string'],
+            'addition'    => ['string', 'max:255', 'nullable'],
+            'postalcode'  => ['required', 'string', 'max:255'],
+            'city'        => ['required', 'string', 'max:255'],
+            'state'       => ['required', 'string', 'max:255'],
+            'country'     => ['required', 'integer', 'min:1'],
+            'type'        => ['required', 'string'],
         ])->validate();
 
         if (
@@ -1175,19 +1195,19 @@ class AdminSupplierController extends Controller
                 }
 
                 $address = Address::create([
-                    'country_id' => $request->country,
-                    'street' => $request->street,
+                    'country_id'  => $request->country,
+                    'street'      => $request->street,
                     'housenumber' => $request->housenumber,
-                    'addition' => $request->addition ?? '',
-                    'postalcode' => $request->postalcode,
-                    'city' => $request->city,
-                    'state' => $request->state,
+                    'addition'    => $request->addition ?? '',
+                    'postalcode'  => $request->postalcode,
+                    'city'        => $request->city,
+                    'state'       => $request->state,
                 ]);
 
                 ProfileAddress::create([
                     'profile_id' => $profile->id,
                     'address_id' => $address->id,
-                    'type' => $request->type,
+                    'type'       => $request->type,
                 ]);
 
                 return redirect()->back()->with('success', __('interface.messages.postal_address_added'));
@@ -1202,9 +1222,9 @@ class AdminSupplierController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function supplier_profile_address_update(Request $request): RedirectResponse
     {
@@ -1279,11 +1299,12 @@ class AdminSupplierController extends Controller
     /**
      * Delete a profile postal address.
      *
+     * @param int $user_id
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function supplier_profile_address_delete(int $user_id, int $id): RedirectResponse
     {
@@ -1354,13 +1375,16 @@ class AdminSupplierController extends Controller
                     switch ($request->columns[$order['column']]) {
                         case 'address':
                             $orderBy = 'address_id';
+
                             break;
                         case 'type':
                             $orderBy = 'type';
+
                             break;
                         case 'id':
                         default:
                             $orderBy = 'id';
+
                             break;
                     }
 
@@ -1374,12 +1398,12 @@ class AdminSupplierController extends Controller
                 ->limit($request->length);
 
             return response()->json([
-                'draw' => (int) $request->draw,
-                'recordsTotal' => $totalCount,
+                'draw'            => (int) $request->draw,
+                'recordsTotal'    => $totalCount,
                 'recordsFiltered' => $filteredCount,
-                'data' => $query
+                'data'            => $query
                     ->get()
-                    ->transform(function (BankAccount $account) use ($user, $totalCount) {
+                    ->transform(function (BankAccount $account) use ($user) {
                         $sepa = '
 <a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#sepaMandate' . $account->id . '"><i class="bi bi-pencil-square"></i></a>
 <div class="modal fade" id="sepaMandate' . $account->id . '" tabindex="-1" aria-labelledby="sepaMandate' . $account->id . 'Label" aria-hidden="true">
@@ -1421,15 +1445,15 @@ class AdminSupplierController extends Controller
 ';
 
                         return (object) [
-                            'iban' => $account->iban,
-                            'bic' => $account->bic,
-                            'bank' => $account->bank,
-                            'owner' => $account->owner,
-                            'sepa' => empty($account->sepa_mandate_signed_at) ? $sepa : '<button type="button" class="btn btn-primary btn-sm" disabled><i class="bi bi-check-circle"></i></button>',
+                            'iban'    => $account->iban,
+                            'bic'     => $account->bic,
+                            'bank'    => $account->bank,
+                            'owner'   => $account->owner,
+                            'sepa'    => empty($account->sepa_mandate_signed_at) ? $sepa : '<button type="button" class="btn btn-primary btn-sm" disabled><i class="bi bi-check-circle"></i></button>',
                             'primary' => ! $account->primary ? '<a href="' . route('admin.suppliers.profile.bank.primary', ['user_id' => $user->id, 'id' => $account->id]) . '" class="btn btn-success btn-sm"><i class="bi bi-check-circle"></i></a>' : '<button type="button" class="btn btn-success btn-sm" disabled><i class="bi bi-check-circle"></i></button>',
-                            'delete' => '<a href="' . route('admin.suppliers.profile.bank.delete', ['user_id' => $user->id, 'id' => $account->id]) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>',
+                            'delete'  => '<a href="' . route('admin.suppliers.profile.bank.delete', ['user_id' => $user->id, 'id' => $account->id]) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>',
                         ];
-                    })
+                    }),
             ]);
         }
 
@@ -1441,17 +1465,17 @@ class AdminSupplierController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function supplier_profile_bank_create(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
-            'iban' => ['required', 'string', 'max:255'],
-            'bic' => ['required', 'string', 'max:255'],
-            'bank' => ['string', 'max:255', 'nullable'],
-            'owner' => ['required', 'string', 'max:255'],
+            'iban'    => ['required', 'string', 'max:255'],
+            'bic'     => ['required', 'string', 'max:255'],
+            'bank'    => ['string', 'max:255', 'nullable'],
+            'owner'   => ['required', 'string', 'max:255'],
             'primary' => ['nullable', 'string'],
         ])->validate();
 
@@ -1474,11 +1498,11 @@ class AdminSupplierController extends Controller
 
                 BankAccount::create([
                     'profile_id' => $profile->id,
-                    'iban' => $request->iban,
-                    'bic' => $request->bic,
-                    'bank' => $request->bank,
-                    'owner' => $request->owner,
-                    'primary' => $primary
+                    'iban'       => $request->iban,
+                    'bic'        => $request->bic,
+                    'bank'       => $request->bank,
+                    'owner'      => $request->owner,
+                    'primary'    => $primary,
                 ]);
 
                 return redirect()->back()->with('success', __('interface.messages.bank_added'));
@@ -1493,16 +1517,16 @@ class AdminSupplierController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function supplier_profile_bank_sepa(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
             'account_id' => ['required', 'integer'],
-            'name' => ['required', 'string'],
-            'accept' => ['required'],
+            'name'       => ['required', 'string'],
+            'accept'     => ['required'],
         ])->validate();
 
         if (
@@ -1517,7 +1541,7 @@ class AdminSupplierController extends Controller
                 $account->profile->user_id == $user->id
             ) {
                 $account->update([
-                    'sepa_mandate' => 'SEPA' . $user->id . $account->id . Carbon::now()->format('YmdHis'),
+                    'sepa_mandate'           => 'SEPA' . $user->id . $account->id . Carbon::now()->format('YmdHis'),
                     'sepa_mandate_signed_at' => Carbon::now(),
                     'sepa_mandate_signature' => Hash::make($request->name),
                 ]);
@@ -1532,11 +1556,12 @@ class AdminSupplierController extends Controller
     /**
      * Make a profile bank account primary.
      *
+     * @param int $user_id
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function supplier_profile_bank_primary(int $user_id, int $id): RedirectResponse
     {
@@ -1579,11 +1604,12 @@ class AdminSupplierController extends Controller
     /**
      * Delete a profile bank account.
      *
+     * @param int $user_id
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function supplier_profile_bank_delete(int $user_id, int $id): RedirectResponse
     {
@@ -1652,25 +1678,32 @@ class AdminSupplierController extends Controller
                     switch ($request->columns[$order['column']]) {
                         case 'created_at':
                             $orderBy = 'created_at';
+
                             break;
                         case 'contract_id':
                             $orderBy = 'contract_id';
+
                             break;
                         case 'invoice_id':
                             $orderBy = 'invoice_id';
+
                             break;
                         case 'amount':
                             $orderBy = 'amount';
+
                             break;
                         case 'transaction_method':
                             $orderBy = 'transaction_method';
+
                             break;
                         case 'transaction_id':
                             $orderBy = 'transaction_id';
+
                             break;
                         case 'id':
                         default:
                             $orderBy = 'id';
+
                             break;
                     }
 
@@ -1684,12 +1717,12 @@ class AdminSupplierController extends Controller
                 ->limit($request->length);
 
             return response()->json([
-                'draw' => (int) $request->draw,
-                'recordsTotal' => $totalCount,
+                'draw'            => (int) $request->draw,
+                'recordsTotal'    => $totalCount,
                 'recordsFiltered' => $filteredCount,
-                'data' => $query
+                'data'            => $query
                     ->get()
-                    ->transform(function (PrepaidHistory $entry) use ($user, $totalCount) {
+                    ->transform(function (PrepaidHistory $entry) {
                         $edit = '
 <a class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editTransaction' . $entry->id . '"><i class="bi bi-pencil-square"></i></a>
 <div class="modal fade" id="editTransaction' . $entry->id . '" tabindex="-1" aria-labelledby="editTransaction' . $entry->id . 'Label" aria-hidden="true">
@@ -1743,16 +1776,16 @@ class AdminSupplierController extends Controller
 ';
 
                         return (object) [
-                            'date' => $entry->created_at->format('d.m.Y, H:i'),
-                            'contract_id' => ! empty($contract = $entry->contract) ? $contract->number : __('interface.misc.not_available'),
-                            'invoice_id' => ! empty($invoice = $entry->invoice) ? $invoice->number : __('interface.misc.not_available'),
-                            'amount' => number_format($entry->amount, 2) . ' €',
+                            'date'               => $entry->created_at->format('d.m.Y, H:i'),
+                            'contract_id'        => ! empty($contract = $entry->contract) ? $contract->number : __('interface.misc.not_available'),
+                            'invoice_id'         => ! empty($invoice = $entry->invoice) ? $invoice->number : __('interface.misc.not_available'),
+                            'amount'             => number_format($entry->amount, 2) . ' €',
                             'transaction_method' => empty($transactionMethod) ? (empty($entry->creator) ? '<i class="bi bi-robot mr-2"></i> ' . __('interface.data.system') : '<i class="bi bi-pencil-square mr-2"></i> ' . __('interface.data.manual') . ' (' . $entry->creator->realName . ')') : $entry->transaction_method,
-                            'transaction_id' => (empty($transactionId = $entry->transaction_id) ? __('interface.misc.not_available') : $transactionId) . ' (#' . $entry->id . ')',
-                            'edit' => $edit,
-                            'delete' => '<a href="' . route('admin.suppliers.transactions.delete', ['user_id' => $entry->user_id, 'id' => $entry->id]) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>',
+                            'transaction_id'     => (empty($transactionId = $entry->transaction_id) ? __('interface.misc.not_available') : $transactionId) . ' (#' . $entry->id . ')',
+                            'edit'               => $edit,
+                            'delete'             => '<a href="' . route('admin.suppliers.transactions.delete', ['user_id' => $entry->user_id, 'id' => $entry->id]) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>',
                         ];
-                    })
+                    }),
             ]);
         }
 
@@ -1764,24 +1797,24 @@ class AdminSupplierController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function supplier_transaction_create(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
-            'amount' => ['required', 'numeric'],
+            'amount'      => ['required', 'numeric'],
             'contract_id' => ['nullable', 'integer'],
-            'invoice_id' => ['nullable', 'integer'],
+            'invoice_id'  => ['nullable', 'integer'],
         ])->validate();
 
         PrepaidHistory::create([
-            'user_id' => $request->user_id,
+            'user_id'         => $request->user_id,
             'creator_user_id' => Auth::id(),
-            'contract_id' => ! empty($contractId = $request->contract_id) ? $contractId : null,
-            'invoice_id' => ! empty($invoiceId = $request->invoice_id) ? $invoiceId : null,
-            'amount' => $request->amount,
+            'contract_id'     => ! empty($contractId = $request->contract_id) ? $contractId : null,
+            'invoice_id'      => ! empty($invoiceId = $request->invoice_id) ? $invoiceId : null,
+            'amount'          => $request->amount,
         ]);
 
         return redirect()->back()->with('success', __('interface.messages.transaction_added'));
@@ -1792,26 +1825,26 @@ class AdminSupplierController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function supplier_transaction_update(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
-            'booking_id' => ['required', 'integer'],
-            'amount' => ['required', 'numeric'],
+            'booking_id'  => ['required', 'integer'],
+            'amount'      => ['required', 'numeric'],
             'contract_id' => ['nullable', 'integer'],
-            'invoice_id' => ['nullable', 'integer'],
+            'invoice_id'  => ['nullable', 'integer'],
         ])->validate();
 
         /* @var PrepaidHistory $entry */
         if (! empty($entry = PrepaidHistory::find($request->booking_id))) {
             $entry->update([
                 'creator_user_id' => Auth::id(),
-                'contract_id' => ! empty($contractId = $request->contract_id) ? $contractId : null,
-                'invoice_id' => ! empty($invoiceId = $request->invoice_id) ? $invoiceId : null,
-                'amount' => $request->amount,
+                'contract_id'     => ! empty($contractId = $request->contract_id) ? $contractId : null,
+                'invoice_id'      => ! empty($invoiceId = $request->invoice_id) ? $invoiceId : null,
+                'amount'          => $request->amount,
             ]);
 
             return redirect()->back()->with('success', __('interface.messages.transaction_updated'));
@@ -1825,9 +1858,9 @@ class AdminSupplierController extends Controller
      *
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function supplier_transaction_delete(int $id): RedirectResponse
     {

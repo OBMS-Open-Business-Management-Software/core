@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Models\Accounting\Contract\Contract;
@@ -41,7 +43,7 @@ class CustomerContractController extends Controller
      *
      * @param int $id
      *
-     * @return Renderable|RedirectResponse
+     * @return RedirectResponse|Renderable
      */
     public function contract_details(int $id)
     {
@@ -85,10 +87,12 @@ class CustomerContractController extends Controller
                 switch ($request->columns[$order['column']]) {
                     case 'user':
                         $orderBy = 'user_id';
+
                         break;
                     case 'id':
                     default:
                         $orderBy = 'id';
+
                         break;
                 }
 
@@ -102,35 +106,39 @@ class CustomerContractController extends Controller
             ->limit($request->length);
 
         return response()->json([
-            'draw' => (int) $request->draw,
-            'recordsTotal' => $totalCount,
+            'draw'            => (int) $request->draw,
+            'recordsTotal'    => $totalCount,
             'recordsFiltered' => $filteredCount,
-            'data' => $query
+            'data'            => $query
                 ->get()
                 ->transform(function (Contract $contract) {
                     switch ($contract->status) {
                         case 'cancelled':
                             $status = '<span class="badge badge-danger">' . __('interface.status.cancelled') . '</span>';
+
                             break;
                         case 'expires':
                             $status = '<span class="badge badge-warning">' . __('interface.status.expires') . '</span>';
+
                             break;
                         case 'started':
                             $status = '<span class="badge badge-success">' . __('interface.status.active') . '</span>';
+
                             break;
                         case 'template':
                         default:
                             $status = '<span class="badge badge-primary">' . __('interface.status.draft') . '</span>';
+
                             break;
                     }
 
                     return (object) [
-                        'id' => $contract->number,
+                        'id'     => $contract->number,
                         'status' => $status,
-                        'type' => $contract->type->name ?? __('interface.misc.not_available'),
-                        'view' => '<a href="' . route('customer.contracts.details', $contract->id) . '" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>',
+                        'type'   => $contract->type->name ?? __('interface.misc.not_available'),
+                        'view'   => '<a href="' . route('customer.contracts.details', $contract->id) . '" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>',
                     ];
-                })
+                }),
         ]);
     }
 
@@ -139,9 +147,9 @@ class CustomerContractController extends Controller
      *
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function contract_extend(int $id): RedirectResponse
     {
@@ -164,41 +172,41 @@ class CustomerContractController extends Controller
             $contract->user->prepaidAccountBalance >= $contract->grossSum
         ) {
             PrepaidHistory::all([
-                'user_id' => $contract->user_id,
-                'creator_user_id' => Auth::id(),
-                'contract_id' => $contract->id,
-                'amount' => $contract->grossSum * (-1),
+                'user_id'            => $contract->user_id,
+                'creator_user_id'    => Auth::id(),
+                'contract_id'        => $contract->id,
+                'amount'             => $contract->grossSum * (-1),
                 'transaction_method' => 'account',
-                'transaction_id' => null,
+                'transaction_id'     => null,
             ]);
 
             /* @var Invoice $invoice */
             $invoice = Invoice::create([
-                'user_id' => $contract->user_id,
-                'type_id' => $contract->type->invoice_type_id,
-                'contract_id' => $contract->id,
-                'status' => 'paid',
+                'user_id'        => $contract->user_id,
+                'type_id'        => $contract->type->invoice_type_id,
+                'contract_id'    => $contract->id,
+                'status'         => 'paid',
                 'reverse_charge' => $contract->user->reverseCharge,
             ]);
 
             $contract->positionLinks->each(function (ContractPosition $link) use ($invoice) {
                 /* @var Position $position */
                 $position = Position::create([
-                    'order_id' => $link->position->order_id,
-                    'product_id' => $link->position->product_id,
-                    'discount_id' => $link->position->discount_id,
-                    'name' => $link->position->name,
-                    'description' => $link->position->description,
-                    'amount' => $link->position->amount,
+                    'order_id'       => $link->position->order_id,
+                    'product_id'     => $link->position->product_id,
+                    'discount_id'    => $link->position->discount_id,
+                    'name'           => $link->position->name,
+                    'description'    => $link->position->description,
+                    'amount'         => $link->position->amount,
                     'vat_percentage' => $link->position->vat_percentage,
-                    'quantity' => $link->position->quantity,
+                    'quantity'       => $link->position->quantity,
                 ]);
 
                 InvoicePosition::create([
-                    'invoice_id' => $invoice->id,
+                    'invoice_id'  => $invoice->id,
                     'position_id' => $position->id,
-                    'started_at' => $link->started_at,
-                    'ended_at' => $link->ended_at,
+                    'started_at'  => $link->started_at,
+                    'ended_at'    => $link->ended_at,
                 ]);
             });
 
@@ -226,19 +234,19 @@ class CustomerContractController extends Controller
 
             $pdf = App::make('dompdf.wrapper')->loadView('pdf.invoice', [
                 'invoice' => $invoice,
-                'sepaQr' => $sepaQr,
+                'sepaQr'  => $sepaQr,
             ]);
 
             $content = $pdf->output();
 
             /* @var File $file */
             $file = File::create([
-                'user_id' => null,
+                'user_id'   => null,
                 'folder_id' => null,
-                'name' => $invoice->number . '.pdf',
-                'data' => $content,
-                'mime' => 'application/pdf',
-                'size' => strlen($content),
+                'name'      => $invoice->number . '.pdf',
+                'data'      => $content,
+                'mime'      => 'application/pdf',
+                'size'      => strlen($content),
             ]);
 
             $invoice->update([
@@ -246,16 +254,16 @@ class CustomerContractController extends Controller
             ]);
 
             $contract->update([
-                'last_invoice_at' => $contract->cancelled_to,
-                'cancelled_at' => Carbon::now(),
+                'last_invoice_at'         => $contract->cancelled_to,
+                'cancelled_at'            => Carbon::now(),
                 'cancellation_revoked_at' => null,
-                'cancelled_to' => $contract->cancelled_to->addDays($contract->type->invoice_period),
+                'cancelled_to'            => $contract->cancelled_to->addDays($contract->type->invoice_period),
             ]);
 
             InvoiceHistory::create([
-                'user_id' => Auth::id(),
+                'user_id'    => Auth::id(),
                 'invoice_id' => $invoice->id,
-                'status' => 'pay',
+                'status'     => 'pay',
             ]);
 
             return redirect()->back()->with('success', __('interface.messages.contract_extended'));
@@ -269,9 +277,9 @@ class CustomerContractController extends Controller
      *
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function contract_cancel(int $id): RedirectResponse
     {
@@ -309,9 +317,9 @@ class CustomerContractController extends Controller
 
             if (! empty($cancelledTo)) {
                 $contract->update([
-                    'cancelled_at' => Carbon::now(),
+                    'cancelled_at'            => Carbon::now(),
                     'cancellation_revoked_at' => null,
-                    'cancelled_to' => $cancelledTo,
+                    'cancelled_to'            => $cancelledTo,
                 ]);
 
                 return redirect()->back()->with('success', __('interface.messages.contract_stopped'));
@@ -326,9 +334,9 @@ class CustomerContractController extends Controller
      *
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function contract_cancellation_revoke(int $id): RedirectResponse
     {
@@ -347,9 +355,9 @@ class CustomerContractController extends Controller
             $contract->user_id == Auth::id()
         ) {
             $contract->update([
-                'cancelled_at' => null,
+                'cancelled_at'            => null,
                 'cancellation_revoked_at' => null,
-                'cancelled_to' => null,
+                'cancelled_to'            => null,
             ]);
 
             return redirect()->back()->with('success', __('interface.messages.contract_cancellation_revoked'));

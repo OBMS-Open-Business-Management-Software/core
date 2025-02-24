@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Products\Product;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class AdminServiceController extends Controller
 {
@@ -57,10 +59,12 @@ class AdminServiceController extends Controller
                 switch ($request->columns[$order['column']]) {
                     case 'user_id':
                         $orderBy = 'user_id';
+
                         break;
                     case 'id':
                     default:
                         $orderBy = 'id';
+
                         break;
                 }
 
@@ -74,30 +78,33 @@ class AdminServiceController extends Controller
             ->limit($request->length);
 
         return response()->json([
-            'draw' => (int) $request->draw,
-            'recordsTotal' => $totalCount,
+            'draw'            => (int) $request->draw,
+            'recordsTotal'    => $totalCount,
             'recordsFiltered' => $filteredCount,
-            'data' => $query
+            'data'            => $query
                 ->get()
                 ->transform(function ($result) {
                     return (object) [
-                        'id' => $result->id,
+                        'id'      => $result->id,
                         'user_id' => $result->user_id,
-                        'status' => $result->status(),
-                        'view' => '<a href="' . $this->handler->technicalName() . '/' . $result->id . '" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>',
+                        'status'  => $result->status(),
+                        'view'    => '<a href="' . $this->handler->technicalName() . '/' . $result->id . '" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>',
                     ];
-                })
+                }),
         ]);
     }
 
     /**
      * View a service.
      *
-     * @return Application|Factory|View|RedirectResponse
+     * @param int     $id
+     * @param Request $request
+     *
+     * @return Application|Factory|RedirectResponse|View
      */
     public function service_details(int $id, Request $request)
     {
-        $model = $this->handler->model();
+        $model   = $this->handler->model();
         $service = $model::find($id);
 
         if (!$service) {
@@ -112,11 +119,14 @@ class AdminServiceController extends Controller
     /**
      * View service statistics.
      *
-     * @return Application|Factory|View|RedirectResponse
+     * @param int     $id
+     * @param Request $request
+     *
+     * @return Application|Factory|RedirectResponse|View
      */
     public function service_statistics(int $id, Request $request)
     {
-        $model = $this->handler->model();
+        $model   = $this->handler->model();
         $service = $model::find($id);
 
         if (!$service) {
@@ -131,14 +141,14 @@ class AdminServiceController extends Controller
     /**
      * Start a service.
      *
-     * @param int $id
+     * @param int     $id
      * @param Request $request
      *
      * @return RedirectResponse
      */
     public function service_start(int $id, Request $request)
     {
-        $model = $this->handler->model();
+        $model   = $this->handler->model();
         $service = $model::find($id);
 
         if (!$service) {
@@ -153,14 +163,14 @@ class AdminServiceController extends Controller
     /**
      * Stop a service.
      *
-     * @param int $id
+     * @param int     $id
      * @param Request $request
      *
      * @return RedirectResponse
      */
     public function service_stop(int $id, Request $request)
     {
-        $model = $this->handler->model();
+        $model   = $this->handler->model();
         $service = $model::find($id);
 
         if (!$service) {
@@ -175,14 +185,14 @@ class AdminServiceController extends Controller
     /**
      * Restart a service.
      *
-     * @param int $id
+     * @param int     $id
      * @param Request $request
      *
      * @return RedirectResponse
      */
     public function service_restart(int $id, Request $request)
     {
-        $model = $this->handler->model();
+        $model   = $this->handler->model();
         $service = $model::find($id);
 
         if (!$service) {

@@ -75,6 +75,14 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
+        ],
+        "format": "./vendor/bin/pint",
+        "format-check": "./vendor/bin/pint --test",
+        "analyse": "./vendor/bin/phpstan analyse --memory-limit=2G",
+        "analyse-baseline": "./vendor/bin/phpstan analyse --memory-limit=2G --generate-baseline",
+        "test-all": [
+            "@format-check",
+            "@analyse"
         ]
     },
     "extra": {

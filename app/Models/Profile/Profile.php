@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\Profile;
 
 use App\Models\Address\Address;
@@ -12,38 +14,37 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class Profile
+ * Class Profile.
  *
  * This class is the model for basic profile metadata.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *
- * @property int $id
- * @property int $user_id
- * @property string $firstname
- * @property string $lastname
- * @property string|null $company
- * @property string|null $tax_id
- * @property string|null $vat_id
- * @property bool $verified
- * @property bool $primary
- * @property Carbon $created_at
- * @property Carbon $updated_at
- * @property Carbon $deleted_at
- *
- * @property User|null $user
+ * @property int                        $id
+ * @property int                        $user_id
+ * @property string                     $firstname
+ * @property string                     $lastname
+ * @property string|null                $company
+ * @property string|null                $tax_id
+ * @property string|null                $vat_id
+ * @property bool                       $verified
+ * @property bool                       $primary
+ * @property Carbon                     $created_at
+ * @property Carbon                     $updated_at
+ * @property Carbon                     $deleted_at
+ * @property User|null                  $user
  * @property Collection<ProfileAddress> $addressLinks
  * @property Collection<ProfileHistory> $history
- * @property Collection<BankAccount> $bankAccounts
- * @property Collection<ProfilePhone> $phoneNumbers
- * @property Collection<ProfileEmail> $emailAddresses
- * @property ProfileEmail|null $contactEmailAddress
- * @property ProfileEmail|null $billingEmailAddress
- * @property ProfilePhone|null $contactPhoneNumber
- * @property ProfilePhone|null $billingPhoneNumber
- * @property Address|null $contactPostalAddress
- * @property Address|null $billingPostalAddress
- * @property BankAccount|null $primaryBankAccount
+ * @property Collection<BankAccount>    $bankAccounts
+ * @property Collection<ProfilePhone>   $phoneNumbers
+ * @property Collection<ProfileEmail>   $emailAddresses
+ * @property ProfileEmail|null          $contactEmailAddress
+ * @property ProfileEmail|null          $billingEmailAddress
+ * @property ProfilePhone|null          $contactPhoneNumber
+ * @property ProfilePhone|null          $billingPhoneNumber
+ * @property Address|null               $contactPostalAddress
+ * @property Address|null               $billingPostalAddress
+ * @property BankAccount|null           $primaryBankAccount
  */
 class Profile extends Model
 {
@@ -59,7 +60,7 @@ class Profile extends Model
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var string[]|bool
+     * @var bool|string[]
      */
     protected $guarded = [
         'id',
@@ -72,7 +73,7 @@ class Profile extends Model
      */
     protected $casts = [
         'verified' => 'boolean',
-        'primary' => 'boolean',
+        'primary'  => 'boolean',
     ];
 
     /**

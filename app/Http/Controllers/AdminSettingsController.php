@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Models\Setting;
@@ -51,10 +53,12 @@ class AdminSettingsController extends Controller
                 switch ($request->columns[$order['column']]) {
                     case 'setting':
                         $orderBy = 'setting';
+
                         break;
                     case 'id':
                     default:
                         $orderBy = 'id';
+
                         break;
                 }
 
@@ -68,10 +72,10 @@ class AdminSettingsController extends Controller
             ->limit($request->length);
 
         return response()->json([
-            'draw' => (int) $request->draw,
-            'recordsTotal' => $totalCount,
+            'draw'            => (int) $request->draw,
+            'recordsTotal'    => $totalCount,
             'recordsFiltered' => $filteredCount,
-            'data' => $query
+            'data'            => $query
                 ->get()
                 ->transform(function (Setting $setting) {
                     $edit = '
@@ -110,12 +114,12 @@ class AdminSettingsController extends Controller
 ';
 
                     return (object) [
-                        'id' => $setting->id,
+                        'id'      => $setting->id,
                         'setting' => $setting->setting,
-                        'value' => $setting->value,
-                        'edit' => $edit,
+                        'value'   => $setting->value,
+                        'edit'    => $edit,
                     ];
-                })
+                }),
         ]);
     }
 
@@ -124,15 +128,15 @@ class AdminSettingsController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function settings_update(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
             'setting_id' => ['required', 'integer'],
-            'value' => ['string', 'nullable'],
+            'value'      => ['string', 'nullable'],
         ])->validate();
 
         /* @var Setting $setting */

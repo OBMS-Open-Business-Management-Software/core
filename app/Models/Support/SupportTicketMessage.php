@@ -1,37 +1,38 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\Support;
 
 use App\Emails\Support\SupportTicketMessageNew;
 use App\Models\User;
 use Carbon\Carbon;
-use Exception;
 use Error;
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 
 /**
- * Class SupportTicketMessage
+ * Class SupportTicketMessage.
  *
  * This class is the model for basic ticket message metadata.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *
- * @property int $id
- * @property int $ticket_id
- * @property int $user_id
- * @property string $message
- * @property bool $note
- * @property bool $external
- * @property Carbon $created_at
- * @property Carbon $updated_at
- * @property Carbon $deleted_at
- *
+ * @property int                $id
+ * @property int                $ticket_id
+ * @property int                $user_id
+ * @property string             $message
+ * @property bool               $note
+ * @property bool               $external
+ * @property Carbon             $created_at
+ * @property Carbon             $updated_at
+ * @property Carbon             $deleted_at
  * @property SupportTicket|null $ticket
- * @property User|null $user
- * @property string|null $email
+ * @property User|null          $user
+ * @property string|null        $email
  */
 class SupportTicketMessage extends Model
 {
@@ -41,7 +42,7 @@ class SupportTicketMessage extends Model
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var string[]|bool
+     * @var bool|string[]
      */
     protected $guarded = [
         'id',
@@ -53,7 +54,7 @@ class SupportTicketMessage extends Model
      * @var array
      */
     protected $casts = [
-        'note' => 'bool',
+        'note'     => 'bool',
         'external' => 'bool',
     ];
 
@@ -79,14 +80,12 @@ class SupportTicketMessage extends Model
 
     /**
      * Send the email creation notification.
-     *
-     * @return void
      */
     public function sendEmailCreationNotification(): void
     {
         try {
             $this->notify(new SupportTicketMessageNew());
-        } catch (Exception|Error $exception) {
+        } catch (Exception | Error $exception) {
         }
     }
 

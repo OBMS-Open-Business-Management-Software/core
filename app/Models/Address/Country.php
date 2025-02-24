@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\Address;
 
 use Carbon\Carbon;
@@ -9,23 +11,22 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class Address
+ * Class Address.
  *
  * This class is the model for basic address metadata.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *
- * @property int $id
- * @property string $name
- * @property string $iso2
- * @property bool $eu
- * @property bool $reverse_charge
- * @property double $vat_basic
- * @property double|null $vat_reduced
- * @property Carbon $created_at
- * @property Carbon $updated_at
- * @property Carbon $deleted_at
- *
+ * @property int                      $id
+ * @property string                   $name
+ * @property string                   $iso2
+ * @property bool                     $eu
+ * @property bool                     $reverse_charge
+ * @property float                    $vat_basic
+ * @property float|null               $vat_reduced
+ * @property Carbon                   $created_at
+ * @property Carbon                   $updated_at
+ * @property Carbon                   $deleted_at
  * @property Collection<Address>|null $addresses
  */
 class Country extends Model
@@ -42,7 +43,7 @@ class Country extends Model
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var string[]|bool
+     * @var bool|string[]
      */
     protected $guarded = [
         'id',
@@ -55,7 +56,7 @@ class Country extends Model
      */
     protected $casts = [
         'reverse_charge' => 'boolean',
-        'eu' => 'boolean',
+        'eu'             => 'boolean',
     ];
 
     /**

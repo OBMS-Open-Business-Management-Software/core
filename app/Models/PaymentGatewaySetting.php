@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Traits\Encryptable;
@@ -8,13 +10,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class PaymentGatewaySetting
+ * Class PaymentGatewaySetting.
  *
  * This class is the model for basic payment gateway metadata.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *
- * @property int $id
+ * @property int    $id
  * @property string $gateway
  * @property string $setting
  * @property string $value
@@ -30,7 +32,7 @@ class PaymentGatewaySetting extends Model
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var string[]|bool
+     * @var bool|string[]
      */
     protected $guarded = [
         'id',
@@ -39,7 +41,7 @@ class PaymentGatewaySetting extends Model
     /**
      * The attributes that are encryptable.
      *
-     * @var string[]|bool
+     * @var bool|string[]
      */
     protected $encryptable = [
         'value',

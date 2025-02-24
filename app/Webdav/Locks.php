@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Webdav;
 
 use App\Models\FileManager\Lock;
@@ -10,8 +12,6 @@ use Sabre\DAV\Locks\LockInfo;
 
 /**
  * Class Locks.
- *
- * @package App\Webdav
  */
 class Locks extends AbstractBackend
 {
@@ -19,7 +19,7 @@ class Locks extends AbstractBackend
      * Get file locks.
      *
      * @param string $uri
-     * @param bool $returnChildLocks
+     * @param bool   $returnChildLocks
      *
      * @return array
      */
@@ -31,7 +31,7 @@ class Locks extends AbstractBackend
 
                 $currentPath = '';
 
-                collect(collect(explode('/', $uri))->last())->each(function ($part) use ($uri, &$condition, &$currentPath) {
+                collect(collect(explode('/', $uri))->last())->each(function ($part) use (&$condition, &$currentPath) {
                     if ($currentPath) {
                         $currentPath .= '/';
                     }
@@ -51,14 +51,14 @@ class Locks extends AbstractBackend
                 return $condition;
             })
             ->transform(function (Lock $lock) {
-                $lockInfo = new LockInfo();
-                $lockInfo->owner = $lock->owner;
-                $lockInfo->token = $lock->token;
+                $lockInfo          = new LockInfo();
+                $lockInfo->owner   = $lock->owner;
+                $lockInfo->token   = $lock->token;
                 $lockInfo->timeout = $lock->timeout;
                 $lockInfo->created = $lock->created;
-                $lockInfo->scope = $lock->scope;
-                $lockInfo->depth = $lock->depth;
-                $lockInfo->uri = $lock->uri;
+                $lockInfo->scope   = $lock->scope;
+                $lockInfo->depth   = $lock->depth;
+                $lockInfo->uri     = $lock->uri;
 
                 return $lockInfo;
             })
@@ -68,7 +68,7 @@ class Locks extends AbstractBackend
     /**
      * Lock file.
      *
-     * @param string $uri
+     * @param string   $uri
      * @param LockInfo $lockInfo
      *
      * @return bool
@@ -77,7 +77,7 @@ class Locks extends AbstractBackend
     {
         $lockInfo->timeout = 30 * 60;
         $lockInfo->created = time();
-        $lockInfo->uri = $uri;
+        $lockInfo->uri     = $uri;
 
         if (
             ! empty(
@@ -87,22 +87,22 @@ class Locks extends AbstractBackend
             )
         ) {
             return $lock->update([
-                "owner" => $lockInfo->owner,
-                "timeout" => $lockInfo->timeout,
-                "scope" => $lockInfo->scope,
-                "depth" => $lockInfo->depth,
-                "uri" => $uri,
-                "created" => $lockInfo->created,
+                'owner'   => $lockInfo->owner,
+                'timeout' => $lockInfo->timeout,
+                'scope'   => $lockInfo->scope,
+                'depth'   => $lockInfo->depth,
+                'uri'     => $uri,
+                'created' => $lockInfo->created,
             ]) > 0;
         } else {
             return Lock::create([
-                "owner" => $lockInfo->owner,
-                "timeout" => $lockInfo->timeout,
-                "scope" => $lockInfo->scope,
-                "depth" => $lockInfo->depth,
-                "uri" => $uri,
-                "created" => $lockInfo->created,
-                "token" => $lockInfo->token
+                'owner'   => $lockInfo->owner,
+                'timeout' => $lockInfo->timeout,
+                'scope'   => $lockInfo->scope,
+                'depth'   => $lockInfo->depth,
+                'uri'     => $uri,
+                'created' => $lockInfo->created,
+                'token'   => $lockInfo->token,
             ]) instanceof Lock;
         }
     }
@@ -110,7 +110,7 @@ class Locks extends AbstractBackend
     /**
      * Unlock file.
      *
-     * @param string $uri
+     * @param string   $uri
      * @param LockInfo $lockInfo
      *
      * @return bool
@@ -118,8 +118,8 @@ class Locks extends AbstractBackend
     public function unlock($uri, LockInfo $lockInfo): bool
     {
         return Lock::where([
-            "uri" => $uri,
-            "token" => $lockInfo->token,
+            'uri'   => $uri,
+            'token' => $lockInfo->token,
         ])->delete();
     }
 }

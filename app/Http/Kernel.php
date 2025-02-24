@@ -1,9 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http;
 
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\EncryptCookies;
+use App\Http\Middleware\IdentifyAdminProductLists;
+use App\Http\Middleware\IdentifyCustomerProductLists;
+use App\Http\Middleware\IdentifyTenant;
 use App\Http\Middleware\InjectNavigateables;
 use App\Http\Middleware\InjectShopCategoryOrProduct;
 use App\Http\Middleware\PasswordChangeRequired;
@@ -18,9 +23,6 @@ use App\Http\Middleware\RequireEmployeeRole;
 use App\Http\Middleware\RequireUnlockedProfile;
 use App\Http\Middleware\TrimStrings;
 use App\Http\Middleware\TrustProxies;
-use App\Http\Middleware\IdentifyTenant;
-use App\Http\Middleware\IdentifyAdminProductLists;
-use App\Http\Middleware\IdentifyCustomerProductLists;
 use App\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Auth\Middleware\AuthenticateWithBasicAuth;
 use Illuminate\Auth\Middleware\Authorize;
@@ -86,27 +88,27 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth' => Authenticate::class,
-        'auth.basic' => AuthenticateWithBasicAuth::class,
-        'cache.headers' => SetCacheHeaders::class,
-        'can' => Authorize::class,
-        'guest' => RedirectIfAuthenticated::class,
-        'password.confirm' => RequirePassword::class,
-        'signed' => ValidateSignature::class,
-        'throttle' => ThrottleRequests::class,
-        'verified' => EnsureEmailIsVerified::class,
-        'password.check_reset' => PasswordChangeRequired::class,
-        'tenant' => IdentifyTenant::class,
-        'tenant.prohibit' => ProhibitTenants::class,
-        'role.customer' => RequireCustomerRole::class,
-        'role.employee' => RequireEmployeeRole::class,
-        'role.admin' => RequireAdminRole::class,
-        'role.api' => RequireAPIRole::class,
-        'unlocked' => RequireUnlockedProfile::class,
-        'accepted' => RequireAcceptedPages::class,
-        'navigateables' => InjectNavigateables::class,
+        'auth'                   => Authenticate::class,
+        'auth.basic'             => AuthenticateWithBasicAuth::class,
+        'cache.headers'          => SetCacheHeaders::class,
+        'can'                    => Authorize::class,
+        'guest'                  => RedirectIfAuthenticated::class,
+        'password.confirm'       => RequirePassword::class,
+        'signed'                 => ValidateSignature::class,
+        'throttle'               => ThrottleRequests::class,
+        'verified'               => EnsureEmailIsVerified::class,
+        'password.check_reset'   => PasswordChangeRequired::class,
+        'tenant'                 => IdentifyTenant::class,
+        'tenant.prohibit'        => ProhibitTenants::class,
+        'role.customer'          => RequireCustomerRole::class,
+        'role.employee'          => RequireEmployeeRole::class,
+        'role.admin'             => RequireAdminRole::class,
+        'role.api'               => RequireAPIRole::class,
+        'unlocked'               => RequireUnlockedProfile::class,
+        'accepted'               => RequireAcceptedPages::class,
+        'navigateables'          => InjectNavigateables::class,
         'shop.categoryOrProduct' => InjectShopCategoryOrProduct::class,
-        'products.admin' => IdentifyAdminProductLists::class,
-        'products.customer' => IdentifyCustomerProductLists::class,
+        'products.admin'         => IdentifyAdminProductLists::class,
+        'products.customer'      => IdentifyCustomerProductLists::class,
     ];
 }

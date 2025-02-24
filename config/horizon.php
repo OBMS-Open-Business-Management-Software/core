@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Support\Str;
 
 return [
@@ -56,7 +58,7 @@ return [
 
     'prefix' => env(
         'HORIZON_PREFIX',
-        Str::slug(env('APP_NAME', 'laravel'), '_').'_horizon:'
+        Str::slug(env('APP_NAME', 'laravel'), '_') . '_horizon:'
     ),
 
     /*
@@ -108,12 +110,12 @@ return [
     */
 
     'trim' => [
-        'recent' => 60,
-        'pending' => 60,
-        'completed' => 60,
+        'recent'        => 60,
+        'pending'       => 60,
+        'completed'     => 60,
         'recent_failed' => 10080,
-        'failed' => 10080,
-        'monitored' => 10080,
+        'failed'        => 10080,
+        'monitored'     => 10080,
     ],
 
     /*
@@ -129,7 +131,7 @@ return [
 
     'metrics' => [
         'trim_snapshots' => [
-            'job' => 24,
+            'job'   => 24,
             'queue' => 24,
         ],
     ],
@@ -175,13 +177,13 @@ return [
 
     'defaults' => [
         'supervisor-1' => [
-            'connection' => 'redis',
-            'queue' => ['default'],
-            'balance' => 'auto',
+            'connection'   => 'redis',
+            'queue'        => ['default'],
+            'balance'      => 'auto',
             'maxProcesses' => 1,
-            'memory' => 128,
-            'tries' => 1,
-            'nice' => 0,
+            'memory'       => 128,
+            'tries'        => 1,
+            'nice'         => 0,
         ],
     ],
 
@@ -189,186 +191,186 @@ return [
         'production' => [
             'supervisor-1' => [
                 'connection' => 'redis',
-                'queue' => [
+                'queue'      => [
                     'default',
                 ],
-                'balance' => 'simple',
+                'balance'   => 'simple',
                 'processes' => 10,
-                'tries' => 1,
-                'timeout' => 60,
+                'tries'     => 1,
+                'timeout'   => 60,
             ],
             'supervisor-2' => [
                 'connection' => 'redis',
-                'queue' => [
+                'queue'      => [
                     'dispatchers',
                 ],
-                'balance' => 'simple',
+                'balance'   => 'simple',
                 'processes' => 25,
-                'tries' => 1,
-                'timeout' => 0,
+                'tries'     => 1,
+                'timeout'   => 0,
             ],
             'supervisor-3' => [
                 'connection' => 'redis',
-                'queue' => [
+                'queue'      => [
                     'support_ticket_import',
                 ],
-                'balance' => 'simple',
+                'balance'   => 'simple',
                 'processes' => 10,
-                'tries' => 1,
-                'timeout' => 3600,
+                'tries'     => 1,
+                'timeout'   => 3600,
             ],
             'supervisor-4' => [
                 'connection' => 'redis',
-                'queue' => [
+                'queue'      => [
                     'invoice_reminders',
                 ],
-                'balance' => 'simple',
+                'balance'   => 'simple',
                 'processes' => 10,
-                'tries' => 1,
-                'timeout' => 3600,
+                'tries'     => 1,
+                'timeout'   => 3600,
             ],
             'supervisor-5' => [
                 'connection' => 'redis',
-                'queue' => [
+                'queue'      => [
                     'shop_orders',
                 ],
-                'balance' => 'simple',
+                'balance'   => 'simple',
                 'processes' => 10,
-                'tries' => 1,
-                'timeout' => 3600,
+                'tries'     => 1,
+                'timeout'   => 3600,
             ],
             'supervisor-6' => [
                 'connection' => 'redis',
-                'queue' => [
+                'queue'      => [
                     'shop_order_setups',
                 ],
-                'balance' => 'simple',
+                'balance'   => 'simple',
                 'processes' => 50,
-                'tries' => 1,
-                'timeout' => 3600,
+                'tries'     => 1,
+                'timeout'   => 3600,
             ],
             'supervisor-7' => [
                 'connection' => 'redis',
-                'queue' => [
+                'queue'      => [
                     'shop_order_removals',
                 ],
-                'balance' => 'simple',
+                'balance'   => 'simple',
                 'processes' => 50,
-                'tries' => 1,
-                'timeout' => 3600,
+                'tries'     => 1,
+                'timeout'   => 3600,
             ],
             'supervisor-8' => [
                 'connection' => 'redis',
-                'queue' => [
+                'queue'      => [
                     'auto_migrations',
                 ],
-                'balance' => 'simple',
+                'balance'   => 'simple',
                 'processes' => 50,
-                'tries' => 1,
-                'timeout' => 3600,
+                'tries'     => 1,
+                'timeout'   => 3600,
             ],
             'supervisor-9' => [
                 'connection' => 'redis',
-                'queue' => [
+                'queue'      => [
                     'invoice_import',
                 ],
-                'balance' => 'simple',
+                'balance'   => 'simple',
                 'processes' => 10,
-                'tries' => 1,
-                'timeout' => 3600,
+                'tries'     => 1,
+                'timeout'   => 3600,
             ],
         ],
 
         'local' => [
             'supervisor-1' => [
                 'connection' => 'redis',
-                'queue' => [
+                'queue'      => [
                     'default',
                 ],
-                'balance' => 'simple',
+                'balance'   => 'simple',
                 'processes' => 1,
-                'tries' => 1,
-                'timeout' => 60,
+                'tries'     => 1,
+                'timeout'   => 60,
             ],
             'supervisor-2' => [
                 'connection' => 'redis',
-                'queue' => [
+                'queue'      => [
                     'dispatchers',
                 ],
-                'balance' => 'simple',
+                'balance'   => 'simple',
                 'processes' => 5,
-                'tries' => 1,
-                'timeout' => 0,
+                'tries'     => 1,
+                'timeout'   => 0,
             ],
             'supervisor-3' => [
                 'connection' => 'redis',
-                'queue' => [
+                'queue'      => [
                     'support_ticket_import',
                 ],
-                'balance' => 'simple',
+                'balance'   => 'simple',
                 'processes' => 1,
-                'tries' => 1,
-                'timeout' => 3600,
+                'tries'     => 1,
+                'timeout'   => 3600,
             ],
             'supervisor-4' => [
                 'connection' => 'redis',
-                'queue' => [
+                'queue'      => [
                     'invoice_reminders',
                 ],
-                'balance' => 'simple',
+                'balance'   => 'simple',
                 'processes' => 1,
-                'tries' => 1,
-                'timeout' => 3600,
+                'tries'     => 1,
+                'timeout'   => 3600,
             ],
             'supervisor-5' => [
                 'connection' => 'redis',
-                'queue' => [
+                'queue'      => [
                     'shop_orders',
                 ],
-                'balance' => 'simple',
+                'balance'   => 'simple',
                 'processes' => 1,
-                'tries' => 1,
-                'timeout' => 3600,
+                'tries'     => 1,
+                'timeout'   => 3600,
             ],
             'supervisor-6' => [
                 'connection' => 'redis',
-                'queue' => [
+                'queue'      => [
                     'shop_order_setups',
                 ],
-                'balance' => 'simple',
+                'balance'   => 'simple',
                 'processes' => 5,
-                'tries' => 1,
-                'timeout' => 3600,
+                'tries'     => 1,
+                'timeout'   => 3600,
             ],
             'supervisor-7' => [
                 'connection' => 'redis',
-                'queue' => [
+                'queue'      => [
                     'shop_order_removals',
                 ],
-                'balance' => 'simple',
+                'balance'   => 'simple',
                 'processes' => 5,
-                'tries' => 1,
-                'timeout' => 3600,
+                'tries'     => 1,
+                'timeout'   => 3600,
             ],
             'supervisor-8' => [
                 'connection' => 'redis',
-                'queue' => [
+                'queue'      => [
                     'auto_migrations',
                 ],
-                'balance' => 'simple',
+                'balance'   => 'simple',
                 'processes' => 5,
-                'tries' => 1,
-                'timeout' => 3600,
+                'tries'     => 1,
+                'timeout'   => 3600,
             ],
             'supervisor-9' => [
                 'connection' => 'redis',
-                'queue' => [
+                'queue'      => [
                     'invoice_import',
                 ],
-                'balance' => 'simple',
+                'balance'   => 'simple',
                 'processes' => 1,
-                'tries' => 1,
-                'timeout' => 3600,
+                'tries'     => 1,
+                'timeout'   => 3600,
             ],
         ],
     ],

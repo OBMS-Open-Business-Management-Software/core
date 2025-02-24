@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Helpers\PaymentGateways;
@@ -25,8 +27,6 @@ class PaymentController extends Controller
      * Check payment response pingback.
      *
      * @param Request $request
-     *
-     * @return void
      */
     public function pingback(Request $request): void
     {
@@ -82,8 +82,6 @@ class PaymentController extends Controller
      * Initialize a deposit payment.
      *
      * @param Request $request
-     *
-     * @return void
      */
     public function customer_initialize_deposit(Request $request): RedirectResponse
     {

@@ -13,7 +13,8 @@ class HorizonUniqueConnector extends RedisConnector
     /**
      * Establish a queue connection.
      *
-     * @param  array  $config
+     * @param array $config
+     *
      * @return Queue
      */
     public function connect(array $config)

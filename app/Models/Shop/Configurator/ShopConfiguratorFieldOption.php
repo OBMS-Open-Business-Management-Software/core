@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\Shop\Configurator;
 
 use Carbon\Carbon;
@@ -8,22 +10,21 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class ShopConfiguratorFieldOption
+ * Class ShopConfiguratorFieldOption.
  *
  * This class is the model for basic shop configurator field option metadata.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *
- * @property int $id
- * @property int|null $field_id
- * @property string $label
- * @property string $value
- * @property double|null $amount
- * @property bool $default
- * @property Carbon $created_at
- * @property Carbon $updated_at
- * @property Carbon $deleted_at
- *
+ * @property int                        $id
+ * @property int|null                   $field_id
+ * @property string                     $label
+ * @property string                     $value
+ * @property float|null                 $amount
+ * @property bool                       $default
+ * @property Carbon                     $created_at
+ * @property Carbon                     $updated_at
+ * @property Carbon                     $deleted_at
  * @property ShopConfiguratorField|null $field
  */
 class ShopConfiguratorFieldOption extends Model
@@ -33,7 +34,7 @@ class ShopConfiguratorFieldOption extends Model
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var string[]|bool
+     * @var bool|string[]
      */
     protected $guarded = [
         'id',

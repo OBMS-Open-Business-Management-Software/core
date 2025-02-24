@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Webdav;
 
 use App\Helpers\Filemanager;
@@ -10,8 +12,6 @@ use Sabre\DAV\File as Framework;
 
 /**
  * Class File.
- *
- * @package App\Webdav
  */
 class File extends Framework
 {
@@ -46,8 +46,6 @@ class File extends Framework
      *
      * @param resource|string $data
      *
-     * @return void
-     *
      * @throws NotFound
      */
     public function put($data): void
@@ -64,7 +62,7 @@ class File extends Framework
         }
 
         $fileOrFolder->update([
-            "data" => $data,
+            'data' => $data,
         ]);
     }
 
@@ -81,9 +79,9 @@ class File extends Framework
     /**
      * Get file.
      *
-     * @return string
-     *
      * @throws NotFound
+     *
+     * @return string
      */
     public function get(): string
     {
@@ -100,9 +98,9 @@ class File extends Framework
     /**
      * Get file size.
      *
-     * @return int
-     *
      * @throws NotFound
+     *
+     * @return int
      */
     public function getSize(): int
     {
@@ -119,9 +117,9 @@ class File extends Framework
     /**
      * Get file hash.
      *
-     * @return string
-     *
      * @throws NotFound
+     *
+     * @return string
      */
     public function getETag()
     {
@@ -138,9 +136,9 @@ class File extends Framework
     /**
      * Get file last modification timestamp.
      *
-     * @return int
-     *
      * @throws NotFound
+     *
+     * @return int
      */
     public function getLastModified(): int
     {
@@ -159,7 +157,7 @@ class File extends Framework
      *
      * @param string $name
      *
-     * @throws NotFound|Exception
+     * @throws Exception|NotFound
      */
     public function setName($name)
     {
@@ -180,7 +178,7 @@ class File extends Framework
         }
 
         $fileOrFolder->update([
-            "name" => $name,
+            'name' => $name,
         ]);
     }
 }

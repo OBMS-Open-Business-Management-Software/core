@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\Accounting;
 
 use App\Models\Accounting\Contract\ContractPosition;
@@ -14,36 +16,35 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class Position
+ * Class Position.
  *
  * This class is the model for basic position metadata.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *
- * @property int $id
- * @property int|null $order_id
- * @property int|null $product_id
- * @property int|null $discount_id
- * @property string $name
- * @property string $description
- * @property double $amount
- * @property int $vat_percentage
- * @property double $quantity
- * @property Carbon $created_at
- * @property Carbon $updated_at
- * @property Carbon $deleted_at
- *
- * @property PositionDiscount|null $discount
- * @property Product|null $product
- * @property Order|null $order
- * @property Collection<InvoicePosition> $invoicePositions
+ * @property int                          $id
+ * @property int|null                     $order_id
+ * @property int|null                     $product_id
+ * @property int|null                     $discount_id
+ * @property string                       $name
+ * @property string                       $description
+ * @property float                        $amount
+ * @property int                          $vat_percentage
+ * @property float                        $quantity
+ * @property Carbon                       $created_at
+ * @property Carbon                       $updated_at
+ * @property Carbon                       $deleted_at
+ * @property PositionDiscount|null        $discount
+ * @property Product|null                 $product
+ * @property Order|null                   $order
+ * @property Collection<InvoicePosition>  $invoicePositions
  * @property Collection<ContractPosition> $contractPositions
- * @property float $netSum
- * @property float $grossSum
- * @property float $vatSum
- * @property float $discountNetSum
- * @property float $discountGrossSum
- * @property float $discountVatSum
+ * @property float                        $netSum
+ * @property float                        $grossSum
+ * @property float                        $vatSum
+ * @property float                        $discountNetSum
+ * @property float                        $discountGrossSum
+ * @property float                        $discountVatSum
  */
 class Position extends Model
 {
@@ -52,7 +53,7 @@ class Position extends Model
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var string[]|bool
+     * @var bool|string[]
      */
     protected $guarded = [
         'id',
@@ -153,10 +154,12 @@ class Position extends Model
             switch ($discount->type) {
                 case 'percentage':
                     $value = $this->netSum * ($this->discount->amount / 100);
+
                     break;
                 case 'fixed':
                 default:
                     $value = $this->discount->amount;
+
                     break;
             }
         }
@@ -178,10 +181,12 @@ class Position extends Model
             switch ($discount->type) {
                 case 'percentage':
                     $value = $this->grossSum * ($this->discount->amount / 100);
+
                     break;
                 case 'fixed':
                 default:
                     $value = $this->discount->amount * (1 + ($this->vat_percentage / 100));
+
                     break;
             }
         }

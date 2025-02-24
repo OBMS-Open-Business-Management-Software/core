@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\FileManager;
 
 use Carbon\Carbon;
@@ -7,19 +9,19 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class Lock
+ * Class Lock.
  *
  * This class is the model for basic WebDAV lock metadata.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *
- * @property int $id
+ * @property int    $id
  * @property string $owner
- * @property int $timeout
- * @property int $created
+ * @property int    $timeout
+ * @property int    $created
  * @property string $token
  * @property string $scope
- * @property int $depth
+ * @property int    $depth
  * @property string $uri
  * @property Carbon $created_at
  * @property Carbon $updated_at
@@ -39,7 +41,7 @@ class Lock extends Model
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var string[]|bool
+     * @var bool|string[]
      */
     protected $guarded = [
         'id',

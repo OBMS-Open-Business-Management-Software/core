@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\Shop\Configurator;
 
 use Carbon\Carbon;
@@ -10,26 +12,25 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class ShopConfiguratorCategory
+ * Class ShopConfiguratorCategory.
  *
  * This class is the model for basic shop configurator category metadata.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *
- * @property int $id
- * @property int|null $category_id
- * @property string $route
- * @property string $name
- * @property string $description
- * @property bool $public
- * @property Carbon $created_at
- * @property Carbon $updated_at
- * @property Carbon $deleted_at
- *
- * @property ShopConfiguratorCategory|null $category
- * @property Collection<ShopConfiguratorForm> $forms
+ * @property int                                  $id
+ * @property int|null                             $category_id
+ * @property string                               $route
+ * @property string                               $name
+ * @property string                               $description
+ * @property bool                                 $public
+ * @property Carbon                               $created_at
+ * @property Carbon                               $updated_at
+ * @property Carbon                               $deleted_at
+ * @property ShopConfiguratorCategory|null        $category
+ * @property Collection<ShopConfiguratorForm>     $forms
  * @property Collection<ShopConfiguratorCategory> $categories
- * @property string $fullRoute
+ * @property string                               $fullRoute
  */
 class ShopConfiguratorCategory extends Model
 {
@@ -38,7 +39,7 @@ class ShopConfiguratorCategory extends Model
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var string[]|bool
+     * @var bool|string[]
      */
     protected $guarded = [
         'id',

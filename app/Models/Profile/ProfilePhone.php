@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\Profile;
 
 use Carbon\Carbon;
@@ -8,20 +10,19 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class ProfilePhone
+ * Class ProfilePhone.
  *
  * This class is the model for linking profile with phone numbers.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *
- * @property int $id
- * @property int $profile_id
- * @property string $phone
- * @property string $type
- * @property Carbon $created_at
- * @property Carbon $updated_at
- * @property Carbon $deleted_at
- *
+ * @property int          $id
+ * @property int          $profile_id
+ * @property string       $phone
+ * @property string       $type
+ * @property Carbon       $created_at
+ * @property Carbon       $updated_at
+ * @property Carbon       $deleted_at
  * @property Profile|null $profile
  */
 class ProfilePhone extends Model
@@ -38,7 +39,7 @@ class ProfilePhone extends Model
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var string[]|bool
+     * @var bool|string[]
      */
     protected $guarded = [
         'id',

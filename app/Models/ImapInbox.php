@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Traits\Encryptable;
@@ -8,13 +10,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class ImapInbox
+ * Class ImapInbox.
  *
  * This class is the model for basic IMAP inbox metadata.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *
- * @property int $id
+ * @property int    $id
  * @property string $host
  * @property string $username
  * @property string $password
@@ -22,7 +24,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $protocol
  * @property string $validate_cert
  * @property string $folder
- * @property bool $delete_after_import
+ * @property bool   $delete_after_import
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * @property Carbon $deleted_at
@@ -35,7 +37,7 @@ class ImapInbox extends Model
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var string[]|bool
+     * @var bool|string[]
      */
     protected $guarded = [
         'id',
@@ -53,7 +55,7 @@ class ImapInbox extends Model
     /**
      * The attributes that are encryptable.
      *
-     * @var string[]|bool
+     * @var bool|string[]
      */
     protected $encryptable = [
         'host',

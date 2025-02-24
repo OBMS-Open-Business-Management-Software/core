@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Webdav;
 
 use App\Helpers\Filemanager;
@@ -15,8 +17,6 @@ use Sabre\DAV\Exception\NotFound;
 
 /**
  * Class Directory.
- *
- * @package App\Webdav
  */
 class Directory extends Collection
 {
@@ -27,7 +27,7 @@ class Directory extends Collection
      *
      * @param string $myPath
      */
-    public function __construct(string $myPath = "")
+    public function __construct(string $myPath = '')
     {
         $this->myPath = $myPath;
     }
@@ -57,9 +57,9 @@ class Directory extends Collection
      *
      * @param string $name
      *
-     * @return WebdavDirectory|WebdavFile
-     *
      * @throws NotFound
+     *
+     * @return WebdavDirectory|WebdavFile
      */
     public function getChild($name)
     {
@@ -106,18 +106,16 @@ class Directory extends Collection
      * Create file in folder.
      *
      * @param string $name
-     * @param mixed $data
+     * @param mixed  $data
      *
-     * @return void
-     *
-     * @throws NotFound|Exception
+     * @throws Exception|NotFound
      */
     public function createFile($name, $data = null): void
     {
         $fileOrFolder = Filemanager::resolve($this->myPath);
 
         if (! empty($data)) {
-            $data = stream_get_contents($data, -1);
+            $data     = stream_get_contents($data, -1);
             $fileInfo = new finfo(FILEINFO_MIME_TYPE);
             $mimeType = $fileInfo->buffer($data);
         } else {
@@ -133,12 +131,12 @@ class Directory extends Collection
         }
 
         File::create([
-            'user_id' => ! empty($request->private) ? Auth::id() : null,
+            'user_id'   => ! empty($request->private) ? Auth::id() : null,
             'folder_id' => $fileOrFolder->id ?? null,
-            'name' => $name,
-            'data' => $data,
-            'mime' => $mimeType,
-            'size' => strlen($data) ?? 0,
+            'name'      => $name,
+            'data'      => $data,
+            'mime'      => $mimeType,
+            'size'      => strlen($data) ?? 0,
         ]);
     }
 
@@ -152,7 +150,7 @@ class Directory extends Collection
         $fileOrFolder = Filemanager::resolve($this->myPath);
 
         Folder::updateOrCreate([
-            'name' => $name,
+            'name'      => $name,
             'parent_id' => $fileOrFolder->id ?? 0,
         ]);
     }
@@ -179,7 +177,7 @@ class Directory extends Collection
      *
      * @param string $name
      *
-     * @throws NotFound|Exception
+     * @throws Exception|NotFound
      */
     public function setName($name): void
     {

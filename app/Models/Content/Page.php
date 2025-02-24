@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\Content;
 
 use Carbon\Carbon;
@@ -10,24 +12,23 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class Page
+ * Class Page.
  *
  * This class is the model for basic page metadata.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *
- * @property int $id
- * @property string $route
- * @property string $title
- * @property bool $must_accept
- * @property bool $navigation_item
- * @property Carbon $created_at
- * @property Carbon $updated_at
- * @property Carbon $deleted_at
- *
- * @property Collection<PageVersion> $versions
+ * @property int                        $id
+ * @property string                     $route
+ * @property string                     $title
+ * @property bool                       $must_accept
+ * @property bool                       $navigation_item
+ * @property Carbon                     $created_at
+ * @property Carbon                     $updated_at
+ * @property Carbon                     $deleted_at
+ * @property Collection<PageVersion>    $versions
  * @property Collection<PageAcceptance> $acceptance
- * @property PageVersion $latest
+ * @property PageVersion                $latest
  *
  * @method static Builder acceptable()
  * @method static Builder navigateable()
@@ -39,7 +40,7 @@ class Page extends Model
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var string[]|bool
+     * @var bool|string[]
      */
     protected $guarded = [
         'id',
@@ -51,7 +52,7 @@ class Page extends Model
      * @var array
      */
     protected $casts = [
-        'must_accept' => 'bool',
+        'must_accept'     => 'bool',
         'navigation_item' => 'bool',
     ];
 

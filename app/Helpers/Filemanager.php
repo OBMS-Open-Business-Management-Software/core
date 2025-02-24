@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Helpers;
 
 use App\Models\FileManager\File;
@@ -12,23 +14,23 @@ class Filemanager
      * Resolve a path to either a Folder or File object. If no matching object
      * could be found a null value will be returned.
      *
-     * @param string $path
+     * @param string      $path
      * @param Folder|null $parent
      *
-     * @return Folder|File|null
+     * @return File|Folder|null
      */
     public static function resolve(string $path, ?Folder $parent = null)
     {
-        $path = trim($path, '/');
+        $path     = trim($path, '/');
         $segments = explode('/', $path);
-        $segment = $segments[0];
+        $segment  = $segments[0];
 
         $folder = Folder::where('name', '=', $segment);
-        $file = File::where('name', '=', $segment);
+        $file   = File::where('name', '=', $segment);
 
         if (! empty($parent)) {
             $folder = $folder->where('parent_id', '=', $parent->id);
-            $file = $file->where('folder_id', '=', $parent->id);
+            $file   = $file->where('folder_id', '=', $parent->id);
         } else {
             $folder = $folder->where(function (Builder $builder) {
                 return $builder->where('parent_id', '=', 0)

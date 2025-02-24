@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\UsageTracker;
 
 use App\Models\Accounting\Contract\Contract;
@@ -12,25 +14,23 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class TrackerInstance
+ * Class TrackerInstance.
  *
  * This class is the model for tracker instance metadata.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *
- * @property int $id
- * @property int $contract_id
- * @property int|null $contract_position_id
- * @property int $tracker_id
- * @property Carbon $created_at
- * @property Carbon $updated_at
- * @property Carbon $deleted_at
- *
- * @property Contract|null $contract
+ * @property int                   $id
+ * @property int                   $contract_id
+ * @property int|null              $contract_position_id
+ * @property int                   $tracker_id
+ * @property Carbon                $created_at
+ * @property Carbon                $updated_at
+ * @property Carbon                $deleted_at
+ * @property Contract|null         $contract
  * @property ContractPosition|null $contractPosition
- * @property Tracker|null $tracker
- *
- * @property float|null $vat_percentage
+ * @property Tracker|null          $tracker
+ * @property float|null            $vat_percentage
  */
 class TrackerInstance extends Model
 {
@@ -40,7 +40,7 @@ class TrackerInstance extends Model
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var string[]|bool
+     * @var bool|string[]
      */
     protected $guarded = [
         'id',
@@ -115,15 +115,15 @@ class TrackerInstance extends Model
     /**
      * Calculate billable net amount.
      *
-     * @param Carbon $from
-     * @param Carbon $to
+     * @param Carbon      $from
+     * @param Carbon      $to
      * @param object|null $position
      *
      * @return float
      */
     public function calculate(Carbon $from, Carbon $to, ?object &$position = null): float
     {
-        $amount = 0;
+        $amount      = 0;
         $description = __($this->tracker->description);
 
         if ($this->tracker->items->isNotEmpty()) {
@@ -145,21 +145,26 @@ class TrackerInstance extends Model
                         ) {
                             $amount += $item->amount;
                         }
+
                         break;
                     case 'integer':
                     case 'double':
                         switch ($item->process) {
                             case 'min':
                                 $value = $data->min();
+
                                 break;
                             case 'median':
                                 $value = $data->median();
+
                                 break;
                             case 'average':
                                 $value = $data->average();
+
                                 break;
                             case 'max':
                                 $value = $data->max();
+
                                 break;
                             default:
                                 $value = $data->last();
@@ -209,11 +214,11 @@ class TrackerInstance extends Model
             $description .= '<br><br><ul>';
 
             $position = (object) [
-                'name' => __($this->tracker->name),
-                'description' => $description,
-                'amount' => $amount,
+                'name'           => __($this->tracker->name),
+                'description'    => $description,
+                'amount'         => $amount,
                 'vat_percentage' => $this->vat_percentage,
-                'quantity' => 1,
+                'quantity'       => 1,
             ];
         }
 

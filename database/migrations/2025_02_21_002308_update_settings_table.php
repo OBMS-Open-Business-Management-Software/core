@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Models\Setting;
 use Carbon\Carbon;
 use Illuminate\Database\Migrations\Migration;
@@ -7,8 +9,6 @@ use Illuminate\Database\Migrations\Migration;
 return new class () extends Migration {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
@@ -16,14 +16,14 @@ return new class () extends Migration {
 
         Setting::insert([
             [
-                'setting' => 'passport.private_key',
-                'value' => null,
+                'setting'    => 'passport.private_key',
+                'value'      => null,
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,
             ],
             [
-                'setting' => 'passport.public_key',
-                'value' => null,
+                'setting'    => 'passport.public_key',
+                'value'      => null,
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,
             ],
@@ -32,8 +32,6 @@ return new class () extends Migration {
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {

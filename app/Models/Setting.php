@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Traits\Encryptable;
@@ -8,13 +10,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class Setting
+ * Class Setting.
  *
  * This class is the model for basic application setting metadata.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *
- * @property int $id
+ * @property int    $id
  * @property string $setting
  * @property string $value
  * @property Carbon $created_at
@@ -29,7 +31,7 @@ class Setting extends Model
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var string[]|bool
+     * @var bool|string[]
      */
     protected $guarded = [
         'id',
@@ -38,7 +40,7 @@ class Setting extends Model
     /**
      * The attributes that are encryptable.
      *
-     * @var string[]|bool
+     * @var bool|string[]
      */
     protected $encryptable = [
         'value',

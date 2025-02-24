@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Jobs\TenantJobs;
 
 use App\Helpers\Products;
@@ -14,7 +16,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
 /**
- * Class ShopOrderQueueSetup
+ * Class ShopOrderQueueSetup.
  *
  * This class is the tenant job for processing orders of a specific type.
  *
@@ -25,7 +27,9 @@ class ShopOrderQueueSetup extends TenantJob
     use UniquelyQueueable;
 
     public $tries = 1;
+
     public $timeout = 3600;
+
     public static $onQueue = 'shop_order_setups';
 
     private string $type;
@@ -62,7 +66,7 @@ class ShopOrderQueueSetup extends TenantJob
                 ->where('deleted', '=', false)
                 ->where('fails', '<', 3)
                 ->each(function (ShopOrderQueue $queueItem) {
-                    $fields = collect();
+                    $fields          = collect();
                     $validationRules = [];
 
                     $queueItem->fields->each(function (ShopOrderQueueField $queueField) use ($queueItem, &$fields, &$validationRules) {
@@ -93,6 +97,7 @@ class ShopOrderQueueSetup extends TenantJob
                                     if (! empty($field->step)) {
                                         $rules[] = 'multiple_of:' . $field->step;
                                     }
+
                                     break;
                                 case 'input_radio':
                                 case 'input_radio_image':
@@ -106,11 +111,13 @@ class ShopOrderQueueSetup extends TenantJob
                                     }
 
                                     $rules[] = Rule::in($availableOptions);
+
                                     break;
                                 case 'input_text':
                                 case 'textarea':
                                 default:
                                     $rules[] = 'string';
+
                                     break;
                             }
 
@@ -123,33 +130,33 @@ class ShopOrderQueueSetup extends TenantJob
 
                         $queueItem->update([
                             'verified' => false,
-                            'invalid' => true,
-                            'fails' => $fails,
+                            'invalid'  => true,
+                            'fails'    => $fails,
                         ]);
 
                         ShopOrderQueueHistory::create([
                             'order_id' => $queueItem->id,
-                            'type' => 'warning',
-                            'message' => 'Field validation failed.',
+                            'type'     => 'warning',
+                            'message'  => 'Field validation failed.',
                         ]);
 
                         if ($fails >= 3) {
                             ShopOrderQueueHistory::create([
                                 'order_id' => $queueItem->id,
-                                'type' => 'danger',
-                                'message' => 'Setup failed and won\'t be executed again.',
+                                'type'     => 'danger',
+                                'message'  => 'Setup failed and won\'t be executed again.',
                             ]);
                         }
                     } else {
                         $queueItem->update([
                             'verified' => true,
-                            'invalid' => false,
+                            'invalid'  => false,
                         ]);
 
                         ShopOrderQueueHistory::create([
                             'order_id' => $queueItem->id,
-                            'type' => 'success',
-                            'message' => 'Field validation succeeded.',
+                            'type'     => 'success',
+                            'message'  => 'Field validation succeeded.',
                         ]);
                     }
                 });
@@ -161,7 +168,7 @@ class ShopOrderQueueSetup extends TenantJob
                 ->where('disapproved', '=', false)
                 ->where('setup', '=', false)
                 ->where('fails', '<', 3)
-                ->each(function (ShopOrderQueue $queueItem) use ($handler) {
+                ->each(function (ShopOrderQueue $queueItem) {
                     try {
                         $contractExisted = false;
 
@@ -173,22 +180,22 @@ class ShopOrderQueueSetup extends TenantJob
                             if (! $contractExisted) {
                                 ShopOrderQueueHistory::create([
                                     'order_id' => $queueItem->id,
-                                    'type' => 'success',
-                                    'message' => 'Contract creation succeeded.',
+                                    'type'     => 'success',
+                                    'message'  => 'Contract creation succeeded.',
                                 ]);
                             } else {
                                 ShopOrderQueueHistory::create([
                                     'order_id' => $queueItem->id,
-                                    'type' => 'warning',
-                                    'message' => 'Contract already exists. Skipping...',
+                                    'type'     => 'warning',
+                                    'message'  => 'Contract already exists. Skipping...',
                                 ]);
                             }
 
                             if ($queueItem->createProduct()) {
                                 ShopOrderQueueHistory::create([
                                     'order_id' => $queueItem->id,
-                                    'type' => 'success',
-                                    'message' => 'Product creation succeeded.',
+                                    'type'     => 'success',
+                                    'message'  => 'Product creation succeeded.',
                                 ]);
 
                                 if ($contract->start()) {
@@ -198,16 +205,16 @@ class ShopOrderQueueSetup extends TenantJob
 
                                     ShopOrderQueueHistory::create([
                                         'order_id' => $queueItem->id,
-                                        'type' => 'warning',
-                                        'message' => 'Contract starting process succeeded.',
+                                        'type'     => 'warning',
+                                        'message'  => 'Contract starting process succeeded.',
                                     ]);
                                 } else {
                                     $fails = $queueItem->fails + 1;
 
                                     ShopOrderQueueHistory::create([
                                         'order_id' => $queueItem->id,
-                                        'type' => 'warning',
-                                        'message' => 'Contract starting process failed.',
+                                        'type'     => 'warning',
+                                        'message'  => 'Contract starting process failed.',
                                     ]);
 
                                     $queueItem->update([
@@ -217,8 +224,8 @@ class ShopOrderQueueSetup extends TenantJob
                                     if ($fails >= 3) {
                                         ShopOrderQueueHistory::create([
                                             'order_id' => $queueItem->id,
-                                            'type' => 'danger',
-                                            'message' => 'Setup failed and won\'t be executed again.',
+                                            'type'     => 'danger',
+                                            'message'  => 'Setup failed and won\'t be executed again.',
                                         ]);
 
                                         $queueItem->sendEmailSetupFailedNotification();
@@ -233,15 +240,15 @@ class ShopOrderQueueSetup extends TenantJob
 
                                 ShopOrderQueueHistory::create([
                                     'order_id' => $queueItem->id,
-                                    'type' => 'warning',
-                                    'message' => 'Product creation failed.',
+                                    'type'     => 'warning',
+                                    'message'  => 'Product creation failed.',
                                 ]);
 
                                 if ($fails >= 3) {
                                     ShopOrderQueueHistory::create([
                                         'order_id' => $queueItem->id,
-                                        'type' => 'danger',
-                                        'message' => 'Setup failed and won\'t be executed again.',
+                                        'type'     => 'danger',
+                                        'message'  => 'Setup failed and won\'t be executed again.',
                                     ]);
 
                                     $queueItem->sendEmailSetupFailedNotification();
@@ -252,8 +259,8 @@ class ShopOrderQueueSetup extends TenantJob
 
                             ShopOrderQueueHistory::create([
                                 'order_id' => $queueItem->id,
-                                'type' => 'warning',
-                                'message' => 'Contract creation failed.',
+                                'type'     => 'warning',
+                                'message'  => 'Contract creation failed.',
                             ]);
 
                             $queueItem->update([
@@ -263,8 +270,8 @@ class ShopOrderQueueSetup extends TenantJob
                             if ($fails >= 3) {
                                 ShopOrderQueueHistory::create([
                                     'order_id' => $queueItem->id,
-                                    'type' => 'danger',
-                                    'message' => 'Setup failed and won\'t be executed again.',
+                                    'type'     => 'danger',
+                                    'message'  => 'Setup failed and won\'t be executed again.',
                                 ]);
 
                                 $queueItem->sendEmailSetupFailedNotification();
@@ -280,8 +287,8 @@ class ShopOrderQueueSetup extends TenantJob
                         if ($fails >= 3) {
                             ShopOrderQueueHistory::create([
                                 'order_id' => $queueItem->id,
-                                'type' => 'danger',
-                                'message' => 'Setup failed and won\'t be executed again.',
+                                'type'     => 'danger',
+                                'message'  => 'Setup failed and won\'t be executed again.',
                             ]);
 
                             $queueItem->sendEmailSetupFailedNotification();

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Helpers\PaymentGateways;
@@ -29,9 +31,9 @@ class AdminPaymentGatewayController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function gateway_save(Request $request): RedirectResponse
     {
@@ -45,7 +47,7 @@ class AdminPaymentGatewayController extends Controller
             )
         ) {
             $validation = [];
-            $fields = collect();
+            $fields     = collect();
 
             $gateway->parameters()->each(function ($name, $key) use (&$validation, &$fields) {
                 $validation[$key] = ['required'];
@@ -62,7 +64,7 @@ class AdminPaymentGatewayController extends Controller
                     PaymentGatewaySetting::create([
                         'gateway' => $request->gateway,
                         'setting' => $key,
-                        'value' => $value,
+                        'value'   => $value,
                     ]);
                 }
             });

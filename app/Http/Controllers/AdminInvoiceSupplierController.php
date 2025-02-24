@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Helpers\Download;
@@ -50,8 +52,8 @@ class AdminInvoiceSupplierController extends Controller
     public function invoice_details(int $id): Renderable
     {
         return view('admin.invoice.supplier.details', [
-            'invoice' => Invoice::find($id),
-            'types' => InvoiceType::all(),
+            'invoice'   => Invoice::find($id),
+            'types'     => InvoiceType::all(),
             'discounts' => PositionDiscount::all(),
         ]);
     }
@@ -92,10 +94,12 @@ class AdminInvoiceSupplierController extends Controller
                 switch ($request->columns[$order['column']]) {
                     case 'user':
                         $orderBy = 'user_id';
+
                         break;
                     case 'id':
                     default:
                         $orderBy = 'id';
+
                         break;
                 }
 
@@ -109,10 +113,10 @@ class AdminInvoiceSupplierController extends Controller
             ->limit($request->length);
 
         return response()->json([
-            'draw' => (int) $request->draw,
-            'recordsTotal' => $totalCount,
+            'draw'            => (int) $request->draw,
+            'recordsTotal'    => $totalCount,
             'recordsFiltered' => $filteredCount,
-            'data' => $query
+            'data'            => $query
                 ->get()
                 ->transform(function (Invoice $invoice) {
                     switch ($invoice->status) {
@@ -122,22 +126,28 @@ class AdminInvoiceSupplierController extends Controller
                             } else {
                                 $status = '<span class="badge badge-warning">' . __('interface.status.unpaid') . '</span>';
                             }
+
                             break;
                         case 'paid':
                             $status = '<span class="badge badge-success">' . __('interface.status.paid') . '</span>';
+
                             break;
                         case 'refunded':
                             $status = '<span class="badge badge-secondary">' . __('interface.status.refunded') . '</span>';
+
                             break;
                         case 'refund':
                             $status = '<span class="badge badge-info text-white">' . __('interface.actions.refund') . '</span>';
+
                             break;
                         case 'revoked':
                             $status = '<span class="badge badge-secondary">' . __('interface.status.revoked') . '</span>';
+
                             break;
                         case 'template':
                         default:
                             $status = '<span class="badge badge-primary">' . __('interface.status.draft') . '</span>';
+
                             break;
                     }
 
@@ -205,17 +215,17 @@ class AdminInvoiceSupplierController extends Controller
                     }
 
                     return (object) [
-                        'id' => $invoice->number,
-                        'user' => $invoice->user->realName ?? __('interface.misc.not_available'),
+                        'id'     => $invoice->number,
+                        'user'   => $invoice->user->realName ?? __('interface.misc.not_available'),
                         'status' => $status,
-                        'type' => $invoice->type->name ?? __('interface.misc.not_available'),
-                        'date' => ! empty($invoice->archived_at) ? $invoice->archived_at->format('d.m.Y, H:i') : __('interface.misc.not_available'),
-                        'due' => ! empty($invoice->archived_at) ? $invoice->archived_at->addDays($invoice->type->period)->format('d.m.Y') . ', 23:59' : __('interface.misc.not_available'),
-                        'view' => '<a href="' . route('admin.invoices.suppliers.details', $invoice->id) . '" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>',
-                        'edit' => $invoice->status == 'template' ? $edit : '<button type="button" class="btn btn-warning btn-sm" disabled><i class="bi bi-pencil-square"></i></button>',
+                        'type'   => $invoice->type->name ?? __('interface.misc.not_available'),
+                        'date'   => ! empty($invoice->archived_at) ? $invoice->archived_at->format('d.m.Y, H:i') : __('interface.misc.not_available'),
+                        'due'    => ! empty($invoice->archived_at) ? $invoice->archived_at->addDays($invoice->type->period)->format('d.m.Y') . ', 23:59' : __('interface.misc.not_available'),
+                        'view'   => '<a href="' . route('admin.invoices.suppliers.details', $invoice->id) . '" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>',
+                        'edit'   => $invoice->status == 'template' ? $edit : '<button type="button" class="btn btn-warning btn-sm" disabled><i class="bi bi-pencil-square"></i></button>',
                         'delete' => $invoice->status == 'template' ? '<a href="' . route('admin.invoices.suppliers.delete', $invoice->id) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>' : '<button type="button" class="btn btn-danger btn-sm" disabled><i class="bi bi-trash"></i></button>',
                     ];
-                })
+                }),
         ]);
     }
 
@@ -224,16 +234,16 @@ class AdminInvoiceSupplierController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function invoice_add(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
-            'user_id' => ['required', 'integer'],
-            'type_id' => ['required', 'integer'],
-            'name' => ['required', 'string'],
+            'user_id'        => ['required', 'integer'],
+            'type_id'        => ['required', 'integer'],
+            'name'           => ['required', 'string'],
             'reverse_charge' => ['string', 'nullable'],
         ])->validate();
 
@@ -247,22 +257,22 @@ class AdminInvoiceSupplierController extends Controller
             $user->role == 'supplier'
         ) {
             $file = File::create([
-                'user_id' => ! empty($request->private) ? Auth::id() : null,
+                'user_id'   => ! empty($request->private) ? Auth::id() : null,
                 'folder_id' => null,
-                'name' =>  $file->getClientOriginalName(),
-                'data' => $file->getContent(),
-                'mime' => $file->getClientMimeType(),
-                'size' => $file->getSize(),
+                'name'      => $file->getClientOriginalName(),
+                'data'      => $file->getContent(),
+                'mime'      => $file->getClientMimeType(),
+                'size'      => $file->getSize(),
             ]);
 
             if ($file instanceof File) {
                 $invoice = Invoice::create([
-                    'user_id' => $request->user_id,
-                    'type_id' => $request->type_id,
+                    'user_id'        => $request->user_id,
+                    'type_id'        => $request->type_id,
                     'reverse_charge' => (bool) $request->reverse_charge,
-                    'archived' => true,
-                    'file_id' => $file->id,
-                    'name' => $request->name,
+                    'archived'       => true,
+                    'file_id'        => $file->id,
+                    'name'           => $request->name,
                 ]);
 
                 return redirect()->route('admin.invoices.suppliers.details', $invoice->id)->with('success', __('interface.messages.invoice_added'));
@@ -277,17 +287,17 @@ class AdminInvoiceSupplierController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function invoice_update(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
             'invoice_id' => ['required', 'integer'],
-            'user_id' => ['required', 'integer'],
-            'type_id' => ['required', 'integer'],
-            'name' => ['required', 'string'],
+            'user_id'    => ['required', 'integer'],
+            'type_id'    => ['required', 'integer'],
+            'name'       => ['required', 'string'],
         ])->validate();
 
         if (
@@ -297,7 +307,7 @@ class AdminInvoiceSupplierController extends Controller
             $user->role == 'supplier'
         ) {
             $invoice->update([
-                'name' => $request->name,
+                'name'    => $request->name,
                 'user_id' => $request->user_id,
                 'type_id' => $request->type_id,
             ]);
@@ -313,9 +323,9 @@ class AdminInvoiceSupplierController extends Controller
      *
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function invoice_delete(int $id): RedirectResponse
     {
@@ -342,9 +352,9 @@ class AdminInvoiceSupplierController extends Controller
      *
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function invoice_publish(int $id): RedirectResponse
     {
@@ -361,13 +371,13 @@ class AdminInvoiceSupplierController extends Controller
         ) {
             $invoice->update([
                 'archived_at' => Carbon::now(),
-                'status' => 'unpaid',
+                'status'      => 'unpaid',
             ]);
 
             InvoiceHistory::create([
-                'user_id' => Auth::id(),
+                'user_id'    => Auth::id(),
                 'invoice_id' => $invoice->id,
-                'status' => 'publish',
+                'status'     => 'publish',
             ]);
 
             return redirect()->back()->with('success', __('interface.messages.invoice_published'));
@@ -380,8 +390,6 @@ class AdminInvoiceSupplierController extends Controller
      * Download an existing invoice.
      *
      * @param int $id
-     *
-     * @return void
      *
      * @throws ValidationException
      */
@@ -410,9 +418,9 @@ class AdminInvoiceSupplierController extends Controller
      *
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function invoice_revoke(int $id): RedirectResponse
     {
@@ -431,9 +439,9 @@ class AdminInvoiceSupplierController extends Controller
             ]);
 
             InvoiceHistory::create([
-                'user_id' => Auth::id(),
+                'user_id'    => Auth::id(),
                 'invoice_id' => $invoice->id,
-                'status' => 'revoke',
+                'status'     => 'revoke',
             ]);
 
             return redirect()->back()->with('success', __('interface.messages.invoice_revoked'));
@@ -447,9 +455,9 @@ class AdminInvoiceSupplierController extends Controller
      *
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function invoice_paid(int $id): RedirectResponse
     {
@@ -468,15 +476,15 @@ class AdminInvoiceSupplierController extends Controller
             ]);
 
             InvoiceHistory::create([
-                'user_id' => Auth::id(),
+                'user_id'    => Auth::id(),
                 'invoice_id' => $invoice->id,
-                'status' => 'pay',
+                'status'     => 'pay',
             ]);
 
             PrepaidHistory::create([
-                'user_id' => $invoice->user_id,
+                'user_id'    => $invoice->user_id,
                 'invoice_id' => $invoice->id,
-                'amount' => $invoice->grossSumDiscounted,
+                'amount'     => $invoice->grossSumDiscounted,
             ]);
 
             return redirect()->back()->with('success', __('interface.messages.invoice_paid'));
@@ -490,9 +498,9 @@ class AdminInvoiceSupplierController extends Controller
      *
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function invoice_unpaid(int $id): RedirectResponse
     {
@@ -511,15 +519,15 @@ class AdminInvoiceSupplierController extends Controller
             ]);
 
             InvoiceHistory::create([
-                'user_id' => Auth::id(),
+                'user_id'    => Auth::id(),
                 'invoice_id' => $invoice->id,
-                'status' => 'unpay',
+                'status'     => 'unpay',
             ]);
 
             PrepaidHistory::create([
-                'user_id' => $invoice->user_id,
+                'user_id'    => $invoice->user_id,
                 'invoice_id' => $invoice->id,
-                'amount' => $invoice->grossSumDiscounted * (-1),
+                'amount'     => $invoice->grossSumDiscounted * (-1),
             ]);
 
             return redirect()->back()->with('success', __('interface.messages.invoice_unpaid'));
@@ -533,15 +541,15 @@ class AdminInvoiceSupplierController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function invoice_refund(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
             'invoice_id' => ['required', 'integer'],
-            'name' => ['required', 'string'],
+            'name'       => ['required', 'string'],
         ])->validate();
 
         /* @var UploadedFile|null $file */
@@ -555,27 +563,27 @@ class AdminInvoiceSupplierController extends Controller
             $invoice->status == 'paid'
         ) {
             $file = File::create([
-                'user_id' => ! empty($request->private) ? Auth::id() : null,
+                'user_id'   => ! empty($request->private) ? Auth::id() : null,
                 'folder_id' => null,
-                'name' =>  $file->getClientOriginalName(),
-                'data' => $file->getContent(),
-                'mime' => $file->getClientMimeType(),
-                'size' => $file->getSize(),
+                'name'      => $file->getClientOriginalName(),
+                'data'      => $file->getContent(),
+                'mime'      => $file->getClientMimeType(),
+                'size'      => $file->getSize(),
             ]);
 
             if ($file instanceof File) {
                 $revokationInvoice = $invoice->refund('refunded', $file, $request->name, true);
 
                 InvoiceHistory::create([
-                    'user_id' => Auth::id(),
+                    'user_id'    => Auth::id(),
                     'invoice_id' => $invoice->id,
-                    'status' => 'refund',
+                    'status'     => 'refund',
                 ]);
 
                 PrepaidHistory::create([
-                    'user_id' => $invoice->user_id,
+                    'user_id'    => $invoice->user_id,
                     'invoice_id' => $invoice->id,
-                    'amount' => $invoice->grossSumDiscounted * (-1),
+                    'amount'     => $invoice->grossSumDiscounted * (-1),
                 ]);
 
                 return redirect()->route('admin.invoices.suppliers.details', $revokationInvoice->id)->with('success', __('interface.messages.invoice_refunded'));
@@ -590,26 +598,26 @@ class AdminInvoiceSupplierController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function invoice_positions_add(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
-            'invoice_id' => ['required', 'integer'],
-            'name' => ['required', 'string'],
-            'description' => ['required', 'string'],
-            'amount' => ['required', 'numeric'],
+            'invoice_id'     => ['required', 'integer'],
+            'name'           => ['required', 'string'],
+            'description'    => ['required', 'string'],
+            'amount'         => ['required', 'numeric'],
             'vat_percentage' => ['nullable', 'numeric'],
-            'quantity' => ['required', 'numeric'],
-            'discount_id' => ['nullable', 'integer'],
+            'quantity'       => ['required', 'numeric'],
+            'discount_id'    => ['nullable', 'integer'],
         ])->validate();
 
         if (! empty($request->service_runtime)) {
             Validator::make($request->toArray(), [
                 'started_at' => ['required', 'string'],
-                'ended_at' => ['required', 'string'],
+                'ended_at'   => ['required', 'string'],
             ])->validate();
         }
 
@@ -619,19 +627,19 @@ class AdminInvoiceSupplierController extends Controller
             $invoice->status == 'template'
         ) {
             $position = Position::create([
-                'discount_id' => ! empty($request->discount_id) ? $request->discount_id : null,
-                'name' => $request->name,
-                'description' => $request->description,
-                'amount' => $request->amount,
+                'discount_id'    => ! empty($request->discount_id) ? $request->discount_id : null,
+                'name'           => $request->name,
+                'description'    => $request->description,
+                'amount'         => $request->amount,
                 'vat_percentage' => ! empty($request->vat_percentage) ? $request->vat_percentage : 0,
-                'quantity' => $request->quantity,
+                'quantity'       => $request->quantity,
             ]);
 
             InvoicePosition::create([
-                'invoice_id' => $request->invoice_id,
+                'invoice_id'  => $request->invoice_id,
                 'position_id' => $position->id,
-                'started_at' => ! empty($request->service_runtime) ? Carbon::parse($request->started_at) : null,
-                'ended_at' => ! empty($request->service_runtime) ? Carbon::parse($request->ended_at) : null,
+                'started_at'  => ! empty($request->service_runtime) ? Carbon::parse($request->started_at) : null,
+                'ended_at'    => ! empty($request->service_runtime) ? Carbon::parse($request->ended_at) : null,
             ]);
 
             return redirect()->back()->with('success', __('interface.messages.invoice_position_added'));
@@ -645,26 +653,26 @@ class AdminInvoiceSupplierController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function invoice_positions_update(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
-            'position_id' => ['required', 'integer'],
-            'name' => ['required', 'string'],
-            'description' => ['required', 'string'],
-            'amount' => ['required', 'numeric'],
+            'position_id'    => ['required', 'integer'],
+            'name'           => ['required', 'string'],
+            'description'    => ['required', 'string'],
+            'amount'         => ['required', 'numeric'],
             'vat_percentage' => ['nullable', 'numeric'],
-            'quantity' => ['required', 'numeric'],
-            'discount_id' => ['nullable', 'integer'],
+            'quantity'       => ['required', 'numeric'],
+            'discount_id'    => ['nullable', 'integer'],
         ])->validate();
 
         if (! empty($request->service_runtime)) {
             Validator::make($request->toArray(), [
                 'started_at' => ['required', 'string'],
-                'ended_at' => ['required', 'string'],
+                'ended_at'   => ['required', 'string'],
             ])->validate();
         }
 
@@ -674,17 +682,17 @@ class AdminInvoiceSupplierController extends Controller
             $position->invoice->status == 'template'
         ) {
             $position->position->update([
-                'discount_id' => ! empty($request->discount_id) ? $request->discount_id : null,
-                'name' => $request->name,
-                'description' => $request->description,
-                'amount' => $request->amount,
+                'discount_id'    => ! empty($request->discount_id) ? $request->discount_id : null,
+                'name'           => $request->name,
+                'description'    => $request->description,
+                'amount'         => $request->amount,
                 'vat_percentage' => ! empty($request->vat_percentage) ? $request->vat_percentage : 0,
-                'quantity' => $request->quantity,
+                'quantity'       => $request->quantity,
             ]);
 
             $position->update([
                 'started_at' => ! empty($request->service_runtime) ? Carbon::parse($request->started_at) : null,
-                'ended_at' => ! empty($request->service_runtime) ? Carbon::parse($request->ended_at) : null,
+                'ended_at'   => ! empty($request->service_runtime) ? Carbon::parse($request->ended_at) : null,
             ]);
 
             return redirect()->back()->with('success', __('interface.messages.invoice_position_updated'));
@@ -699,17 +707,17 @@ class AdminInvoiceSupplierController extends Controller
      * @param int $invoice_id
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function invoice_positions_delete(int $invoice_id, int $id): RedirectResponse
     {
         Validator::make([
-            'invoice_id' => $invoice_id,
+            'invoice_id'  => $invoice_id,
             'position_id' => $id,
         ], [
-            'invoice_id' => ['required', 'integer'],
+            'invoice_id'  => ['required', 'integer'],
             'position_id' => ['required', 'integer'],
         ])->validate();
 
@@ -753,13 +761,16 @@ class AdminInvoiceSupplierController extends Controller
                 switch ($request->columns[$order['column']]) {
                     case 'status':
                         $orderBy = 'status';
+
                         break;
                     case 'date':
                         $orderBy = 'created_at';
+
                         break;
                     case 'id':
                     default:
                         $orderBy = 'id';
+
                         break;
                 }
 
@@ -773,40 +784,46 @@ class AdminInvoiceSupplierController extends Controller
             ->limit($request->length);
 
         return response()->json([
-            'draw' => (int) $request->draw,
-            'recordsTotal' => $totalCount,
+            'draw'            => (int) $request->draw,
+            'recordsTotal'    => $totalCount,
             'recordsFiltered' => $filteredCount,
-            'data' => $query
+            'data'            => $query
                 ->get()
                 ->transform(function (InvoiceHistory $history) {
                     switch ($history->status) {
                         case 'publish':
                             $status = '<span class="badge badge-success">' . __('interface.status.published') . '</span>';
+
                             break;
                         case 'revoke':
                             $status = '<span class="badge badge-secondary">' . __('interface.status.revoked') . '</span>';
+
                             break;
                         case 'refund':
                             $status = '<span class="badge badge-info text-white">' . __('interface.actions.refund') . '</span>';
+
                             break;
                         case 'unpay':
                             $status = '<span class="badge badge-warning">' . __('interface.status.unpaid') . '</span>';
+
                             break;
                         case 'pay':
                             $status = '<span class="badge badge-success">' . __('interface.status.paid') . '</span>';
+
                             break;
                         default:
                             $status = '<span class="badge badge-secondary">' . __('interface.status.unknown') . '</span>';
+
                             break;
                     }
 
                     return (object) [
-                        'id' => $history->id,
-                        'date' => $history->created_at->format('d.m.Y, H:i'),
-                        'name' => ! empty($history->user) && ! empty($history->user->realName) ? '<i class="bi bi-person mr-2"></i> ' . $history->user->realName : '<i class="bi bi-robot mr-2""></i> ' . __('interface.data.system'),
+                        'id'     => $history->id,
+                        'date'   => $history->created_at->format('d.m.Y, H:i'),
+                        'name'   => ! empty($history->user) && ! empty($history->user->realName) ? '<i class="bi bi-person mr-2"></i> ' . $history->user->realName : '<i class="bi bi-robot mr-2""></i> ' . __('interface.data.system'),
                         'status' => $status,
                     ];
-                })
+                }),
         ]);
     }
 
@@ -848,13 +865,16 @@ class AdminInvoiceSupplierController extends Controller
                 switch ($request->columns[$order['column']]) {
                     case 'name':
                         $orderBy = 'name';
+
                         break;
                     case 'description':
                         $orderBy = 'description';
+
                         break;
                     case 'id':
                     default:
                         $orderBy = 'id';
+
                         break;
                 }
 
@@ -868,10 +888,10 @@ class AdminInvoiceSupplierController extends Controller
             ->limit($request->length);
 
         return response()->json([
-            'draw' => (int) $request->draw,
-            'recordsTotal' => $totalCount,
+            'draw'            => (int) $request->draw,
+            'recordsTotal'    => $totalCount,
             'recordsFiltered' => $filteredCount,
-            'data' => $query
+            'data'            => $query
                 ->get()
                 ->transform(function (InvoiceImporter $importer) {
                     $edit = '
@@ -975,14 +995,14 @@ class AdminInvoiceSupplierController extends Controller
 ';
 
                     return (object) [
-                        'id' => $importer->id,
-                        'name' => $importer->name,
+                        'id'          => $importer->id,
+                        'name'        => $importer->name,
                         'description' => $importer->description,
-                        'log' => '<a href="' . route('admin.invoices.importers.log', $importer->id) . '" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>',
-                        'edit' => $edit,
-                        'delete' => '<a href="' . route('admin.invoices.importers.delete', $importer->id) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>',
+                        'log'         => '<a href="' . route('admin.invoices.importers.log', $importer->id) . '" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>',
+                        'edit'        => $edit,
+                        'delete'      => '<a href="' . route('admin.invoices.importers.delete', $importer->id) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>',
                     ];
-                })
+                }),
         ]);
     }
 
@@ -991,44 +1011,44 @@ class AdminInvoiceSupplierController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function invoice_importers_add(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
-            'name' => ['required', 'string'],
+            'name'        => ['required', 'string'],
             'description' => ['string', 'nullable'],
-            'imap' => ['required'],
+            'imap'        => ['required'],
         ])->validate();
 
         Validator::make($request->imap, [
-            'host' => ['required', 'string'],
-            'port' => ['required', 'integer'],
-            'protocol' => ['required', 'string'],
-            'username' => ['string', 'nullable'],
-            'password' => ['string', 'nullable'],
-            'folder' => ['required', 'string'],
-            'validate_cert' => ['string',  'nullable'],
+            'host'                => ['required', 'string'],
+            'port'                => ['required', 'integer'],
+            'protocol'            => ['required', 'string'],
+            'username'            => ['string', 'nullable'],
+            'password'            => ['string', 'nullable'],
+            'folder'              => ['required', 'string'],
+            'validate_cert'       => ['string',  'nullable'],
             'delete_after_import' => ['string',  'nullable'],
         ])->validate();
 
         if (
             $inbox = ImapInbox::create([
-                'host' => $request->imap['host'],
-                'username' => $request->imap['username'],
-                'password' => $request->imap['password'],
-                'port' => (int) $request->imap['port'],
-                'protocol' => $request->imap['protocol'],
-                'validate_cert' => (bool) $request->imap['validate_cert'] ?? false,
-                'folder' => $request->imap['folder'],
+                'host'                => $request->imap['host'],
+                'username'            => $request->imap['username'],
+                'password'            => $request->imap['password'],
+                'port'                => (int) $request->imap['port'],
+                'protocol'            => $request->imap['protocol'],
+                'validate_cert'       => (bool) $request->imap['validate_cert'] ?? false,
+                'folder'              => $request->imap['folder'],
                 'delete_after_import' => (bool) $request->imap['delete_after_import'] ?? false,
             ])
         ) {
             InvoiceImporter::create([
-                'name' => $request->name,
-                'description' => $request->description,
+                'name'          => $request->name,
+                'description'   => $request->description,
                 'imap_inbox_id' => $inbox->id,
             ]);
 
@@ -1043,9 +1063,9 @@ class AdminInvoiceSupplierController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function invoice_importers_update(Request $request): RedirectResponse
     {
@@ -1054,31 +1074,31 @@ class AdminInvoiceSupplierController extends Controller
         ])->validate();
 
         Validator::make($request->imap, [
-            'host' => ['required', 'string'],
-            'port' => ['required', 'integer'],
-            'protocol' => ['required', 'string'],
-            'username' => ['string', 'nullable'],
-            'password' => ['string', 'nullable'],
-            'folder' => ['required', 'string'],
-            'validate_cert' => ['string',  'nullable'],
+            'host'                => ['required', 'string'],
+            'port'                => ['required', 'integer'],
+            'protocol'            => ['required', 'string'],
+            'username'            => ['string', 'nullable'],
+            'password'            => ['string', 'nullable'],
+            'folder'              => ['required', 'string'],
+            'validate_cert'       => ['string',  'nullable'],
             'delete_after_import' => ['string',  'nullable'],
         ])->validate();
 
         /* @var InvoiceImporter $importer */
         if (! empty($importer = InvoiceImporter::find($request->importer_id))) {
             $importer->update([
-                'name' => $request->name,
+                'name'        => $request->name,
                 'description' => $request->description,
             ]);
 
             if (! empty($inbox = $importer->imapInbox)) {
                 $data = [
-                    'host' => $request->imap['host'],
-                    'username' => $request->imap['username'],
-                    'port' => (int) $request->imap['port'],
-                    'protocol' => $request->imap['protocol'],
-                    'validate_cert' => isset($request->imap['validate_cert']),
-                    'folder' => $request->imap['folder'],
+                    'host'                => $request->imap['host'],
+                    'username'            => $request->imap['username'],
+                    'port'                => (int) $request->imap['port'],
+                    'protocol'            => $request->imap['protocol'],
+                    'validate_cert'       => isset($request->imap['validate_cert']),
+                    'folder'              => $request->imap['folder'],
                     'delete_after_import' => isset($request->imap['delete_after_import']),
                 ];
 
@@ -1092,13 +1112,13 @@ class AdminInvoiceSupplierController extends Controller
                 if (
                     ! empty(
                         $inbox = ImapInbox::create([
-                            'host' => $request->imap['host'],
-                            'username' => $request->imap['username'],
-                            'password' => $request->imap['password'],
-                            'port' => (int) $request->imap['port'],
-                            'protocol' => $request->imap['protocol'],
-                            'validate_cert' => isset($request->imap['validate_cert']),
-                            'folder' => $request->imap['folder'],
+                            'host'                => $request->imap['host'],
+                            'username'            => $request->imap['username'],
+                            'password'            => $request->imap['password'],
+                            'port'                => (int) $request->imap['port'],
+                            'protocol'            => $request->imap['protocol'],
+                            'validate_cert'       => isset($request->imap['validate_cert']),
+                            'folder'              => $request->imap['folder'],
                             'delete_after_import' => isset($request->imap['delete_after_import']),
                         ])
                     )
@@ -1120,9 +1140,9 @@ class AdminInvoiceSupplierController extends Controller
      *
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function invoice_importers_delete(int $id): RedirectResponse
     {
@@ -1184,22 +1204,28 @@ class AdminInvoiceSupplierController extends Controller
                 switch ($request->columns[$order['column']]) {
                     case 'to':
                         $orderBy = 'to';
+
                         break;
                     case 'from_name':
                         $orderBy = 'from_name';
+
                         break;
                     case 'from':
                         $orderBy = 'from';
+
                         break;
                     case 'subject':
                         $orderBy = 'subject';
+
                         break;
                     case 'created_at':
                         $orderBy = 'created_at';
+
                         break;
                     case 'id':
                     default:
                         $orderBy = 'id';
+
                         break;
                 }
 
@@ -1213,22 +1239,22 @@ class AdminInvoiceSupplierController extends Controller
             ->limit($request->length);
 
         return response()->json([
-            'draw' => (int) $request->draw,
-            'recordsTotal' => $totalCount,
+            'draw'            => (int) $request->draw,
+            'recordsTotal'    => $totalCount,
             'recordsFiltered' => $filteredCount,
-            'data' => $query
+            'data'            => $query
                 ->get()
                 ->transform(function (InvoiceImporterHistory $entry) {
                     return (object) [
                         'created_at' => $entry->created_at->format('d.m.Y, H:i'),
-                        'subject' => $entry->subject,
-                        'from' => $entry->from,
-                        'from_name' => $entry->from_name,
-                        'to' => $entry->to,
-                        'download' => ! empty($file = $entry->file) ? '<a href="' . route('admin.filemanager.file.download', $file->id) . '" class="btn btn-warning btn-sm" download><i class="bi bi-download"></i></a>' : '<button type="button" class="btn btn-warning btn-sm" disabled><i class="bi bi-download"></i></button>',
-                        'invoice' => ! empty($invoice = $entry->invoice) ? '<a href="' . route('admin.invoices.suppliers.details', $invoice->id) . '" class="btn btn-warning btn-sm" target="_blank"><i class="bi bi-file-earmark-text"></i></a>' : '<button type="button" class="btn btn-warning btn-sm" disabled><i class="bi bi-file-earmark-text"></i></button>',
+                        'subject'    => $entry->subject,
+                        'from'       => $entry->from,
+                        'from_name'  => $entry->from_name,
+                        'to'         => $entry->to,
+                        'download'   => ! empty($file = $entry->file) ? '<a href="' . route('admin.filemanager.file.download', $file->id) . '" class="btn btn-warning btn-sm" download><i class="bi bi-download"></i></a>' : '<button type="button" class="btn btn-warning btn-sm" disabled><i class="bi bi-download"></i></button>',
+                        'invoice'    => ! empty($invoice = $entry->invoice) ? '<a href="' . route('admin.invoices.suppliers.details', $invoice->id) . '" class="btn btn-warning btn-sm" target="_blank"><i class="bi bi-file-earmark-text"></i></a>' : '<button type="button" class="btn btn-warning btn-sm" disabled><i class="bi bi-file-earmark-text"></i></button>',
                     ];
-                })
+                }),
         ]);
     }
 }

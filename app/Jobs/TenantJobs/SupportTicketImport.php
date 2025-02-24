@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Jobs\TenantJobs;
 
 use App\Helpers\IMAP;
@@ -17,7 +19,7 @@ use finfo;
 use stdClass;
 
 /**
- * Class SupportTicketImport
+ * Class SupportTicketImport.
  *
  * This class is the tenant job for importing ticket metadata via. IMAP inboxes.
  *
@@ -28,7 +30,9 @@ class SupportTicketImport extends TenantJob
     use UniquelyQueueable;
 
     public $tries = 1;
+
     public $timeout = 3600;
+
     public static $onQueue = 'support_ticket_import';
 
     /**
@@ -66,35 +70,35 @@ class SupportTicketImport extends TenantJob
                     $ticket->email === $mail->from
                 ) {
                     SupportTicketMessage::create([
-                        'ticket_id' => $ticket->id,
-                        'user_id' => null,
-                        'message' => $mail->message,
-                        'note' => false,
-                        'external' => true,
-                        'imap_name' => $mail->from_name,
-                        'imap_email' => $mail->from
+                        'ticket_id'  => $ticket->id,
+                        'user_id'    => null,
+                        'message'    => $mail->message,
+                        'note'       => false,
+                        'external'   => true,
+                        'imap_name'  => $mail->from_name,
+                        'imap_email' => $mail->from,
                     ]);
                 } else {
                     /* @var SupportTicket $ticket */
                     $ticket = SupportTicket::create([
                         'category_id' => $category->id,
-                        'subject' => $mail->subject,
-                        'priority' => $category->priority,
+                        'subject'     => $mail->subject,
+                        'priority'    => $category->priority,
                     ]);
 
                     SupportTicketMessage::create([
                         'ticket_id' => $ticket->id,
-                        'user_id' => null,
-                        'message' => $mail->message,
-                        'note' => false,
-                        'external' => true,
+                        'user_id'   => null,
+                        'message'   => $mail->message,
+                        'note'      => false,
+                        'external'  => true,
                     ]);
 
                     SupportTicketHistory::create([
                         'ticket_id' => $ticket->id,
-                        'user_id' => null,
-                        'type' => 'status',
-                        'action' => 'open',
+                        'user_id'   => null,
+                        'type'      => 'status',
+                        'action'    => 'open',
                     ]);
 
                     $ticket->sendEmailCreationNotification();
@@ -110,27 +114,27 @@ class SupportTicketImport extends TenantJob
                             $fileMime = $fileInfo->buffer($file['attachment']);
 
                             $file = File::create([
-                                'user_id' => null,
+                                'user_id'   => null,
                                 'folder_id' => null,
-                                'name' => Carbon::now()->format('YmdHis') . '_' . $file['filename'],
-                                'data' => $file['attachment'],
-                                'mime' => $fileMime,
-                                'size' => strlen($file['attachment']),
+                                'name'      => Carbon::now()->format('YmdHis') . '_' . $file['filename'],
+                                'data'      => $file['attachment'],
+                                'mime'      => $fileMime,
+                                'size'      => strlen($file['attachment']),
                             ]);
 
                             if ($file instanceof File) {
                                 SupportTicketFile::create([
                                     'ticket_id' => $ticket->id,
-                                    'user_id' => null,
-                                    'file_id' => $file->id,
-                                    'external' => true,
+                                    'user_id'   => null,
+                                    'file_id'   => $file->id,
+                                    'external'  => true,
                                 ]);
 
                                 SupportTicketHistory::create([
                                     'ticket_id' => $ticket->id,
-                                    'user_id' => null,
-                                    'type' => 'file',
-                                    'action' => 'add',
+                                    'user_id'   => null,
+                                    'type'      => 'file',
+                                    'action'    => 'add',
                                     'reference' => $file->id,
                                 ]);
                             }

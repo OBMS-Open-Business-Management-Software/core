@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
@@ -8,8 +10,6 @@ use Illuminate\Support\Facades\Schema;
 return new class () extends Migration {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
@@ -33,13 +33,11 @@ return new class () extends Migration {
             $table->softDeletes();
         });
 
-        DB::statement("ALTER TABLE filemanager_files ADD data LONGBLOB AFTER name");
+        DB::statement('ALTER TABLE filemanager_files ADD data LONGBLOB AFTER name');
     }
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {

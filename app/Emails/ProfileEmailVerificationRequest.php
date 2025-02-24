@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Emails;
 
 use App\Models\Profile\ProfileEmail;
@@ -40,8 +42,6 @@ class ProfileEmailVerificationRequest extends Request
 
     /**
      * Fulfill the email verification request.
-     *
-     * @return void
      */
     public function fulfill()
     {

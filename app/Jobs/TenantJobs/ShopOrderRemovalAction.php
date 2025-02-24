@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Jobs\TenantJobs;
 
 use App\Helpers\Products;
@@ -12,7 +14,7 @@ use Exception;
 use Illuminate\Database\Eloquent\Builder;
 
 /**
- * Class ShopOrderRemovalAction
+ * Class ShopOrderRemovalAction.
  *
  * This class is the tenant job for removing expired orders of a specific type.
  *
@@ -23,7 +25,9 @@ class ShopOrderRemovalAction extends TenantJob
     use UniquelyQueueable;
 
     public $tries = 1;
+
     public $timeout = 3600;
+
     public static $onQueue = 'shop_order_setups';
 
     private string $type;
@@ -73,8 +77,8 @@ class ShopOrderRemovalAction extends TenantJob
 
                                 ShopOrderQueueHistory::create([
                                     'order_id' => $queueItem->id,
-                                    'type' => 'success',
-                                    'message' => 'Product deletion succeeded.',
+                                    'type'     => 'success',
+                                    'message'  => 'Product deletion succeeded.',
                                 ]);
 
                                 $queueItem->sendEmailRemovalNotification();
@@ -87,8 +91,8 @@ class ShopOrderRemovalAction extends TenantJob
 
                                 ShopOrderQueueHistory::create([
                                     'order_id' => $queueItem->id,
-                                    'type' => 'success',
-                                    'message' => 'Product locking succeeded.',
+                                    'type'     => 'success',
+                                    'message'  => 'Product locking succeeded.',
                                 ]);
 
                                 $queueItem->sendEmailLockNotification();
@@ -102,8 +106,8 @@ class ShopOrderRemovalAction extends TenantJob
 
                             ShopOrderQueueHistory::create([
                                 'order_id' => $queueItem->id,
-                                'type' => 'success',
-                                'message' => 'Product deletion succeeded.',
+                                'type'     => 'success',
+                                'message'  => 'Product deletion succeeded.',
                             ]);
 
                             $queueItem->sendEmailRemovalNotification();
@@ -111,8 +115,8 @@ class ShopOrderRemovalAction extends TenantJob
                     } catch (Exception $exception) {
                         ShopOrderQueueHistory::create([
                             'order_id' => $queueItem->id,
-                            'type' => 'warning',
-                            'message' => 'Product locking / deletion failed.',
+                            'type'     => 'warning',
+                            'message'  => 'Product locking / deletion failed.',
                         ]);
 
                         $queueItem->sendEmailLockFailedNotification();
@@ -135,16 +139,16 @@ class ShopOrderRemovalAction extends TenantJob
 
                         ShopOrderQueueHistory::create([
                             'order_id' => $queueItem->id,
-                            'type' => 'success',
-                            'message' => 'Product unlocking succeeded.',
+                            'type'     => 'success',
+                            'message'  => 'Product unlocking succeeded.',
                         ]);
 
                         $queueItem->sendEmailUnlockNotification();
                     } catch (Exception $exception) {
                         ShopOrderQueueHistory::create([
                             'order_id' => $queueItem->id,
-                            'type' => 'warning',
-                            'message' => 'Product unlocking failed.',
+                            'type'     => 'warning',
+                            'message'  => 'Product unlocking failed.',
                         ]);
 
                         $queueItem->sendEmailUnlockFailedNotification();

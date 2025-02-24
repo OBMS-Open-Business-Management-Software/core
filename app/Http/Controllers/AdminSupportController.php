@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Helpers\Download;
@@ -74,12 +76,15 @@ class AdminSupportController extends Controller
         switch ($request->type) {
             case 'open':
                 $query = $query->where('status', '=', 'open');
+
                 break;
             case 'closed':
                 $query = $query->where('status', '=', 'closed');
+
                 break;
             case 'locked':
                 $query = $query->where('status', '=', 'locked');
+
                 break;
         }
 
@@ -97,10 +102,12 @@ class AdminSupportController extends Controller
                 switch ($request->columns[$order['column']]) {
                     case 'subject':
                         $orderBy = 'subject';
+
                         break;
                     case 'id':
                     default:
                         $orderBy = 'id';
+
                         break;
                 }
 
@@ -114,10 +121,10 @@ class AdminSupportController extends Controller
             ->limit($request->length);
 
         return response()->json([
-            'draw' => (int) $request->draw,
-            'recordsTotal' => $totalCount,
+            'draw'            => (int) $request->draw,
+            'recordsTotal'    => $totalCount,
             'recordsFiltered' => $filteredCount,
-            'data' => $query
+            'data'            => $query
                 ->get()
                 ->transform(function (SupportTicket $ticket) {
                     $status = '';
@@ -125,12 +132,15 @@ class AdminSupportController extends Controller
                     switch ($ticket->status) {
                         case 'open':
                             $status = '<span class="badge badge-primary">' . __('interface.status.open') . '</span>';
+
                             break;
                         case 'closed':
                             $status = '<span class="badge badge-secondary">' . __('interface.status.closed') . '</span>';
+
                             break;
                         case 'locked':
                             $status = '<span class="badge badge-danger">' . __('interface.status.locked') . '</span>';
+
                             break;
                     }
 
@@ -146,34 +156,40 @@ class AdminSupportController extends Controller
                         case 'low':
                         default:
                             $priority = '<span class="badge badge-secondary">' . __('interface.priorities.low') . '</span>';
+
                             break;
                         case 'medium':
                             $priority = '<span class="badge badge-success">' . __('interface.priorities.medium') . '</span>';
+
                             break;
                         case 'high':
                             $priority = '<span class="badge badge-warning">' . __('interface.priorities.high') . '</span>';
+
                             break;
                         case 'emergency':
                             $priority = '<span class="badge badge-danger">' . __('interface.priorities.emergency') . '</span>';
+
                             break;
                     }
 
                     return (object) [
-                        'id' => $ticket->id,
-                        'subject' => $ticket->subject,
+                        'id'       => $ticket->id,
+                        'subject'  => $ticket->subject,
                         'category' => ! empty($ticket->category) ? $ticket->category->name : __('interface.status.uncategorized'),
-                        'status' => $status,
+                        'status'   => $status,
                         'priority' => $priority,
-                        'view' => '<a href="' . route('admin.support.details', $ticket->id) . '" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>',
+                        'view'     => '<a href="' . route('admin.support.details', $ticket->id) . '" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>',
                     ];
-                })
+                }),
         ]);
     }
 
     /**
      * View a support ticket.
      *
-     * @return Application|Factory|View|RedirectResponse
+     * @param Request $request
+     *
+     * @return Application|Factory|RedirectResponse|View
      */
     public function support_details(Request $request)
     {
@@ -188,7 +204,7 @@ class AdminSupportController extends Controller
         ) {
             return view('admin.support.details', [
                 'ticket' => $ticket,
-                'run' => SupportRun::where('user_id', '=', Auth::id())
+                'run'    => SupportRun::where('user_id', '=', Auth::id())
                     ->whereNull('ended_at')
                     ->first(),
                 'categories' => SupportCategory::whereHas('assignments', function (Builder $builder) {
@@ -206,14 +222,14 @@ class AdminSupportController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function support_answer(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
-            'id' => ['required', 'integer'],
+            'id'      => ['required', 'integer'],
             'message' => ['required', 'string'],
         ])->validate();
 
@@ -229,9 +245,9 @@ class AdminSupportController extends Controller
             /* @var SupportTicketMessage $message */
             $message = SupportTicketMessage::create([
                 'ticket_id' => $ticket->id,
-                'user_id' => Auth::id(),
-                'message' => $request->message,
-                'note' => ! empty($request->note) && $request->note == 'true',
+                'user_id'   => Auth::id(),
+                'message'   => $request->message,
+                'note'      => ! empty($request->note) && $request->note == 'true',
             ]);
 
             $fileNotification = false;
@@ -239,27 +255,27 @@ class AdminSupportController extends Controller
             /* @var UploadedFile|null $file */
             if (! empty($file = $request->files->get('file'))) {
                 $file = File::create([
-                    'user_id' => ! empty($request->private) ? Auth::id() : null,
+                    'user_id'   => ! empty($request->private) ? Auth::id() : null,
                     'folder_id' => null,
-                    'name' => Carbon::now()->format('YmdHis') . '_' . $file->getClientOriginalName(),
-                    'data' => $file->getContent(),
-                    'mime' => $file->getClientMimeType(),
-                    'size' => $file->getSize(),
+                    'name'      => Carbon::now()->format('YmdHis') . '_' . $file->getClientOriginalName(),
+                    'data'      => $file->getContent(),
+                    'mime'      => $file->getClientMimeType(),
+                    'size'      => $file->getSize(),
                 ]);
 
                 if ($file instanceof File) {
                     SupportTicketFile::create([
                         'ticket_id' => $ticket->id,
-                        'user_id' => Auth::id(),
-                        'file_id' => $file->id,
-                        'internal' => ! empty($request->note) && $request->note == 'true',
+                        'user_id'   => Auth::id(),
+                        'file_id'   => $file->id,
+                        'internal'  => ! empty($request->note) && $request->note == 'true',
                     ]);
 
                     SupportTicketHistory::create([
                         'ticket_id' => $ticket->id,
-                        'user_id' => Auth::id(),
-                        'type' => 'file',
-                        'action' => 'add',
+                        'user_id'   => Auth::id(),
+                        'type'      => 'file',
+                        'action'    => 'add',
                         'reference' => $file->id,
                     ]);
 
@@ -294,9 +310,9 @@ class AdminSupportController extends Controller
      *
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function support_close(int $id): RedirectResponse
     {
@@ -321,9 +337,9 @@ class AdminSupportController extends Controller
 
             SupportTicketHistory::create([
                 'ticket_id' => $ticket->id,
-                'user_id' => Auth::id(),
-                'type' => 'status',
-                'action' => 'close',
+                'user_id'   => Auth::id(),
+                'type'      => 'status',
+                'action'    => 'close',
             ]);
 
             $ticket->sendEmailCloseNotification();
@@ -339,9 +355,9 @@ class AdminSupportController extends Controller
      *
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function support_reopen(int $id): RedirectResponse
     {
@@ -366,9 +382,9 @@ class AdminSupportController extends Controller
 
             SupportTicketHistory::create([
                 'ticket_id' => $ticket->id,
-                'user_id' => Auth::id(),
-                'type' => 'status',
-                'action' => 'reopen',
+                'user_id'   => Auth::id(),
+                'type'      => 'status',
+                'action'    => 'reopen',
             ]);
 
             $ticket->sendEmailReopenNotification();
@@ -384,9 +400,9 @@ class AdminSupportController extends Controller
      *
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function support_lock(int $id): RedirectResponse
     {
@@ -411,9 +427,9 @@ class AdminSupportController extends Controller
 
             SupportTicketHistory::create([
                 'ticket_id' => $ticket->id,
-                'user_id' => Auth::id(),
-                'type' => 'status',
-                'action' => 'lock',
+                'user_id'   => Auth::id(),
+                'type'      => 'status',
+                'action'    => 'lock',
             ]);
 
             $ticket->sendEmailLockNotification();
@@ -429,9 +445,9 @@ class AdminSupportController extends Controller
      *
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function support_unlock(int $id): RedirectResponse
     {
@@ -456,9 +472,9 @@ class AdminSupportController extends Controller
 
             SupportTicketHistory::create([
                 'ticket_id' => $ticket->id,
-                'user_id' => Auth::id(),
-                'type' => 'status',
-                'action' => 'unlock',
+                'user_id'   => Auth::id(),
+                'type'      => 'status',
+                'action'    => 'unlock',
             ]);
 
             $ticket->sendEmailUnlockNotification();
@@ -474,9 +490,9 @@ class AdminSupportController extends Controller
      *
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function support_join(int $id): RedirectResponse
     {
@@ -497,15 +513,15 @@ class AdminSupportController extends Controller
         ) {
             SupportTicketAssignment::create([
                 'ticket_id' => $ticket->id,
-                'user_id' => Auth::id(),
-                'role' => Auth::user()->role,
+                'user_id'   => Auth::id(),
+                'role'      => Auth::user()->role,
             ]);
 
             SupportTicketHistory::create([
                 'ticket_id' => $ticket->id,
-                'user_id' => Auth::id(),
-                'type' => 'assignment',
-                'action' => 'assign',
+                'user_id'   => Auth::id(),
+                'type'      => 'assignment',
+                'action'    => 'assign',
                 'reference' => Auth::id(),
             ]);
 
@@ -520,9 +536,9 @@ class AdminSupportController extends Controller
      *
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function support_leave(int $id): RedirectResponse
     {
@@ -547,9 +563,9 @@ class AdminSupportController extends Controller
 
             SupportTicketHistory::create([
                 'ticket_id' => $ticket->id,
-                'user_id' => Auth::id(),
-                'type' => 'assignment',
-                'action' => 'unassign',
+                'user_id'   => Auth::id(),
+                'type'      => 'assignment',
+                'action'    => 'unassign',
                 'reference' => Auth::id(),
             ]);
 
@@ -564,9 +580,9 @@ class AdminSupportController extends Controller
      *
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function support_escalate(int $id): RedirectResponse
     {
@@ -591,9 +607,9 @@ class AdminSupportController extends Controller
 
             SupportTicketHistory::create([
                 'ticket_id' => $ticket->id,
-                'user_id' => Auth::id(),
-                'type' => 'escalate',
-                'action' => 'escalate',
+                'user_id'   => Auth::id(),
+                'type'      => 'escalate',
+                'action'    => 'escalate',
             ]);
 
             $ticket->sendEmailEscalationNotification();
@@ -609,9 +625,9 @@ class AdminSupportController extends Controller
      *
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function support_deescalate(int $id): RedirectResponse
     {
@@ -636,9 +652,9 @@ class AdminSupportController extends Controller
 
             SupportTicketHistory::create([
                 'ticket_id' => $ticket->id,
-                'user_id' => Auth::id(),
-                'type' => 'escalate',
-                'action' => 'deescalate',
+                'user_id'   => Auth::id(),
+                'type'      => 'escalate',
+                'action'    => 'deescalate',
             ]);
 
             $ticket->sendEmailDeescalationNotification();
@@ -654,14 +670,14 @@ class AdminSupportController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function support_move(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
-            'ticket_id' => ['required', 'integer'],
+            'ticket_id'   => ['required', 'integer'],
             'category_id' => ['required', 'integer'],
         ])->validate();
 
@@ -680,9 +696,9 @@ class AdminSupportController extends Controller
 
             SupportTicketHistory::create([
                 'ticket_id' => $ticket->id,
-                'user_id' => Auth::id(),
-                'type' => 'category',
-                'action' => 'move',
+                'user_id'   => Auth::id(),
+                'type'      => 'category',
+                'action'    => 'move',
                 'reference' => $request->category_id,
             ]);
 
@@ -698,9 +714,9 @@ class AdminSupportController extends Controller
 
                 SupportTicketHistory::create([
                     'ticket_id' => $ticket->id,
-                    'user_id' => Auth::id(),
-                    'type' => 'assignment',
-                    'action' => 'unassign',
+                    'user_id'   => Auth::id(),
+                    'type'      => 'assignment',
+                    'action'    => 'unassign',
                     'reference' => Auth::id(),
                 ]);
 
@@ -718,15 +734,15 @@ class AdminSupportController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function support_priority(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
             'ticket_id' => ['required', 'integer'],
-            'priority' => ['required', 'string'],
+            'priority'  => ['required', 'string'],
         ])->validate();
 
         if (
@@ -744,9 +760,9 @@ class AdminSupportController extends Controller
 
             SupportTicketHistory::create([
                 'ticket_id' => $ticket->id,
-                'user_id' => Auth::id(),
-                'type' => 'priority',
-                'action' => 'set',
+                'user_id'   => Auth::id(),
+                'type'      => 'priority',
+                'action'    => 'set',
                 'reference' => $request->priority,
             ]);
 
@@ -763,9 +779,9 @@ class AdminSupportController extends Controller
      *
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function support_hold(int $id): RedirectResponse
     {
@@ -790,9 +806,9 @@ class AdminSupportController extends Controller
 
             SupportTicketHistory::create([
                 'ticket_id' => $ticket->id,
-                'user_id' => Auth::id(),
-                'type' => 'hold',
-                'action' => 'hold',
+                'user_id'   => Auth::id(),
+                'type'      => 'hold',
+                'action'    => 'hold',
             ]);
 
             $ticket->sendEmailHoldNotification();
@@ -808,9 +824,9 @@ class AdminSupportController extends Controller
      *
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function support_unhold(int $id): RedirectResponse
     {
@@ -835,9 +851,9 @@ class AdminSupportController extends Controller
 
             SupportTicketHistory::create([
                 'ticket_id' => $ticket->id,
-                'user_id' => Auth::id(),
-                'type' => 'hold',
-                'action' => 'unhold',
+                'user_id'   => Auth::id(),
+                'type'      => 'hold',
+                'action'    => 'unhold',
             ]);
 
             $ticket->sendEmailUnholdNotification();
@@ -854,9 +870,9 @@ class AdminSupportController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function support_run_start(Request $request): RedirectResponse
     {
@@ -879,24 +895,24 @@ class AdminSupportController extends Controller
                 /* @var SupportRun|null $run */
                 $run = SupportRun::create([
                     'category_id' => $request->category ?? null,
-                    'ticket_id' => $ticket->id,
-                    'user_id' => Auth::id(),
+                    'ticket_id'   => $ticket->id,
+                    'user_id'     => Auth::id(),
                 ]);
 
                 SupportTicketHistory::create([
                     'ticket_id' => $ticket->id,
-                    'user_id' => Auth::id(),
-                    'type' => 'run',
-                    'action' => 'opened',
+                    'user_id'   => Auth::id(),
+                    'type'      => 'run',
+                    'action'    => 'opened',
                     'reference' => $run->id,
                 ]);
 
                 SupportRunHistory::create([
-                    'run_id' => $run->id,
-                    'user_id' => Auth::id(),
+                    'run_id'    => $run->id,
+                    'user_id'   => Auth::id(),
                     'ticket_id' => $ticket->id,
-                    'type' => 'status',
-                    'action' => 'start',
+                    'type'      => 'status',
+                    'action'    => 'start',
                 ]);
 
                 return redirect()->route('admin.support.details', $ticket->id)->with('success', __('interface.messages.ticket_run_started'));
@@ -929,18 +945,18 @@ class AdminSupportController extends Controller
             if (! empty($nextTicket = SupportRun::nextTicket())) {
                 SupportTicketHistory::create([
                     'ticket_id' => $nextTicket->id,
-                    'user_id' => Auth::id(),
-                    'type' => 'run',
-                    'action' => 'opened',
+                    'user_id'   => Auth::id(),
+                    'type'      => 'run',
+                    'action'    => 'opened',
                     'reference' => $run->id,
                 ]);
 
                 SupportRunHistory::create([
-                    'run_id' => $run->id,
-                    'user_id' => Auth::id(),
+                    'run_id'    => $run->id,
+                    'user_id'   => Auth::id(),
                     'ticket_id' => $nextTicket->id,
-                    'type' => 'message',
-                    'action' => 'rotate',
+                    'type'      => 'message',
+                    'action'    => 'rotate',
                 ]);
 
                 $run->update([
@@ -981,10 +997,10 @@ class AdminSupportController extends Controller
             ]);
 
             SupportRunHistory::create([
-                'run_id' => $run->id,
+                'run_id'  => $run->id,
                 'user_id' => Auth::id(),
-                'type' => 'status',
-                'action' => 'stop',
+                'type'    => 'status',
+                'action'  => 'stop',
             ]);
 
             return redirect()->back()->with('success', __('interface.messages.ticket_run_stopped'));
@@ -1030,13 +1046,16 @@ class AdminSupportController extends Controller
                 switch ($request->columns[$order['column']]) {
                     case 'name':
                         $orderBy = 'name';
+
                         break;
                     case 'description':
                         $orderBy = 'description';
+
                         break;
                     case 'id':
                     default:
                         $orderBy = 'id';
+
                         break;
                 }
 
@@ -1050,10 +1069,10 @@ class AdminSupportController extends Controller
             ->limit($request->length);
 
         return response()->json([
-            'draw' => (int) $request->draw,
-            'recordsTotal' => $totalCount,
+            'draw'            => (int) $request->draw,
+            'recordsTotal'    => $totalCount,
             'recordsFiltered' => $filteredCount,
-            'data' => $query
+            'data'            => $query
                 ->get()
                 ->transform(function (SupportCategory $category) {
                     $edit = '
@@ -1214,13 +1233,13 @@ class AdminSupportController extends Controller
 ';
 
                     return (object) [
-                        'id' => $category->id,
-                        'name' => $category->name,
+                        'id'          => $category->id,
+                        'name'        => $category->name,
                         'description' => $category->description,
-                        'edit' => $edit,
-                        'delete' => '<a href="' . route('admin.support.categories.delete', $category->id) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>',
+                        'edit'        => $edit,
+                        'delete'      => '<a href="' . route('admin.support.categories.delete', $category->id) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>',
                     ];
-                })
+                }),
         ]);
     }
 
@@ -1229,24 +1248,24 @@ class AdminSupportController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function support_categories_add(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
-            'name' => ['required', 'string'],
-            'description' => ['required', 'string'],
+            'name'          => ['required', 'string'],
+            'description'   => ['required', 'string'],
             'email_address' => ['string', 'nullable'],
-            'email_name' => ['string', 'nullable'],
+            'email_name'    => ['string', 'nullable'],
         ])->validate();
 
         $category = SupportCategory::create([
-            'name' => $request->name,
-            'description' => $request->description,
+            'name'          => $request->name,
+            'description'   => $request->description,
             'email_address' => $request->email_address ?? null,
-            'email_name' => $request->email_name ?? null,
+            'email_name'    => $request->email_name ?? null,
         ]);
 
         if (
@@ -1254,13 +1273,13 @@ class AdminSupportController extends Controller
             ! empty($request->imap['enable'])
         ) {
             Validator::make($request->imap, [
-                'host' => ['required', 'string'],
-                'port' => ['required', 'integer'],
-                'protocol' => ['required', 'string'],
-                'username' => ['string', 'nullable'],
-                'password' => ['string', 'nullable'],
-                'folder' => ['required', 'string'],
-                'validate_cert' => ['string',  'nullable'],
+                'host'                => ['required', 'string'],
+                'port'                => ['required', 'integer'],
+                'protocol'            => ['required', 'string'],
+                'username'            => ['string', 'nullable'],
+                'password'            => ['string', 'nullable'],
+                'folder'              => ['required', 'string'],
+                'validate_cert'       => ['string',  'nullable'],
                 'delete_after_import' => ['string',  'nullable'],
             ])->validate();
 
@@ -1268,13 +1287,13 @@ class AdminSupportController extends Controller
             if (
                 ! empty(
                     $inbox = ImapInbox::create([
-                        'host' => $request->imap['host'],
-                        'username' => $request->imap['username'],
-                        'password' => $request->imap['password'],
-                        'port' => (int) $request->imap['port'],
-                        'protocol' => $request->imap['protocol'],
-                        'validate_cert' => (bool) $request->imap['validate_cert'] ?? false,
-                        'folder' => $request->imap['folder'],
+                        'host'                => $request->imap['host'],
+                        'username'            => $request->imap['username'],
+                        'password'            => $request->imap['password'],
+                        'port'                => (int) $request->imap['port'],
+                        'protocol'            => $request->imap['protocol'],
+                        'validate_cert'       => (bool) $request->imap['validate_cert'] ?? false,
+                        'folder'              => $request->imap['folder'],
                         'delete_after_import' => (bool) $request->imap['delete_after_import'] ?? false,
                     ])
                 )
@@ -1293,49 +1312,49 @@ class AdminSupportController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function support_categories_update(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
-            'category_id' => ['required', 'integer'],
-            'name' => ['required', 'string'],
-            'description' => ['required', 'string'],
+            'category_id'   => ['required', 'integer'],
+            'name'          => ['required', 'string'],
+            'description'   => ['required', 'string'],
             'email_address' => ['string', 'nullable'],
-            'email_name' => ['string', 'nullable'],
+            'email_name'    => ['string', 'nullable'],
         ])->validate();
 
         /* @var SupportCategory $category */
         if (! empty($category = SupportCategory::find($request->category_id))) {
             $category->update([
-                'name' => $request->name,
-                'description' => $request->description,
+                'name'          => $request->name,
+                'description'   => $request->description,
                 'email_address' => $request->email_address ?? null,
-                'email_name' => $request->email_name ?? null,
+                'email_name'    => $request->email_name ?? null,
             ]);
 
             if (! empty($request->imap['enable'])) {
                 Validator::make($request->imap, [
-                    'host' => ['required', 'string'],
-                    'port' => ['required', 'integer'],
-                    'protocol' => ['required', 'string'],
-                    'username' => ['string', 'nullable'],
-                    'password' => ['string', 'nullable'],
-                    'folder' => ['required', 'string'],
-                    'validate_cert' => ['string', 'nullable'],
+                    'host'                => ['required', 'string'],
+                    'port'                => ['required', 'integer'],
+                    'protocol'            => ['required', 'string'],
+                    'username'            => ['string', 'nullable'],
+                    'password'            => ['string', 'nullable'],
+                    'folder'              => ['required', 'string'],
+                    'validate_cert'       => ['string', 'nullable'],
                     'delete_after_import' => ['string', 'nullable'],
                 ])->validate();
 
                 if (! empty($inbox = $category->imapInbox)) {
                     $data = [
-                        'host' => $request->imap['host'],
-                        'username' => $request->imap['username'],
-                        'port' => (int) $request->imap['port'],
-                        'protocol' => $request->imap['protocol'],
-                        'validate_cert' => (bool) $request->imap['validate_cert'] ?? false,
-                        'folder' => $request->imap['folder'],
+                        'host'                => $request->imap['host'],
+                        'username'            => $request->imap['username'],
+                        'port'                => (int) $request->imap['port'],
+                        'protocol'            => $request->imap['protocol'],
+                        'validate_cert'       => (bool) $request->imap['validate_cert'] ?? false,
+                        'folder'              => $request->imap['folder'],
                         'delete_after_import' => (bool) $request->imap['delete_after_import'] ?? false,
                     ];
 
@@ -1349,13 +1368,13 @@ class AdminSupportController extends Controller
                     if (
                         ! empty(
                             $inbox = ImapInbox::create([
-                                'host' => $request->imap['host'],
-                                'username' => $request->imap['username'],
-                                'password' => $request->imap['password'],
-                                'port' => (int) $request->imap['port'],
-                                'protocol' => $request->imap['protocol'],
-                                'validate_cert' => (bool) $request->imap['validate_cert'] ?? false,
-                                'folder' => $request->imap['folder'],
+                                'host'                => $request->imap['host'],
+                                'username'            => $request->imap['username'],
+                                'password'            => $request->imap['password'],
+                                'port'                => (int) $request->imap['port'],
+                                'protocol'            => $request->imap['protocol'],
+                                'validate_cert'       => (bool) $request->imap['validate_cert'] ?? false,
+                                'folder'              => $request->imap['folder'],
                                 'delete_after_import' => (bool) $request->imap['delete_after_import'] ?? false,
                             ])
                         )
@@ -1384,9 +1403,9 @@ class AdminSupportController extends Controller
      *
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function support_categories_delete(int $id): RedirectResponse
     {
@@ -1429,10 +1448,12 @@ class AdminSupportController extends Controller
                 switch ($request->columns[$order['column']]) {
                     case 'name':
                         $orderBy = 'user_id';
+
                         break;
                     case 'id':
                     default:
                         $orderBy = 'id';
+
                         break;
                 }
 
@@ -1446,17 +1467,17 @@ class AdminSupportController extends Controller
             ->limit($request->length);
 
         return response()->json([
-            'draw' => (int) $request->draw,
-            'recordsTotal' => $totalCount,
+            'draw'            => (int) $request->draw,
+            'recordsTotal'    => $totalCount,
             'recordsFiltered' => $filteredCount,
-            'data' => $query
+            'data'            => $query
                 ->get()
                 ->transform(function (SupportCategoryAssignment $assignment) {
                     return (object) [
-                        'name' => $assignment->user->name,
+                        'name'   => $assignment->user->name,
                         'delete' => '<a href="' . route('admin.support.categories.user.delete', ['id' => $assignment->category_id, 'category_link_id' => $assignment->id]) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>',
                     ];
-                })
+                }),
         ]);
     }
 
@@ -1465,23 +1486,23 @@ class AdminSupportController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function support_category_user_add(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
             'category_id' => ['required', 'integer'],
-            'user_id' => ['required', 'integer'],
+            'user_id'     => ['required', 'integer'],
         ])->validate();
 
         /* @var User|null $user */
         if (! empty($user = User::find($request->user_id))) {
             SupportCategoryAssignment::create([
                 'category_id' => $request->category_id,
-                'user_id' => $user->id,
-                'role' => $user->role,
+                'user_id'     => $user->id,
+                'role'        => $user->role,
             ]);
 
             return redirect()->back()->with('success', __('interface.messages.ticket_category_user_link_added'));
@@ -1496,9 +1517,9 @@ class AdminSupportController extends Controller
      * @param int $category_id
      * @param int $category_link_id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function support_category_user_delete(int $category_id, int $category_link_id): RedirectResponse
     {
@@ -1519,17 +1540,17 @@ class AdminSupportController extends Controller
      * @param int $id
      * @param int $filelink_id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function support_file_download(int $id, int $filelink_id): RedirectResponse
     {
         Validator::make([
-            'id' => $id,
+            'id'          => $id,
             'filelink_id' => $filelink_id,
         ], [
-            'id' => ['required', 'integer'],
+            'id'          => ['required', 'integer'],
             'filelink_id' => ['required', 'integer'],
         ])->validate();
 
@@ -1564,17 +1585,17 @@ class AdminSupportController extends Controller
      * @param int $id
      * @param int $filelink_id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function support_file_delete(int $id, int $filelink_id): RedirectResponse
     {
         Validator::make([
-            'id' => $id,
+            'id'          => $id,
             'filelink_id' => $filelink_id,
         ], [
-            'id' => ['required', 'integer'],
+            'id'          => ['required', 'integer'],
             'filelink_id' => ['required', 'integer'],
         ])->validate();
 
@@ -1594,9 +1615,9 @@ class AdminSupportController extends Controller
         ) {
             SupportTicketHistory::create([
                 'ticket_id' => $ticket->id,
-                'user_id' => Auth::id(),
-                'type' => 'file',
-                'action' => 'remove',
+                'user_id'   => Auth::id(),
+                'type'      => 'file',
+                'action'    => 'remove',
                 'reference' => $fileLink->file_id,
             ]);
 
@@ -1614,9 +1635,9 @@ class AdminSupportController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function support_file_upload(Request $request): RedirectResponse
     {
@@ -1635,26 +1656,26 @@ class AdminSupportController extends Controller
             ! empty($file = $request->files->get('file'))
         ) {
             $file = File::create([
-                'user_id' => ! empty($request->private) ? Auth::id() : null,
+                'user_id'   => ! empty($request->private) ? Auth::id() : null,
                 'folder_id' => null,
-                'name' => Carbon::now()->format('YmdHis') . '_' . $file->getClientOriginalName(),
-                'data' => $file->getContent(),
-                'mime' => $file->getClientMimeType(),
-                'size' => $file->getSize(),
+                'name'      => Carbon::now()->format('YmdHis') . '_' . $file->getClientOriginalName(),
+                'data'      => $file->getContent(),
+                'mime'      => $file->getClientMimeType(),
+                'size'      => $file->getSize(),
             ]);
 
             if ($file instanceof File) {
                 SupportTicketFile::create([
                     'ticket_id' => $ticket->id,
-                    'user_id' => Auth::id(),
-                    'file_id' => $file->id,
+                    'user_id'   => Auth::id(),
+                    'file_id'   => $file->id,
                 ]);
 
                 SupportTicketHistory::create([
                     'ticket_id' => $ticket->id,
-                    'user_id' => Auth::id(),
-                    'type' => 'file',
-                    'action' => 'add',
+                    'user_id'   => Auth::id(),
+                    'type'      => 'file',
+                    'action'    => 'add',
                     'reference' => $file->id,
                 ]);
 

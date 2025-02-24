@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Models\Accounting\Contract\Contract;
@@ -11,38 +13,37 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 /**
- * Class Tenant
+ * Class Tenant.
  *
  * This class is the model for basic tenant metadata.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *
- * @property int $id
- * @property int $user_id
- * @property int $contract_id
- * @property string $domain
- * @property string $database_driver
- * @property string $database_url
- * @property string $database_host
- * @property string $database_port
- * @property string $database_database
- * @property string $database_username
- * @property string $database_password
- * @property string $database_unix_socket
- * @property string $database_charset
- * @property string $database_collation
- * @property string $database_prefix
- * @property bool $database_prefix_indexes
- * @property bool $database_strict
- * @property string $database_engine
- * @property string $redis_prefix
- * @property Carbon $created_at
- * @property Carbon $updated_at
- *
- * @property User|null $user
+ * @property int           $id
+ * @property int           $user_id
+ * @property int           $contract_id
+ * @property string        $domain
+ * @property string        $database_driver
+ * @property string        $database_url
+ * @property string        $database_host
+ * @property string        $database_port
+ * @property string        $database_database
+ * @property string        $database_username
+ * @property string        $database_password
+ * @property string        $database_unix_socket
+ * @property string        $database_charset
+ * @property string        $database_collation
+ * @property string        $database_prefix
+ * @property bool          $database_prefix_indexes
+ * @property bool          $database_strict
+ * @property string        $database_engine
+ * @property string        $redis_prefix
+ * @property Carbon        $created_at
+ * @property Carbon        $updated_at
+ * @property User|null     $user
  * @property Contract|null $contract
- * @property float $size
- * @property Collection $processes
+ * @property float         $size
+ * @property Collection    $processes
  */
 class Tenant extends Model
 {
@@ -58,7 +59,7 @@ class Tenant extends Model
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var string[]|bool
+     * @var bool|string[]
      */
     protected $guarded = [
         'id',
@@ -71,13 +72,13 @@ class Tenant extends Model
      */
     protected $casts = [
         'database_prefix_indexes' => 'boolean',
-        'database_strict' => 'boolean',
+        'database_strict'         => 'boolean',
     ];
 
     /**
      * The attributes that are encryptable.
      *
-     * @var string[]|bool
+     * @var bool|string[]
      */
     protected $encryptable = [
         'database_driver',

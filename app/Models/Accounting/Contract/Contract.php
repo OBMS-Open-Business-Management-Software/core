@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\Accounting\Contract;
 
 use App\Models\Accounting\Invoice\Invoice;
@@ -12,38 +14,37 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class Contract
+ * Class Contract.
  *
  * This class is the model for basic contract metadata.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *
- * @property int $id
- * @property int $user_id
- * @property int $type_id
- * @property double $reserved_prepaid_amount
- * @property Carbon|null $started_at
- * @property Carbon|null $last_invoice_at
- * @property Carbon|null $cancelled_at
- * @property Carbon|null $cancellation_revoked_at
- * @property Carbon|null $cancelled_to
- * @property Carbon $created_at
- * @property Carbon $updated_at
- * @property Carbon $deleted_at
- *
- * @property User|null $user
- * @property ContractType|null $type
- * @property Collection<ContractPosition> $positionLinks
- * @property Collection<Invoice> $invoices
- * @property Collection<ContractHistory> $history
- * @property string $number
- * @property bool $started
- * @property bool $cancelled
- * @property bool $expired
- * @property bool $cancellationRevoked
- * @property string $status
- * @property double $netSum
- * @property double $grossSum
+ * @property int                            $id
+ * @property int                            $user_id
+ * @property int                            $type_id
+ * @property float                          $reserved_prepaid_amount
+ * @property Carbon|null                    $started_at
+ * @property Carbon|null                    $last_invoice_at
+ * @property Carbon|null                    $cancelled_at
+ * @property Carbon|null                    $cancellation_revoked_at
+ * @property Carbon|null                    $cancelled_to
+ * @property Carbon                         $created_at
+ * @property Carbon                         $updated_at
+ * @property Carbon                         $deleted_at
+ * @property User|null                      $user
+ * @property ContractType|null              $type
+ * @property Collection<ContractPosition>   $positionLinks
+ * @property Collection<Invoice>            $invoices
+ * @property Collection<ContractHistory>    $history
+ * @property string                         $number
+ * @property bool                           $started
+ * @property bool                           $cancelled
+ * @property bool                           $expired
+ * @property bool                           $cancellationRevoked
+ * @property string                         $status
+ * @property float                          $netSum
+ * @property float                          $grossSum
  * @property \Illuminate\Support\Collection $vatPositions
  */
 class Contract extends Model
@@ -53,7 +54,7 @@ class Contract extends Model
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var string[]|bool
+     * @var bool|string[]
      */
     protected $guarded = [
         'id',
@@ -65,11 +66,11 @@ class Contract extends Model
      * @var array
      */
     protected $casts = [
-        'started_at' => 'datetime',
-        'last_invoice_at' => 'datetime',
-        'cancelled_at' => 'datetime',
+        'started_at'              => 'datetime',
+        'last_invoice_at'         => 'datetime',
+        'cancelled_at'            => 'datetime',
         'cancellation_revoked_at' => 'datetime',
-        'cancelled_to' => 'datetime',
+        'cancelled_to'            => 'datetime',
     ];
 
     /**
@@ -257,11 +258,11 @@ class Contract extends Model
     {
         if ($this->status === 'template') {
             $this->update([
-                'started_at' => Carbon::now(),
-                'last_invoice_at' => null,
-                'cancelled_at' => null,
+                'started_at'              => Carbon::now(),
+                'last_invoice_at'         => null,
+                'cancelled_at'            => null,
                 'cancellation_revoked_at' => null,
-                'cancelled_to' => null,
+                'cancelled_to'            => null,
             ]);
         }
 

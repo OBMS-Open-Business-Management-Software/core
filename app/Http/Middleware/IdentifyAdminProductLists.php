@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Middleware;
 
 use App\Helpers\Products;
@@ -7,7 +9,7 @@ use Closure;
 use Illuminate\Http\Request;
 
 /**
- * Class IdentifyAdminProductLists
+ * Class IdentifyAdminProductLists.
  *
  * This class is the middleware for identifying the admin product lists.
  *
@@ -18,7 +20,7 @@ class IdentifyAdminProductLists
     /**
      * Handle an incoming request.
      *
-     * @param  Request  $request
+     * @param Request $request
      * @param Closure $next
      *
      * @return mixed

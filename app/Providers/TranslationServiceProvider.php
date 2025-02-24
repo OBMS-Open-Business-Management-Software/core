@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
-use Illuminate\Translation\Translator;
-use Illuminate\Support\ServiceProvider;
 use App\Helpers\CustomTranslationLoader;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Translation\Translator;
 
 class TranslationServiceProvider extends ServiceProvider
 {

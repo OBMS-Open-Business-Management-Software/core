@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Emails\Shop;
 
 use App\Helpers\SMIME;
@@ -29,7 +31,8 @@ class OrderNewSuccessfulApproval extends Notification
     /**
      * Get the notification's channels.
      *
-     * @param  ShopOrderQueue  $notifiable
+     * @param ShopOrderQueue $notifiable
+     *
      * @return array
      */
     public function via(ShopOrderQueue $notifiable): array
@@ -40,7 +43,7 @@ class OrderNewSuccessfulApproval extends Notification
     /**
      * Build the mail representation of the notification.
      *
-     * @param  ShopOrderQueue  $notifiable
+     * @param ShopOrderQueue $notifiable
      *
      * @return MailMessage
      */
@@ -58,7 +61,7 @@ class OrderNewSuccessfulApproval extends Notification
     /**
      * Get the support ticket creation email notification mail message for the given URL.
      *
-     * @param string $url
+     * @param string         $url
      * @param ShopOrderQueue $notifiable
      *
      * @return MailMessage
@@ -79,7 +82,7 @@ class OrderNewSuccessfulApproval extends Notification
     /**
      * Get the verification URL for the given notifiable.
      *
-     * @param  ShopOrderQueue  $notifiable
+     * @param ShopOrderQueue $notifiable
      *
      * @return string
      */
@@ -96,8 +99,6 @@ class OrderNewSuccessfulApproval extends Notification
      * Set a callback that should be used when creating the email verification URL.
      *
      * @param Closure $callback
-     *
-     * @return void
      */
     public static function createUrlUsing(Closure $callback)
     {
@@ -108,8 +109,6 @@ class OrderNewSuccessfulApproval extends Notification
      * Set a callback that should be used when building the notification mail message.
      *
      * @param Closure $callback
-     *
-     * @return void
      */
     public static function toMailUsing(Closure $callback)
     {

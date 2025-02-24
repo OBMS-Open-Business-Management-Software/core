@@ -1,39 +1,40 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\Accounting\Invoice;
 
 use App\Emails\Accounting\AccountingReminder;
 use App\Models\FileManager\File;
 use Carbon\Carbon;
-use Exception;
 use Error;
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 
 /**
- * Class InvoiceReminder
+ * Class InvoiceReminder.
  *
  * This class is the model for basic invoice reminder metadata.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *
- * @property int $id
- * @property int $invoice_id
- * @property int $dunning_id
- * @property int|null $file_id
- * @property bool $sent
- * @property Carbon $due_at
- * @property Carbon $archived_at
- * @property Carbon $created_at
- * @property Carbon $updated_at
- * @property Carbon $deleted_at
- *
- * @property Invoice|null $invoice
+ * @property int                 $id
+ * @property int                 $invoice_id
+ * @property int                 $dunning_id
+ * @property int|null            $file_id
+ * @property bool                $sent
+ * @property Carbon              $due_at
+ * @property Carbon              $archived_at
+ * @property Carbon              $created_at
+ * @property Carbon              $updated_at
+ * @property Carbon              $deleted_at
+ * @property Invoice|null        $invoice
  * @property InvoiceDunning|null $dunning
- * @property File|null $file
- * @property string $number
+ * @property File|null           $file
+ * @property string              $number
  */
 class InvoiceReminder extends Model
 {
@@ -43,7 +44,7 @@ class InvoiceReminder extends Model
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var string[]|bool
+     * @var bool|string[]
      */
     protected $guarded = [
         'id',
@@ -55,8 +56,8 @@ class InvoiceReminder extends Model
      * @var array
      */
     protected $casts = [
-        'sent' => 'boolean',
-        'due_at' => 'datetime',
+        'sent'        => 'boolean',
+        'due_at'      => 'datetime',
         'archived_at' => 'datetime',
     ];
 
@@ -123,7 +124,7 @@ class InvoiceReminder extends Model
             $this->notify(new AccountingReminder());
 
             $status = true;
-        } catch (Exception|Error $exception) {
+        } catch (Exception | Error $exception) {
         }
 
         $this->update([

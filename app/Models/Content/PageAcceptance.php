@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\Content;
 
 use App\Models\User;
@@ -9,24 +11,23 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class PageVersion
+ * Class PageVersion.
  *
  * This class is the model for basic page version metadata.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *
- * @property int $id
- * @property int $page_id
- * @property int $page_version_id
- * @property int $user_id
- * @property string $ip
- * @property string $user_agent
- * @property string $signature
- * @property Carbon $signed_at
- * @property Carbon $created_at
- * @property Carbon $updated_at
- * @property Carbon $deleted_at
- *
+ * @property int       $id
+ * @property int       $page_id
+ * @property int       $page_version_id
+ * @property int       $user_id
+ * @property string    $ip
+ * @property string    $user_agent
+ * @property string    $signature
+ * @property Carbon    $signed_at
+ * @property Carbon    $created_at
+ * @property Carbon    $updated_at
+ * @property Carbon    $deleted_at
  * @property Page|null $page
  * @property User|null $user
  */
@@ -44,7 +45,7 @@ class PageAcceptance extends Model
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var string[]|bool
+     * @var bool|string[]
      */
     protected $guarded = [
         'id',
@@ -96,6 +97,6 @@ class PageAcceptance extends Model
      */
     public function getSignedAttribute(): bool
     {
-        return md5($this->page_id . $this->page_version_id . $this->user_id. $this->user_agent . $this->ip . $this->signed_at) === $this->signature;
+        return md5($this->page_id . $this->page_version_id . $this->user_id . $this->user_agent . $this->ip . $this->signed_at) === $this->signature;
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\Support;
 
 use App\Models\User;
@@ -9,22 +11,21 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class SupportTicketAssignment
+ * Class SupportTicketAssignment.
  *
  * This class is the model for linking users with tickets metadata.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *
- * @property int $id
- * @property int $ticket_id
- * @property int $user_id
- * @property string $role
- * @property Carbon $created_at
- * @property Carbon $updated_at
- * @property Carbon $deleted_at
- *
+ * @property int                $id
+ * @property int                $ticket_id
+ * @property int                $user_id
+ * @property string             $role
+ * @property Carbon             $created_at
+ * @property Carbon             $updated_at
+ * @property Carbon             $deleted_at
  * @property SupportTicket|null $ticket
- * @property User|null $user
+ * @property User|null          $user
  */
 class SupportTicketAssignment extends Model
 {
@@ -33,7 +34,7 @@ class SupportTicketAssignment extends Model
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var string[]|bool
+     * @var bool|string[]
      */
     protected $guarded = [
         'id',

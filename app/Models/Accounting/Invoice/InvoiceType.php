@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\Accounting\Invoice;
 
 use Carbon\Carbon;
@@ -10,26 +12,25 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class InvoiceType
+ * Class InvoiceType.
  *
  * This class is the model for basic invoice type metadata.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *
- * @property int $id
- * @property int|null $discount_id
- * @property string $name
- * @property string $description
- * @property string $type
- * @property double|null $period
- * @property bool $dunning
- * @property Carbon $created_at
- * @property Carbon $updated_at
- * @property Carbon $deleted_at
- *
+ * @property int                        $id
+ * @property int|null                   $discount_id
+ * @property string                     $name
+ * @property string                     $description
+ * @property string                     $type
+ * @property float|null                 $period
+ * @property bool                       $dunning
+ * @property Carbon                     $created_at
+ * @property Carbon                     $updated_at
+ * @property Carbon                     $deleted_at
  * @property Collection<InvoiceDunning> $dunnings
- * @property Collection<Invoice> $invoices
- * @property InvoiceDiscount|null $discount
+ * @property Collection<Invoice>        $invoices
+ * @property InvoiceDiscount|null       $discount
  */
 class InvoiceType extends Model
 {
@@ -38,7 +39,7 @@ class InvoiceType extends Model
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var string[]|bool
+     * @var bool|string[]
      */
     protected $guarded = [
         'id',

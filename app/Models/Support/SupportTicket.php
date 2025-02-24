@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\Support;
 
 use App\Emails\Support\SupportTicketClose;
@@ -18,8 +20,8 @@ use App\Models\Support\Category\SupportCategory;
 use App\Models\Support\Run\SupportRun;
 use App\Models\Support\Run\SupportRunHistory;
 use Carbon\Carbon;
-use Exception;
 use Error;
+use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -28,39 +30,37 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 
 /**
- * Class SupportTicket
+ * Class SupportTicket.
  *
  * This class is the model for basic ticket metadata.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *
- * @property int $id
- * @property int $category_id
- * @property string $imap_name
- * @property string $imap_email
- * @property string $subject
- * @property string $status
- * @property string $priority
- * @property bool $hold
- * @property bool $escalated
- * @property Carbon $created_at
- * @property Carbon $updated_at
- * @property Carbon $deleted_at
- *
+ * @property int                                 $id
+ * @property int                                 $category_id
+ * @property string                              $imap_name
+ * @property string                              $imap_email
+ * @property string                              $subject
+ * @property string                              $status
+ * @property string                              $priority
+ * @property bool                                $hold
+ * @property bool                                $escalated
+ * @property Carbon                              $created_at
+ * @property Carbon                              $updated_at
+ * @property Carbon                              $deleted_at
  * @property Collection<SupportTicketAssignment> $assignments
- * @property Collection<SupportTicketMessage> $messages
- * @property Collection<SupportTicketHistory> $history
- * @property Collection<SupportTicketFile> $fileLinks
- * @property SupportCategory|null $category
- *
- * @property Collection<SupportTicketHistory> $runActions
- * @property Collection<SupportTicketHistory> $activeAssignments
- * @property Collection<File> $files
- * @property string|null $name
- * @property string|null $email
- * @property bool $external
- * @property string $answerEmailAddress
- * @property string $answerEmailName
+ * @property Collection<SupportTicketMessage>    $messages
+ * @property Collection<SupportTicketHistory>    $history
+ * @property Collection<SupportTicketFile>       $fileLinks
+ * @property SupportCategory|null                $category
+ * @property Collection<SupportTicketHistory>    $runActions
+ * @property Collection<SupportTicketHistory>    $activeAssignments
+ * @property Collection<File>                    $files
+ * @property string|null                         $name
+ * @property string|null                         $email
+ * @property bool                                $external
+ * @property string                              $answerEmailAddress
+ * @property string                              $answerEmailName
  */
 class SupportTicket extends Model
 {
@@ -70,7 +70,7 @@ class SupportTicket extends Model
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var string[]|bool
+     * @var bool|string[]
      */
     protected $guarded = [
         'id',
@@ -82,7 +82,7 @@ class SupportTicket extends Model
      * @var array
      */
     protected $casts = [
-        'hold' => 'bool',
+        'hold'     => 'bool',
         'escalate' => 'bool',
     ];
 
@@ -181,7 +181,7 @@ class SupportTicket extends Model
             ->sortByDesc('created_at');
 
         return (clone $history)
-            ->reject(function (SupportTicketHistory $entry) use ($history) {
+            ->reject(function (SupportTicketHistory $entry) {
                 $revertedHistory = $this->history
                     ->where('user_id', '=', $entry->user_id)
                     ->where('type', '=', 'assignment')
@@ -289,144 +289,122 @@ class SupportTicket extends Model
 
     /**
      * Send the email creation notification.
-     *
-     * @return void
      */
     public function sendEmailCreationNotification(): void
     {
         try {
             $this->notify(new SupportTicketNew());
-        } catch (Exception|Error $exception) {
+        } catch (Exception | Error $exception) {
         }
     }
 
     /**
      * Send the email lock notification.
-     *
-     * @return void
      */
     public function sendEmailLockNotification(): void
     {
         try {
             $this->notify(new SupportTicketLock());
-        } catch (Exception|Error $exception) {
+        } catch (Exception | Error $exception) {
         }
     }
 
     /**
      * Send the email unlock notification.
-     *
-     * @return void
      */
     public function sendEmailUnlockNotification(): void
     {
         try {
             $this->notify(new SupportTicketUnlock());
-        } catch (Exception|Error $exception) {
+        } catch (Exception | Error $exception) {
         }
     }
 
     /**
      * Send the email escalation notification.
-     *
-     * @return void
      */
     public function sendEmailEscalationNotification(): void
     {
         try {
             $this->notify(new SupportTicketEscalation());
-        } catch (Exception|Error $exception) {
+        } catch (Exception | Error $exception) {
         }
     }
 
     /**
      * Send the email deescalation notification.
-     *
-     * @return void
      */
     public function sendEmailDeescalationNotification(): void
     {
         try {
             $this->notify(new SupportTicketDeescalation());
-        } catch (Exception|Error $exception) {
+        } catch (Exception | Error $exception) {
         }
     }
 
     /**
      * Send the email hold notification.
-     *
-     * @return void
      */
     public function sendEmailHoldNotification(): void
     {
         try {
             $this->notify(new SupportTicketHold());
-        } catch (Exception|Error $exception) {
+        } catch (Exception | Error $exception) {
         }
     }
 
     /**
      * Send the email unhold notification.
-     *
-     * @return void
      */
     public function sendEmailUnholdNotification(): void
     {
         try {
             $this->notify(new SupportTicketUnhold());
-        } catch (Exception|Error $exception) {
+        } catch (Exception | Error $exception) {
         }
     }
 
     /**
      * Send the email file upload notification.
-     *
-     * @return void
      */
     public function sendEmailFileUploadNotification(): void
     {
         try {
             $this->notify(new SupportTicketFileUpload());
-        } catch (Exception|Error $exception) {
+        } catch (Exception | Error $exception) {
         }
     }
 
     /**
      * Send the email hold notification.
-     *
-     * @return void
      */
     public function sendEmailCloseNotification(): void
     {
         try {
             $this->notify(new SupportTicketClose());
-        } catch (Exception|Error $exception) {
+        } catch (Exception | Error $exception) {
         }
     }
 
     /**
      * Send the email hold notification.
-     *
-     * @return void
      */
     public function sendEmailReopenNotification(): void
     {
         try {
             $this->notify(new SupportTicketReopen());
-        } catch (Exception|Error $exception) {
+        } catch (Exception | Error $exception) {
         }
     }
 
     /**
      * Send the email hold notification.
-     *
-     * @return void
      */
     public function sendEmailPriorityNotification(): void
     {
         try {
             $this->notify(new SupportTicketPriority());
-        } catch (Exception|Error $exception) {
+        } catch (Exception | Error $exception) {
         }
     }
 

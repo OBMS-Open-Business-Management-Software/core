@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Models\Setting;
 use Carbon\Carbon;
 use Illuminate\Database\Migrations\Migration;
@@ -7,8 +9,6 @@ use Illuminate\Database\Migrations\Migration;
 return new class () extends Migration {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
@@ -16,28 +16,28 @@ return new class () extends Migration {
 
         Setting::insert([
             [
-                'setting' => 'theme.primary',
-                'value' => encrypt('#040E29'),
+                'setting'    => 'theme.primary',
+                'value'      => encrypt('#040E29'),
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,
             ], [
-                'setting' => 'theme.secondary',
-                'value' => encrypt('#3C4858'),
+                'setting'    => 'theme.secondary',
+                'value'      => encrypt('#3C4858'),
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,
             ], [
-                'setting' => 'theme.secondary-dark',
-                'value' => encrypt('#2B3747'),
+                'setting'    => 'theme.secondary-dark',
+                'value'      => encrypt('#2B3747'),
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,
             ], [
-                'setting' => 'theme.white',
-                'value' => encrypt('#FFFFFF'),
+                'setting'    => 'theme.white',
+                'value'      => encrypt('#FFFFFF'),
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,
             ], [
-                'setting' => 'theme.gray',
-                'value' => encrypt('#F3F9FC'),
+                'setting'    => 'theme.gray',
+                'value'      => encrypt('#F3F9FC'),
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,
             ],
@@ -46,8 +46,6 @@ return new class () extends Migration {
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {

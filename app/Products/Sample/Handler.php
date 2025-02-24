@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Products\Sample;
 
+use App\Products\Product;
+use App\Products\Sample\Models\Sample;
 use App\Traits\Product\HasCapabilities;
 use App\Traits\Product\HasService;
 use App\Traits\Product\HasSettings;
-use App\Products\Product;
-use App\Products\Sample\Models\Sample;
 use Illuminate\Support\Collection;
 
 /**
@@ -31,7 +33,7 @@ class Handler implements Product
     public function parameters(): Collection
     {
         return collect([
-            "test" => __('sample.test'),
+            'test' => __('sample.test'),
         ]);
     }
 
@@ -92,8 +94,8 @@ class Handler implements Product
      */
     public function ui(): object
     {
-        return (object)[
-            'admin' => true,
+        return (object) [
+            'admin'    => true,
             'customer' => true,
         ];
     }
@@ -113,7 +115,7 @@ class Handler implements Product
     /**
      * Update an existing product instance.
      *
-     * @param int $id
+     * @param int        $id
      * @param Collection $data
      *
      * @return bool

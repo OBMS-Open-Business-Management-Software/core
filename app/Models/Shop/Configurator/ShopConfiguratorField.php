@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\Shop\Configurator;
 
 use Carbon\Carbon;
@@ -10,32 +12,31 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class ShopConfiguratorField
+ * Class ShopConfiguratorField.
  *
  * This class is the model for basic shop configurator field metadata.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *
- * @property int $id
- * @property int|null $form_id
- * @property string $type
- * @property string $label
- * @property string $key
- * @property string|null $value
- * @property string|null $value_prefix
- * @property string|null $value_suffix
- * @property double|null $amount
- * @property double|null $min
- * @property double|null $max
- * @property double|null $step
- * @property boolean $required
- * @property Carbon $created_at
- * @property Carbon $updated_at
- * @property Carbon $deleted_at
- *
- * @property ShopConfiguratorForm|null $form
+ * @property int                                     $id
+ * @property int|null                                $form_id
+ * @property string                                  $type
+ * @property string                                  $label
+ * @property string                                  $key
+ * @property string|null                             $value
+ * @property string|null                             $value_prefix
+ * @property string|null                             $value_suffix
+ * @property float|null                              $amount
+ * @property float|null                              $min
+ * @property float|null                              $max
+ * @property float|null                              $step
+ * @property bool                                    $required
+ * @property Carbon                                  $created_at
+ * @property Carbon                                  $updated_at
+ * @property Carbon                                  $deleted_at
+ * @property ShopConfiguratorForm|null               $form
  * @property Collection<ShopConfiguratorFieldOption> $options
- * @property ShopConfiguratorFieldOption|null $defaultOption
+ * @property ShopConfiguratorFieldOption|null        $defaultOption
  */
 class ShopConfiguratorField extends Model
 {
@@ -44,7 +45,7 @@ class ShopConfiguratorField extends Model
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var string[]|bool
+     * @var bool|string[]
      */
     protected $guarded = [
         'id',

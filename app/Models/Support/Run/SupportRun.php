@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\Support\Run;
 
 use App\Models\Support\SupportTicket;
@@ -12,21 +14,20 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class SupportTicket
+ * Class SupportTicket.
  *
  * This class is the model for basic ticket metadata.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *
- * @property int $id
- * @property int $ticket_id
- * @property int $user_id
- * @property Carbon $created_at
- * @property Carbon $updated_at
- * @property Carbon $deleted_at
- *
- * @property SupportTicket|null $ticket
- * @property User|null $user
+ * @property int                           $id
+ * @property int                           $ticket_id
+ * @property int                           $user_id
+ * @property Carbon                        $created_at
+ * @property Carbon                        $updated_at
+ * @property Carbon                        $deleted_at
+ * @property SupportTicket|null            $ticket
+ * @property User|null                     $user
  * @property Collection<SupportRunHistory> $history
  */
 class SupportRun extends Model
@@ -36,7 +37,7 @@ class SupportRun extends Model
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var string[]|bool
+     * @var bool|string[]
      */
     protected $guarded = [
         'id',

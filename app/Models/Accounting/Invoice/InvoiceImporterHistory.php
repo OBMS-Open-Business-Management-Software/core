@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\Accounting\Invoice;
 
 use App\Models\FileManager\File;
@@ -8,28 +10,27 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
- * Class InvoiceImporterHistory
+ * Class InvoiceImporterHistory.
  *
  * This class is the model for basic invoice importer metadata.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *
- * @property int $id
- * @property int $importer_id
- * @property int|null $invoice_id
- * @property int|null $file_id
- * @property string $subject
- * @property string $from
- * @property string $from_name
- * @property string $to
- * @property string $message
- * @property Carbon $created_at
- * @property Carbon $updated_at
- * @property Carbon $deleted_at
- *
+ * @property int                  $id
+ * @property int                  $importer_id
+ * @property int|null             $invoice_id
+ * @property int|null             $file_id
+ * @property string               $subject
+ * @property string               $from
+ * @property string               $from_name
+ * @property string               $to
+ * @property string               $message
+ * @property Carbon               $created_at
+ * @property Carbon               $updated_at
+ * @property Carbon               $deleted_at
  * @property InvoiceImporter|null $importer
- * @property Invoice|null $invoice
- * @property File|null $file
+ * @property Invoice|null         $invoice
+ * @property File|null            $file
  */
 class InvoiceImporterHistory extends Model
 {

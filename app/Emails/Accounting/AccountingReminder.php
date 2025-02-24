@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Emails\Accounting;
 
 use App\Helpers\SMIME;
@@ -34,7 +36,8 @@ class AccountingReminder extends Notification
     /**
      * Get the notification's channels.
      *
-     * @param  InvoiceReminder  $notifiable
+     * @param InvoiceReminder $notifiable
+     *
      * @return array
      */
     public function via(InvoiceReminder $notifiable): array
@@ -45,7 +48,7 @@ class AccountingReminder extends Notification
     /**
      * Build the mail representation of the notification.
      *
-     * @param  InvoiceReminder  $notifiable
+     * @param InvoiceReminder $notifiable
      *
      * @return MailMessage
      */
@@ -63,7 +66,7 @@ class AccountingReminder extends Notification
     /**
      * Get the support ticket creation email notification mail message for the given URL.
      *
-     * @param string $url
+     * @param string          $url
      * @param InvoiceReminder $notifiable
      *
      * @return MailMessage
@@ -102,7 +105,7 @@ class AccountingReminder extends Notification
 
             $pdf = App::make('dompdf.wrapper')->loadView('pdf.reminder', [
                 'reminder' => $notifiable,
-                'sepaQr' => $sepaQr,
+                'sepaQr'   => $sepaQr,
             ]);
 
             $message = $message->attachData($pdf->output(), $notifiable->number . '.pdf');
@@ -114,7 +117,7 @@ class AccountingReminder extends Notification
     /**
      * Get the verification URL for the given notifiable.
      *
-     * @param  InvoiceReminder  $notifiable
+     * @param InvoiceReminder $notifiable
      *
      * @return string
      */
@@ -127,7 +130,7 @@ class AccountingReminder extends Notification
         return URL::signedRoute(
             'customer.support.details',
             [
-                'id' => $notifiable->getKey(),
+                'id'   => $notifiable->getKey(),
                 'hash' => sha1($notifiable->email),
             ]
         );
@@ -137,8 +140,6 @@ class AccountingReminder extends Notification
      * Set a callback that should be used when creating the email verification URL.
      *
      * @param Closure $callback
-     *
-     * @return void
      */
     public static function createUrlUsing(Closure $callback)
     {
@@ -149,8 +150,6 @@ class AccountingReminder extends Notification
      * Set a callback that should be used when building the notification mail message.
      *
      * @param Closure $callback
-     *
-     * @return void
      */
     public static function toMailUsing(Closure $callback)
     {

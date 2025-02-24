@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\Accounting\Invoice;
 
 use App\Models\FileManager\File;
@@ -10,24 +12,23 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class InvoiceHistory
+ * Class InvoiceHistory.
  *
  * This class is the model for basic invoice history metadata.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *
- * @property int $id
- * @property int|null $user_id
- * @property int $invoice_id
- * @property int $file_id
- * @property string $status
- * @property Carbon $created_at
- * @property Carbon $updated_at
- * @property Carbon $deleted_at
- *
- * @property User|null $user
+ * @property int          $id
+ * @property int|null     $user_id
+ * @property int          $invoice_id
+ * @property int          $file_id
+ * @property string       $status
+ * @property Carbon       $created_at
+ * @property Carbon       $updated_at
+ * @property Carbon       $deleted_at
+ * @property User|null    $user
  * @property Invoice|null $invoice
- * @property File|null $file
+ * @property File|null    $file
  */
 class InvoiceHistory extends Model
 {
@@ -43,7 +44,7 @@ class InvoiceHistory extends Model
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var string[]|bool
+     * @var bool|string[]
      */
     protected $guarded = [
         'id',

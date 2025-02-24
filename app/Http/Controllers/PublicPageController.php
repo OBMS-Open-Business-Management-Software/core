@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Models\Content\Page;
@@ -33,7 +35,7 @@ class PublicPageController extends Controller
         }
 
         return view('cms.page', [
-            'page' => $page,
+            'page'   => $page,
             'render' => function ($__php, $__data) {
                 $obLevel = ob_get_level();
                 ob_start();
@@ -56,7 +58,7 @@ class PublicPageController extends Controller
                 }
 
                 return ob_get_clean();
-            }
+            },
         ]);
     }
 
@@ -81,7 +83,7 @@ class PublicPageController extends Controller
 
         if ($page->latest->page_id == $page->id) {
             return view('cms.page', [
-                'page' => $page,
+                'page'   => $page,
                 'render' => function ($__php, $__data) {
                     $obLevel = ob_get_level();
                     ob_start();
@@ -104,7 +106,7 @@ class PublicPageController extends Controller
                     }
 
                     return ob_get_clean();
-                }
+                },
             ]);
         }
 

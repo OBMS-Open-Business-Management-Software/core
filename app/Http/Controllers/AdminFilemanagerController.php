@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Helpers\Download;
@@ -116,10 +118,12 @@ class AdminFilemanagerController extends Controller
                 switch ($request->columns[$order['column']]) {
                     case 'name':
                         $orderBy = 'name';
+
                         break;
                     case 'id':
                     default:
                         $orderBy = 'id';
+
                         break;
                 }
 
@@ -134,12 +138,12 @@ class AdminFilemanagerController extends Controller
 
         /* @var Folder|File $fileOrFolder */
         return response()->json([
-            'draw' => (int) $request->draw,
-            'recordsTotal' => $totalCount,
+            'draw'            => (int) $request->draw,
+            'recordsTotal'    => $totalCount,
             'recordsFiltered' => $filteredCount,
-            'data' => $query
+            'data'            => $query
                 ->get()
-                ->transform(function ($fileOrFolder) use ($totalCount) {
+                ->transform(function ($fileOrFolder) {
                     if ($fileOrFolder->type == 'folder') {
                         $edit = '
 <a class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editFolder' . $fileOrFolder->id . '"><i class="bi bi-pencil-square"></i></a>
@@ -183,13 +187,13 @@ class AdminFilemanagerController extends Controller
 ';
 
                         return (object) [
-                            'icon' => '<i class="bi bi-folder"></i>',
-                            'name' => $fileOrFolder->name,
+                            'icon'    => '<i class="bi bi-folder"></i>',
+                            'name'    => $fileOrFolder->name,
                             'private' => $fileOrFolder->user_id > 0 ? '<i class="bi bi-lock"></i>' : '',
-                            'size' => $fileOrFolder->folderSize . 'B',
-                            'edit' => $edit,
-                            'action' => '<a href="' . route('admin.filemanager.folder', $fileOrFolder->id) . '" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>',
-                            'delete' => '<a href="' . route('admin.filemanager.folder.delete', $fileOrFolder->id) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>',
+                            'size'    => $fileOrFolder->folderSize . 'B',
+                            'edit'    => $edit,
+                            'action'  => '<a href="' . route('admin.filemanager.folder', $fileOrFolder->id) . '" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>',
+                            'delete'  => '<a href="' . route('admin.filemanager.folder.delete', $fileOrFolder->id) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>',
                         ];
                     } elseif ($fileOrFolder->type == 'file') {
                         $edit = '
@@ -234,13 +238,13 @@ class AdminFilemanagerController extends Controller
 ';
 
                         return (object) [
-                            'icon' => '<i class="bi bi-file-earmark"></i> ' . (! empty($fileOrFolder->mime) ? '<span class="badge badge-secondary ml-2 font-weight-normal">' . $fileOrFolder->mime . '</span>' : ''),
-                            'name' => $fileOrFolder->name,
+                            'icon'    => '<i class="bi bi-file-earmark"></i> ' . (! empty($fileOrFolder->mime) ? '<span class="badge badge-secondary ml-2 font-weight-normal">' . $fileOrFolder->mime . '</span>' : ''),
+                            'name'    => $fileOrFolder->name,
                             'private' => $fileOrFolder->user_id > 0 ? '<i class="bi bi-lock"></i>' : '',
-                            'size' => $fileOrFolder->size . 'B',
-                            'edit' => $edit,
-                            'action' => '<a href="' . route('admin.filemanager.file.download', $fileOrFolder->id) . '" class="btn btn-warning btn-sm" download><i class="bi bi-download"></i></a>',
-                            'delete' => '<a href="' . route('admin.filemanager.file.delete', $fileOrFolder->id) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>',
+                            'size'    => $fileOrFolder->size . 'B',
+                            'edit'    => $edit,
+                            'action'  => '<a href="' . route('admin.filemanager.file.download', $fileOrFolder->id) . '" class="btn btn-warning btn-sm" download><i class="bi bi-download"></i></a>',
+                            'delete'  => '<a href="' . route('admin.filemanager.file.delete', $fileOrFolder->id) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>',
                         ];
                     }
 
@@ -248,7 +252,7 @@ class AdminFilemanagerController extends Controller
                 })
                 ->reject(function ($fileOrFolder) {
                     return ! isset($fileOrFolder);
-                })
+                }),
         ]);
     }
 
@@ -257,16 +261,16 @@ class AdminFilemanagerController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function filemanager_folder_create(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
             'folder_id' => ['integer', 'nullable'],
-            'name' => ['required', 'string', 'max:255'],
-            'private' => ['string', 'nullable'],
+            'name'      => ['required', 'string', 'max:255'],
+            'private'   => ['string', 'nullable'],
         ])->validate();
 
         if (
@@ -278,9 +282,9 @@ class AdminFilemanagerController extends Controller
                 ->exists()
         ) {
             Folder::create([
-                'user_id' => ! empty($request->private) ? Auth::id() : null,
+                'user_id'   => ! empty($request->private) ? Auth::id() : null,
                 'parent_id' => $request->folder_id,
-                'name' => $request->name,
+                'name'      => $request->name,
             ]);
 
             return redirect()->back()->with('success', 'The folder has been created successfully.');
@@ -294,16 +298,16 @@ class AdminFilemanagerController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function filemanager_folder_update(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
             'folder_id' => ['required', 'integer'],
-            'name' => ['required', 'string', 'max:255'],
-            'private' => ['string', 'nullable'],
+            'name'      => ['required', 'string', 'max:255'],
+            'private'   => ['string', 'nullable'],
         ])->validate();
 
         if (
@@ -319,7 +323,7 @@ class AdminFilemanagerController extends Controller
         ) {
             $folder->update([
                 'user_id' => ! empty($request->private) ? Auth::id() : null,
-                'name' => $request->name,
+                'name'    => $request->name,
             ]);
 
             return redirect()->back()->with('success', 'The folder has been updated successfully.');
@@ -333,9 +337,9 @@ class AdminFilemanagerController extends Controller
      *
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function filemanager_folder_delete(int $id): RedirectResponse
     {
@@ -366,15 +370,15 @@ class AdminFilemanagerController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function filemanager_file_create(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
             'folder_id' => ['integer', 'nullable'],
-            'private' => ['string', 'nullable'],
+            'private'   => ['string', 'nullable'],
         ])->validate();
 
         /* @var UploadedFile|null $file */
@@ -388,12 +392,12 @@ class AdminFilemanagerController extends Controller
                 ->exists()
         ) {
             File::create([
-                'user_id' => ! empty($request->private) ? Auth::id() : null,
+                'user_id'   => ! empty($request->private) ? Auth::id() : null,
                 'folder_id' => $request->folder_id,
-                'name' => $file->getClientOriginalName(),
-                'data' => $file->getContent(),
-                'mime' => $file->getClientMimeType(),
-                'size' => $file->getSize(),
+                'name'      => $file->getClientOriginalName(),
+                'data'      => $file->getContent(),
+                'mime'      => $file->getClientMimeType(),
+                'size'      => $file->getSize(),
             ]);
 
             return redirect()->back()->with('success', 'The file has been uploaded successfully.');
@@ -407,15 +411,15 @@ class AdminFilemanagerController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function filemanager_file_update(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
             'file_id' => ['required', 'integer'],
-            'name' => ['required', 'string', 'max:255'],
+            'name'    => ['required', 'string', 'max:255'],
             'private' => ['string', 'nullable'],
         ])->validate();
 
@@ -433,7 +437,7 @@ class AdminFilemanagerController extends Controller
         ) {
             $file->update([
                 'user_id' => ! empty($request->private) ? Auth::id() : null,
-                'name' => $request->name,
+                'name'    => $request->name,
             ]);
 
             return redirect()->back()->with('success', 'The file has been updated successfully.');
@@ -447,9 +451,9 @@ class AdminFilemanagerController extends Controller
      *
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function filemanager_file_delete(int $id): RedirectResponse
     {
@@ -480,9 +484,9 @@ class AdminFilemanagerController extends Controller
      *
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function filemanager_file_download(int $id): RedirectResponse
     {
@@ -524,7 +528,7 @@ class AdminFilemanagerController extends Controller
         $authPlugin = new AuthPlugin($authBackend);
 
         $locksBackend = new Locks();
-        $locksPlugin = new LocksPlugin($locksBackend);
+        $locksPlugin  = new LocksPlugin($locksBackend);
 
         try {
             $server = new Server($publicDir);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Jobs\TenantJobs;
 
 use App\Jobs\Structure\TenantJob;
@@ -8,7 +10,7 @@ use App\Models\Tenant;
 use Illuminate\Support\Facades\Artisan;
 
 /**
- * Class AutoMigrations
+ * Class AutoMigrations.
  *
  * This class is the tenant job for running migrations.
  *
@@ -19,7 +21,9 @@ class AutoMigrations extends TenantJob
     use UniquelyQueueable;
 
     public $tries = 1;
+
     public $timeout = 3600;
+
     public static $onQueue = 'auto_migrations';
 
     /**

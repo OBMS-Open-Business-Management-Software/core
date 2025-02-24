@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Traits;
 
 /**
- * Trait Encryptable
+ * Trait Encryptable.
  *
  * This trait enables attribute encryption for models.
  *
@@ -15,7 +17,7 @@ trait Encryptable
      * If the attribute is in the encryptable array
      * then decrypt it.
      *
-     * @param  $key
+     * @param $key
      *
      * @return mixed $value
      */
@@ -50,6 +52,7 @@ trait Encryptable
 
         return parent::setAttribute($key, $value);
     }
+
     /**
      * When need to make sure that we iterate through
      * all the keys.

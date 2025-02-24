@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Helpers;
 
 use Illuminate\Support\Collection;
@@ -14,7 +16,7 @@ use Illuminate\Support\Collection;
  */
 class ClassFinder
 {
-    public const appRoot = __DIR__ . "/../../";
+    public const appRoot = __DIR__ . '/../../';
 
     /**
      * Get a list of classes within a certain namespace.
@@ -47,7 +49,7 @@ class ClassFinder
     private static function getDefinedNamespaces()
     {
         $composerJsonPath = self::appRoot . 'composer.json';
-        $composerConfig = json_decode(file_get_contents($composerJsonPath));
+        $composerConfig   = json_decode(file_get_contents($composerJsonPath));
 
         return (array) $composerConfig->autoload->{'psr-4'};
     }
@@ -63,7 +65,7 @@ class ClassFinder
     {
         $composerNamespaces = self::getDefinedNamespaces();
 
-        $namespaceFragments = explode('\\', $namespace);
+        $namespaceFragments          = explode('\\', $namespace);
         $undefinedNamespaceFragments = [];
 
         while ($namespaceFragments) {

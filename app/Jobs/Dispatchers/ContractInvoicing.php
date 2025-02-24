@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Jobs\Dispatchers;
 
 use App\Jobs\Structure\Job;
@@ -7,7 +9,7 @@ use App\Jobs\TenantJobs\ContractInvoicing as ContractInvoicingJob;
 use App\Models\Tenant;
 
 /**
- * Class ContractInvoicing
+ * Class ContractInvoicing.
  *
  * This class is the dispatcher job for generating contract invoices.
  *
@@ -16,7 +18,9 @@ use App\Models\Tenant;
 class ContractInvoicing extends Job
 {
     public $tries = 1;
+
     public $timeout = 3600;
+
     public static $onQueue = 'dispatchers';
 
     /**

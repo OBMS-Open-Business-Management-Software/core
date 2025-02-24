@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Emails\AccountEmailVerificationRequest;
 use App\Emails\ProfileEmailVerificationRequest;
-use App\Products\Product;
 use App\Helpers\Products;
 use App\Models\Content\Page;
 use App\Models\Shop\Configurator\ShopConfiguratorCategory;
 use App\Models\Shop\Configurator\ShopConfiguratorForm;
+use App\Products\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -55,7 +57,7 @@ Route::middleware([
     Route::get('/redirect', [App\Http\Controllers\DashboardController::class, 'redirect'])->name('redirect');
 
     Route::group([
-        'prefix' => 'customer',
+        'prefix'     => 'customer',
         'middleware' => [
             'role.customer',
             'products.customer',
@@ -135,8 +137,8 @@ Route::middleware([
             Route::post('/profile/transactions/initialize/invoice/{id}', [App\Http\Controllers\PaymentController::class, 'customer_initialize_invoice'])->name('customer.profile.transactions.invoice');
 
             Products::list()->transform(function ($handler) {
-                return (object)[
-                    'instance' => $handler,
+                return (object) [
+                    'instance'     => $handler,
                     'capabilities' => $handler->capabilities(),
                 ];
             })->reject(function ($handler) {
@@ -167,7 +169,7 @@ Route::middleware([
     });
 
     Route::group([
-        'prefix' => 'admin',
+        'prefix'     => 'admin',
         'middleware' => [
             'role.employee',
             'products.admin',
@@ -452,8 +454,8 @@ Route::middleware([
         Route::get('/shop/{id}', [App\Http\Controllers\AdminShopController::class, 'shop_categories_index'])->name('admin.shop.categories.details');
 
         Products::list()->transform(function ($handler) {
-            return (object)[
-                'instance' => $handler,
+            return (object) [
+                'instance'     => $handler,
                 'capabilities' => $handler->capabilities(),
             ];
         })->reject(function ($handler) {

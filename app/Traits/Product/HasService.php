@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Traits\Product;
 
 use Illuminate\Database\Eloquent\Model;
@@ -18,6 +20,8 @@ trait HasService
 
     /**
      * Get service model instance.
+     *
+     * @param int $id
      *
      * @return Collection
      */

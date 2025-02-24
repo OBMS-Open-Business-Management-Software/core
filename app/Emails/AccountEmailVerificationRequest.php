@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Emails;
 
 use Illuminate\Auth\Events\Verified;
@@ -9,8 +11,6 @@ class AccountEmailVerificationRequest extends Request
 {
     /**
      * Fulfill the email verification request.
-     *
-     * @return void
      */
     public function fulfill()
     {
