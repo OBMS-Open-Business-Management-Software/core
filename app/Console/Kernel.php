@@ -14,7 +14,7 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Laravel\Passport\Console\ClientCommand;
 
 /**
- * Class Kernel.
+ * Class Kernel
  *
  * This class holds the definition for job and command scheduling (automated tasks).
  *

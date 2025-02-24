@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class BankAccount.
+ * Class BankAccount
  *
  * This class is the model for basic bank account metadata.
  *

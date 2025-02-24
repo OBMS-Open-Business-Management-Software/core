@@ -30,7 +30,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 
 /**
- * Class SupportTicket.
+ * Class SupportTicket
  *
  * This class is the model for basic ticket metadata.
  *

@@ -7,7 +7,7 @@ namespace App\Helpers;
 use Illuminate\Support\Collection;
 
 /**
- * Class ClassFinder.
+ * Class ClassFinder
  *
  * This class is the helper for handling namespace scanning for
  * classes.

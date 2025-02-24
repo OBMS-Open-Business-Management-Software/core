@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class ProfileAddress.
+ * Class ProfileAddress
  *
  * This class is the model for linking profile with address metadata.
  *

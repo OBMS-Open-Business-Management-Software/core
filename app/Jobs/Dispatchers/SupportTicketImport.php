@@ -9,7 +9,7 @@ use App\Jobs\TenantJobs\SupportTicketImport as SupportTicketImportJob;
 use App\Models\Tenant;
 
 /**
- * Class SupportTicketImport.
+ * Class SupportTicketImport
  *
  * This class is the dispatcher job for importing ticket metadata via. IMAP inboxes.
  *

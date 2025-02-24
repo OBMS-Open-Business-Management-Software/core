@@ -5,22 +5,12 @@ declare(strict_types=1);
 namespace App\PaymentGateways\PayPal\Helpers;
 
 /**
- * HTTP Request class.
+ * Class  HTTPRequest
  *
  * @version 1.0
  *
  * @author martin maly
  * @copyright (C) 2008 martin maly
- */
-
-/**
- * Class  HTTPRequest.
- *
- * @version 1.0
- *
- * @author martin maly
- * @copyright (C) 2008 martin maly
- * 2.10.2008 20:10:40
  */
 class HTTPRequest
 {

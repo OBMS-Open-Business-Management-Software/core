@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class PaymentGatewaySetting.
+ * Class PaymentGatewaySetting
  *
  * This class is the model for basic payment gateway metadata.
  *

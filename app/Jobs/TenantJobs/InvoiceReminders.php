@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\App;
 use SepaQr\Data;
 
 /**
- * Class InvoiceReminders.
+ * Class InvoiceReminders
  *
  * This class is the tenant job for sending out invoice reminders.
  *

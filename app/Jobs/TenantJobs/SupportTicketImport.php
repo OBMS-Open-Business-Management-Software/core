@@ -19,7 +19,7 @@ use finfo;
 use stdClass;
 
 /**
- * Class SupportTicketImport.
+ * Class SupportTicketImport
  *
  * This class is the tenant job for importing ticket metadata via. IMAP inboxes.
  *

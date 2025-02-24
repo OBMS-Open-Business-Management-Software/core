@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class PageVersion.
+ * Class PageVersion
  *
  * This class is the model for basic page version metadata.
  *

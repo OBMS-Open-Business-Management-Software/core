@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 /**
- * Class RequireCustomerRole.
+ * Class RequireCustomerRole
  *
  * This class is the middleware for checking for customer user role.
  *

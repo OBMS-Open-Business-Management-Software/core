@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
- * Class InvoiceImporterHistory.
+ * Class InvoiceImporterHistory
  *
  * This class is the model for basic invoice importer metadata.
  *

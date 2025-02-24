@@ -8,7 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class OauthClient.
+ * Class OauthClient
  *
  * This class is the model for basic OAUTH client metadata.
  *

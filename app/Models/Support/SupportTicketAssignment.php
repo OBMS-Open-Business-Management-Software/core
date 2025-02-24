@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class SupportTicketAssignment.
+ * Class SupportTicketAssignment
  *
  * This class is the model for linking users with tickets metadata.
  *

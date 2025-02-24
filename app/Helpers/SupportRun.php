@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 
 /**
- * Class SupportRun.
+ * Class SupportRun
  *
  * This class is the helper for ticket run actions.
  *

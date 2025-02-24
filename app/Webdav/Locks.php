@@ -11,7 +11,7 @@ use Sabre\DAV\Locks\Backend\AbstractBackend;
 use Sabre\DAV\Locks\LockInfo;
 
 /**
- * Class Locks.
+ * Class Locks
  */
 class Locks extends AbstractBackend
 {

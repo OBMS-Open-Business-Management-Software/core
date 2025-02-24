@@ -9,7 +9,7 @@ use App\Jobs\TenantJobs\ShopOrderQueue as ShopOrderQueueJob;
 use App\Models\Tenant;
 
 /**
- * Class ShopOrderQueue.
+ * Class ShopOrderQueue
  *
  * This class is the dispatcher job for processing orders.
  *

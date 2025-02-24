@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class Position.
+ * Class Position
  *
  * This class is the model for basic position metadata.
  *

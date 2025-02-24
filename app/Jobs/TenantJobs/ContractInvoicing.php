@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\App;
 use SepaQr\Data;
 
 /**
- * Class ContractInvoicing.
+ * Class ContractInvoicing
  *
  * This class is the tenant job for generating contract invoices.
  *

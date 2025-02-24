@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class PositionDiscount.
+ * Class PositionDiscount
  *
  * This class is the model for basic position metadata.
  *

@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 /**
- * Class RequireAcceptedPages.
+ * Class RequireAcceptedPages
  *
  * This class is the middleware for checking for page content acceptance.
  *

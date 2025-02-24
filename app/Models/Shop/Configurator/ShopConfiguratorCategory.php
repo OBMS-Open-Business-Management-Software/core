@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class ShopConfiguratorCategory.
+ * Class ShopConfiguratorCategory
  *
  * This class is the model for basic shop configurator category metadata.
  *

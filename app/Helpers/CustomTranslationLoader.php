@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Translation\FileLoader;
 
 /**
- * Class CustomTranslationLoader.
+ * Class CustomTranslationLoader
  *
  * This class is the helper for custom translation loading.
  *

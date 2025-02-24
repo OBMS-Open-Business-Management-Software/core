@@ -9,7 +9,7 @@ use Closure;
 use Illuminate\Http\Request;
 
 /**
- * Class IdentifyCustomerProductLists.
+ * Class IdentifyCustomerProductLists
  *
  * This class is the middleware for identifying the admin customer lists.
  *

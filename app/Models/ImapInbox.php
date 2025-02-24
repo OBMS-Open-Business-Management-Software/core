@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class ImapInbox.
+ * Class ImapInbox
  *
  * This class is the model for basic IMAP inbox metadata.
  *

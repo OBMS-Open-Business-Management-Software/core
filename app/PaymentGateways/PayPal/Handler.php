@@ -12,7 +12,7 @@ use Exception;
 use Illuminate\Support\Collection;
 
 /**
- * Class Handler.
+ * Class Handler
  *
  * This class is a payment method handler for PayPal (SOAP).
  *

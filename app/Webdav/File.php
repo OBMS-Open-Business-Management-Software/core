@@ -11,7 +11,7 @@ use Sabre\DAV\Exception\NotFound;
 use Sabre\DAV\File as Framework;
 
 /**
- * Class File.
+ * Class File
  */
 class File extends Framework
 {

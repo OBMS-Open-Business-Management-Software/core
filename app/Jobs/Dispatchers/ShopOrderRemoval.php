@@ -9,7 +9,7 @@ use App\Jobs\TenantJobs\ShopOrderRemoval as ShopOrderRemovalJob;
 use App\Models\Tenant;
 
 /**
- * Class ShopOrderRemoval.
+ * Class ShopOrderRemoval
  *
  * This class is the dispatcher job for removing expired orders.
  *

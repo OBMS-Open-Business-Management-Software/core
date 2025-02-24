@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 /**
- * Class RequireUnlockedProfile.
+ * Class RequireUnlockedProfile
  *
  * This class is the middleware for checking for an unlocked customer user.
  *

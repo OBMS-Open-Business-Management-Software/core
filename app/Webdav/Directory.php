@@ -16,7 +16,7 @@ use Sabre\DAV\Collection;
 use Sabre\DAV\Exception\NotFound;
 
 /**
- * Class Directory.
+ * Class Directory
  */
 class Directory extends Collection
 {

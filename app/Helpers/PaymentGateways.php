@@ -16,7 +16,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 
 /**
- * Class PaymentGateways.
+ * Class PaymentGateways
  *
  * This class is the helper for handling payment gateways.
  *

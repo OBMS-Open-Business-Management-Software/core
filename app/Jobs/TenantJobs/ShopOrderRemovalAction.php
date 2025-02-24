@@ -14,7 +14,7 @@ use Exception;
 use Illuminate\Database\Eloquent\Builder;
 
 /**
- * Class ShopOrderRemovalAction.
+ * Class ShopOrderRemovalAction
  *
  * This class is the tenant job for removing expired orders of a specific type.
  *

@@ -9,7 +9,7 @@ use Closure;
 use Illuminate\Http\Request;
 
 /**
- * Class InjectNavigateables.
+ * Class InjectNavigateables
  *
  * This class is the middleware for injecting navigateable pages.
  *

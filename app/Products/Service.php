@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
- * Class Service.
+ * Class Service
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *

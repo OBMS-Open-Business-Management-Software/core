@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\App;
 use SepaQr\Data;
 
 /**
- * Class Invoice.
+ * Class Invoice
  *
  * This class is the model for basic invoice metadata.
  *

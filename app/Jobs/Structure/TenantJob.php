@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Config;
 use PDO;
 
 /**
- * Class TenantJob.
+ * Class TenantJob
  *
  * Parent class for jobs that have to be executed as per tenant.
  * It is used to set the correct database connection for Eloquent

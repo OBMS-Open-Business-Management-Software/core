@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class Payment.
+ * Class Payment
  *
  * This class is the model for basic payment log metadata.
  *

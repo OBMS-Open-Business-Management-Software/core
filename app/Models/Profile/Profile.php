@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class Profile.
+ * Class Profile
  *
  * This class is the model for basic profile metadata.
  *

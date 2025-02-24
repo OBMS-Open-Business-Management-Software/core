@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
 /**
- * Class ShopOrderQueueSetup.
+ * Class ShopOrderQueueSetup
  *
  * This class is the tenant job for processing orders of a specific type.
  *

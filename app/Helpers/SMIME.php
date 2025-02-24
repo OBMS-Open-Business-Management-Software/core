@@ -8,7 +8,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Symfony\Component\Mime\Crypto\SMimeSigner;
 
 /**
- * Class SMIME.
+ * Class SMIME
  *
  * This class is the helper for signing emails via. S/MIME certificates.
  *

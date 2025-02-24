@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class ShopOrderQueueField.
+ * Class ShopOrderQueueField
  *
  * This class is the model for basic shop order field metadata.
  *

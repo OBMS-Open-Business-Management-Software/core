@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 /**
- * Class RequireAPIRole.
+ * Class RequireAPIRole
  *
  * This class is the middleware for checking for api user role.
  *

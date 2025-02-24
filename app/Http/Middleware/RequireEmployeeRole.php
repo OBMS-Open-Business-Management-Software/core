@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 /**
- * Class RequireEmployeeRole.
+ * Class RequireEmployeeRole
  *
  * This class is the middleware for checking for employee user role.
  *

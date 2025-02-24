@@ -10,7 +10,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Queue\InteractsWithQueue;
 
 /**
- * Class TenantJob.
+ * Class TenantJob
  *
  * Class for identifying jobs. It is used as parent for every job, either
  * directly or as parent of TenantJob.

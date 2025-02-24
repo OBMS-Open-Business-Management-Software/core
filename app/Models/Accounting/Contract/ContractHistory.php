@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class ContractHistory.
+ * Class ContractHistory
  *
  * This class is the model for basic contract history metadata.
  *

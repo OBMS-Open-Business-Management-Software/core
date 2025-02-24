@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class PrepaidHistory.
+ * Class PrepaidHistory
  *
  * This class is the model for basic prepaid history metadata.
  *

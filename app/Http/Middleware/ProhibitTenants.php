@@ -8,7 +8,7 @@ use Closure;
 use Illuminate\Http\Request;
 
 /**
- * Class ProhibitTenants.
+ * Class ProhibitTenants
  *
  * This class is the middleware for checking for tenants.
  *

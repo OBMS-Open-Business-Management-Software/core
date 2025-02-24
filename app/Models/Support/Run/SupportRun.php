@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class SupportTicket.
+ * Class SupportTicket
  *
  * This class is the model for basic ticket metadata.
  *

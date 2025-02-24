@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
- * Class SupportCategory.
+ * Class SupportCategory
  *
  * This class is the model for basic invoice importer metadata.
  *

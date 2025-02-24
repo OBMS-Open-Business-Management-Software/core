@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class Tracker.
+ * Class Tracker
  *
  * This class is the model for tracker metadata.
  *

@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class InvoiceHistory.
+ * Class InvoiceHistory
  *
  * This class is the model for basic invoice history metadata.
  *

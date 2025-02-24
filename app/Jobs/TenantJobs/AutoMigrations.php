@@ -10,7 +10,7 @@ use App\Models\Tenant;
 use Illuminate\Support\Facades\Artisan;
 
 /**
- * Class AutoMigrations.
+ * Class AutoMigrations
  *
  * This class is the tenant job for running migrations.
  *

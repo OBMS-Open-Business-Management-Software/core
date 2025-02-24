@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Helpers;
 
 /**
- * Class Tags.
+ * Class Tags
  *
  * This class is the helper for handling string HTML tag stripping.
  *

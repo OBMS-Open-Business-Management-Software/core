@@ -9,7 +9,7 @@ use App\Jobs\TenantJobs\AutoMigrations as AutoMigrationsJob;
 use App\Models\Tenant;
 
 /**
- * Class AutoMigrations.
+ * Class AutoMigrations
  *
  * This class is the dispatcher job for running migrations.
  *

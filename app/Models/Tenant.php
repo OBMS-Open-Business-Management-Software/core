@@ -13,7 +13,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 /**
- * Class Tenant.
+ * Class Tenant
  *
  * This class is the model for basic tenant metadata.
  *

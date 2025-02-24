@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class InvoiceType.
+ * Class InvoiceType
  *
  * This class is the model for basic invoice type metadata.
  *

@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class InvoiceDunning.
+ * Class InvoiceDunning
  *
  * This class is the model for basic invoice dunning metadata.
  *

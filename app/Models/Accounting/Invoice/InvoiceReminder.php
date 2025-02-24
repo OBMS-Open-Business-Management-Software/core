@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 
 /**
- * Class InvoiceReminder.
+ * Class InvoiceReminder
  *
  * This class is the model for basic invoice reminder metadata.
  *

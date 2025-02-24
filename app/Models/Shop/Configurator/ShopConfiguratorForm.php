@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 
 /**
- * Class ShopConfiguratorForm.
+ * Class ShopConfiguratorForm
  *
  * This class is the model for basic shop configurator form metadata.
  *

@@ -11,7 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class Sample.
+ * Class Sample
  *
  * This class is the model for basic sample service metadata.
  *

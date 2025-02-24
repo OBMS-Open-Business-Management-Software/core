@@ -12,7 +12,7 @@ use App\Traits\Product\HasSettings;
 use Illuminate\Support\Collection;
 
 /**
- * Class Handler.
+ * Class Handler
  *
  * This class is a product handler sample.
  *

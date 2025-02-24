@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Config;
 use PDO;
 
 /**
- * Class IdentifyTenant.
+ * Class IdentifyTenant
  *
  * This class is the middleware for identifying the tenant.
  *

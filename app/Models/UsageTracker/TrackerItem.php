@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class TrackerItem.
+ * Class TrackerItem
  *
  * This class is the model for tracker item metadata.
  *

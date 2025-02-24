@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class ProductSetting.
+ * Class ProductSetting
  *
  * This class is the model for basic product setting metadata.
  *

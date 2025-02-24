@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 
 /**
- * Class ProfileEmail.
+ * Class ProfileEmail
  *
  * This class is the model for linking profile with email addresses.
  *

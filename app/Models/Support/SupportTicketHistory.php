@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class SupportTicketHistory.
+ * Class SupportTicketHistory
  *
  * This class is the model for support ticket history metadata.
  *

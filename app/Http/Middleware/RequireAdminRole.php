@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 /**
- * Class RequireAdminRole.
+ * Class RequireAdminRole
  *
  * This class is the middleware for checking for admin user role.
  *

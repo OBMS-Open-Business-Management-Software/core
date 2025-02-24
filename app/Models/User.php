@@ -33,7 +33,7 @@ use Laravel\Fortify\TwoFactorAuthenticationProvider;
 use Laravel\Passport\HasApiTokens;
 
 /**
- * Class User.
+ * Class User
  *
  * This class is the model for basic user metadata.
  *

@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 
 /**
- * Class SupportTicketMessage.
+ * Class SupportTicketMessage
  *
  * This class is the model for basic ticket message metadata.
  *

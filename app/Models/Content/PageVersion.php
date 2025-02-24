@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Blade;
 
 /**
- * Class PageVersion.
+ * Class PageVersion
  *
  * This class is the model for basic page version metadata.
  *

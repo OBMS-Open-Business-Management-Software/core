@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class ShopConfiguratorFieldOption.
+ * Class ShopConfiguratorFieldOption
  *
  * This class is the model for basic shop configurator field option metadata.
  *

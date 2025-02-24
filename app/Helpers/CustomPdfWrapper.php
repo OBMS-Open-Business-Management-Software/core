@@ -15,7 +15,7 @@ use horstoeko\zugferd\ZugferdDocumentPdfMerger;
 use horstoeko\zugferd\ZugferdProfiles;
 
 /**
- * Class CustomPdfWrapper.
+ * Class CustomPdfWrapper
  *
  * This class is the helper for custom pdf xrechnung injection.
  *

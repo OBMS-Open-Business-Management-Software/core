@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class ProfileHistory.
+ * Class ProfileHistory
  *
  * This class is the model for profile history metadata.
  *

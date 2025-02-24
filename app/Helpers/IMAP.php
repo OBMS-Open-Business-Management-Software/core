@@ -8,7 +8,7 @@ use Illuminate\Support\Collection;
 use Throwable;
 
 /**
- * Class IMAP.
+ * Class IMAP
  *
  * This class is the helper for handling IMAP inboxes.
  *

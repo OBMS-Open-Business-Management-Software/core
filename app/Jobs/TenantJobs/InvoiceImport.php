@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Builder;
 use stdClass;
 
 /**
- * Class InvoiceImport.
+ * Class InvoiceImport
  *
  * This class is the tenant job for importing invoice metadata via. IMAP inboxes.
  *

@@ -9,7 +9,7 @@ use App\Jobs\Structure\TenantJob;
 use App\Jobs\Structure\UniquelyQueueable;
 
 /**
- * Class ShopOrderRemoval.
+ * Class ShopOrderRemoval
  *
  * This class is the tenant job for removing expired orders.
  *

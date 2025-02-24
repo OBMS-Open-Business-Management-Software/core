@@ -35,7 +35,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 
 /**
- * Class ShopConfiguratorForm.
+ * Class ShopConfiguratorForm
  *
  * This class is the model for basic shop order metadata.
  *

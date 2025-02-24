@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class Setting.
+ * Class Setting
  *
  * This class is the model for basic application setting metadata.
  *

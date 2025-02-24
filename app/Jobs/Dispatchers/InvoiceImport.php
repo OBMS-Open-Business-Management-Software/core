@@ -9,7 +9,7 @@ use App\Jobs\TenantJobs\InvoiceImport as InvoiceImportJob;
 use App\Models\Tenant;
 
 /**
- * Class InvoiceImport.
+ * Class InvoiceImport
  *
  * This class is the dispatcher job for importing invoice metadata via. IMAP inboxes.
  *

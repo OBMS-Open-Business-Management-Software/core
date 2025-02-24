@@ -9,7 +9,7 @@ use App\Jobs\TenantJobs\InvoiceReminders as InvoiceRemindersJob;
 use App\Models\Tenant;
 
 /**
- * Class InvoiceReminders.
+ * Class InvoiceReminders
  *
  * This class is the dispatcher job for sending out invoice reminders.
  *

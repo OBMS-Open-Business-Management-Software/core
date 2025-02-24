@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class SupportTicketFile.
+ * Class SupportTicketFile
  *
  * This class is the model for linking files with tickets metadata.
  *

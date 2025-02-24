@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class ContractPosition.
+ * Class ContractPosition
  *
  * This class is the model for linking contract with position metadata.
  *

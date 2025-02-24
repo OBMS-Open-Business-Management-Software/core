@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class InvoiceDunning.
+ * Class InvoiceDunning
  *
  * This class is the model for basic invoice discount metadata.
  *

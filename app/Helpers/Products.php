@@ -7,7 +7,7 @@ namespace App\Helpers;
 use Illuminate\Support\Collection;
 
 /**
- * Class Products.
+ * Class Products
  *
  * This class is the helper for handling products.
  *

@@ -9,7 +9,7 @@ use App\Jobs\TenantJobs\ContractInvoicing as ContractInvoicingJob;
 use App\Models\Tenant;
 
 /**
- * Class ContractInvoicing.
+ * Class ContractInvoicing
  *
  * This class is the dispatcher job for generating contract invoices.
  *

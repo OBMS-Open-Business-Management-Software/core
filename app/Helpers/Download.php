@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Helpers;
 
 /**
- * Class Download.
+ * Class Download
  *
  * This class is the helper for preparing downloads.
  *

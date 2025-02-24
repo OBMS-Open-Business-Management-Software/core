@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class Lock.
+ * Class Lock
  *
  * This class is the model for basic WebDAV lock metadata.
  *

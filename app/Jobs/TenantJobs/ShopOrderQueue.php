@@ -9,7 +9,7 @@ use App\Jobs\Structure\TenantJob;
 use App\Jobs\Structure\UniquelyQueueable;
 
 /**
- * Class ShopOrderQueue.
+ * Class ShopOrderQueue
  *
  * This class is the tenant job for processing orders.
  *

@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class ShopOrderQueueHistory.
+ * Class ShopOrderQueueHistory
  *
  * This class is the model for basic shop order history metadata.
  *
