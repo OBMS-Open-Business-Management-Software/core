@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.9.0](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.8.2...v1.9.0) (2025-02-24)
+
+
+### Features
+
+* laravel 11 upgrade ([7fefdf8](https://github.com/OBMS-Open-Business-Management-Software/core/commit/7fefdf8a1cd99b58f14c7b5f3f5acf997404ce7b))
+
 ## [1.8.2](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.8.1...v1.8.2) (2025-02-23)
 
 
