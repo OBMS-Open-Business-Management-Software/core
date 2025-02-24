@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Jobs\TenantJobs;
 
 use App\Helpers\Products;
@@ -7,7 +9,7 @@ use App\Jobs\Structure\TenantJob;
 use App\Jobs\Structure\UniquelyQueueable;
 
 /**
- * Class ShopOrderQueue
+ * Class ShopOrderQueue.
  *
  * This class is the tenant job for processing orders.
  *
@@ -18,7 +20,9 @@ class ShopOrderQueue extends TenantJob
     use UniquelyQueueable;
 
     public $tries = 1;
+
     public $timeout = 3600;
+
     public static $onQueue = 'shop_orders';
 
     /**
@@ -39,7 +43,7 @@ class ShopOrderQueue extends TenantJob
         Products::list()->each(function ($handler) {
             $this->dispatch((new ShopOrderQueueSetup([
                 'tenant_id' => $this->tenant_id,
-                'type' => $handler->technicalName(),
+                'type'      => $handler->technicalName(),
             ]))->onQueue('shop_order_setups'));
         });
     }

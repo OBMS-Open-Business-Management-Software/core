@@ -15,15 +15,16 @@ class HorizonUniqueQueue extends RedisQueue
      *
      * @param string $payload
      * @param string $queue
-     * @param array $options
+     * @param array  $options
+     *
      * @return mixed
      */
     public function pushRaw($payload, $queue = null, array $options = [])
     {
         $connection = $this->getConnection();
-        $tracker = $this->getTrackerName($queue);
-        $data = json_decode($payload, true);
-        $exists = isset($data['uniqueIdentifier']) && $connection->hexists($tracker, $data['uniqueIdentifier']);
+        $tracker    = $this->getTrackerName($queue);
+        $data       = json_decode($payload, true);
+        $exists     = isset($data['uniqueIdentifier']) && $connection->hexists($tracker, $data['uniqueIdentifier']);
 
         if ($exists) {
             return null;
@@ -41,6 +42,7 @@ class HorizonUniqueQueue extends RedisQueue
 
     /**
      * @param $queue
+     *
      * @return string
      */
     public function getTrackerName($queue): string
@@ -51,9 +53,8 @@ class HorizonUniqueQueue extends RedisQueue
     /**
      * Delete a reserved job from the queue.
      *
-     * @param string $queue
+     * @param string   $queue
      * @param RedisJob $job
-     * @return void
      */
     public function deleteReserved($queue, $job)
     {
@@ -69,7 +70,7 @@ class HorizonUniqueQueue extends RedisQueue
     /**
      * Create a payload for an object-based queue handler.
      *
-     * @param mixed $job
+     * @param mixed  $job
      * @param string $queue
      *
      * @return array

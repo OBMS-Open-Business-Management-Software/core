@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Helpers\Products;
@@ -28,9 +30,9 @@ class AdminShopController extends Controller
     public function shop_categories_index(?int $id = null): Renderable
     {
         return view('admin.shop.category', [
-            'category' => ShopConfiguratorCategory::find($id),
+            'category'      => ShopConfiguratorCategory::find($id),
             'contractTypes' => ContractType::all(),
-            'trackers' => Tracker::all(),
+            'trackers'      => Tracker::all(),
         ]);
     }
 
@@ -70,19 +72,24 @@ class AdminShopController extends Controller
                 switch ($request->columns[$order['column']]) {
                     case 'route':
                         $orderBy = 'route';
+
                         break;
                     case 'name':
                         $orderBy = 'name';
+
                         break;
                     case 'description':
                         $orderBy = 'description';
+
                         break;
                     case 'public':
                         $orderBy = 'public';
+
                         break;
                     case 'id':
                     default:
                         $orderBy = 'id';
+
                         break;
                 }
 
@@ -96,10 +103,10 @@ class AdminShopController extends Controller
             ->limit($request->length);
 
         return response()->json([
-            'draw' => (int) $request->draw,
-            'recordsTotal' => $totalCount,
+            'draw'            => (int) $request->draw,
+            'recordsTotal'    => $totalCount,
             'recordsFiltered' => $filteredCount,
-            'data' => $query
+            'data'            => $query
                 ->get()
                 ->transform(function (ShopConfiguratorCategory $category) {
                     $edit = '
@@ -162,16 +169,16 @@ class AdminShopController extends Controller
 ';
 
                     return (object) [
-                        'id' => $category->id,
-                        'route' => $category->fullRoute,
-                        'name' => $category->name,
+                        'id'          => $category->id,
+                        'route'       => $category->fullRoute,
+                        'name'        => $category->name,
                         'description' => $category->description,
-                        'public' => $category->public ? '<span class="badge badge-success">' . __('interface.misc.yes') . '</span>' : '<span class="badge badge-warning">' . __('interface.misc.no') . '</span>',
-                        'view' => '<a href="' . route('admin.shop.categories.details', $category->id) . '" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>',
-                        'edit' => $edit,
-                        'delete' => '<a href="' . route('admin.shop.categories.delete', $category->id) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>',
+                        'public'      => $category->public ? '<span class="badge badge-success">' . __('interface.misc.yes') . '</span>' : '<span class="badge badge-warning">' . __('interface.misc.no') . '</span>',
+                        'view'        => '<a href="' . route('admin.shop.categories.details', $category->id) . '" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>',
+                        'edit'        => $edit,
+                        'delete'      => '<a href="' . route('admin.shop.categories.delete', $category->id) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>',
                     ];
-                })
+                }),
         ]);
     }
 
@@ -180,26 +187,26 @@ class AdminShopController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function shop_categories_add(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
             'category_id' => ['nullable', 'integer'],
-            'route' => ['required', 'string'],
-            'name' => ['required', 'string'],
+            'route'       => ['required', 'string'],
+            'name'        => ['required', 'string'],
             'description' => ['required', 'string'],
-            'public' => ['nullable', 'string'],
+            'public'      => ['nullable', 'string'],
         ])->validate();
 
         $category = ShopConfiguratorCategory::create([
             'category_id' => ! empty($request->category_id) ? $request->category_id : null,
-            'route' => $request->route,
-            'name' => $request->name,
+            'route'       => $request->route,
+            'name'        => $request->name,
             'description' => $request->description,
-            'public' => ! empty($request->public),
+            'public'      => ! empty($request->public),
         ]);
 
         return redirect()->route('admin.shop.categories.details', $category->id)->with('success', __('interface.messages.shop_category_added'));
@@ -210,27 +217,27 @@ class AdminShopController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function shop_categories_update(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
             'category_id' => ['required', 'integer'],
-            'route' => ['required', 'string'],
-            'name' => ['required', 'string'],
+            'route'       => ['required', 'string'],
+            'name'        => ['required', 'string'],
             'description' => ['required', 'string'],
-            'public' => ['nullable', 'string'],
+            'public'      => ['nullable', 'string'],
         ])->validate();
 
         /* @var ShopConfiguratorCategory $category */
         if (! empty($category = ShopConfiguratorCategory::find($request->category_id))) {
             $category->update([
-                'route' => $request->route,
-                'name' => $request->name,
+                'route'       => $request->route,
+                'name'        => $request->name,
                 'description' => $request->description,
-                'public' => ! empty($request->public),
+                'public'      => ! empty($request->public),
             ]);
 
             return redirect()->back()->with('success', __('interface.messages.shop_category_updated'));
@@ -244,9 +251,9 @@ class AdminShopController extends Controller
      *
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function shop_categories_delete(int $id): RedirectResponse
     {
@@ -306,22 +313,28 @@ class AdminShopController extends Controller
                 switch ($request->columns[$order['column']]) {
                     case 'route':
                         $orderBy = 'route';
+
                         break;
                     case 'name':
                         $orderBy = 'name';
+
                         break;
                     case 'description':
                         $orderBy = 'description';
+
                         break;
                     case 'approval':
                         $orderBy = 'approval';
+
                         break;
                     case 'public':
                         $orderBy = 'public';
+
                         break;
                     case 'id':
                     default:
                         $orderBy = 'id';
+
                         break;
                 }
 
@@ -335,13 +348,13 @@ class AdminShopController extends Controller
             ->limit($request->length);
 
         $availableContractTypes = ContractType::all();
-        $availableTrackerTypes = Tracker::all();
+        $availableTrackerTypes  = Tracker::all();
 
         return response()->json([
-            'draw' => (int) $request->draw,
-            'recordsTotal' => $totalCount,
+            'draw'            => (int) $request->draw,
+            'recordsTotal'    => $totalCount,
             'recordsFiltered' => $filteredCount,
-            'data' => $query
+            'data'            => $query
                 ->get()
                 ->transform(function (ShopConfiguratorForm $form) use ($availableContractTypes, $availableTrackerTypes) {
                     $contractTypes = '';
@@ -461,28 +474,31 @@ class AdminShopController extends Controller
                     switch ($form->type) {
                         case 'form':
                             $type = __('interface.data.form');
+
                             break;
                         case 'package':
                             $type = __('interface.data.package');
+
                             break;
                         default:
                             $type = __('interface.misc.not_available');
+
                             break;
                     }
 
                     return (object) [
-                        'id' => $form->id,
-                        'route' => $form->fullRoute,
-                        'type' => $type,
-                        'name' => $form->name,
+                        'id'          => $form->id,
+                        'route'       => $form->fullRoute,
+                        'type'        => $type,
+                        'name'        => $form->name,
                         'description' => $form->description,
-                        'approval' => $form->approval ? '<span class="badge badge-success">' . __('interface.misc.yes') . '</span>' : '<span class="badge badge-warning">' . __('interface.misc.no') . '</span>',
-                        'public' => $form->public ? '<span class="badge badge-success">' . __('interface.misc.yes') . '</span>' : '<span class="badge badge-warning">' . __('interface.misc.no') . '</span>',
-                        'view' => '<a href="' . route('admin.shop.forms', $form->id) . '" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>',
-                        'edit' => $edit,
-                        'delete' => '<a href="' . route('admin.shop.forms.delete', $form->id) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>',
+                        'approval'    => $form->approval ? '<span class="badge badge-success">' . __('interface.misc.yes') . '</span>' : '<span class="badge badge-warning">' . __('interface.misc.no') . '</span>',
+                        'public'      => $form->public ? '<span class="badge badge-success">' . __('interface.misc.yes') . '</span>' : '<span class="badge badge-warning">' . __('interface.misc.no') . '</span>',
+                        'view'        => '<a href="' . route('admin.shop.forms', $form->id) . '" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>',
+                        'edit'        => $edit,
+                        'delete'      => '<a href="' . route('admin.shop.forms.delete', $form->id) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>',
                     ];
-                })
+                }),
         ]);
     }
 
@@ -491,38 +507,38 @@ class AdminShopController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function shop_forms_add(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
-            'category_id' => ['nullable', 'integer'],
-            'tracker_id' => ['nullable', 'integer'],
-            'route' => ['required', 'string'],
-            'type' => ['required', 'string'],
-            'name' => ['required', 'string'],
-            'description' => ['required', 'string'],
-            'approval' => ['nullable', 'string'],
-            'public' => ['nullable', 'string'],
-            'product_type' => ['required', 'string'],
-            'vat_type' => ['required', 'string'],
+            'category_id'      => ['nullable', 'integer'],
+            'tracker_id'       => ['nullable', 'integer'],
+            'route'            => ['required', 'string'],
+            'type'             => ['required', 'string'],
+            'name'             => ['required', 'string'],
+            'description'      => ['required', 'string'],
+            'approval'         => ['nullable', 'string'],
+            'public'           => ['nullable', 'string'],
+            'product_type'     => ['required', 'string'],
+            'vat_type'         => ['required', 'string'],
             'contract_type_id' => ['required', 'integer'],
         ])->validate();
 
         $form = ShopConfiguratorForm::create([
-            'category_id' => ! empty($request->category_id) ? $request->category_id : null,
-            'tracker_id' => ! empty($request->tracker_id) ? $request->tracker_id : null,
-            'route' => $request->route,
-            'type' => $request->type,
-            'name' => $request->name,
-            'description' => $request->description,
-            'approval' => ! empty($request->approval),
-            'public' => ! empty($request->public),
+            'category_id'      => ! empty($request->category_id) ? $request->category_id : null,
+            'tracker_id'       => ! empty($request->tracker_id) ? $request->tracker_id : null,
+            'route'            => $request->route,
+            'type'             => $request->type,
+            'name'             => $request->name,
+            'description'      => $request->description,
+            'approval'         => ! empty($request->approval),
+            'public'           => ! empty($request->public),
             'contract_type_id' => $request->contract_type_id,
-            'product_type' => $request->product_type,
-            'vat_type' => $request->vat_type,
+            'product_type'     => $request->product_type,
+            'vat_type'         => $request->vat_type,
         ]);
 
         if (! empty($form->category_id)) {
@@ -537,37 +553,37 @@ class AdminShopController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function shop_forms_update(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
-            'form_id' => ['required', 'integer'],
-            'tracker_id' => ['nullable', 'integer'],
-            'route' => ['required', 'string'],
-            'name' => ['required', 'string'],
-            'description' => ['required', 'string'],
-            'approval' => ['nullable', 'string'],
-            'public' => ['nullable', 'string'],
-            'product_type' => ['required', 'string'],
-            'vat_type' => ['required', 'string'],
+            'form_id'          => ['required', 'integer'],
+            'tracker_id'       => ['nullable', 'integer'],
+            'route'            => ['required', 'string'],
+            'name'             => ['required', 'string'],
+            'description'      => ['required', 'string'],
+            'approval'         => ['nullable', 'string'],
+            'public'           => ['nullable', 'string'],
+            'product_type'     => ['required', 'string'],
+            'vat_type'         => ['required', 'string'],
             'contract_type_id' => ['required', 'integer'],
         ])->validate();
 
         /* @var ShopConfiguratorForm $form */
         if (! empty($form = ShopConfiguratorForm::find($request->form_id))) {
             $form->update([
-                'tracker_id' => ! empty($request->tracker_id) ? $request->tracker_id : null,
-                'route' => $request->route,
-                'name' => $request->name,
-                'description' => $request->description,
-                'approval' => ! empty($request->approval),
-                'public' => ! empty($request->public),
+                'tracker_id'       => ! empty($request->tracker_id) ? $request->tracker_id : null,
+                'route'            => $request->route,
+                'name'             => $request->name,
+                'description'      => $request->description,
+                'approval'         => ! empty($request->approval),
+                'public'           => ! empty($request->public),
                 'contract_type_id' => $request->contract_type_id,
-                'product_type' => $request->product_type,
-                'vat_type' => $request->vat_type,
+                'product_type'     => $request->product_type,
+                'vat_type'         => $request->vat_type,
             ]);
 
             return redirect()->back()->with('success', __('interface.messages.shop_form_updated'));
@@ -581,9 +597,9 @@ class AdminShopController extends Controller
      *
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function shop_forms_delete(int $id): RedirectResponse
     {
@@ -619,47 +635,48 @@ class AdminShopController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function shop_fields_add(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
-            'form_id' => ['required', 'integer'],
-            'type' => ['required', 'string'],
-            'label' => ['required', 'string'],
-            'key' => ['required', 'string'],
-            'value' => ['nullable', 'string'],
+            'form_id'      => ['required', 'integer'],
+            'type'         => ['required', 'string'],
+            'label'        => ['required', 'string'],
+            'key'          => ['required', 'string'],
+            'value'        => ['nullable', 'string'],
             'value_prefix' => ['nullable', 'string'],
             'value_suffix' => ['nullable', 'string'],
-            'amount' => ['required', 'numeric'],
-            'required' => ['nullable', 'string'],
+            'amount'       => ['required', 'numeric'],
+            'required'     => ['nullable', 'string'],
         ])->validate();
 
         switch ($request->type) {
             case 'input_number':
             case 'input_range':
                 Validator::make($request->toArray(), [
-                    'min' => ['required', 'numeric'],
-                    'max' => ['required', 'numeric'],
+                    'min'  => ['required', 'numeric'],
+                    'max'  => ['required', 'numeric'],
                     'step' => ['required', 'numeric'],
                 ])->validate();
 
                 ShopConfiguratorField::create([
-                    'form_id' => $request->form_id,
-                    'type' => $request->type,
-                    'label' => $request->label,
-                    'key' => $request->key,
-                    'value' => $request->value,
+                    'form_id'      => $request->form_id,
+                    'type'         => $request->type,
+                    'label'        => $request->label,
+                    'key'          => $request->key,
+                    'value'        => $request->value,
                     'value_prefix' => ! empty($request->value_prefix) ? $request->value_prefix : null,
                     'value_suffix' => ! empty($request->value_suffix) ? $request->value_suffix : null,
-                    'amount' => $request->amount,
-                    'min' => $request->min,
-                    'max' => $request->max,
-                    'step' => $request->step,
-                    'required' => ! empty($request->required),
+                    'amount'       => $request->amount,
+                    'min'          => $request->min,
+                    'max'          => $request->max,
+                    'step'         => $request->step,
+                    'required'     => ! empty($request->required),
                 ]);
+
                 break;
             case 'input_radio':
             case 'input_radio_image':
@@ -670,15 +687,15 @@ class AdminShopController extends Controller
 
                 /* @var ShopConfiguratorField|null $field */
                 $field = ShopConfiguratorField::create([
-                    'form_id' => $request->form_id,
-                    'type' => $request->type,
-                    'label' => $request->label,
-                    'key' => $request->key,
-                    'value' => $request->value,
+                    'form_id'      => $request->form_id,
+                    'type'         => $request->type,
+                    'label'        => $request->label,
+                    'key'          => $request->key,
+                    'value'        => $request->value,
                     'value_prefix' => ! empty($request->value_prefix) ? $request->value_prefix : null,
                     'value_suffix' => ! empty($request->value_suffix) ? $request->value_suffix : null,
-                    'amount' => $request->amount,
-                    'required' => ! empty($request->required),
+                    'amount'       => $request->amount,
+                    'required'     => ! empty($request->required),
                 ]);
 
                 if (
@@ -688,26 +705,28 @@ class AdminShopController extends Controller
                     collect($options)->each(function (array $option) use ($field) {
                         ShopConfiguratorFieldOption::create([
                             'field_id' => $field->id,
-                            'label' => $option['label'],
-                            'value' => $option['value'],
-                            'amount' => $option['amount'],
-                            'default' => ! empty($option['default']),
+                            'label'    => $option['label'],
+                            'value'    => $option['value'],
+                            'amount'   => $option['amount'],
+                            'default'  => ! empty($option['default']),
                         ]);
                     });
                 }
+
                 break;
             default:
                 ShopConfiguratorField::create([
-                    'form_id' => $request->form_id,
-                    'type' => $request->type,
-                    'label' => $request->label,
-                    'key' => $request->key,
-                    'value' => $request->value,
+                    'form_id'      => $request->form_id,
+                    'type'         => $request->type,
+                    'label'        => $request->label,
+                    'key'          => $request->key,
+                    'value'        => $request->value,
                     'value_prefix' => ! empty($request->value_prefix) ? $request->value_prefix : null,
                     'value_suffix' => ! empty($request->value_suffix) ? $request->value_suffix : null,
-                    'amount' => $request->amount,
-                    'required' => ! empty($request->required),
+                    'amount'       => $request->amount,
+                    'required'     => ! empty($request->required),
                 ]);
+
                 break;
         }
 
@@ -719,21 +738,21 @@ class AdminShopController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function shop_fields_update(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
-            'field_id' => ['required', 'integer'],
-            'label' => ['required', 'string'],
-            'key' => ['required', 'string'],
-            'value' => ['nullable', 'string'],
+            'field_id'     => ['required', 'integer'],
+            'label'        => ['required', 'string'],
+            'key'          => ['required', 'string'],
+            'value'        => ['nullable', 'string'],
             'value_prefix' => ['nullable', 'string'],
             'value_suffix' => ['nullable', 'string'],
-            'amount' => ['required', 'numeric'],
-            'required' => ['nullable', 'string'],
+            'amount'       => ['required', 'numeric'],
+            'required'     => ['nullable', 'string'],
         ])->validate();
 
         /* @var ShopConfiguratorField $field */
@@ -742,23 +761,24 @@ class AdminShopController extends Controller
                 case 'input_number':
                 case 'input_range':
                     Validator::make($request->toArray(), [
-                        'min' => ['required', 'numeric'],
-                        'max' => ['required', 'numeric'],
+                        'min'  => ['required', 'numeric'],
+                        'max'  => ['required', 'numeric'],
                         'step' => ['required', 'numeric'],
                     ])->validate();
 
                     $field->update([
-                        'label' => $request->label,
-                        'key' => $request->key,
-                        'value' => $request->value,
+                        'label'        => $request->label,
+                        'key'          => $request->key,
+                        'value'        => $request->value,
                         'value_prefix' => ! empty($request->value_prefix) ? $request->value_prefix : null,
                         'value_suffix' => ! empty($request->value_suffix) ? $request->value_suffix : null,
-                        'amount' => $request->amount,
-                        'min' => $request->min,
-                        'max' => $request->max,
-                        'step' => $request->step,
-                        'required' => ! empty($request->required),
+                        'amount'       => $request->amount,
+                        'min'          => $request->min,
+                        'max'          => $request->max,
+                        'step'         => $request->step,
+                        'required'     => ! empty($request->required),
                     ]);
+
                     break;
                 case 'input_radio':
                 case 'input_radio_image':
@@ -768,13 +788,13 @@ class AdminShopController extends Controller
                     ])->validate();
 
                     $field->update([
-                        'label' => $request->label,
-                        'key' => $request->key,
-                        'value' => $request->value,
+                        'label'        => $request->label,
+                        'key'          => $request->key,
+                        'value'        => $request->value,
                         'value_prefix' => ! empty($request->value_prefix) ? $request->value_prefix : null,
                         'value_suffix' => ! empty($request->value_suffix) ? $request->value_suffix : null,
-                        'amount' => $request->amount,
-                        'required' => ! empty($request->required),
+                        'amount'       => $request->amount,
+                        'required'     => ! empty($request->required),
                     ]);
 
                     if (
@@ -786,24 +806,26 @@ class AdminShopController extends Controller
                         collect($options)->each(function (array $option) use ($field) {
                             ShopConfiguratorFieldOption::create([
                                 'field_id' => $field->id,
-                                'label' => $option['label'],
-                                'value' => $option['value'],
-                                'amount' => $option['amount'],
-                                'default' => ! empty($option['default']),
+                                'label'    => $option['label'],
+                                'value'    => $option['value'],
+                                'amount'   => $option['amount'],
+                                'default'  => ! empty($option['default']),
                             ]);
                         });
                     }
+
                     break;
                 default:
                     $field->update([
-                        'label' => $request->label,
-                        'key' => $request->key,
-                        'value' => $request->value,
+                        'label'        => $request->label,
+                        'key'          => $request->key,
+                        'value'        => $request->value,
                         'value_prefix' => ! empty($request->value_prefix) ? $request->value_prefix : null,
                         'value_suffix' => ! empty($request->value_suffix) ? $request->value_suffix : null,
-                        'amount' => $request->amount,
-                        'required' => ! empty($request->required),
+                        'amount'       => $request->amount,
+                        'required'     => ! empty($request->required),
                     ]);
+
                     break;
             }
 
@@ -818,9 +840,9 @@ class AdminShopController extends Controller
      *
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function shop_fields_delete(int $id): RedirectResponse
     {
@@ -872,22 +894,28 @@ class AdminShopController extends Controller
                 switch ($request->columns[$order['column']]) {
                     case 'type':
                         $orderBy = 'type';
+
                         break;
                     case 'key':
                         $orderBy = 'key';
+
                         break;
                     case 'label':
                         $orderBy = 'label';
+
                         break;
                     case 'value':
                         $orderBy = 'value';
+
                         break;
                     case 'required':
                         $orderBy = 'required';
+
                         break;
                     case 'id':
                     default:
                         $orderBy = 'id';
+
                         break;
                 }
 
@@ -901,42 +929,52 @@ class AdminShopController extends Controller
             ->limit($request->length);
 
         return response()->json([
-            'draw' => (int) $request->draw,
-            'recordsTotal' => $totalCount,
+            'draw'            => (int) $request->draw,
+            'recordsTotal'    => $totalCount,
             'recordsFiltered' => $filteredCount,
-            'data' => $query
+            'data'            => $query
                 ->get()
                 ->transform(function (ShopConfiguratorField $field) {
                     switch ($field->type) {
                         case 'input_text':
                             $type = __('interface.data.text');
+
                             break;
                         case 'input_number':
                             $type = __('interface.data.number');
+
                             break;
                         case 'input_range':
                             $type = __('interface.data.range');
+
                             break;
                         case 'input_radio':
                             $type = __('interface.data.radio_text');
+
                             break;
                         case 'input_radio_image':
                             $type = __('interface.data.radio_image');
+
                             break;
                         case 'input_checkbox':
                             $type = __('interface.data.checkbox');
+
                             break;
                         case 'input_hidden':
                             $type = __('interface.data.hidden_text');
+
                             break;
                         case 'select':
                             $type = __('interface.data.select');
+
                             break;
                         case 'textarea':
                             $type = __('interface.data.textarea');
+
                             break;
                         default:
                             $type = __('interface.status.unknown');
+
                             break;
                     }
 
@@ -1096,16 +1134,16 @@ class AdminShopController extends Controller
 ';
 
                     return (object) [
-                        'id' => $field->id,
-                        'type' => $type,
-                        'key' => $field->key,
-                        'label' => $field->label,
-                        'value' => $field->value,
+                        'id'       => $field->id,
+                        'type'     => $type,
+                        'key'      => $field->key,
+                        'label'    => $field->label,
+                        'value'    => $field->value,
                         'required' => $field->required ? '<span class="badge badge-success">' . __('interface.misc.yes') . '</span>' : '<span class="badge badge-warning">' . __('interface.misc.no') . '</span>',
-                        'edit' => $edit,
-                        'delete' => '<a href="' . route('admin.shop.fields.delete', $field->id) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>',
+                        'edit'     => $edit,
+                        'delete'   => '<a href="' . route('admin.shop.fields.delete', $field->id) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>',
                     ];
-                })
+                }),
         ]);
     }
 
@@ -1151,26 +1189,32 @@ class AdminShopController extends Controller
             foreach ($request->order as $order) {
                 switch ($request->columns[$order['column']]) {
                     case 'status':
-                        $orderBy = 'approved';
+                        $orderBy       = 'approved';
                         $orderBySecond = 'disapproved';
-                        $orderByThird = 'setup';
+                        $orderByThird  = 'setup';
                         $orderByFourth = 'fails';
+
                         break;
                     case 'amount':
                         $orderBy = 'amount';
+
                         break;
                     case 'product_type':
                         $orderBy = 'product_type';
+
                         break;
                     case 'user':
                         $orderBy = 'user_id';
+
                         break;
                     case 'form':
                         $orderBy = 'form_id';
+
                         break;
                     case 'id':
                     default:
                         $orderBy = 'id';
+
                         break;
                 }
 
@@ -1196,10 +1240,10 @@ class AdminShopController extends Controller
             ->limit($request->length);
 
         return response()->json([
-            'draw' => (int) $request->draw,
-            'recordsTotal' => $totalCount,
+            'draw'            => (int) $request->draw,
+            'recordsTotal'    => $totalCount,
             'recordsFiltered' => $filteredCount,
-            'data' => $query
+            'data'            => $query
                 ->get()
                 ->transform(function (ShopOrderQueue $queue) {
                     if (
@@ -1318,18 +1362,23 @@ class AdminShopController extends Controller
                             switch ($history->type) {
                                 case 'success':
                                     $icon = 'bi bi-check-circle';
+
                                     break;
                                 case 'warning':
                                     $icon = 'bi bi-exclamation-triangle';
+
                                     break;
                                 case 'danger':
                                     $icon = 'bi bi-exclamation-circle';
+
                                     break;
                                 case 'info':
                                     $icon = 'bi bi-info-circle';
+
                                     break;
                                 default:
                                     $icon = null;
+
                                     break;
                             }
 
@@ -1419,19 +1468,19 @@ class AdminShopController extends Controller
                     }
 
                     return (object) [
-                        'id' => $queue->number,
-                        'user' => ! empty($user = $queue->user) ? '<a href="' . route('admin.customers.profile', $user->id) . '" class="text-decoration-none" target="_blank">' . $user->realName . ' <i class="bi bi-box-arrow-up-right"></i></a>' : __('interface.misc.not_available'),
-                        'form' => __($queue->form->name),
+                        'id'           => $queue->number,
+                        'user'         => ! empty($user = $queue->user) ? '<a href="' . route('admin.customers.profile', $user->id) . '" class="text-decoration-none" target="_blank">' . $user->realName . ' <i class="bi bi-box-arrow-up-right"></i></a>' : __('interface.misc.not_available'),
+                        'form'         => __($queue->form->name),
                         'product_type' => ! empty($handler = $queue->handler) ? $handler->name() : '&lt;' . $queue->product_type . '&gt;',
-                        'amount' => number_format($queue->amount, 2) . ' €<span class="d-block small">' . number_format($queue->amount * (100 + $queue->vat_percentage) / 100, 2) . ' €</span>',
-                        'status' => $status,
-                        'history' => $history,
-                        'approve' => ! $queue->approved && ! $queue->disapproved ? '<a href="' . route('admin.shop.orders.approve', $queue->id) . '" class="btn btn-success btn-sm"><i class="bi bi-check-circle"></i></a>' : '<button type="button" class="btn btn-success btn-sm" disabled><i class="bi bi-check-circle"></i></button>',
-                        'disapprove' => ! $queue->disapproved && ! $queue->approved ? '<a href="' . route('admin.shop.orders.disapprove', $queue->id) . '" class="btn btn-danger btn-sm"><i class="bi bi-x-circle"></i></a>' : '<button type="button" class="btn btn-danger btn-sm" disabled><i class="bi bi-x-circle"></i></button>',
-                        'edit' => (! $queue->disapproved && ! $queue->approved && ! $queue->setup) || (! $queue->setup && $queue->fails >= 3) ? $edit : '<button type="button" class="btn btn-warning btn-sm" disabled><i class="bi bi-pencil-square"></i></button>',
-                        'delete' => (! $queue->disapproved && ! $queue->approved && ! $queue->setup) || (! $queue->setup && $queue->fails >= 3) ? '<a href="' . route('admin.shop.orders.delete', $queue->id) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>' : '<button type="button" class="btn btn-danger btn-sm" disabled><i class="bi bi-trash"></i></button>',
+                        'amount'       => number_format($queue->amount, 2) . ' €<span class="d-block small">' . number_format($queue->amount * (100 + $queue->vat_percentage) / 100, 2) . ' €</span>',
+                        'status'       => $status,
+                        'history'      => $history,
+                        'approve'      => ! $queue->approved && ! $queue->disapproved ? '<a href="' . route('admin.shop.orders.approve', $queue->id) . '" class="btn btn-success btn-sm"><i class="bi bi-check-circle"></i></a>' : '<button type="button" class="btn btn-success btn-sm" disabled><i class="bi bi-check-circle"></i></button>',
+                        'disapprove'   => ! $queue->disapproved && ! $queue->approved ? '<a href="' . route('admin.shop.orders.disapprove', $queue->id) . '" class="btn btn-danger btn-sm"><i class="bi bi-x-circle"></i></a>' : '<button type="button" class="btn btn-danger btn-sm" disabled><i class="bi bi-x-circle"></i></button>',
+                        'edit'         => (! $queue->disapproved && ! $queue->approved && ! $queue->setup) || (! $queue->setup && $queue->fails >= 3) ? $edit : '<button type="button" class="btn btn-warning btn-sm" disabled><i class="bi bi-pencil-square"></i></button>',
+                        'delete'       => (! $queue->disapproved && ! $queue->approved && ! $queue->setup) || (! $queue->setup && $queue->fails >= 3) ? '<a href="' . route('admin.shop.orders.delete', $queue->id) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>' : '<button type="button" class="btn btn-danger btn-sm" disabled><i class="bi bi-trash"></i></button>',
                     ];
-                })
+                }),
         ]);
     }
 
@@ -1440,9 +1489,9 @@ class AdminShopController extends Controller
      *
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function shop_orders_approve(int $id): RedirectResponse
     {
@@ -1464,8 +1513,8 @@ class AdminShopController extends Controller
 
             ShopOrderQueueHistory::create([
                 'order_id' => $order->id,
-                'type' => 'success',
-                'message' => 'Order approval succeeded.',
+                'type'     => 'success',
+                'message'  => 'Order approval succeeded.',
             ]);
 
             $order->sendEmailSuccessfulApprovalNotification();
@@ -1481,9 +1530,9 @@ class AdminShopController extends Controller
      *
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function shop_orders_disapprove(int $id): RedirectResponse
     {
@@ -1504,8 +1553,8 @@ class AdminShopController extends Controller
                 ($grossAmount = $order->amount * (100 + $order->vat_percentage) / 100) > 0
             ) {
                 PrepaidHistory::create([
-                    'user_id' => Auth::id(),
-                    'amount' => $grossAmount,
+                    'user_id'            => Auth::id(),
+                    'amount'             => $grossAmount,
                     'transaction_method' => 'account',
                 ]);
             }
@@ -1516,8 +1565,8 @@ class AdminShopController extends Controller
 
             ShopOrderQueueHistory::create([
                 'order_id' => $order->id,
-                'type' => 'success',
-                'message' => 'Order approval declined. Setup won\'t be executed.',
+                'type'     => 'success',
+                'message'  => 'Order approval declined. Setup won\'t be executed.',
             ]);
 
             $order->sendEmailUnsuccessfulApprovalNotification();
@@ -1533,9 +1582,9 @@ class AdminShopController extends Controller
      *
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function shop_orders_delete(int $id): RedirectResponse
     {
@@ -1556,8 +1605,8 @@ class AdminShopController extends Controller
                 ($grossAmount = $order->amount * (100 + $order->vat_percentage) / 100) > 0
             ) {
                 PrepaidHistory::create([
-                    'user_id' => Auth::id(),
-                    'amount' => $grossAmount,
+                    'user_id'            => Auth::id(),
+                    'amount'             => $grossAmount,
                     'transaction_method' => 'account',
                 ]);
             }
@@ -1575,16 +1624,16 @@ class AdminShopController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function shop_orders_update(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
-            'order_id' => ['required', 'integer'],
-            'product_type' => ['required', 'string'],
-            'amount' => ['required', 'numeric'],
+            'order_id'       => ['required', 'integer'],
+            'product_type'   => ['required', 'string'],
+            'amount'         => ['required', 'numeric'],
             'vat_percentage' => ['required', 'numeric'],
             'reverse_charge' => ['nullable', 'string'],
         ])->validate();
@@ -1592,23 +1641,23 @@ class AdminShopController extends Controller
         /* @var ShopOrderQueue $order */
         if (! empty($order = ShopOrderQueue::find($request->order_id))) {
             $orderResetAfterFailure = false;
-            $orderApproval = false;
+            $orderApproval          = false;
 
             if ($order->fails >= 3) {
                 $orderResetAfterFailure = true;
-                $orderApproval = ! empty($form = $order->form) && ! $form->approval;
+                $orderApproval          = ! empty($form = $order->form) && ! $form->approval;
             }
 
             $order->update([
-                'product_type' => $request->product_type,
-                'amount' => $request->amount,
+                'product_type'   => $request->product_type,
+                'amount'         => $request->amount,
                 'vat_percentage' => $request->vat_percentage,
                 'reverse_charge' => ! empty($request->reverse_charge),
-                'invalid' => false,
-                'verified' => false,
-                'approved' => $orderApproval,
-                'disapproved' => false,
-                'fails' => 0,
+                'invalid'        => false,
+                'verified'       => false,
+                'approved'       => $orderApproval,
+                'disapproved'    => false,
+                'fails'          => 0,
             ]);
 
             $order->fields()->delete();
@@ -1617,8 +1666,8 @@ class AdminShopController extends Controller
                 collect($options)->each(function (array $option) use ($order) {
                     ShopOrderQueueField::create([
                         'order_id' => $order->id,
-                        'key' => $option['key'],
-                        'value' => $option['value'],
+                        'key'      => $option['key'],
+                        'value'    => $option['value'],
                     ]);
                 });
             }
@@ -1626,8 +1675,8 @@ class AdminShopController extends Controller
             if ($orderResetAfterFailure) {
                 ShopOrderQueueHistory::create([
                     'order_id' => $order->id,
-                    'type' => 'info',
-                    'message' => 'Failed order status reset after setup modification.',
+                    'type'     => 'info',
+                    'message'  => 'Failed order status reset after setup modification.',
                 ]);
 
                 if ($orderApproval) {
@@ -1660,9 +1709,9 @@ class AdminShopController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function products_save(Request $request): RedirectResponse
     {
@@ -1676,7 +1725,7 @@ class AdminShopController extends Controller
             )
         ) {
             $validation = [];
-            $fields = collect();
+            $fields     = collect();
 
             $product->parameters()->each(function ($name, $key) use (&$validation, &$fields) {
                 $validation[$key] = ['required'];
@@ -1692,8 +1741,8 @@ class AdminShopController extends Controller
                 if ($fields->contains($key)) {
                     ProductSetting::create([
                         'product_type' => $request->product_type,
-                        'setting' => $key,
-                        'value' => $value,
+                        'setting'      => $key,
+                        'value'        => $value,
                     ]);
                 }
             });

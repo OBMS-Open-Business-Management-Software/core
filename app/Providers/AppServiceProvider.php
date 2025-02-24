@@ -1,22 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
-use Exception;
-use Illuminate\Support\ServiceProvider;
 use App\Helpers\CustomPdfWrapper;
 use App\Models\Setting;
+use Exception;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
-     *
-     * @return void
      */
     public function register()
     {
@@ -27,8 +27,6 @@ class AppServiceProvider extends ServiceProvider
 
     /**
      * Bootstrap any application services.
-     *
-     * @return void
      */
     public function boot()
     {
@@ -49,7 +47,7 @@ class AppServiceProvider extends ServiceProvider
             symlink(resource_path('themes/' . $theme . '/public'), public_path('themes/' . $theme));
         });
 
-        $theme = config('app.theme', 'aurora');
+        $theme     = config('app.theme', 'aurora');
         $themePath = resource_path('themes/' . $theme);
 
         if (File::isDirectory($themePath)) {

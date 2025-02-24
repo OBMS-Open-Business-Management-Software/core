@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Models\Tenant;
@@ -58,16 +60,20 @@ class AdminTenantController extends Controller
                 switch ($request->columns[$order['column']]) {
                     case 'user':
                         $orderBy = 'user_id';
+
                         break;
                     case 'contract':
                         $orderBy = 'contract_id';
+
                         break;
                     case 'domain':
                         $orderBy = 'domain';
+
                         break;
                     case 'id':
                     default:
                         $orderBy = 'id';
+
                         break;
                 }
 
@@ -81,10 +87,10 @@ class AdminTenantController extends Controller
             ->limit($request->length);
 
         return response()->json([
-            'draw' => (int) $request->draw,
-            'recordsTotal' => $totalCount,
+            'draw'            => (int) $request->draw,
+            'recordsTotal'    => $totalCount,
             'recordsFiltered' => $filteredCount,
-            'data' => $query
+            'data'            => $query
                 ->get()
                 ->transform(function (Tenant $tenant) {
                     $info = '
@@ -240,15 +246,15 @@ class AdminTenantController extends Controller
 ';
 
                     return (object) [
-                        'id' => $tenant->id,
-                        'user' => ! empty($user = $tenant->user) ? $user->realName : __('interface.misc.not_available'),
+                        'id'       => $tenant->id,
+                        'user'     => ! empty($user = $tenant->user) ? $user->realName : __('interface.misc.not_available'),
                         'contract' => ! empty($contract = $tenant->contract) ? $contract->number : __('interface.misc.not_available'),
-                        'domain' => $tenant->domain,
-                        'info' => $info,
-                        'edit' => $edit,
-                        'delete' => '<a href="' . route('admin.tenants.delete', $tenant->id) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>',
+                        'domain'   => $tenant->domain,
+                        'info'     => $info,
+                        'edit'     => $edit,
+                        'delete'   => '<a href="' . route('admin.tenants.delete', $tenant->id) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>',
                     ];
-                })
+                }),
         ]);
     }
 
@@ -260,16 +266,16 @@ class AdminTenantController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function tenant_add(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
-            'user_id' => ['integer', 'nullable'],
+            'user_id'     => ['integer', 'nullable'],
             'contract_id' => ['integer', 'nullable'],
-            'domain' => ['required', 'string', 'max:255'],
+            'domain'      => ['required', 'string', 'max:255'],
         ])->validate();
 
         /* @var Tenant|null $tenant */
@@ -277,9 +283,9 @@ class AdminTenantController extends Controller
             ! Tenant::where('domain', '=', $request->domain)->exists() &&
             ! empty(
                 $tenant = Tenant::create([
-                    'user_id' => ! empty($request->user_id) ? $request->user_id : null,
+                    'user_id'     => ! empty($request->user_id) ? $request->user_id : null,
                     'contract_id' => ! empty($request->contract_id) ? $request->contract_id : null,
-                    'domain' => $request->domain,
+                    'domain'      => $request->domain,
                 ])
             ) &&
             (
@@ -287,7 +293,7 @@ class AdminTenantController extends Controller
                 $user->role === 'customer'
             )
         ) {
-            $name = config('database.tenants.prefix') . (! empty($request->user_id) ? $request->user_id : '0') . $tenant->id;
+            $name     = config('database.tenants.prefix') . (! empty($request->user_id) ? $request->user_id : '0') . $tenant->id;
             $password = Str::random();
 
             DB::connection('base')->statement('CREATE DATABASE ' . $name);
@@ -299,42 +305,42 @@ class AdminTenantController extends Controller
             DB::connection('base')->statement('FLUSH PRIVILEGES');
 
             $tenant->update([
-                'database_driver' => config('database.connections.mysql.driver'),
-                'database_url' => config('database.connections.mysql.url'),
-                'database_host' => config('database.connections.mysql.host'),
-                'database_port' =>  config('database.connections.mysql.port'),
-                'database_database' => $name,
-                'database_username' => $name,
-                'database_password' => $password,
-                'database_unix_socket' =>  config('database.connections.mysql.unix_socket'),
-                'database_charset' =>  config('database.connections.mysql.charset'),
-                'database_collation' =>  config('database.connections.mysql.collation'),
-                'database_prefix' =>  config('database.connections.mysql.prefix'),
-                'database_prefix_indexes' =>  config('database.connections.mysql.prefix_indexes'),
-                'database_strict' => config('database.connections.mysql.strict'),
-                'database_engine' => config('database.connections.mysql.engine'),
-                'redis_prefix' => $name . '-',
+                'database_driver'         => config('database.connections.mysql.driver'),
+                'database_url'            => config('database.connections.mysql.url'),
+                'database_host'           => config('database.connections.mysql.host'),
+                'database_port'           => config('database.connections.mysql.port'),
+                'database_database'       => $name,
+                'database_username'       => $name,
+                'database_password'       => $password,
+                'database_unix_socket'    => config('database.connections.mysql.unix_socket'),
+                'database_charset'        => config('database.connections.mysql.charset'),
+                'database_collation'      => config('database.connections.mysql.collation'),
+                'database_prefix'         => config('database.connections.mysql.prefix'),
+                'database_prefix_indexes' => config('database.connections.mysql.prefix_indexes'),
+                'database_strict'         => config('database.connections.mysql.strict'),
+                'database_engine'         => config('database.connections.mysql.engine'),
+                'redis_prefix'            => $name . '-',
             ]);
 
             Config::set('database.connections.' . $name, [
-                "driver" => $tenant->database_driver,
-                "url" => $tenant->database_url,
-                "host" => $tenant->database_host,
-                "port" => $tenant->database_port,
-                "database" => $tenant->database_database,
-                "username" => $tenant->database_username,
-                "password" => $tenant->database_password,
-                "unix_socket" => $tenant->database_unix_socket,
-                "database_charset" => $tenant->database_charset,
-                "collation" => $tenant->database_collation,
-                "prefix" => $tenant->database_prefix,
-                "prefix_indexes" => $tenant->database_prefix_indexes ? '1' : '0',
-                "database_strict" => $tenant->database_strict ? '1' : '0',
-                "database_engine" => $tenant->database_engine,
-                "redis_prefix" => $tenant->redis_prefix,
-                'options' => extension_loaded('pdo_mysql') ? array_filter([
+                'driver'           => $tenant->database_driver,
+                'url'              => $tenant->database_url,
+                'host'             => $tenant->database_host,
+                'port'             => $tenant->database_port,
+                'database'         => $tenant->database_database,
+                'username'         => $tenant->database_username,
+                'password'         => $tenant->database_password,
+                'unix_socket'      => $tenant->database_unix_socket,
+                'database_charset' => $tenant->database_charset,
+                'collation'        => $tenant->database_collation,
+                'prefix'           => $tenant->database_prefix,
+                'prefix_indexes'   => $tenant->database_prefix_indexes ? '1' : '0',
+                'database_strict'  => $tenant->database_strict ? '1' : '0',
+                'database_engine'  => $tenant->database_engine,
+                'redis_prefix'     => $tenant->redis_prefix,
+                'options'          => extension_loaded('pdo_mysql') ? array_filter([
                     PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
-                    PDO::ATTR_PERSISTENT => true,
+                    PDO::ATTR_PERSISTENT   => true,
                 ]) : [],
             ]);
 
@@ -360,17 +366,17 @@ class AdminTenantController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function tenant_update(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
-            'tenant_id' => ['required', 'integer'],
-            'user_id' => ['integer', 'nullable'],
+            'tenant_id'   => ['required', 'integer'],
+            'user_id'     => ['integer', 'nullable'],
             'contract_id' => ['integer', 'nullable'],
-            'domain' => ['required', 'string', 'max:255'],
+            'domain'      => ['required', 'string', 'max:255'],
         ])->validate();
 
         /* @var Tenant $tenant */
@@ -378,31 +384,31 @@ class AdminTenantController extends Controller
             $oldDomain = (clone $tenant)->domain;
 
             $tenant->update([
-                'user_id' => ! empty($request->user_id) ? $request->user_id : null,
+                'user_id'     => ! empty($request->user_id) ? $request->user_id : null,
                 'contract_id' => ! empty($request->contract_id) ? $request->contract_id : null,
-                'domain' => $request->domain,
+                'domain'      => $request->domain,
             ]);
 
             if ($oldDomain !== $tenant->domain) {
                 Config::set('database.connections.' . $tenant->database_database, [
-                    "driver" => $tenant->database_driver,
-                    "url" => $tenant->database_url,
-                    "host" => $tenant->database_host,
-                    "port" => $tenant->database_port,
-                    "database" => $tenant->database_database,
-                    "username" => $tenant->database_username,
-                    "password" => $tenant->database_password,
-                    "unix_socket" => $tenant->database_unix_socket,
-                    "database_charset" => $tenant->database_charset,
-                    "collation" => $tenant->database_collation,
-                    "prefix" => $tenant->database_prefix,
-                    "prefix_indexes" => $tenant->database_prefix_indexes ? '1' : '0',
-                    "database_strict" => $tenant->database_strict ? '1' : '0',
-                    "database_engine" => $tenant->database_engine,
-                    "redis_prefix" => $tenant->redis_prefix,
-                    'options' => extension_loaded('pdo_mysql') ? array_filter([
+                    'driver'           => $tenant->database_driver,
+                    'url'              => $tenant->database_url,
+                    'host'             => $tenant->database_host,
+                    'port'             => $tenant->database_port,
+                    'database'         => $tenant->database_database,
+                    'username'         => $tenant->database_username,
+                    'password'         => $tenant->database_password,
+                    'unix_socket'      => $tenant->database_unix_socket,
+                    'database_charset' => $tenant->database_charset,
+                    'collation'        => $tenant->database_collation,
+                    'prefix'           => $tenant->database_prefix,
+                    'prefix_indexes'   => $tenant->database_prefix_indexes ? '1' : '0',
+                    'database_strict'  => $tenant->database_strict ? '1' : '0',
+                    'database_engine'  => $tenant->database_engine,
+                    'redis_prefix'     => $tenant->redis_prefix,
+                    'options'          => extension_loaded('pdo_mysql') ? array_filter([
                         PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
-                        PDO::ATTR_PERSISTENT => true,
+                        PDO::ATTR_PERSISTENT   => true,
                     ]) : [],
                 ]);
 
@@ -423,9 +429,9 @@ class AdminTenantController extends Controller
      *
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function tenant_delete(int $id): RedirectResponse
     {

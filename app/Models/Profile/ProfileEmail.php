@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\Profile;
 
 use App\Emails\ProfileEmailVerification;
 use Carbon\Carbon;
-use Exception;
 use Error;
+use Exception;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -13,21 +15,20 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 
 /**
- * Class ProfileEmail
+ * Class ProfileEmail.
  *
  * This class is the model for linking profile with email addresses.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *
- * @property int $id
- * @property int $profile_id
- * @property string $email
- * @property Carbon $email_verified_at
- * @property string $type
- * @property Carbon $created_at
- * @property Carbon $updated_at
- * @property Carbon $deleted_at
- *
+ * @property int          $id
+ * @property int          $profile_id
+ * @property string       $email
+ * @property Carbon       $email_verified_at
+ * @property string       $type
+ * @property Carbon       $created_at
+ * @property Carbon       $updated_at
+ * @property Carbon       $deleted_at
  * @property Profile|null $profile
  */
 class ProfileEmail extends Model implements MustVerifyEmail
@@ -45,7 +46,7 @@ class ProfileEmail extends Model implements MustVerifyEmail
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var string[]|bool
+     * @var bool|string[]
      */
     protected $guarded = [
         'id',
@@ -84,14 +85,12 @@ class ProfileEmail extends Model implements MustVerifyEmail
 
     /**
      * Send the email verification notification.
-     *
-     * @return void
      */
     public function sendEmailVerificationNotification(): void
     {
         try {
             $this->notify(new ProfileEmailVerification());
-        } catch (Exception|Error $exception) {
+        } catch (Exception | Error $exception) {
         }
     }
 

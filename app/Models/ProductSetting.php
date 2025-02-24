@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Traits\Encryptable;
@@ -8,13 +10,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class ProductSetting
+ * Class ProductSetting.
  *
  * This class is the model for basic product setting metadata.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *
- * @property int $id
+ * @property int    $id
  * @property string $product_type
  * @property string $setting
  * @property string $value
@@ -37,7 +39,7 @@ class ProductSetting extends Model
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var string[]|bool
+     * @var bool|string[]
      */
     protected $guarded = [
         'id',
@@ -46,7 +48,7 @@ class ProductSetting extends Model
     /**
      * The attributes that are encryptable.
      *
-     * @var string[]|bool
+     * @var bool|string[]
      */
     protected $encryptable = [
         'value',

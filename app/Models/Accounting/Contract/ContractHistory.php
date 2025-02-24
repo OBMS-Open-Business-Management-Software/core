@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\Accounting\Contract;
 
 use App\Models\User;
@@ -9,21 +11,20 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class ContractHistory
+ * Class ContractHistory.
  *
  * This class is the model for basic contract history metadata.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *
- * @property int $id
- * @property int|null $user_id
- * @property int $contract_id
- * @property string $status
- * @property Carbon $created_at
- * @property Carbon $updated_at
- * @property Carbon $deleted_at
- *
- * @property User|null $user
+ * @property int           $id
+ * @property int|null      $user_id
+ * @property int           $contract_id
+ * @property string        $status
+ * @property Carbon        $created_at
+ * @property Carbon        $updated_at
+ * @property Carbon        $deleted_at
+ * @property User|null     $user
  * @property Contract|null $contract
  */
 class ContractHistory extends Model
@@ -40,7 +41,7 @@ class ContractHistory extends Model
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var string[]|bool
+     * @var bool|string[]
      */
     protected $guarded = [
         'id',

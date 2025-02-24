@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\FileManager;
 
 use App\Models\User;
@@ -11,26 +13,25 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class File
+ * Class File.
  *
  * This class is the model for basic folder metadata.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *
- * @property int $id
- * @property int|null $user_id
- * @property int|null $parent_id
- * @property string $name
- * @property Carbon $created_at
- * @property Carbon $updated_at
- * @property Carbon $deleted_at
- *
- * @property User|null $user
- * @property Folder|null $parent
- * @property Collection<File> $files
+ * @property int                $id
+ * @property int|null           $user_id
+ * @property int|null           $parent_id
+ * @property string             $name
+ * @property Carbon             $created_at
+ * @property Carbon             $updated_at
+ * @property Carbon             $deleted_at
+ * @property User|null          $user
+ * @property Folder|null        $parent
+ * @property Collection<File>   $files
  * @property Collection<Folder> $children
- * @property string $path
- * @property int $folderSize
+ * @property string             $path
+ * @property int                $folderSize
  */
 class Folder extends Model
 {
@@ -46,7 +47,7 @@ class Folder extends Model
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var string[]|bool
+     * @var bool|string[]
      */
     protected $guarded = [
         'id',

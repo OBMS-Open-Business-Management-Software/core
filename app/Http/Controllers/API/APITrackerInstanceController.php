@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\API\Resources\TrackerInstance as TrackerInstanceResource;
 use App\Models\UsageTracker\TrackerInstance;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use App\Http\Controllers\API\Resources\TrackerInstance as TrackerInstanceResource;
 use Illuminate\Support\Facades\Validator;
 
 class APITrackerInstanceController extends APIBaseController
@@ -21,6 +23,7 @@ class APITrackerInstanceController extends APIBaseController
 
         return $this->sendResponse(TrackerInstanceResource::collection($products), 'Usage tracker instance retrieved successfully.');
     }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -33,8 +36,8 @@ class APITrackerInstanceController extends APIBaseController
         $input = $request->all();
 
         $validator = Validator::make($input, [
-            'name' => 'required',
-            'detail' => 'required'
+            'name'   => 'required',
+            'detail' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -67,7 +70,7 @@ class APITrackerInstanceController extends APIBaseController
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
+     * @param Request         $request
      * @param TrackerInstance $instance
      *
      * @return JsonResponse

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Helpers;
 
 /**
@@ -35,7 +37,7 @@ class Tags
         $parts = explode('@', $email);
 
         if (count($parts) == 2) {
-            $inbox = $parts[0];
+            $inbox  = $parts[0];
             $domain = $parts[1];
 
             $parts = explode('+', $inbox);
@@ -60,7 +62,7 @@ class Tags
     public static function getStringBetween(string $string, string $start, string $end): string
     {
         $string = ' ' . $string . ' ';
-        $ini = strpos($string, $start);
+        $ini    = strpos($string, $start);
 
         if ($ini == 0) {
             return false;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\Content;
 
 use App\Models\User;
@@ -12,24 +14,23 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Blade;
 
 /**
- * Class PageVersion
+ * Class PageVersion.
  *
  * This class is the model for basic page version metadata.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *
- * @property int $id
- * @property int $page_id
- * @property int $user_id
- * @property string $content
- * @property Carbon $created_at
- * @property Carbon $updated_at
- * @property Carbon $deleted_at
- *
- * @property Page|null $page
- * @property User|null $user
+ * @property int                        $id
+ * @property int                        $page_id
+ * @property int                        $user_id
+ * @property string                     $content
+ * @property Carbon                     $created_at
+ * @property Carbon                     $updated_at
+ * @property Carbon                     $deleted_at
+ * @property Page|null                  $page
+ * @property User|null                  $user
  * @property Collection<PageAcceptance> $acceptance
- * @property string $compiled
+ * @property string                     $compiled
  */
 class PageVersion extends Model
 {
@@ -38,7 +39,7 @@ class PageVersion extends Model
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var string[]|bool
+     * @var bool|string[]
      */
     protected $guarded = [
         'id',

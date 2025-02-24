@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\Shop\Configurator;
 
 use App\Models\Accounting\Contract\ContractType;
@@ -14,7 +16,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 
 /**
- * Class ShopConfiguratorForm
+ * Class ShopConfiguratorForm.
  *
  * This class is the model for basic shop configurator form metadata.
  *
@@ -31,32 +33,31 @@ use Illuminate\Support\Facades\Auth;
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *
- * @property int $id
- * @property int|null $category_id
- * @property int|null $contract_type_id
- * @property int|null $tracker_id
- * @property string $type
- * @property string $route
- * @property string $name
- * @property string $description
- * @property string $product_type
- * @property bool $approval
- * @property bool $public
- * @property string $vat_type
- * @property Carbon $created_at
- * @property Carbon $updated_at
- * @property Carbon $deleted_at
- *
- * @property ShopConfiguratorCategory|null $category
- * @property ContractType|null $contractType
- * @property Tracker|null $tracker
+ * @property int                               $id
+ * @property int|null                          $category_id
+ * @property int|null                          $contract_type_id
+ * @property int|null                          $tracker_id
+ * @property string                            $type
+ * @property string                            $route
+ * @property string                            $name
+ * @property string                            $description
+ * @property string                            $product_type
+ * @property bool                              $approval
+ * @property bool                              $public
+ * @property string                            $vat_type
+ * @property Carbon                            $created_at
+ * @property Carbon                            $updated_at
+ * @property Carbon                            $deleted_at
+ * @property ShopConfiguratorCategory|null     $category
+ * @property ContractType|null                 $contractType
+ * @property Tracker|null                      $tracker
  * @property Collection<ShopConfiguratorField> $fields
- * @property string $fullRoute
- * @property double $minAmount
- * @property double $baseAmount
- * @property double $defaultAmount
- * @property double $vatRate
- * @property bool $reverseCharge
+ * @property string                            $fullRoute
+ * @property float                             $minAmount
+ * @property float                             $baseAmount
+ * @property float                             $defaultAmount
+ * @property float                             $vatRate
+ * @property bool                              $reverseCharge
  */
 class ShopConfiguratorForm extends Model
 {
@@ -65,7 +66,7 @@ class ShopConfiguratorForm extends Model
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var string[]|bool
+     * @var bool|string[]
      */
     protected $guarded = [
         'id',
@@ -78,7 +79,7 @@ class ShopConfiguratorForm extends Model
      */
     protected $casts = [
         'approval' => 'bool',
-        'public' => 'bool',
+        'public'   => 'bool',
     ];
 
     /**

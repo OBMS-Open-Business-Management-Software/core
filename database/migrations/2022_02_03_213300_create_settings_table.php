@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Models\Setting;
 use Carbon\Carbon;
 use Illuminate\Database\Migrations\Migration;
@@ -9,8 +11,6 @@ use Illuminate\Support\Facades\Schema;
 return new class () extends Migration {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
@@ -26,183 +26,183 @@ return new class () extends Migration {
 
         Setting::insert([
             [
-                'setting' => 'app.name',
-                'value' => encrypt('OBMS'),
+                'setting'    => 'app.name',
+                'value'      => encrypt('OBMS'),
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,
             ], [
-                'setting' => 'app.url',
-                'value' => encrypt('http://localhost'),
+                'setting'    => 'app.url',
+                'value'      => encrypt('http://localhost'),
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,
             ], [
-                'setting' => 'company.logo',
-                'value' => null,
+                'setting'    => 'company.logo',
+                'value'      => null,
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,
             ], [
-                'setting' => 'company.name',
-                'value' => null,
+                'setting'    => 'company.name',
+                'value'      => null,
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,
             ], [
-                'setting' => 'company.representative',
-                'value' => null,
+                'setting'    => 'company.representative',
+                'value'      => null,
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,
             ], [
-                'setting' => 'company.address.oneliner',
-                'value' => null,
+                'setting'    => 'company.address.oneliner',
+                'value'      => null,
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,
             ], [
-                'setting' => 'company.address.street',
-                'value' => null,
+                'setting'    => 'company.address.street',
+                'value'      => null,
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,
             ], [
-                'setting' => 'company.address.housenumber',
-                'value' => null,
+                'setting'    => 'company.address.housenumber',
+                'value'      => null,
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,
             ], [
-                'setting' => 'company.address.addition',
-                'value' => null,
+                'setting'    => 'company.address.addition',
+                'value'      => null,
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,
             ], [
-                'setting' => 'company.address.postalcode',
-                'value' => null,
+                'setting'    => 'company.address.postalcode',
+                'value'      => null,
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,
             ], [
-                'setting' => 'company.address.city',
-                'value' => null,
+                'setting'    => 'company.address.city',
+                'value'      => null,
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,
             ], [
-                'setting' => 'company.address.state',
-                'value' => null,
+                'setting'    => 'company.address.state',
+                'value'      => null,
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,
             ], [
-                'setting' => 'company.address.country',
-                'value' => null,
+                'setting'    => 'company.address.country',
+                'value'      => null,
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,
             ], [
-                'setting' => 'company.phone',
-                'value' => null,
+                'setting'    => 'company.phone',
+                'value'      => null,
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,
             ], [
-                'setting' => 'company.fax',
-                'value' => null,
+                'setting'    => 'company.fax',
+                'value'      => null,
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,
             ], [
-                'setting' => 'company.email',
-                'value' => null,
+                'setting'    => 'company.email',
+                'value'      => null,
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,
             ], [
-                'setting' => 'company.register_court',
-                'value' => null,
+                'setting'    => 'company.register_court',
+                'value'      => null,
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,
             ], [
-                'setting' => 'company.register_number',
-                'value' => null,
+                'setting'    => 'company.register_number',
+                'value'      => null,
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,
             ], [
-                'setting' => 'company.vat_id',
-                'value' => null,
+                'setting'    => 'company.vat_id',
+                'value'      => null,
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,
             ], [
-                'setting' => 'company.tax_id',
-                'value' => null,
+                'setting'    => 'company.tax_id',
+                'value'      => null,
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,
             ], [
-                'setting' => 'company.bank.iban',
-                'value' => null,
+                'setting'    => 'company.bank.iban',
+                'value'      => null,
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,
             ], [
-                'setting' => 'company.bank.bic',
-                'value' => null,
+                'setting'    => 'company.bank.bic',
+                'value'      => null,
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,
             ], [
-                'setting' => 'company.bank.institute',
-                'value' => null,
+                'setting'    => 'company.bank.institute',
+                'value'      => null,
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,
             ], [
-                'setting' => 'company.bank.owner',
-                'value' => null,
+                'setting'    => 'company.bank.owner',
+                'value'      => null,
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,
             ], [
-                'setting' => 'company.dunning.default_deadline',
-                'value' => encrypt(7),
+                'setting'    => 'company.dunning.default_deadline',
+                'value'      => encrypt(7),
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,
             ], [
-                'setting' => 'company.default_country',
-                'value' => encrypt(1),
+                'setting'    => 'company.default_country',
+                'value'      => encrypt(1),
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,
             ], [
-                'setting' => 'company.default_vat_rate',
-                'value' => encrypt(19),
+                'setting'    => 'company.default_vat_rate',
+                'value'      => encrypt(19),
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,
             ], [
-                'setting' => 'mail.mailers.smtp.transport',
-                'value' => encrypt('smtp'),
+                'setting'    => 'mail.mailers.smtp.transport',
+                'value'      => encrypt('smtp'),
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,
             ], [
-                'setting' => 'mail.mailers.smtp.host',
-                'value' => null,
+                'setting'    => 'mail.mailers.smtp.host',
+                'value'      => null,
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,
             ], [
-                'setting' => 'mail.mailers.smtp.port',
-                'value' => null,
+                'setting'    => 'mail.mailers.smtp.port',
+                'value'      => null,
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,
             ], [
-                'setting' => 'mail.mailers.smtp.encryption',
-                'value' => null,
+                'setting'    => 'mail.mailers.smtp.encryption',
+                'value'      => null,
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,
             ], [
-                'setting' => 'mail.mailers.smtp.username',
-                'value' => null,
+                'setting'    => 'mail.mailers.smtp.username',
+                'value'      => null,
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,
             ], [
-                'setting' => 'mail.mailers.smtp.password',
-                'value' => null,
+                'setting'    => 'mail.mailers.smtp.password',
+                'value'      => null,
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,
             ], [
-                'setting' => 'mail.mailers.smtp.timeout',
-                'value' => null,
+                'setting'    => 'mail.mailers.smtp.timeout',
+                'value'      => null,
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,
             ], [
-                'setting' => 'mail.mailers.smtp.auth_mode',
-                'value' => null,
+                'setting'    => 'mail.mailers.smtp.auth_mode',
+                'value'      => null,
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,
             ], [
-                'setting' => 'session.lifetime',
-                'value' => encrypt(120),
+                'setting'    => 'session.lifetime',
+                'value'      => encrypt(120),
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,
             ],
@@ -211,8 +211,6 @@ return new class () extends Migration {
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {

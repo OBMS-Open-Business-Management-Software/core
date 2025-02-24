@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Models\Address\Country;
@@ -30,26 +32,26 @@ class AdminProfileController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function profile_update(Request $request): RedirectResponse
     {
         if (Auth::user()->email !== $request->email) {
             Validator::make($request->toArray(), [
-                'name' => ['required', 'string', 'max:255'],
+                'name'  => ['required', 'string', 'max:255'],
                 'email' => ['required', 'email', 'confirmed'],
             ])->validate();
 
             Auth::user()->update([
-                'name' => $request->name,
-                'email' => $request->email,
+                'name'              => $request->name,
+                'email'             => $request->email,
                 'email_verified_at' => null,
             ]);
         } else {
             Validator::make($request->toArray(), [
-                'name' => ['required', 'string', 'max:255'],
+                'name'  => ['required', 'string', 'max:255'],
                 'email' => ['required', 'email'],
             ])->validate();
 
@@ -66,15 +68,15 @@ class AdminProfileController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function profile_password(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
             'password_current' => ['required', 'current_password'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password'         => ['required', 'string', 'min:8', 'confirmed'],
         ])->validate();
 
         Auth::user()->update([

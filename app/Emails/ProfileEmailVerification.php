@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Emails;
 
 use App\Helpers\SMIME;
@@ -30,7 +32,8 @@ class ProfileEmailVerification extends Notification
     /**
      * Get the notification's channels.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
+     *
      * @return array
      */
     public function via($notifiable): array
@@ -41,7 +44,7 @@ class ProfileEmailVerification extends Notification
     /**
      * Build the mail representation of the notification.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
      *
      * @return MailMessage
      */
@@ -59,7 +62,7 @@ class ProfileEmailVerification extends Notification
     /**
      * Get the verify email notification mail message for the given URL.
      *
-     * @param  string  $url
+     * @param string $url
      *
      * @return MailMessage
      */
@@ -77,7 +80,7 @@ class ProfileEmailVerification extends Notification
     /**
      * Get the verification URL for the given notifiable.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
      *
      * @return string
      */
@@ -91,7 +94,7 @@ class ProfileEmailVerification extends Notification
             'customer.verification.verify',
             Carbon::now()->addMinutes(Config::get('auth.verification.expire', 60)),
             [
-                'id' => $notifiable->getKey(),
+                'id'   => $notifiable->getKey(),
                 'hash' => sha1($notifiable->getEmailForVerification()),
             ]
         );
@@ -101,8 +104,6 @@ class ProfileEmailVerification extends Notification
      * Set a callback that should be used when creating the email verification URL.
      *
      * @param Closure $callback
-     *
-     * @return void
      */
     public static function createUrlUsing(Closure $callback)
     {
@@ -113,8 +114,6 @@ class ProfileEmailVerification extends Notification
      * Set a callback that should be used when building the notification mail message.
      *
      * @param Closure $callback
-     *
-     * @return void
      */
     public static function toMailUsing(Closure $callback)
     {

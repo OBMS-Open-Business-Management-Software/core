@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Emails;
 
 use App\Helpers\SMIME;
@@ -30,7 +32,7 @@ class AccountEmailVerification extends Notification
     /**
      * Get the notification's channels.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
      *
      * @return array
      */
@@ -42,7 +44,7 @@ class AccountEmailVerification extends Notification
     /**
      * Build the mail representation of the notification.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
      *
      * @return MailMessage
      */
@@ -78,7 +80,7 @@ class AccountEmailVerification extends Notification
     /**
      * Get the verification URL for the given notifiable.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
      *
      * @return string
      */
@@ -92,7 +94,7 @@ class AccountEmailVerification extends Notification
             'verification.verify',
             Carbon::now()->addMinutes(Config::get('auth.verification.expire', 60)),
             [
-                'id' => $notifiable->getKey(),
+                'id'   => $notifiable->getKey(),
                 'hash' => sha1($notifiable->getEmailForVerification()),
             ]
         );
@@ -102,8 +104,6 @@ class AccountEmailVerification extends Notification
      * Set a callback that should be used when creating the email verification URL.
      *
      * @param Closure $callback
-     *
-     * @return void
      */
     public static function createUrlUsing(Closure $callback)
     {
@@ -114,8 +114,6 @@ class AccountEmailVerification extends Notification
      * Set a callback that should be used when building the notification mail message.
      *
      * @param Closure $callback
-     *
-     * @return void
      */
     public static function toMailUsing(Closure $callback)
     {

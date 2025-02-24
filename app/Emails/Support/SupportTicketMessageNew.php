@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Emails\Support;
 
 use App\Helpers\SMIME;
@@ -29,7 +31,8 @@ class SupportTicketMessageNew extends Notification
     /**
      * Get the notification's channels.
      *
-     * @param  SupportTicketMessage  $notifiable
+     * @param SupportTicketMessage $notifiable
+     *
      * @return array
      */
     public function via(SupportTicketMessage $notifiable): array
@@ -40,7 +43,7 @@ class SupportTicketMessageNew extends Notification
     /**
      * Build the mail representation of the notification.
      *
-     * @param  SupportTicketMessage  $notifiable
+     * @param SupportTicketMessage $notifiable
      *
      * @return MailMessage
      */
@@ -58,7 +61,7 @@ class SupportTicketMessageNew extends Notification
     /**
      * Get the support ticket message email notification mail message for the given URL.
      *
-     * @param string $url
+     * @param string               $url
      * @param SupportTicketMessage $notifiable
      *
      * @return MailMessage
@@ -66,7 +69,7 @@ class SupportTicketMessageNew extends Notification
     protected function buildMailMessage(string $url, SupportTicketMessage $notifiable): MailMessage
     {
         $message = (new MailMessage())
-            ->subject('[Ticket #' . $notifiable->ticket->id . '] '. Lang::get('New response'))
+            ->subject('[Ticket #' . $notifiable->ticket->id . '] ' . Lang::get('New response'))
             ->line($notifiable->message)
             ->action(Lang::get('View Ticket'), $url)
             ->replyTo($notifiable->ticket->answerEmailAddress, $notifiable->ticket->answerEmailName);
@@ -77,7 +80,7 @@ class SupportTicketMessageNew extends Notification
     /**
      * Get the verification URL for the given notifiable.
      *
-     * @param  SupportTicketMessage  $notifiable
+     * @param SupportTicketMessage $notifiable
      *
      * @return string
      */
@@ -90,7 +93,7 @@ class SupportTicketMessageNew extends Notification
         return URL::signedRoute(
             'customer.support.details',
             [
-                'id' => $notifiable->ticket->getKey(),
+                'id'   => $notifiable->ticket->getKey(),
                 'hash' => sha1($notifiable->ticket->email),
             ]
         );
@@ -100,8 +103,6 @@ class SupportTicketMessageNew extends Notification
      * Set a callback that should be used when creating the email verification URL.
      *
      * @param Closure $callback
-     *
-     * @return void
      */
     public static function createUrlUsing(Closure $callback)
     {
@@ -112,8 +113,6 @@ class SupportTicketMessageNew extends Notification
      * Set a callback that should be used when building the notification mail message.
      *
      * @param Closure $callback
-     *
-     * @return void
      */
     public static function toMailUsing(Closure $callback)
     {

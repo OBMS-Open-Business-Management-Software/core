@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Traits\Product;
 
 use Illuminate\Support\Collection;
@@ -22,7 +24,7 @@ trait HasCapabilities
      */
     public function capabilities(): Collection
     {
-        $capabilities = ['capabilities.reflect'];
+        $capabilities  = ['capabilities.reflect'];
         $handlerTraits = collect(class_uses(self::class) ?: []);
 
         if ($handlerTraits->contains('App\Traits\Product\HasService')) {

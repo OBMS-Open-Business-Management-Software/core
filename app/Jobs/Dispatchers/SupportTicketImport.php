@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Jobs\Dispatchers;
 
 use App\Jobs\Structure\Job;
@@ -7,7 +9,7 @@ use App\Jobs\TenantJobs\SupportTicketImport as SupportTicketImportJob;
 use App\Models\Tenant;
 
 /**
- * Class SupportTicketImport
+ * Class SupportTicketImport.
  *
  * This class is the dispatcher job for importing ticket metadata via. IMAP inboxes.
  *
@@ -16,7 +18,9 @@ use App\Models\Tenant;
 class SupportTicketImport extends Job
 {
     public $tries = 1;
+
     public $timeout = 3600;
+
     public static $onQueue = 'dispatchers';
 
     /**

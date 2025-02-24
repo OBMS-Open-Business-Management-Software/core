@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\PaymentGateways;
 
 use Exception;
@@ -61,17 +63,17 @@ interface Gateway
      * Initialize a new payment. This should either return a result array or
      * redirect the user directly.
      *
-     * @param $type
-     * @param $method
-     * @param $client
-     * @param $description
-     * @param $identification
-     * @param mixed $payment Either an invoice object or the amount which the user has to pay
-     * @param $invoice
-     * @param $returnCheckUrl
-     * @param $returnSuccessUrl
-     * @param $returnFailedUrl
-     * @param $returnNeutral
+     * @param        $type
+     * @param        $method
+     * @param        $client
+     * @param        $description
+     * @param        $identification
+     * @param mixed  $payment          Either an invoice object or the amount which the user has to pay
+     * @param        $invoice
+     * @param        $returnCheckUrl
+     * @param        $returnSuccessUrl
+     * @param        $returnFailedUrl
+     * @param        $returnNeutral
      * @param string $pingbackUrl
      *
      * @return array|null
@@ -99,9 +101,9 @@ interface Gateway
      * @param $method
      * @param $client
      *
-     * @return array
-     *
      * @throws Exception
+     *
+     * @return array
      */
     public function pingback($type, $method, $client): array;
 }

@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\PaymentGateways\PayPal;
 
 use App\PaymentGateways\Gateway;
-use App\Traits\PaymentGateway\HasSettings;
 use App\PaymentGateways\PayPal\Helpers\PaypalIPNClient;
 use App\PaymentGateways\PayPal\Helpers\PaypalMerchantClient;
+use App\Traits\PaymentGateway\HasSettings;
 use Exception;
 use Illuminate\Support\Collection;
 
@@ -29,10 +31,10 @@ class Handler implements Gateway
     public function parameters(): Collection
     {
         return collect([
-            "username" => __('paypal.username'),
-            "publickey" => __('paypal.public_key'),
-            "privatekey" => __('paypal.private_key'),
-            "api_type" => __('paypal.api_type'),
+            'username'   => __('paypal.username'),
+            'publickey'  => __('paypal.public_key'),
+            'privatekey' => __('paypal.private_key'),
+            'api_type'   => __('paypal.api_type'),
         ]);
     }
 
@@ -80,63 +82,64 @@ class Handler implements Gateway
      * Initialize a new payment. This should either return a result array or
      * redirect the user directly.
      *
-     * @param $type
-     * @param $method
-     * @param $client
-     * @param $description
-     * @param $identification
-     * @param mixed $payment Either an invoice object or the amount which the user has to pay
-     * @param $invoice
-     * @param $returnCheckUrl
-     * @param $returnSuccessUrl
-     * @param $returnFailedUrl
-     * @param $returnNeutral
+     * @param        $type
+     * @param        $method
+     * @param        $client
+     * @param        $description
+     * @param        $identification
+     * @param mixed  $payment          Either an invoice object or the amount which the user has to pay
+     * @param        $invoice
+     * @param        $returnCheckUrl
+     * @param        $returnSuccessUrl
+     * @param        $returnFailedUrl
+     * @param        $returnNeutral
      * @param string $pingbackUrl
      *
      * @return array|null
      */
     public function initialize($type, $method, $client, $description, $identification, $payment, $invoice, $returnCheckUrl, $returnSuccessUrl, $returnFailedUrl, $returnNeutral, $pingbackUrl): ?array
     {
-        $mtid = $description . '_' . rand('1', '9999999');
-        $get = '?payment=' . $mtid . '&amount=' . $payment;
+        $mtid           = $description . '_' . rand('1', '9999999');
+        $get            = '?payment=' . $mtid . '&amount=' . $payment;
         $returnCheckUrl = $returnCheckUrl . $get;
 
-        $api = new PaypalMerchantClient($method);
+        $api   = new PaypalMerchantClient($method);
         $query = $api->buildQuery([
             'PAYMENTACTION' => 'Sale',
-            'AMT' => $payment,
-            'RETURNURL' => $returnCheckUrl,
-            'CANCELURL' => $returnCheckUrl,
-            'DESC' => $description,
-            'NOSHIPPING' => '1',
-            'ALLOWNOTE' => '1',
-            'CURRENCYCODE' => 'EUR',
-            'METHOD' => 'SetExpressCheckout',
-            'INVNUM' => $description,
-            'CUSTOM' => $mtid
+            'AMT'           => $payment,
+            'RETURNURL'     => $returnCheckUrl,
+            'CANCELURL'     => $returnCheckUrl,
+            'DESC'          => $description,
+            'NOSHIPPING'    => '1',
+            'ALLOWNOTE'     => '1',
+            'CURRENCYCODE'  => 'EUR',
+            'METHOD'        => 'SetExpressCheckout',
+            'INVNUM'        => $description,
+            'CUSTOM'        => $mtid,
         ]);
         $result = $api->response($query);
+
         if (! $result) {
             return null;
         }
         $response = $result->getContent();
-        $return = $api->responseParse($response);
+        $return   = $api->responseParse($response);
 
         if ($return['ACK'] !== 'Success') {
             return [
-                "status" => "success",
-                "redirect" => $returnFailedUrl,
-                "payment_id" => $mtid,
-                "payment_status" => "failed",
+                'status'         => 'success',
+                'redirect'       => $returnFailedUrl,
+                'payment_id'     => $mtid,
+                'payment_status' => 'failed',
             ];
         } else {
             $paymentPanel = $api->getGateway() . 'cmd=_express-checkout&useraction=commit&token=' . $return['TOKEN'];
 
             return [
-                "status" => "success",
-                "redirect" => $paymentPanel,
-                "payment_id" => $mtid,
-                "payment_status" => "waiting",
+                'status'         => 'success',
+                'redirect'       => $paymentPanel,
+                'payment_id'     => $mtid,
+                'payment_status' => 'waiting',
             ];
         }
     }
@@ -153,20 +156,20 @@ class Handler implements Gateway
      */
     public function return($type, $method, $client): array
     {
-        $api = new PaypalMerchantClient($method);
+        $api    = new PaypalMerchantClient($method);
         $return = $api->doPayment();
 
         if ($return['ACK'] == 'Success') {
             return [
-                "status" => "success",
-                "payment_id" => $_GET["payment"],
-                "payment_status" => "success",
+                'status'         => 'success',
+                'payment_id'     => $_GET['payment'],
+                'payment_status' => 'success',
             ];
         } else {
             return [
-                "status" => "success",
-                "payment_id" => $_GET["payment"],
-                "payment_status" => "failed",
+                'status'         => 'success',
+                'payment_id'     => $_GET['payment'],
+                'payment_status' => 'failed',
             ];
         }
     }
@@ -180,56 +183,57 @@ class Handler implements Gateway
      * @param $method
      * @param $client
      *
-     * @return array
-     *
      * @throws Exception
+     *
+     * @return array
      */
     public function pingback($type, $method, $client): array
     {
         $ipn = new PaypalIPNClient();
-        if ($method->api_type == "test") {
+
+        if ($method->api_type == 'test') {
             $ipn->useSandbox();
         }
         $verified = $ipn->verifyIPN();
 
         if ($verified) {
             if (
-                $_POST["payment_status"] == "Failed" ||
-                $_POST["payment_status"] == "Denied" ||
-                $_POST["payment_status"] == "Expired"
+                $_POST['payment_status'] == 'Failed' ||
+                $_POST['payment_status'] == 'Denied' ||
+                $_POST['payment_status'] == 'Expired'
             ) {
                 return [
-                    "status" => "success",
-                    "payment_id" => $_POST["custom"],
-                    "payment_status" => "failed",
+                    'status'         => 'success',
+                    'payment_id'     => $_POST['custom'],
+                    'payment_status' => 'failed',
                 ];
             } elseif (
-                $_POST["payment_status"] == "Refunded" ||
-                $_POST["payment_status"] == "Reversed" ||
-                $_POST["payment_status"] == "Voided"
+                $_POST['payment_status'] == 'Refunded' ||
+                $_POST['payment_status'] == 'Reversed' ||
+                $_POST['payment_status'] == 'Voided'
             ) {
                 return [
-                    "status" => "success",
-                    "payment_id" => $_POST["custom"],
-                    "payment_status" => "revoked",
+                    'status'         => 'success',
+                    'payment_id'     => $_POST['custom'],
+                    'payment_status' => 'revoked',
                 ];
             } elseif (
-                $_POST["payment_status"] == "Canceled_Reversal" ||
-                $_POST["payment_status"] == "Completed" ||
-                $_POST["payment_status"] == "Processed"
+                $_POST['payment_status'] == 'Canceled_Reversal' ||
+                $_POST['payment_status'] == 'Completed' ||
+                $_POST['payment_status'] == 'Processed'
             ) {
                 return [
-                    "status" => "success",
-                    "payment_id" => $_POST["custom"],
-                    "payment_status" => "success",
+                    'status'         => 'success',
+                    'payment_id'     => $_POST['custom'],
+                    'payment_status' => 'success',
                 ];
             }
         }
 
         return [
-            "status" => "false",
-            "payment_id" => null,
-            "payment_status" => null,
+            'status'         => 'false',
+            'payment_id'     => null,
+            'payment_status' => null,
         ];
     }
 }

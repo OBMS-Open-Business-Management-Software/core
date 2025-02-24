@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Models\Content\Page;
@@ -55,19 +57,24 @@ class AdminPageController extends Controller
                 switch ($request->columns[$order['column']]) {
                     case 'route':
                         $orderBy = 'route';
+
                         break;
                     case 'title':
                         $orderBy = 'title';
+
                         break;
                     case 'must_accept':
                         $orderBy = 'must_accept';
+
                         break;
                     case 'navigation_item':
                         $orderBy = 'navigation_item';
+
                         break;
                     case 'id':
                     default:
                         $orderBy = 'id';
+
                         break;
                 }
 
@@ -81,10 +88,10 @@ class AdminPageController extends Controller
             ->limit($request->length);
 
         return response()->json([
-            'draw' => (int) $request->draw,
-            'recordsTotal' => $totalCount,
+            'draw'            => (int) $request->draw,
+            'recordsTotal'    => $totalCount,
             'recordsFiltered' => $filteredCount,
-            'data' => $query
+            'data'            => $query
                 ->get()
                 ->transform(function (Page $page) {
                     $edit = '
@@ -142,16 +149,16 @@ class AdminPageController extends Controller
 ';
 
                     return (object) [
-                        'id' => $page->id,
-                        'title' => __($page->title),
-                        'route' => $page->route,
-                        'must_accept' => $page->must_accept ? '<span class="badge badge-success">' . __('interface.misc.yes') . '</span>' : '<span class="badge badge-warning">' . __('interface.misc.no') . '</span>',
+                        'id'              => $page->id,
+                        'title'           => __($page->title),
+                        'route'           => $page->route,
+                        'must_accept'     => $page->must_accept ? '<span class="badge badge-success">' . __('interface.misc.yes') . '</span>' : '<span class="badge badge-warning">' . __('interface.misc.no') . '</span>',
                         'navigation_item' => $page->navigation_item ? '<span class="badge badge-success">' . __('interface.misc.yes') . '</span>' : '<span class="badge badge-warning">' . __('interface.misc.no') . '</span>',
-                        'view' => '<a href="' . route('admin.pages.details', $page->id) . '" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>',
-                        'edit' => $edit,
-                        'delete' => $page->acceptance->isEmpty() ? '<a href="' . route('admin.pages.delete', $page->id) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>' : '<button type="button" class="btn btn-danger btn-sm" disabled><i class="bi bi-trash"></i></button>',
+                        'view'            => '<a href="' . route('admin.pages.details', $page->id) . '" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>',
+                        'edit'            => $edit,
+                        'delete'          => $page->acceptance->isEmpty() ? '<a href="' . route('admin.pages.delete', $page->id) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>' : '<button type="button" class="btn btn-danger btn-sm" disabled><i class="bi bi-trash"></i></button>',
                     ];
-                })
+                }),
         ]);
     }
 
@@ -160,26 +167,26 @@ class AdminPageController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function page_add(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
-            'route' => ['required', 'string'],
-            'title' => ['required', 'string'],
-            'page_content' => ['required', 'string'],
-            'must_accept' => ['nullable', 'string'],
+            'route'           => ['required', 'string'],
+            'title'           => ['required', 'string'],
+            'page_content'    => ['required', 'string'],
+            'must_accept'     => ['nullable', 'string'],
             'navigation_item' => ['nullable', 'string'],
         ])->validate();
 
         if (
             ! empty(
                 $page = Page::create([
-                    'route' => $request->route,
-                    'title' => $request->title,
-                    'must_accept' => ! empty($request->must_accept),
+                    'route'           => $request->route,
+                    'title'           => $request->title,
+                    'must_accept'     => ! empty($request->must_accept),
                     'navigation_item' => ! empty($request->navigation_item),
                 ])
             )
@@ -209,25 +216,25 @@ class AdminPageController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function page_update(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
-            'page_id' => ['required', 'integer'],
-            'route' => ['required', 'string'],
-            'title' => ['required', 'string'],
-            'must_accept' => ['nullable', 'string'],
+            'page_id'         => ['required', 'integer'],
+            'route'           => ['required', 'string'],
+            'title'           => ['required', 'string'],
+            'must_accept'     => ['nullable', 'string'],
             'navigation_item' => ['nullable', 'string'],
         ])->validate();
 
         if (! empty($page = Page::find($request->page_id))) {
             $page->update([
-                'route' => $request->route,
-                'title' => $request->title,
-                'must_accept' => ! empty($request->must_accept),
+                'route'           => $request->route,
+                'title'           => $request->title,
+                'must_accept'     => ! empty($request->must_accept),
                 'navigation_item' => ! empty($request->navigation_item),
             ]);
 
@@ -242,9 +249,9 @@ class AdminPageController extends Controller
      *
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function page_delete(int $id): RedirectResponse
     {
@@ -310,13 +317,16 @@ class AdminPageController extends Controller
                 switch ($request->columns[$order['column']]) {
                     case 'content':
                         $orderBy = 'content';
+
                         break;
                     case 'created_at':
                         $orderBy = 'created_at';
+
                         break;
                     case 'id':
                     default:
                         $orderBy = 'id';
+
                         break;
                 }
 
@@ -330,10 +340,10 @@ class AdminPageController extends Controller
             ->limit($request->length);
 
         return response()->json([
-            'draw' => (int) $request->draw,
-            'recordsTotal' => $totalCount,
+            'draw'            => (int) $request->draw,
+            'recordsTotal'    => $totalCount,
             'recordsFiltered' => $filteredCount,
-            'data' => $query
+            'data'            => $query
                 ->get()
                 ->transform(function (PageVersion $version) {
                     $edit = '
@@ -370,15 +380,15 @@ class AdminPageController extends Controller
 ';
 
                     return (object) [
-                        'id' => $version->id,
+                        'id'         => $version->id,
                         'created_at' => $version->created_at->format('d.m.Y, H:i'),
-                        'content' => substr($version->content, 0, 100) . (strlen($version->content) > 100 ? '...' : ''),
+                        'content'    => substr($version->content, 0, 100) . (strlen($version->content) > 100 ? '...' : ''),
                         'acceptance' => $version->acceptance()->count(),
-                        'view' => '<a href="' . route('cms.page.' . $version->page_id . '.version', $version->id) . '" class="btn btn-primary btn-sm" target="_blank"><i class="bi bi-eye"></i></a>',
-                        'edit' => $edit,
-                        'delete' => $version->acceptance->isEmpty() ? '<a href="' . route('admin.pages.versions.delete', ['id' => $version->page_id, 'version_id' => $version->id]) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>' : '<button type="button" class="btn btn-danger btn-sm" disabled><i class="bi bi-trash"></i></button>',
+                        'view'       => '<a href="' . route('cms.page.' . $version->page_id . '.version', $version->id) . '" class="btn btn-primary btn-sm" target="_blank"><i class="bi bi-eye"></i></a>',
+                        'edit'       => $edit,
+                        'delete'     => $version->acceptance->isEmpty() ? '<a href="' . route('admin.pages.versions.delete', ['id' => $version->page_id, 'version_id' => $version->id]) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>' : '<button type="button" class="btn btn-danger btn-sm" disabled><i class="bi bi-trash"></i></button>',
                     ];
-                })
+                }),
         ]);
     }
 
@@ -387,14 +397,14 @@ class AdminPageController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function page_version_add(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
-            'page_id' => ['required', 'integer'],
+            'page_id'      => ['required', 'integer'],
             'page_content' => ['required', 'string'],
         ])->validate();
 
@@ -424,15 +434,15 @@ class AdminPageController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function page_version_update(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
             'page_version_id' => ['required', 'integer'],
-            'page_content' => ['required', 'string'],
+            'page_content'    => ['required', 'string'],
         ])->validate();
 
         if (! empty($version = PageVersion::find($request->page_version_id))) {
@@ -453,17 +463,17 @@ class AdminPageController extends Controller
      * @param int $id
      * @param int $version_id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function page_version_delete(int $id, int $version_id): RedirectResponse
     {
         Validator::make([
-            'page_id' => $id,
+            'page_id'         => $id,
             'page_version_id' => $id,
         ], [
-            'page_id' => ['required', 'integer'],
+            'page_id'         => ['required', 'integer'],
             'page_version_id' => ['required', 'integer'],
         ])->validate();
 

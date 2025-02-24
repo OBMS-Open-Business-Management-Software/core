@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\UsageTracker;
 
 use Carbon\Carbon;
@@ -9,22 +11,21 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class Tracker
+ * Class Tracker.
  *
  * This class is the model for tracker metadata.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *
- * @property int $id
- * @property string $name
- * @property string $description
- * @property string $vat_type
- * @property Carbon $created_at
- * @property Carbon $updated_at
- * @property Carbon $deleted_at
- *
+ * @property int                         $id
+ * @property string                      $name
+ * @property string                      $description
+ * @property string                      $vat_type
+ * @property Carbon                      $created_at
+ * @property Carbon                      $updated_at
+ * @property Carbon                      $deleted_at
  * @property Collection<TrackerInstance> $instances
- * @property Collection<TrackerItem> $items
+ * @property Collection<TrackerItem>     $items
  */
 class Tracker extends Model
 {
@@ -33,7 +34,7 @@ class Tracker extends Model
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var string[]|bool
+     * @var bool|string[]
      */
     protected $guarded = [
         'id',

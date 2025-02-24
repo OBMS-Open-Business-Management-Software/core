@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\Accounting\Prepaid;
 
 use App\Models\Accounting\Contract\Contract;
@@ -11,28 +13,27 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class PrepaidHistory
+ * Class PrepaidHistory.
  *
  * This class is the model for basic prepaid history metadata.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *
- * @property int $id
- * @property int $user_id
- * @property int|null $creator_user_id
- * @property int $contract_id
- * @property int $invoice_id
- * @property double $amount
- * @property string|null $transaction_method
- * @property string|null $transaction_id
- * @property Carbon $created_at
- * @property Carbon $updated_at
- * @property Carbon $deleted_at
- *
- * @property User|null $user
- * @property User|null $creator
+ * @property int           $id
+ * @property int           $user_id
+ * @property int|null      $creator_user_id
+ * @property int           $contract_id
+ * @property int           $invoice_id
+ * @property float         $amount
+ * @property string|null   $transaction_method
+ * @property string|null   $transaction_id
+ * @property Carbon        $created_at
+ * @property Carbon        $updated_at
+ * @property Carbon        $deleted_at
+ * @property User|null     $user
+ * @property User|null     $creator
  * @property Contract|null $contract
- * @property Invoice|null $invoice
+ * @property Invoice|null  $invoice
  */
 class PrepaidHistory extends Model
 {
@@ -48,7 +49,7 @@ class PrepaidHistory extends Model
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var string[]|bool
+     * @var bool|string[]
      */
     protected $guarded = [
         'id',

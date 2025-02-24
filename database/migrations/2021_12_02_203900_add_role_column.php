@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Migrations\Migration;
@@ -10,8 +12,6 @@ use Illuminate\Support\Facades\Schema;
 return new class () extends Migration {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
@@ -26,26 +26,24 @@ return new class () extends Migration {
         });
 
         User::create([
-            'name' => 'OBMS Admin',
-            'email' => 'admin@obms.local',
-            'password' => Hash::make('admin'),
+            'name'              => 'OBMS Admin',
+            'email'             => 'admin@obms.local',
+            'password'          => Hash::make('admin'),
             'email_verified_at' => Carbon::now(),
-            'role' => 'admin',
+            'role'              => 'admin',
         ]);
 
         User::create([
-            'name' => 'OBMS Customer',
-            'email' => 'customer@obms.local',
-            'password' => Hash::make('customer'),
+            'name'              => 'OBMS Customer',
+            'email'             => 'customer@obms.local',
+            'password'          => Hash::make('customer'),
             'email_verified_at' => Carbon::now(),
-            'role' => 'customer',
+            'role'              => 'customer',
         ]);
     }
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\Profile;
 
 use App\Models\User;
@@ -9,24 +11,23 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class ProfileHistory
+ * Class ProfileHistory.
  *
  * This class is the model for profile history metadata.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *
- * @property int $id
- * @property int $profile_id
- * @property int $user_id
- * @property string $type
- * @property string $action
- * @property string $reference
- * @property Carbon $created_at
- * @property Carbon $updated_at
- * @property Carbon $deleted_at
- *
+ * @property int          $id
+ * @property int          $profile_id
+ * @property int          $user_id
+ * @property string       $type
+ * @property string       $action
+ * @property string       $reference
+ * @property Carbon       $created_at
+ * @property Carbon       $updated_at
+ * @property Carbon       $deleted_at
  * @property Profile|null $profile
- * @property User|null $user
+ * @property User|null    $user
  */
 class ProfileHistory extends Model
 {
@@ -42,7 +43,7 @@ class ProfileHistory extends Model
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var string[]|bool
+     * @var bool|string[]
      */
     protected $guarded = [
         'id',

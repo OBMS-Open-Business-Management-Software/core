@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Products;
 
 use App\Models\Accounting\Contract\Contract;
@@ -14,13 +16,12 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *
- * @property int $id
- * @property int $contract_id
- * @property int $user_id
- * @property int $order_id
+ * @property int    $id
+ * @property int    $contract_id
+ * @property int    $user_id
+ * @property int    $order_id
  * @property Carbon $locked_at
- *
- * @property boolean $locked
+ * @property bool   $locked
  */
 abstract class Service extends Model
 {

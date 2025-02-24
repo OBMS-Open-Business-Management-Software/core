@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Models\Setting;
 use Carbon\Carbon;
 use Illuminate\Database\Migrations\Migration;
@@ -7,8 +9,6 @@ use Illuminate\Database\Migrations\Migration;
 return new class () extends Migration {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
@@ -21,32 +21,32 @@ return new class () extends Migration {
 
         Setting::insert([
             [
-                'setting' => 'theme.success',
-                'value' => encrypt('#0F7038'),
+                'setting'    => 'theme.success',
+                'value'      => encrypt('#0F7038'),
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,
             ],
             [
-                'setting' => 'theme.warning',
-                'value' => encrypt('#FFD500'),
+                'setting'    => 'theme.warning',
+                'value'      => encrypt('#FFD500'),
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,
             ],
             [
-                'setting' => 'theme.danger',
-                'value' => encrypt('#B21E35'),
+                'setting'    => 'theme.danger',
+                'value'      => encrypt('#B21E35'),
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,
             ],
             [
-                'setting' => 'theme.info',
-                'value' => encrypt('#1464F6'),
+                'setting'    => 'theme.info',
+                'value'      => encrypt('#1464F6'),
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,
             ],
             [
-                'setting' => 'theme.body',
-                'value' => encrypt('#3C4858'),
+                'setting'    => 'theme.body',
+                'value'      => encrypt('#3C4858'),
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,
             ],
@@ -55,8 +55,6 @@ return new class () extends Migration {
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {
@@ -74,8 +72,8 @@ return new class () extends Migration {
 
         Setting::insert([
             [
-                'setting' => 'theme.secondary-dark',
-                'value' => encrypt('#2B3747'),
+                'setting'    => 'theme.secondary-dark',
+                'value'      => encrypt('#2B3747'),
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,
             ],

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\Support;
 
 use App\Models\FileManager\File;
@@ -10,25 +12,24 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class SupportTicketFile
+ * Class SupportTicketFile.
  *
  * This class is the model for linking files with tickets metadata.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *
- * @property int $id
- * @property int $ticket_id
- * @property int $user_id
- * @property int $file_id
- * @property bool $external
- * @property bool $internal
- * @property Carbon $created_at
- * @property Carbon $updated_at
- * @property Carbon $deleted_at
- *
+ * @property int                $id
+ * @property int                $ticket_id
+ * @property int                $user_id
+ * @property int                $file_id
+ * @property bool               $external
+ * @property bool               $internal
+ * @property Carbon             $created_at
+ * @property Carbon             $updated_at
+ * @property Carbon             $deleted_at
  * @property SupportTicket|null $ticket
- * @property User|null $user
- * @property File|null $file
+ * @property User|null          $user
+ * @property File|null          $file
  */
 class SupportTicketFile extends Model
 {
@@ -37,7 +38,7 @@ class SupportTicketFile extends Model
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var string[]|bool
+     * @var bool|string[]
      */
     protected $guarded = [
         'id',

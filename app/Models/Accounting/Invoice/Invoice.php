@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\Accounting\Invoice;
 
 use App\Emails\Accounting\AccountingInvoice;
@@ -8,8 +10,8 @@ use App\Models\Accounting\Position;
 use App\Models\FileManager\File;
 use App\Models\User;
 use Carbon\Carbon;
-use Exception;
 use Error;
+use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -20,43 +22,42 @@ use Illuminate\Support\Facades\App;
 use SepaQr\Data;
 
 /**
- * Class Invoice
+ * Class Invoice.
  *
  * This class is the model for basic invoice metadata.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *
- * @property int $id
- * @property int $user_id
- * @property int|null $type_id
- * @property int|null $contract_id
- * @property int|null $file_id
- * @property int|null $original_id
- * @property string|null $name
- * @property string $status
- * @property bool $reverse_charge
- * @property bool $sent
- * @property Carbon|null $archived_at
- * @property Carbon $created_at
- * @property Carbon $updated_at
- * @property Carbon $deleted_at
- *
- * @property User|null $user
- * @property InvoiceType|null $type
- * @property Contract|null $contract
- * @property File|null $file
- * @property Invoice|null $original
- * @property Invoice|null $refunded
- * @property Collection<InvoicePosition> $positionLinks
- * @property Collection<InvoiceReminder> $reminders
- * @property bool $archived
- * @property string $number
- * @property bool $overdue
- * @property float $netSum
- * @property float $grossSum
- * @property float $grossSumDiscounted
+ * @property int                            $id
+ * @property int                            $user_id
+ * @property int|null                       $type_id
+ * @property int|null                       $contract_id
+ * @property int|null                       $file_id
+ * @property int|null                       $original_id
+ * @property string|null                    $name
+ * @property string                         $status
+ * @property bool                           $reverse_charge
+ * @property bool                           $sent
+ * @property Carbon|null                    $archived_at
+ * @property Carbon                         $created_at
+ * @property Carbon                         $updated_at
+ * @property Carbon                         $deleted_at
+ * @property User|null                      $user
+ * @property InvoiceType|null               $type
+ * @property Contract|null                  $contract
+ * @property File|null                      $file
+ * @property Invoice|null                   $original
+ * @property Invoice|null                   $refunded
+ * @property Collection<InvoicePosition>    $positionLinks
+ * @property Collection<InvoiceReminder>    $reminders
+ * @property bool                           $archived
+ * @property string                         $number
+ * @property bool                           $overdue
+ * @property float                          $netSum
+ * @property float                          $grossSum
+ * @property float                          $grossSumDiscounted
  * @property \Illuminate\Support\Collection $vatPositions
- * @property string $email
+ * @property string                         $email
  */
 class Invoice extends Model
 {
@@ -66,7 +67,7 @@ class Invoice extends Model
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var string[]|bool
+     * @var bool|string[]
      */
     protected $guarded = [
         'id',
@@ -79,9 +80,9 @@ class Invoice extends Model
      */
     protected $casts = [
         'reverse_charge' => 'bool',
-        'sent' => 'bool',
-        'archived' => 'bool',
-        'archived_at' => 'datetime',
+        'sent'           => 'bool',
+        'archived'       => 'bool',
+        'archived_at'    => 'datetime',
     ];
 
     /**
@@ -326,7 +327,7 @@ class Invoice extends Model
             $this->notify(new AccountingInvoice());
 
             $status = true;
-        } catch (Exception|Error $exception) {
+        } catch (Exception | Error $exception) {
         }
 
         $this->update([
@@ -339,9 +340,10 @@ class Invoice extends Model
     /**
      * Refund the invoice.
      *
-     * @param File|null $file
+     * @param string      $status
+     * @param File|null   $file
      * @param string|null $name
-     * @param bool $silent
+     * @param bool        $silent
      *
      * @return Invoice
      */
@@ -349,35 +351,35 @@ class Invoice extends Model
     {
         /* @var Invoice $revokationInvoice */
         $revokationInvoice = Invoice::create([
-            'user_id' => $this->user_id,
-            'type_id' => $this->type_id,
-            'contract_id' => $this->contract_id,
-            'original_id' => $this->id,
-            'name' => $name,
-            'status' => 'refund',
+            'user_id'        => $this->user_id,
+            'type_id'        => $this->type_id,
+            'contract_id'    => $this->contract_id,
+            'original_id'    => $this->id,
+            'name'           => $name,
+            'status'         => 'refund',
             'reverse_charge' => $this->reverse_charge,
-            'file_id' => ! empty($file) ? $file->id : null,
-            'archived' => ! empty($file),
+            'file_id'        => ! empty($file) ? $file->id : null,
+            'archived'       => ! empty($file),
         ]);
 
         $this->positionLinks->each(function (InvoicePosition $link) use ($revokationInvoice) {
             /* @var Position $position */
             $position = Position::create([
-                'order_id' => $link->position->order_id,
-                'product_id' => $link->position->product_id,
-                'discount_id' => $link->position->discount_id,
-                'name' => $link->position->name,
-                'description' => $link->position->description,
-                'amount' => $link->position->amount,
+                'order_id'       => $link->position->order_id,
+                'product_id'     => $link->position->product_id,
+                'discount_id'    => $link->position->discount_id,
+                'name'           => $link->position->name,
+                'description'    => $link->position->description,
+                'amount'         => $link->position->amount,
                 'vat_percentage' => $link->position->vat_percentage,
-                'quantity' => $link->position->quantity,
+                'quantity'       => $link->position->quantity,
             ]);
 
             InvoicePosition::create([
-                'invoice_id' => $revokationInvoice->id,
+                'invoice_id'  => $revokationInvoice->id,
                 'position_id' => $position->id,
-                'started_at' => $link->started_at,
-                'ended_at' => $link->ended_at,
+                'started_at'  => $link->started_at,
+                'ended_at'    => $link->ended_at,
             ]);
         });
 
@@ -398,19 +400,19 @@ class Invoice extends Model
 
             $pdf = App::make('dompdf.wrapper')->loadView('pdf.invoice', [
                 'invoice' => $revokationInvoice,
-                'sepaQr' => $sepaQr,
+                'sepaQr'  => $sepaQr,
             ]);
 
             $content = $pdf->output();
 
             /* @var File $file */
             $file = File::create([
-                'user_id' => null,
+                'user_id'   => null,
                 'folder_id' => null,
-                'name' => $revokationInvoice->number . '.pdf',
-                'data' => $content,
-                'mime' => 'application/pdf',
-                'size' => strlen($content),
+                'name'      => $revokationInvoice->number . '.pdf',
+                'data'      => $content,
+                'mime'      => 'application/pdf',
+                'size'      => strlen($content),
             ]);
 
             $revokationInvoice->update([

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\Support;
 
 use App\Models\FileManager\File;
@@ -11,24 +13,23 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class SupportTicketHistory
+ * Class SupportTicketHistory.
  *
  * This class is the model for support ticket history metadata.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *
- * @property int $id
- * @property int $ticket_id
- * @property int $user_id
- * @property string $type
- * @property string $action
- * @property string $reference
- * @property Carbon $created_at
- * @property Carbon $updated_at
- * @property Carbon $deleted_at
- *
+ * @property int                $id
+ * @property int                $ticket_id
+ * @property int                $user_id
+ * @property string             $type
+ * @property string             $action
+ * @property string             $reference
+ * @property Carbon             $created_at
+ * @property Carbon             $updated_at
+ * @property Carbon             $deleted_at
  * @property SupportTicket|null $ticket
- * @property User|null $user
+ * @property User|null          $user
  */
 class SupportTicketHistory extends Model
 {
@@ -44,7 +45,7 @@ class SupportTicketHistory extends Model
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var string[]|bool
+     * @var bool|string[]
      */
     protected $guarded = [
         'id',

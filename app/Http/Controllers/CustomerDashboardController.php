@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Models\Accounting\Contract\Contract;
@@ -108,13 +110,13 @@ class CustomerDashboardController extends Controller
                     ->delete();
 
                 PageAcceptance::updateOrCreate([
-                    'page_id' => $page->id,
+                    'page_id'         => $page->id,
                     'page_version_id' => $page->latest->id,
-                    'user_id' => Auth::id(),
-                    'user_agent' => $request->server('HTTP_USER_AGENT'),
-                    'ip' => $request->ip(),
-                    'signature' => md5($page->id . $page->latest->id . Auth::id(). $request->server('HTTP_USER_AGENT') . $request->ip() . $signedAt),
-                    'signed_at' => $signedAt,
+                    'user_id'         => Auth::id(),
+                    'user_agent'      => $request->server('HTTP_USER_AGENT'),
+                    'ip'              => $request->ip(),
+                    'signature'       => md5($page->id . $page->latest->id . Auth::id() . $request->server('HTTP_USER_AGENT') . $request->ip() . $signedAt),
+                    'signed_at'       => $signedAt,
                 ]);
             });
 

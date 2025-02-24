@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Http\Controllers\API\APIAuthController;
 use App\Http\Controllers\API\APITrackerInstanceController;
 use Illuminate\Support\Facades\Route;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Jobs\TenantJobs;
 
 use App\Jobs\Structure\TenantJob;
@@ -19,7 +21,7 @@ use Illuminate\Support\Facades\App;
 use SepaQr\Data;
 
 /**
- * Class ContractInvoicing
+ * Class ContractInvoicing.
  *
  * This class is the tenant job for generating contract invoices.
  *
@@ -32,7 +34,9 @@ class ContractInvoicing extends TenantJob
     use UniquelyQueueable;
 
     public $tries = 1;
+
     public $timeout = 3600;
+
     public static $onQueue = 'contract_invoicing';
 
     /**
@@ -65,31 +69,31 @@ class ContractInvoicing extends TenantJob
                         if (empty($contract->last_invoice_at)) {
                             /* @var Invoice $invoice */
                             $invoice = Invoice::create([
-                                'user_id' => $contract->user_id,
-                                'type_id' => $contract->type->invoice_type_id,
-                                'contract_id' => $contract->id,
-                                'status' => 'unpaid',
+                                'user_id'        => $contract->user_id,
+                                'type_id'        => $contract->type->invoice_type_id,
+                                'contract_id'    => $contract->id,
+                                'status'         => 'unpaid',
                                 'reverse_charge' => $contract->user->reverseCharge,
                             ]);
 
                             $contract->positionLinks->each(function (ContractPosition $link) use ($invoice) {
                                 /* @var Position $position */
                                 $position = Position::create([
-                                    'order_id' => $link->position->order_id,
-                                    'product_id' => $link->position->product_id,
-                                    'discount_id' => $link->position->discount_id,
-                                    'name' => $link->position->name,
-                                    'description' => $link->position->description,
-                                    'amount' => $link->position->amount,
+                                    'order_id'       => $link->position->order_id,
+                                    'product_id'     => $link->position->product_id,
+                                    'discount_id'    => $link->position->discount_id,
+                                    'name'           => $link->position->name,
+                                    'description'    => $link->position->description,
+                                    'amount'         => $link->position->amount,
                                     'vat_percentage' => $link->position->vat_percentage,
-                                    'quantity' => $link->position->quantity,
+                                    'quantity'       => $link->position->quantity,
                                 ]);
 
                                 InvoicePosition::create([
-                                    'invoice_id' => $invoice->id,
+                                    'invoice_id'  => $invoice->id,
                                     'position_id' => $position->id,
-                                    'started_at' => $link->started_at,
-                                    'ended_at' => $link->ended_at,
+                                    'started_at'  => $link->started_at,
+                                    'ended_at'    => $link->ended_at,
                                 ]);
                             });
 
@@ -117,19 +121,19 @@ class ContractInvoicing extends TenantJob
 
                             $pdf = App::make('dompdf.wrapper')->loadView('pdf.invoice', [
                                 'invoice' => $invoice,
-                                'sepaQr' => $sepaQr,
+                                'sepaQr'  => $sepaQr,
                             ]);
 
                             $content = $pdf->output();
 
                             /* @var File $file */
                             $file = File::create([
-                                'user_id' => null,
+                                'user_id'   => null,
                                 'folder_id' => null,
-                                'name' => $invoice->number . '.pdf',
-                                'data' => $content,
-                                'mime' => 'application/pdf',
-                                'size' => strlen($content),
+                                'name'      => $invoice->number . '.pdf',
+                                'data'      => $content,
+                                'mime'      => 'application/pdf',
+                                'size'      => strlen($content),
                             ]);
 
                             $invoice->update([
@@ -148,31 +152,31 @@ class ContractInvoicing extends TenantJob
                         ) {
                             /* @var Invoice $invoice */
                             $invoice = Invoice::create([
-                                'user_id' => $contract->user_id,
-                                'type_id' => $contract->type->invoice_type_id,
-                                'contract_id' => $contract->id,
-                                'status' => 'unpaid',
+                                'user_id'        => $contract->user_id,
+                                'type_id'        => $contract->type->invoice_type_id,
+                                'contract_id'    => $contract->id,
+                                'status'         => 'unpaid',
                                 'reverse_charge' => $contract->user->reverseCharge,
                             ]);
 
                             $contract->positionLinks->each(function (ContractPosition $link) use ($invoice) {
                                 /* @var Position $position */
                                 $position = Position::create([
-                                    'order_id' => $link->position->order_id,
-                                    'product_id' => $link->position->product_id,
-                                    'discount_id' => $link->position->discount_id,
-                                    'name' => $link->position->name,
-                                    'description' => $link->position->description,
-                                    'amount' => $link->position->amount,
+                                    'order_id'       => $link->position->order_id,
+                                    'product_id'     => $link->position->product_id,
+                                    'discount_id'    => $link->position->discount_id,
+                                    'name'           => $link->position->name,
+                                    'description'    => $link->position->description,
+                                    'amount'         => $link->position->amount,
                                     'vat_percentage' => $link->position->vat_percentage,
-                                    'quantity' => $link->position->quantity,
+                                    'quantity'       => $link->position->quantity,
                                 ]);
 
                                 InvoicePosition::create([
-                                    'invoice_id' => $invoice->id,
+                                    'invoice_id'  => $invoice->id,
                                     'position_id' => $position->id,
-                                    'started_at' => $link->started_at,
-                                    'ended_at' => $link->ended_at,
+                                    'started_at'  => $link->started_at,
+                                    'ended_at'    => $link->ended_at,
                                 ]);
                             });
 
@@ -200,19 +204,19 @@ class ContractInvoicing extends TenantJob
 
                             $pdf = App::make('dompdf.wrapper')->loadView('pdf.invoice', [
                                 'invoice' => $invoice,
-                                'sepaQr' => $sepaQr,
+                                'sepaQr'  => $sepaQr,
                             ]);
 
                             $content = $pdf->output();
 
                             /* @var File $file */
                             $file = File::create([
-                                'user_id' => null,
+                                'user_id'   => null,
                                 'folder_id' => null,
-                                'name' => $invoice->number . '.pdf',
-                                'data' => $content,
-                                'mime' => 'application/pdf',
-                                'size' => strlen($content),
+                                'name'      => $invoice->number . '.pdf',
+                                'data'      => $content,
+                                'mime'      => 'application/pdf',
+                                'size'      => strlen($content),
                             ]);
 
                             $invoice->update([
@@ -239,17 +243,17 @@ class ContractInvoicing extends TenantJob
                         ) {
                             /* @var Invoice $invoice */
                             $invoice = Invoice::create([
-                                'user_id' => $contract->user_id,
-                                'type_id' => $contract->type->invoice_type_id,
-                                'contract_id' => $contract->id,
-                                'status' => 'unpaid',
+                                'user_id'        => $contract->user_id,
+                                'type_id'        => $contract->type->invoice_type_id,
+                                'contract_id'    => $contract->id,
+                                'status'         => 'unpaid',
                                 'reverse_charge' => $contract->user->reverseCharge,
                             ]);
 
                             $contract->positionLinks->each(function (ContractPosition $link) use ($invoice, $contract) {
                                 if (! empty($tracker = $link->trackerInstance)) {
                                     $trackFrom = $contract->last_invoice_at;
-                                    $trackTo = $invoice->created_at;
+                                    $trackTo   = $invoice->created_at;
 
                                     if (
                                         ! empty($trackFrom) &&
@@ -263,36 +267,36 @@ class ContractInvoicing extends TenantJob
                                         ) {
                                             /* @var Position $position */
                                             $position = Position::create([
-                                                'order_id' => $link->position->order_id,
-                                                'product_id' => $link->position->product_id,
-                                                'discount_id' => $link->position->discount_id,
-                                                'name' => $positionDraft->name,
-                                                'description' => $positionDraft->description,
-                                                'amount' => $positionDraft->amount,
+                                                'order_id'       => $link->position->order_id,
+                                                'product_id'     => $link->position->product_id,
+                                                'discount_id'    => $link->position->discount_id,
+                                                'name'           => $positionDraft->name,
+                                                'description'    => $positionDraft->description,
+                                                'amount'         => $positionDraft->amount,
                                                 'vat_percentage' => $positionDraft->vat_percentage,
-                                                'quantity' => $positionDraft->quantity,
+                                                'quantity'       => $positionDraft->quantity,
                                             ]);
                                         }
                                     }
                                 } else {
                                     /* @var Position $position */
                                     $position = Position::create([
-                                        'order_id' => $link->position->order_id,
-                                        'product_id' => $link->position->product_id,
-                                        'discount_id' => $link->position->discount_id,
-                                        'name' => $link->position->name,
-                                        'description' => $link->position->description,
-                                        'amount' => $link->position->amount,
+                                        'order_id'       => $link->position->order_id,
+                                        'product_id'     => $link->position->product_id,
+                                        'discount_id'    => $link->position->discount_id,
+                                        'name'           => $link->position->name,
+                                        'description'    => $link->position->description,
+                                        'amount'         => $link->position->amount,
                                         'vat_percentage' => $link->position->vat_percentage,
-                                        'quantity' => $link->position->quantity,
+                                        'quantity'       => $link->position->quantity,
                                     ]);
                                 }
 
                                 InvoicePosition::create([
-                                    'invoice_id' => $invoice->id,
+                                    'invoice_id'  => $invoice->id,
                                     'position_id' => $position->id,
-                                    'started_at' => $link->started_at,
-                                    'ended_at' => $link->ended_at,
+                                    'started_at'  => $link->started_at,
+                                    'ended_at'    => $link->ended_at,
                                 ]);
                             });
 
@@ -320,19 +324,19 @@ class ContractInvoicing extends TenantJob
 
                             $pdf = App::make('dompdf.wrapper')->loadView('pdf.invoice', [
                                 'invoice' => $invoice,
-                                'sepaQr' => $sepaQr,
+                                'sepaQr'  => $sepaQr,
                             ]);
 
                             $content = $pdf->output();
 
                             /* @var File $file */
                             $file = File::create([
-                                'user_id' => null,
+                                'user_id'   => null,
                                 'folder_id' => null,
-                                'name' => $invoice->number . '.pdf',
-                                'data' => $content,
-                                'mime' => 'application/pdf',
-                                'size' => strlen($content),
+                                'name'      => $invoice->number . '.pdf',
+                                'data'      => $content,
+                                'mime'      => 'application/pdf',
+                                'size'      => strlen($content),
                             ]);
 
                             $invoice->update([
@@ -363,31 +367,31 @@ class ContractInvoicing extends TenantJob
                 ) {
                     /* @var Invoice $invoice */
                     $invoice = Invoice::create([
-                        'user_id' => $contract->user_id,
-                        'type_id' => $contract->type->invoice_type_id,
-                        'contract_id' => $contract->id,
-                        'status' => 'paid',
+                        'user_id'        => $contract->user_id,
+                        'type_id'        => $contract->type->invoice_type_id,
+                        'contract_id'    => $contract->id,
+                        'status'         => 'paid',
                         'reverse_charge' => $contract->user->reverseCharge,
                     ]);
 
                     $contract->positionLinks->each(function (ContractPosition $link) use ($invoice) {
                         /* @var Position $position */
                         $position = Position::create([
-                            'order_id' => $link->position->order_id,
-                            'product_id' => $link->position->product_id,
-                            'discount_id' => $link->position->discount_id,
-                            'name' => $link->position->name,
-                            'description' => $link->position->description,
-                            'amount' => $link->position->amount,
+                            'order_id'       => $link->position->order_id,
+                            'product_id'     => $link->position->product_id,
+                            'discount_id'    => $link->position->discount_id,
+                            'name'           => $link->position->name,
+                            'description'    => $link->position->description,
+                            'amount'         => $link->position->amount,
                             'vat_percentage' => $link->position->vat_percentage,
-                            'quantity' => $link->position->quantity,
+                            'quantity'       => $link->position->quantity,
                         ]);
 
                         InvoicePosition::create([
-                            'invoice_id' => $invoice->id,
+                            'invoice_id'  => $invoice->id,
                             'position_id' => $position->id,
-                            'started_at' => $link->started_at,
-                            'ended_at' => $link->ended_at,
+                            'started_at'  => $link->started_at,
+                            'ended_at'    => $link->ended_at,
                         ]);
                     });
 
@@ -415,19 +419,19 @@ class ContractInvoicing extends TenantJob
 
                     $pdf = App::make('dompdf.wrapper')->loadView('pdf.invoice', [
                         'invoice' => $invoice,
-                        'sepaQr' => $sepaQr,
+                        'sepaQr'  => $sepaQr,
                     ]);
 
                     $content = $pdf->output();
 
                     /* @var File $file */
                     $file = File::create([
-                        'user_id' => null,
+                        'user_id'   => null,
                         'folder_id' => null,
-                        'name' => $invoice->number . '.pdf',
-                        'data' => $content,
-                        'mime' => 'application/pdf',
-                        'size' => strlen($content),
+                        'name'      => $invoice->number . '.pdf',
+                        'data'      => $content,
+                        'mime'      => 'application/pdf',
+                        'size'      => strlen($content),
                     ]);
 
                     $invoice->update([
@@ -435,10 +439,10 @@ class ContractInvoicing extends TenantJob
                     ]);
 
                     $contract->update([
-                        'last_invoice_at' => $contract->started_at,
-                        'cancelled_at' => $contract->started_at,
+                        'last_invoice_at'         => $contract->started_at,
+                        'cancelled_at'            => $contract->started_at,
                         'cancellation_revoked_at' => null,
-                        'cancelled_to' => $contract->started_at->addDays($contract->type->invoice_period),
+                        'cancelled_to'            => $contract->started_at->addDays($contract->type->invoice_period),
                     ]);
                 }
             });
@@ -459,31 +463,31 @@ class ContractInvoicing extends TenantJob
                 ) {
                     /* @var Invoice $invoice */
                     $invoice = Invoice::create([
-                        'user_id' => $contract->user_id,
-                        'type_id' => $contract->type->invoice_type_id,
-                        'contract_id' => $contract->id,
-                        'status' => 'paid',
+                        'user_id'        => $contract->user_id,
+                        'type_id'        => $contract->type->invoice_type_id,
+                        'contract_id'    => $contract->id,
+                        'status'         => 'paid',
                         'reverse_charge' => $contract->user->reverseCharge,
                     ]);
 
                     $contract->positionLinks->each(function (ContractPosition $link) use ($invoice) {
                         /* @var Position $position */
                         $position = Position::create([
-                            'order_id' => $link->position->order_id,
-                            'product_id' => $link->position->product_id,
-                            'discount_id' => $link->position->discount_id,
-                            'name' => $link->position->name,
-                            'description' => $link->position->description,
-                            'amount' => $link->position->amount,
+                            'order_id'       => $link->position->order_id,
+                            'product_id'     => $link->position->product_id,
+                            'discount_id'    => $link->position->discount_id,
+                            'name'           => $link->position->name,
+                            'description'    => $link->position->description,
+                            'amount'         => $link->position->amount,
                             'vat_percentage' => $link->position->vat_percentage,
-                            'quantity' => $link->position->quantity,
+                            'quantity'       => $link->position->quantity,
                         ]);
 
                         InvoicePosition::create([
-                            'invoice_id' => $invoice->id,
+                            'invoice_id'  => $invoice->id,
                             'position_id' => $position->id,
-                            'started_at' => $link->started_at,
-                            'ended_at' => $link->ended_at,
+                            'started_at'  => $link->started_at,
+                            'ended_at'    => $link->ended_at,
                         ]);
                     });
 
@@ -511,19 +515,19 @@ class ContractInvoicing extends TenantJob
 
                     $pdf = App::make('dompdf.wrapper')->loadView('pdf.invoice', [
                         'invoice' => $invoice,
-                        'sepaQr' => $sepaQr,
+                        'sepaQr'  => $sepaQr,
                     ]);
 
                     $content = $pdf->output();
 
                     /* @var File $file */
                     $file = File::create([
-                        'user_id' => null,
+                        'user_id'   => null,
                         'folder_id' => null,
-                        'name' => $invoice->number . '.pdf',
-                        'data' => $content,
-                        'mime' => 'application/pdf',
-                        'size' => strlen($content),
+                        'name'      => $invoice->number . '.pdf',
+                        'data'      => $content,
+                        'mime'      => 'application/pdf',
+                        'size'      => strlen($content),
                     ]);
 
                     $invoice->update([
@@ -531,10 +535,10 @@ class ContractInvoicing extends TenantJob
                     ]);
 
                     $contract->update([
-                        'last_invoice_at' => $contract->started_at,
-                        'cancelled_at' => $contract->started_at,
+                        'last_invoice_at'         => $contract->started_at,
+                        'cancelled_at'            => $contract->started_at,
                         'cancellation_revoked_at' => null,
-                        'cancelled_to' => $contract->started_at->addDays($contract->type->invoice_period),
+                        'cancelled_to'            => $contract->started_at->addDays($contract->type->invoice_period),
                     ]);
                 } elseif (
                     $contract->last_invoice_at
@@ -547,31 +551,31 @@ class ContractInvoicing extends TenantJob
                 ) {
                     /* @var Invoice $invoice */
                     $invoice = Invoice::create([
-                        'user_id' => $contract->user_id,
-                        'type_id' => $contract->type->invoice_type_id,
-                        'contract_id' => $contract->id,
-                        'status' => 'paid',
+                        'user_id'        => $contract->user_id,
+                        'type_id'        => $contract->type->invoice_type_id,
+                        'contract_id'    => $contract->id,
+                        'status'         => 'paid',
                         'reverse_charge' => $contract->user->reverseCharge,
                     ]);
 
                     $contract->positionLinks->each(function (ContractPosition $link) use ($invoice) {
                         /* @var Position $position */
                         $position = Position::create([
-                            'order_id' => $link->position->order_id,
-                            'product_id' => $link->position->product_id,
-                            'discount_id' => $link->position->discount_id,
-                            'name' => $link->position->name,
-                            'description' => $link->position->description,
-                            'amount' => $link->position->amount,
+                            'order_id'       => $link->position->order_id,
+                            'product_id'     => $link->position->product_id,
+                            'discount_id'    => $link->position->discount_id,
+                            'name'           => $link->position->name,
+                            'description'    => $link->position->description,
+                            'amount'         => $link->position->amount,
                             'vat_percentage' => $link->position->vat_percentage,
-                            'quantity' => $link->position->quantity,
+                            'quantity'       => $link->position->quantity,
                         ]);
 
                         InvoicePosition::create([
-                            'invoice_id' => $invoice->id,
+                            'invoice_id'  => $invoice->id,
                             'position_id' => $position->id,
-                            'started_at' => $link->started_at,
-                            'ended_at' => $link->ended_at,
+                            'started_at'  => $link->started_at,
+                            'ended_at'    => $link->ended_at,
                         ]);
                     });
 
@@ -599,19 +603,19 @@ class ContractInvoicing extends TenantJob
 
                     $pdf = App::make('dompdf.wrapper')->loadView('pdf.invoice', [
                         'invoice' => $invoice,
-                        'sepaQr' => $sepaQr,
+                        'sepaQr'  => $sepaQr,
                     ]);
 
                     $content = $pdf->output();
 
                     /* @var File $file */
                     $file = File::create([
-                        'user_id' => null,
+                        'user_id'   => null,
                         'folder_id' => null,
-                        'name' => $invoice->number . '.pdf',
-                        'data' => $content,
-                        'mime' => 'application/pdf',
-                        'size' => strlen($content),
+                        'name'      => $invoice->number . '.pdf',
+                        'data'      => $content,
+                        'mime'      => 'application/pdf',
+                        'size'      => strlen($content),
                     ]);
 
                     $invoice->update([
@@ -619,10 +623,10 @@ class ContractInvoicing extends TenantJob
                     ]);
 
                     $contract->update([
-                        'last_invoice_at' => $contract->last_invoice_at->addDays($contract->type->invoice_period),
-                        'cancelled_at' => $contract->last_invoice_at->addDays($contract->type->invoice_period),
+                        'last_invoice_at'         => $contract->last_invoice_at->addDays($contract->type->invoice_period),
+                        'cancelled_at'            => $contract->last_invoice_at->addDays($contract->type->invoice_period),
                         'cancellation_revoked_at' => null,
-                        'cancelled_to' => $contract->last_invoice_at->addDays($contract->type->invoice_period)->addDays($contract->type->invoice_period),
+                        'cancelled_to'            => $contract->last_invoice_at->addDays($contract->type->invoice_period)->addDays($contract->type->invoice_period),
                     ]);
                 }
             });
@@ -641,17 +645,17 @@ class ContractInvoicing extends TenantJob
 
                 /* @var Invoice $invoice */
                 $invoice = Invoice::create([
-                    'user_id' => $contract->user_id,
-                    'type_id' => $contract->type->invoice_type_id,
-                    'contract_id' => $contract->id,
-                    'status' => 'unpaid',
+                    'user_id'        => $contract->user_id,
+                    'type_id'        => $contract->type->invoice_type_id,
+                    'contract_id'    => $contract->id,
+                    'status'         => 'unpaid',
                     'reverse_charge' => $contract->user->reverseCharge,
                 ]);
 
                 $contract->positionLinks->each(function (ContractPosition $link) use ($invoice, $contract, $factor) {
                     if (! empty($tracker = $link->trackerInstance)) {
                         $trackFrom = $contract->last_invoice_at;
-                        $trackTo = $invoice->created_at;
+                        $trackTo   = $invoice->created_at;
 
                         if (
                             ! empty($trackFrom) &&
@@ -665,36 +669,36 @@ class ContractInvoicing extends TenantJob
                             ) {
                                 /* @var Position $position */
                                 $position = Position::create([
-                                    'order_id' => $link->position->order_id,
-                                    'product_id' => $link->position->product_id,
-                                    'discount_id' => $link->position->discount_id,
-                                    'name' => $positionDraft->name,
-                                    'description' => $positionDraft->description,
-                                    'amount' => $positionDraft->amount,
+                                    'order_id'       => $link->position->order_id,
+                                    'product_id'     => $link->position->product_id,
+                                    'discount_id'    => $link->position->discount_id,
+                                    'name'           => $positionDraft->name,
+                                    'description'    => $positionDraft->description,
+                                    'amount'         => $positionDraft->amount,
                                     'vat_percentage' => $positionDraft->vat_percentage,
-                                    'quantity' => $positionDraft->quantity,
+                                    'quantity'       => $positionDraft->quantity,
                                 ]);
                             }
                         }
                     } else {
                         /* @var Position $position */
                         $position = Position::create([
-                            'order_id' => $link->position->order_id,
-                            'product_id' => $link->position->product_id,
-                            'discount_id' => $link->position->discount_id,
-                            'name' => $link->position->name,
-                            'description' => $link->position->description,
-                            'amount' => $link->position->amount * $factor,
+                            'order_id'       => $link->position->order_id,
+                            'product_id'     => $link->position->product_id,
+                            'discount_id'    => $link->position->discount_id,
+                            'name'           => $link->position->name,
+                            'description'    => $link->position->description,
+                            'amount'         => $link->position->amount * $factor,
                             'vat_percentage' => $link->position->vat_percentage,
-                            'quantity' => $link->position->quantity,
+                            'quantity'       => $link->position->quantity,
                         ]);
                     }
 
                     InvoicePosition::create([
-                        'invoice_id' => $invoice->id,
+                        'invoice_id'  => $invoice->id,
                         'position_id' => $position->id,
-                        'started_at' => $link->started_at,
-                        'ended_at' => $link->ended_at,
+                        'started_at'  => $link->started_at,
+                        'ended_at'    => $link->ended_at,
                     ]);
                 });
 
@@ -722,19 +726,19 @@ class ContractInvoicing extends TenantJob
 
                 $pdf = App::make('dompdf.wrapper')->loadView('pdf.invoice', [
                     'invoice' => $invoice,
-                    'sepaQr' => $sepaQr,
+                    'sepaQr'  => $sepaQr,
                 ]);
 
                 $content = $pdf->output();
 
                 /* @var File $file */
                 $file = File::create([
-                    'user_id' => null,
+                    'user_id'   => null,
                     'folder_id' => null,
-                    'name' => $invoice->number . '.pdf',
-                    'data' => $content,
-                    'mime' => 'application/pdf',
-                    'size' => strlen($content),
+                    'name'      => $invoice->number . '.pdf',
+                    'data'      => $content,
+                    'mime'      => 'application/pdf',
+                    'size'      => strlen($content),
                 ]);
 
                 $invoice->update([
@@ -760,12 +764,12 @@ class ContractInvoicing extends TenantJob
             return true;
         } elseif ($contract->reserved_prepaid_amount == 0) {
             PrepaidHistory::create([
-                'user_id' => $contract->user_id,
-                'creator_user_id' => null,
-                'contract_id' => $contract->id,
-                'amount' => $contract->grossSum * (-1),
+                'user_id'            => $contract->user_id,
+                'creator_user_id'    => null,
+                'contract_id'        => $contract->id,
+                'amount'             => $contract->grossSum * (-1),
                 'transaction_method' => 'account',
-                'transaction_id' => null,
+                'transaction_id'     => null,
             ]);
 
             $contract->update([
@@ -778,12 +782,12 @@ class ContractInvoicing extends TenantJob
             $contract->reserved_prepaid_amount < $contract->grossSum
         ) {
             PrepaidHistory::create([
-                'user_id' => $contract->user_id,
-                'creator_user_id' => null,
-                'contract_id' => $contract->id,
-                'amount' => $contract->grossSum * (-1) + $contract->reserved_prepaid_amount,
+                'user_id'            => $contract->user_id,
+                'creator_user_id'    => null,
+                'contract_id'        => $contract->id,
+                'amount'             => $contract->grossSum * (-1) + $contract->reserved_prepaid_amount,
                 'transaction_method' => 'account',
-                'transaction_id' => null,
+                'transaction_id'     => null,
             ]);
 
             $contract->update([

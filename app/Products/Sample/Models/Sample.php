@@ -1,26 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Products\Sample\Models;
 
+use App\Products\Service;
 use App\Traits\Product\Service\CanStart;
 use App\Traits\Product\Service\HasStatistics;
-use App\Products\Service;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class Sample
+ * Class Sample.
  *
  * This class is the model for basic sample service metadata.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *
- * @property int $id
- * @property int $contract_id
- * @property int $user_id
+ * @property int    $id
+ * @property int    $contract_id
+ * @property int    $user_id
  * @property Carbon $locked_at
- *
- * @property boolean $locked
+ * @property bool   $locked
  */
 class Sample extends Service
 {
@@ -38,7 +39,7 @@ class Sample extends Service
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var string[]|bool
+     * @var bool|string[]
      */
     protected $guarded = [
         'id',

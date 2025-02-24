@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console;
 
 use App\Jobs\Dispatchers\AutoMigrations;
@@ -12,7 +14,7 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Laravel\Passport\Console\ClientCommand;
 
 /**
- * Class Kernel
+ * Class Kernel.
  *
  * This class holds the definition for job and command scheduling (automated tasks).
  *
@@ -50,7 +52,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands(): void
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\Shop\OrderQueue;
 
 use App\Models\Shop\Configurator\ShopConfiguratorField;
@@ -10,24 +12,23 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class ShopOrderQueueField
+ * Class ShopOrderQueueField.
  *
  * This class is the model for basic shop order field metadata.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *
- * @property int $id
- * @property int $order_id
- * @property int|null $field_id
- * @property int|null $option_id
- * @property string $key
- * @property string $value
- * @property Carbon $created_at
- * @property Carbon $updated_at
- * @property Carbon $deleted_at
- *
- * @property ShopOrderQueue|null $order
- * @property ShopConfiguratorField|null $field
+ * @property int                              $id
+ * @property int                              $order_id
+ * @property int|null                         $field_id
+ * @property int|null                         $option_id
+ * @property string                           $key
+ * @property string                           $value
+ * @property Carbon                           $created_at
+ * @property Carbon                           $updated_at
+ * @property Carbon                           $deleted_at
+ * @property ShopOrderQueue|null              $order
+ * @property ShopConfiguratorField|null       $field
  * @property ShopConfiguratorFieldOption|null $option
  */
 class ShopOrderQueueField extends Model
@@ -37,7 +38,7 @@ class ShopOrderQueueField extends Model
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var string[]|bool
+     * @var bool|string[]
      */
     protected $guarded = [
         'id',

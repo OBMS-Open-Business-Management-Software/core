@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Models\Accounting\Prepaid\PrepaidHistory;
@@ -30,9 +32,9 @@ class CustomerShopController extends Controller
     /**
      * Show the contents of a shop category.
      *
-     * @return Renderable
+     * @throws ContainerExceptionInterface|NotFoundExceptionInterface
      *
-     * @throws NotFoundExceptionInterface|ContainerExceptionInterface
+     * @return Renderable
      */
     public function render_category(): Renderable
     {
@@ -82,18 +84,18 @@ class CustomerShopController extends Controller
         }
 
         return view('customer.shop.category', [
-            'category' => $category,
+            'category'   => $category,
             'categories' => $categories,
-            'forms' => $forms,
+            'forms'      => $forms,
         ]);
     }
 
     /**
      * Show the contents of a shop form.
      *
-     * @return Renderable|RedirectResponse
+     * @throws ContainerExceptionInterface|NotFoundExceptionInterface
      *
-     * @throws NotFoundExceptionInterface|ContainerExceptionInterface
+     * @return RedirectResponse|Renderable
      */
     public function render_form()
     {
@@ -127,9 +129,10 @@ class CustomerShopController extends Controller
      * Process a new order.
      *
      * @param Request $request
-     * @return RedirectResponse
      *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function process(Request $request): RedirectResponse
     {
@@ -191,6 +194,7 @@ class CustomerShopController extends Controller
                         if (! empty($field->step)) {
                             $rules[] = 'multiple_of:' . $field->step;
                         }
+
                         break;
                     case 'input_radio':
                     case 'input_radio_image':
@@ -204,11 +208,13 @@ class CustomerShopController extends Controller
                         }
 
                         $rules[] = Rule::in($availableOptions);
+
                         break;
                     case 'input_text':
                     case 'textarea':
                     default:
                         $rules[] = 'string';
+
                         break;
                 }
 
@@ -221,13 +227,13 @@ class CustomerShopController extends Controller
 
             $acceptable->each(function (Page $page) use ($request, $signedAt) {
                 PageAcceptance::updateOrCreate([
-                    'page_id' => $page->id,
+                    'page_id'         => $page->id,
                     'page_version_id' => $page->latest->id,
-                    'user_id' => Auth::id(),
-                    'user_agent' => $request->server('HTTP_USER_AGENT'),
-                    'ip' => $request->ip(),
-                    'signature' => md5($page->id . $page->latest->id . Auth::id(). $request->server('HTTP_USER_AGENT') . $request->ip() . $signedAt),
-                    'signed_at' => $signedAt,
+                    'user_id'         => Auth::id(),
+                    'user_agent'      => $request->server('HTTP_USER_AGENT'),
+                    'ip'              => $request->ip(),
+                    'signature'       => md5($page->id . $page->latest->id . Auth::id() . $request->server('HTTP_USER_AGENT') . $request->ip() . $signedAt),
+                    'signed_at'       => $signedAt,
                 ]);
             });
 
@@ -238,6 +244,7 @@ class CustomerShopController extends Controller
                     case 'input_number':
                     case 'input_range':
                         $amount += $field->amount * ($request->{$field->key} / $field->step);
+
                         break;
                     case 'input_radio':
                     case 'input_radio_image':
@@ -252,17 +259,20 @@ class CustomerShopController extends Controller
                         if (! empty($option)) {
                             $amount += $option->amount;
                         }
+
                         break;
                     case 'input_checkbox':
                         if (! empty($request->{$field->key})) {
                             $amount += $field->amount;
                         }
+
                         break;
                     case 'input_text':
                     case 'textarea':
                     case 'hidden':
                     default:
                         $amount += $field->amount;
+
                         break;
                 }
             });
@@ -270,8 +280,8 @@ class CustomerShopController extends Controller
             if ($form->contractType->invoiceType->type == 'prepaid') {
                 if (Auth::user()->prepaidAccountBalance >= $amount || $amount === 0) {
                     PrepaidHistory::create([
-                        'user_id' => Auth::id(),
-                        'amount' => $amount * ((100 + $form->vatRate) / 100) * (-1),
+                        'user_id'            => Auth::id(),
+                        'amount'             => $amount * ((100 + $form->vatRate) / 100) * (-1),
                         'transaction_method' => 'account',
                     ]);
                 } else {
@@ -283,13 +293,13 @@ class CustomerShopController extends Controller
             if (
                 ! empty(
                     $queueItem = ShopOrderQueue::create([
-                        'user_id' => Auth::id(),
-                        'form_id' => $form->id,
-                        'tracker_id' => $form->tracker_id ?? null,
-                        'product_type' => $form->product_type,
-                        'verified' => true,
-                        'approved' => ! $form->approval,
-                        'amount' => $amount,
+                        'user_id'        => Auth::id(),
+                        'form_id'        => $form->id,
+                        'tracker_id'     => $form->tracker_id ?? null,
+                        'product_type'   => $form->product_type,
+                        'verified'       => true,
+                        'approved'       => ! $form->approval,
+                        'amount'         => $amount,
                         'vat_percentage' => $form->vatRate,
                         'reverse_charge' => $form->reverseCharge,
                     ])
@@ -297,15 +307,15 @@ class CustomerShopController extends Controller
             ) {
                 ShopOrderQueueHistory::create([
                     'order_id' => $queueItem->id,
-                    'type' => 'success',
-                    'message' => 'Field validation succeeded.',
+                    'type'     => 'success',
+                    'message'  => 'Field validation succeeded.',
                 ]);
 
                 if ($queueItem->approved) {
                     ShopOrderQueueHistory::create([
                         'order_id' => $queueItem->id,
-                        'type' => 'success',
-                        'message' => 'Order approval succeeded.',
+                        'type'     => 'success',
+                        'message'  => 'Order approval succeeded.',
                     ]);
                 }
 
@@ -315,11 +325,11 @@ class CustomerShopController extends Controller
                         ->first();
 
                     ShopOrderQueueField::create([
-                        'order_id' => $queueItem->id,
-                        'field_id' => $field->id,
+                        'order_id'  => $queueItem->id,
+                        'field_id'  => $field->id,
                         'option_id' => ! empty($option) ? $option->id : null,
-                        'key' => $field->key,
-                        'value' => $request->{$field->key},
+                        'key'       => $field->key,
+                        'value'     => $request->{$field->key},
                     ]);
                 });
 
@@ -344,7 +354,7 @@ class CustomerShopController extends Controller
      *
      * @param int $order_id
      *
-     * @return Renderable|RedirectResponse
+     * @return RedirectResponse|Renderable
      */
     public function render_success(int $order_id)
     {
@@ -401,26 +411,32 @@ class CustomerShopController extends Controller
             foreach ($request->order as $order) {
                 switch ($request->columns[$order['column']]) {
                     case 'status':
-                        $orderBy = 'approved';
+                        $orderBy       = 'approved';
                         $orderBySecond = 'disapproved';
-                        $orderByThird = 'setup';
+                        $orderByThird  = 'setup';
                         $orderByFourth = 'fails';
+
                         break;
                     case 'amount':
                         $orderBy = 'amount';
+
                         break;
                     case 'product_type':
                         $orderBy = 'product_type';
+
                         break;
                     case 'user':
                         $orderBy = 'user_id';
+
                         break;
                     case 'form':
                         $orderBy = 'form_id';
+
                         break;
                     case 'id':
                     default:
                         $orderBy = 'id';
+
                         break;
                 }
 
@@ -446,10 +462,10 @@ class CustomerShopController extends Controller
             ->limit($request->length);
 
         return response()->json([
-            'draw' => (int) $request->draw,
-            'recordsTotal' => $totalCount,
+            'draw'            => (int) $request->draw,
+            'recordsTotal'    => $totalCount,
             'recordsFiltered' => $filteredCount,
-            'data' => $query
+            'data'            => $query
                 ->get()
                 ->transform(function (ShopOrderQueue $queue) {
                     if ($queue->history->isNotEmpty()) {
@@ -461,18 +477,23 @@ class CustomerShopController extends Controller
                             switch ($history->type) {
                                 case 'success':
                                     $icon = 'bi bi-check-circle';
+
                                     break;
                                 case 'warning':
                                     $icon = 'bi bi-exclamation-triangle';
+
                                     break;
                                 case 'danger':
                                     $icon = 'bi bi-exclamation-circle';
+
                                     break;
                                 case 'info':
                                     $icon = 'bi bi-info-circle';
+
                                     break;
                                 default:
                                     $icon = null;
+
                                     break;
                             }
 
@@ -545,8 +566,8 @@ class CustomerShopController extends Controller
 
                             if ($queue->fails > 0) {
                                 $status .= '<span class="badge badge-warning ml-1"><i class="bi bi-exclamation-triangle"></i> ' . __('interface.data.fails_num', [
-                                        'num' => $queue->fails,
-                                    ]) . '</span>';
+                                    'num' => $queue->fails,
+                                ]) . '</span>';
                             }
                         } else {
                             if ($queue->invalid) {
@@ -562,15 +583,15 @@ class CustomerShopController extends Controller
                     }
 
                     return (object) [
-                        'id' => $queue->number,
-                        'user' => $queue->user->realName ?? __('interface.misc.not_available'),
-                        'form' => __($queue->form->name),
+                        'id'           => $queue->number,
+                        'user'         => $queue->user->realName ?? __('interface.misc.not_available'),
+                        'form'         => __($queue->form->name),
                         'product_type' => ! empty($handler = $queue->handler) ? $handler->name() : '&lt;' . $queue->product_type . '&gt;',
-                        'amount' => number_format($queue->amount, 2) . ' €<span class="d-block small">' . number_format($queue->amount * (100 + $queue->vat_percentage) / 100, 2) . ' €</span>',
-                        'status' => $status,
-                        'history' => $history,
+                        'amount'       => number_format($queue->amount, 2) . ' €<span class="d-block small">' . number_format($queue->amount * (100 + $queue->vat_percentage) / 100, 2) . ' €</span>',
+                        'status'       => $status,
+                        'history'      => $history,
                     ];
-                })
+                }),
         ]);
     }
 }

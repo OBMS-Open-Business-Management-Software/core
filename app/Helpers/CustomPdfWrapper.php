@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Helpers;
 
 use App\Models\Accounting\Invoice\Invoice;
@@ -22,6 +24,7 @@ use horstoeko\zugferd\ZugferdProfiles;
 class CustomPdfWrapper extends PDF
 {
     protected string $xmlPayload = '';
+
     protected ?Invoice $invoice;
 
     public function loadView(string $view, array $data = [], array $mergeData = [], ?string $encoding = null): self
@@ -31,7 +34,7 @@ class CustomPdfWrapper extends PDF
 
             try {
                 $this->xmlPayload = $this->generateXmlPayload($data['invoice']);
-            } catch (Exception|Error $exception) {
+            } catch (Exception | Error $exception) {
             }
         }
 
@@ -157,8 +160,8 @@ class CustomPdfWrapper extends PDF
 
         $document = $document->addDocumentPaymentTerm(
             __('interface.misc.payment_notice', [
-                    'days' => $invoice->type->period,
-                ]),
+                'days' => $invoice->type->period,
+            ]),
             $invoice->archived_at->addDays($invoice->type->period)->toDate()
         )
             ->setDocumentBuyerReference('UNKNOWN');
@@ -170,7 +173,7 @@ class CustomPdfWrapper extends PDF
          */
         $invoice->positionLinks->each(function (InvoicePosition $positionLink, int $key) use ($invoice, &$document, &$allowanceCharges) {
             if (! empty($position = $positionLink->position)) {
-                $document = $document->addNewPosition((string)($key + 1))
+                $document = $document->addNewPosition((string) ($key + 1))
                     ->setDocumentPositionProductDetails($position->name, $position->description)
                     ->setDocumentPositionNetPrice($position->amount, 1, 'H87')
                     ->setDocumentPositionQuantity($position->quantity, 'H87') // See: https://www.xrepository.de/details/urn:xoev-de:kosit:codeliste:rec20_1
@@ -190,10 +193,10 @@ class CustomPdfWrapper extends PDF
                     }
 
                     $allowanceCharges->push((object) [
-                        'taxCategoryCode' => $invoice->reverse_charge ? 'AE' : ($position->vat_percentage == 0 ? 'G' : 'S'),
+                        'taxCategoryCode'  => $invoice->reverse_charge ? 'AE' : ($position->vat_percentage == 0 ? 'G' : 'S'),
                         'taxVATPercentage' => $position->vat_percentage,
-                        'amount' => $allowanceCharge ? $allowanceCharge->amount + $position->discountNetSum : $position->discountNetSum,
-                        'tax' => $allowanceCharge ? $allowanceCharge->tax + $position->discountVatSum : $position->discountVatSum,
+                        'amount'           => $allowanceCharge ? $allowanceCharge->amount + $position->discountNetSum : $position->discountNetSum,
+                        'tax'              => $allowanceCharge ? $allowanceCharge->tax + $position->discountVatSum : $position->discountVatSum,
                     ]);
                 }
             }
@@ -257,7 +260,6 @@ class CustomPdfWrapper extends PDF
             $invoice->netSum,
             $invoice->vatSum,
         );
-
 
         return $document->getContent();
     }

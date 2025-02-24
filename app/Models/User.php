@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Emails\AccountEmailVerification;
@@ -15,8 +17,8 @@ use App\Models\Profile\ProfileEmail;
 use App\Models\Profile\ProfilePhone;
 use App\Models\Support\SupportTicket;
 use Carbon\Carbon;
-use Exception;
 use Error;
+use Exception;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -31,49 +33,48 @@ use Laravel\Fortify\TwoFactorAuthenticationProvider;
 use Laravel\Passport\HasApiTokens;
 
 /**
- * Class User
+ * Class User.
  *
  * This class is the model for basic user metadata.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *
- * @property int $id
- * @property string $name
- * @property string $email
- * @property Carbon $email_verified_at
- * @property string $password
- * @property string $two_factor_secret
- * @property string $two_factor_recovery_codes
- * @property bool $must_change_password
- * @property string $remember_token
- * @property string $role
- * @property bool $locked
- * @property Carbon $created_at
- * @property Carbon $updated_at
- * @property Carbon $deleted_at
- *
- * @property Collection<Tenant> $tenants
+ * @property int                        $id
+ * @property string                     $name
+ * @property string                     $email
+ * @property Carbon                     $email_verified_at
+ * @property string                     $password
+ * @property string                     $two_factor_secret
+ * @property string                     $two_factor_recovery_codes
+ * @property bool                       $must_change_password
+ * @property string                     $remember_token
+ * @property string                     $role
+ * @property bool                       $locked
+ * @property Carbon                     $created_at
+ * @property Carbon                     $updated_at
+ * @property Carbon                     $deleted_at
+ * @property Collection<Tenant>         $tenants
  * @property Collection<PrepaidHistory> $prepaidHistory
- * @property Collection<Invoice> $invoices
+ * @property Collection<Invoice>        $invoices
  * @property Collection<PageAcceptance> $acceptance
- * @property Profile|null $profile
- * @property ProfileEmail|null $contactEmailAddress
- * @property ProfileEmail|null $billingEmailAddress
- * @property ProfilePhone|null $contactPhoneNumber
- * @property ProfilePhone|null $billingPhoneNumber
- * @property Address|null $contactPostalAddress
- * @property Address|null $billingPostalAddress
- * @property BankAccount|null $primaryBankAccount
- * @property bool $validProfile
- * @property bool $validBankAccount
- * @property bool $validBankAccountSEPA
- * @property string $number
- * @property string $realName
- * @property double $prepaidAccountBalance
- * @property int $creditScore
- * @property Collection<Page> $acceptable
- * @property bool $accepted
- * @property bool $reverseCharge
+ * @property Profile|null               $profile
+ * @property ProfileEmail|null          $contactEmailAddress
+ * @property ProfileEmail|null          $billingEmailAddress
+ * @property ProfilePhone|null          $contactPhoneNumber
+ * @property ProfilePhone|null          $billingPhoneNumber
+ * @property Address|null               $contactPostalAddress
+ * @property Address|null               $billingPostalAddress
+ * @property BankAccount|null           $primaryBankAccount
+ * @property bool                       $validProfile
+ * @property bool                       $validBankAccount
+ * @property bool                       $validBankAccountSEPA
+ * @property string                     $number
+ * @property string                     $realName
+ * @property float                      $prepaidAccountBalance
+ * @property int                        $creditScore
+ * @property Collection<Page>           $acceptable
+ * @property bool                       $accepted
+ * @property bool                       $reverseCharge
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -114,7 +115,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        'email_verified_at'    => 'datetime',
         'must_change_password' => 'boolean',
     ];
 
@@ -142,14 +143,12 @@ class User extends Authenticatable implements MustVerifyEmail
 
     /**
      * Send the email verification notification.
-     *
-     * @return void
      */
     public function sendEmailVerificationNotification(): void
     {
         try {
             $this->notify(new AccountEmailVerification());
-        } catch (Exception|Error $exception) {
+        } catch (Exception | Error $exception) {
         }
     }
 

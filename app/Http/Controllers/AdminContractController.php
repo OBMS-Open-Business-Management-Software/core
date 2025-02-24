@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Models\Accounting\Contract\Contract;
@@ -55,10 +57,10 @@ class AdminContractController extends Controller
     public function contract_details(int $id): Renderable
     {
         return view('admin.contract.details', [
-            'contract' => Contract::find($id),
-            'types' => ContractType::all(),
+            'contract'  => Contract::find($id),
+            'types'     => ContractType::all(),
             'discounts' => PositionDiscount::all(),
-            'trackers' => Tracker::all(),
+            'trackers'  => Tracker::all(),
         ]);
     }
 
@@ -93,10 +95,12 @@ class AdminContractController extends Controller
                 switch ($request->columns[$order['column']]) {
                     case 'user':
                         $orderBy = 'user_id';
+
                         break;
                     case 'id':
                     default:
                         $orderBy = 'id';
+
                         break;
                 }
 
@@ -110,25 +114,29 @@ class AdminContractController extends Controller
             ->limit($request->length);
 
         return response()->json([
-            'draw' => (int) $request->draw,
-            'recordsTotal' => $totalCount,
+            'draw'            => (int) $request->draw,
+            'recordsTotal'    => $totalCount,
             'recordsFiltered' => $filteredCount,
-            'data' => $query
+            'data'            => $query
                 ->get()
                 ->transform(function (Contract $contract) {
                     switch ($contract->status) {
                         case 'cancelled':
                             $status = '<span class="badge badge-danger">' . __('interface.status.cancelled') . '</span>';
+
                             break;
                         case 'expires':
                             $status = '<span class="badge badge-warning">' . __('interface.status.expires') . '</span>';
+
                             break;
                         case 'started':
                             $status = '<span class="badge badge-success">' . __('interface.status.active') . '</span>';
+
                             break;
                         case 'template':
                         default:
                             $status = '<span class="badge badge-primary">' . __('interface.status.draft') . '</span>';
+
                             break;
                     }
 
@@ -188,15 +196,15 @@ class AdminContractController extends Controller
                     }
 
                     return (object) [
-                        'id' => $contract->number,
-                        'user' => $contract->user->realName ?? __('interface.misc.not_available'),
+                        'id'     => $contract->number,
+                        'user'   => $contract->user->realName ?? __('interface.misc.not_available'),
                         'status' => $status,
-                        'type' => $contract->type->name ?? __('interface.misc.not_available'),
-                        'view' => '<a href="' . route('admin.contracts.details', $contract->id) . '" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>',
-                        'edit' => ! $contract->started ? $edit : '<button type="button" class="btn btn-warning btn-sm" disabled><i class="bi bi-pencil-square"></i></button>',
+                        'type'   => $contract->type->name ?? __('interface.misc.not_available'),
+                        'view'   => '<a href="' . route('admin.contracts.details', $contract->id) . '" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>',
+                        'edit'   => ! $contract->started ? $edit : '<button type="button" class="btn btn-warning btn-sm" disabled><i class="bi bi-pencil-square"></i></button>',
                         'delete' => ! $contract->started ? '<a href="' . route('admin.contracts.delete', $contract->id) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>' : '<button type="button" class="btn btn-danger btn-sm" disabled><i class="bi bi-trash"></i></button>',
                     ];
-                })
+                }),
         ]);
     }
 
@@ -205,9 +213,9 @@ class AdminContractController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function contract_add(Request $request): RedirectResponse
     {
@@ -236,16 +244,16 @@ class AdminContractController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function contract_update(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
             'contract_id' => ['required', 'integer'],
-            'user_id' => ['required', 'integer'],
-            'type_id' => ['required', 'integer'],
+            'user_id'     => ['required', 'integer'],
+            'type_id'     => ['required', 'integer'],
         ])->validate();
 
         /* @var Contract $contract */
@@ -269,9 +277,9 @@ class AdminContractController extends Controller
      *
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function contract_delete(int $id): RedirectResponse
     {
@@ -299,9 +307,9 @@ class AdminContractController extends Controller
      *
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function contract_start(int $id): RedirectResponse
     {
@@ -327,9 +335,9 @@ class AdminContractController extends Controller
      *
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function contract_extend(int $id): RedirectResponse
     {
@@ -350,41 +358,41 @@ class AdminContractController extends Controller
             $contract->user->prepaidAccountBalance >= $contract->grossSum
         ) {
             PrepaidHistory::all([
-                'user_id' => $contract->user_id,
-                'creator_user_id' => Auth::id(),
-                'contract_id' => $contract->id,
-                'amount' => $contract->grossSum * (-1),
+                'user_id'            => $contract->user_id,
+                'creator_user_id'    => Auth::id(),
+                'contract_id'        => $contract->id,
+                'amount'             => $contract->grossSum * (-1),
                 'transaction_method' => 'account',
-                'transaction_id' => null,
+                'transaction_id'     => null,
             ]);
 
             /* @var Invoice $invoice */
             $invoice = Invoice::create([
-                'user_id' => $contract->user_id,
-                'type_id' => $contract->type->invoice_type_id,
-                'contract_id' => $contract->id,
-                'status' => 'paid',
+                'user_id'        => $contract->user_id,
+                'type_id'        => $contract->type->invoice_type_id,
+                'contract_id'    => $contract->id,
+                'status'         => 'paid',
                 'reverse_charge' => $contract->user->reverseCharge,
             ]);
 
             $contract->positionLinks->each(function (ContractPosition $link) use ($invoice) {
                 /* @var Position $position */
                 $position = Position::create([
-                    'order_id' => $link->position->order_id,
-                    'product_id' => $link->position->product_id,
-                    'discount_id' => $link->position->discount_id,
-                    'name' => $link->position->name,
-                    'description' => $link->position->description,
-                    'amount' => $link->position->amount,
+                    'order_id'       => $link->position->order_id,
+                    'product_id'     => $link->position->product_id,
+                    'discount_id'    => $link->position->discount_id,
+                    'name'           => $link->position->name,
+                    'description'    => $link->position->description,
+                    'amount'         => $link->position->amount,
                     'vat_percentage' => $link->position->vat_percentage,
-                    'quantity' => $link->position->quantity,
+                    'quantity'       => $link->position->quantity,
                 ]);
 
                 InvoicePosition::create([
-                    'invoice_id' => $invoice->id,
+                    'invoice_id'  => $invoice->id,
                     'position_id' => $position->id,
-                    'started_at' => $link->started_at,
-                    'ended_at' => $link->ended_at,
+                    'started_at'  => $link->started_at,
+                    'ended_at'    => $link->ended_at,
                 ]);
             });
 
@@ -412,19 +420,19 @@ class AdminContractController extends Controller
 
             $pdf = App::make('dompdf.wrapper')->loadView('pdf.invoice', [
                 'invoice' => $invoice,
-                'sepaQr' => $sepaQr,
+                'sepaQr'  => $sepaQr,
             ]);
 
             $content = $pdf->output();
 
             /* @var File $file */
             $file = File::create([
-                'user_id' => null,
+                'user_id'   => null,
                 'folder_id' => null,
-                'name' => $invoice->number . '.pdf',
-                'data' => $content,
-                'mime' => 'application/pdf',
-                'size' => strlen($content),
+                'name'      => $invoice->number . '.pdf',
+                'data'      => $content,
+                'mime'      => 'application/pdf',
+                'size'      => strlen($content),
             ]);
 
             $invoice->update([
@@ -432,16 +440,16 @@ class AdminContractController extends Controller
             ]);
 
             $contract->update([
-                'last_invoice_at' => $contract->cancelled_to,
-                'cancelled_at' => Carbon::now(),
+                'last_invoice_at'         => $contract->cancelled_to,
+                'cancelled_at'            => Carbon::now(),
                 'cancellation_revoked_at' => null,
-                'cancelled_to' => $contract->cancelled_to->addDays($contract->type->invoice_period),
+                'cancelled_to'            => $contract->cancelled_to->addDays($contract->type->invoice_period),
             ]);
 
             InvoiceHistory::create([
-                'user_id' => Auth::id(),
+                'user_id'    => Auth::id(),
                 'invoice_id' => $invoice->id,
-                'status' => 'pay',
+                'status'     => 'pay',
             ]);
 
             return redirect()->back()->with('success', __('interface.messages.contract_extended'));
@@ -455,9 +463,9 @@ class AdminContractController extends Controller
      *
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function contract_stop(int $id): RedirectResponse
     {
@@ -479,32 +487,32 @@ class AdminContractController extends Controller
 
                     /* @var Invoice $revokationInvoice */
                     $revokationInvoice = Invoice::create([
-                        'user_id' => $contract->user_id,
-                        'type_id' => $contract->type->invoice_type_id,
-                        'contract_id' => $contract->id,
-                        'original_id' => $invoice->id,
-                        'status' => 'refund',
+                        'user_id'        => $contract->user_id,
+                        'type_id'        => $contract->type->invoice_type_id,
+                        'contract_id'    => $contract->id,
+                        'original_id'    => $invoice->id,
+                        'status'         => 'refund',
                         'reverse_charge' => $contract->user->reverseCharge,
                     ]);
 
                     $contract->positionLinks->each(function (ContractPosition $link) use ($revokationInvoice, $factor) {
                         /* @var Position $position */
                         $position = Position::create([
-                            'order_id' => $link->position->order_id,
-                            'product_id' => $link->position->product_id,
-                            'discount_id' => $link->position->discount_id,
-                            'name' => $link->position->name,
-                            'description' => $link->position->description,
-                            'amount' => $link->position->amount * $factor * (-1),
+                            'order_id'       => $link->position->order_id,
+                            'product_id'     => $link->position->product_id,
+                            'discount_id'    => $link->position->discount_id,
+                            'name'           => $link->position->name,
+                            'description'    => $link->position->description,
+                            'amount'         => $link->position->amount * $factor * (-1),
                             'vat_percentage' => $link->position->vat_percentage,
-                            'quantity' => $link->position->quantity,
+                            'quantity'       => $link->position->quantity,
                         ]);
 
                         InvoicePosition::create([
-                            'invoice_id' => $revokationInvoice->id,
+                            'invoice_id'  => $revokationInvoice->id,
                             'position_id' => $position->id,
-                            'started_at' => $link->started_at,
-                            'ended_at' => $link->ended_at,
+                            'started_at'  => $link->started_at,
+                            'ended_at'    => $link->ended_at,
                         ]);
                     });
 
@@ -532,19 +540,19 @@ class AdminContractController extends Controller
 
                     $pdf = App::make('dompdf.wrapper')->loadView('pdf.invoice', [
                         'invoice' => $revokationInvoice,
-                        'sepaQr' => $sepaQr,
+                        'sepaQr'  => $sepaQr,
                     ]);
 
                     $content = $pdf->output();
 
                     /* @var File $file */
                     $file = File::create([
-                        'user_id' => null,
+                        'user_id'   => null,
                         'folder_id' => null,
-                        'name' => $revokationInvoice->number . '.pdf',
-                        'data' => $content,
-                        'mime' => 'application/pdf',
-                        'size' => strlen($content),
+                        'name'      => $revokationInvoice->number . '.pdf',
+                        'data'      => $content,
+                        'mime'      => 'application/pdf',
+                        'size'      => strlen($content),
                     ]);
 
                     $revokationInvoice->update([
@@ -556,31 +564,31 @@ class AdminContractController extends Controller
 
                 /* @var Invoice $invoice */
                 $invoice = Invoice::create([
-                    'user_id' => $contract->user_id,
-                    'type_id' => $contract->type->invoice_type_id,
-                    'contract_id' => $contract->id,
-                    'status' => 'unpaid',
+                    'user_id'        => $contract->user_id,
+                    'type_id'        => $contract->type->invoice_type_id,
+                    'contract_id'    => $contract->id,
+                    'status'         => 'unpaid',
                     'reverse_charge' => $contract->user->reverseCharge,
                 ]);
 
                 $contract->positionLinks->each(function (ContractPosition $link) use ($invoice, $factor) {
                     /* @var Position $position */
                     $position = Position::create([
-                        'order_id' => $link->position->order_id,
-                        'product_id' => $link->position->product_id,
-                        'discount_id' => $link->position->discount_id,
-                        'name' => $link->position->name,
-                        'description' => $link->position->description,
-                        'amount' => $link->position->amount * $factor,
+                        'order_id'       => $link->position->order_id,
+                        'product_id'     => $link->position->product_id,
+                        'discount_id'    => $link->position->discount_id,
+                        'name'           => $link->position->name,
+                        'description'    => $link->position->description,
+                        'amount'         => $link->position->amount * $factor,
                         'vat_percentage' => $link->position->vat_percentage,
-                        'quantity' => $link->position->quantity,
+                        'quantity'       => $link->position->quantity,
                     ]);
 
                     InvoicePosition::create([
-                        'invoice_id' => $invoice->id,
+                        'invoice_id'  => $invoice->id,
                         'position_id' => $position->id,
-                        'started_at' => $link->started_at,
-                        'ended_at' => $link->ended_at,
+                        'started_at'  => $link->started_at,
+                        'ended_at'    => $link->ended_at,
                     ]);
                 });
 
@@ -608,19 +616,19 @@ class AdminContractController extends Controller
 
                 $pdf = App::make('dompdf.wrapper')->loadView('pdf.invoice', [
                     'invoice' => $invoice,
-                    'sepaQr' => $sepaQr,
+                    'sepaQr'  => $sepaQr,
                 ]);
 
                 $content = $pdf->output();
 
                 /* @var File $file */
                 $file = File::create([
-                    'user_id' => null,
+                    'user_id'   => null,
                     'folder_id' => null,
-                    'name' => $invoice->number . '.pdf',
-                    'data' => $content,
-                    'mime' => 'application/pdf',
-                    'size' => strlen($content),
+                    'name'      => $invoice->number . '.pdf',
+                    'data'      => $content,
+                    'mime'      => 'application/pdf',
+                    'size'      => strlen($content),
                 ]);
 
                 $invoice->update([
@@ -638,41 +646,41 @@ class AdminContractController extends Controller
                 $refund = $contract->grossSum * $factor;
 
                 PrepaidHistory::all([
-                    'user_id' => $contract->user_id,
-                    'creator_user_id' => Auth::id(),
-                    'contract_id' => $contract->id,
-                    'amount' => $refund,
+                    'user_id'            => $contract->user_id,
+                    'creator_user_id'    => Auth::id(),
+                    'contract_id'        => $contract->id,
+                    'amount'             => $refund,
                     'transaction_method' => 'account',
-                    'transaction_id' => null,
+                    'transaction_id'     => null,
                 ]);
 
                 /* @var Invoice $revokationInvoice */
                 $revokationInvoice = Invoice::create([
-                    'user_id' => $contract->user_id,
-                    'type_id' => $contract->type->invoice_type_id,
-                    'contract_id' => $contract->id,
-                    'status' => 'refund',
+                    'user_id'        => $contract->user_id,
+                    'type_id'        => $contract->type->invoice_type_id,
+                    'contract_id'    => $contract->id,
+                    'status'         => 'refund',
                     'reverse_charge' => $contract->user->reverseCharge,
                 ]);
 
                 $contract->positionLinks->each(function (ContractPosition $link) use ($revokationInvoice, $factor) {
                     /* @var Position $position */
                     $position = Position::create([
-                        'order_id' => $link->position->order_id,
-                        'product_id' => $link->position->product_id,
-                        'discount_id' => $link->position->discount_id,
-                        'name' => $link->position->name,
-                        'description' => $link->position->description,
-                        'amount' => $link->position->amount * $factor * (-1),
+                        'order_id'       => $link->position->order_id,
+                        'product_id'     => $link->position->product_id,
+                        'discount_id'    => $link->position->discount_id,
+                        'name'           => $link->position->name,
+                        'description'    => $link->position->description,
+                        'amount'         => $link->position->amount * $factor * (-1),
                         'vat_percentage' => $link->position->vat_percentage,
-                        'quantity' => $link->position->quantity,
+                        'quantity'       => $link->position->quantity,
                     ]);
 
                     InvoicePosition::create([
-                        'invoice_id' => $revokationInvoice->id,
+                        'invoice_id'  => $revokationInvoice->id,
                         'position_id' => $position->id,
-                        'started_at' => $link->started_at,
-                        'ended_at' => $link->ended_at,
+                        'started_at'  => $link->started_at,
+                        'ended_at'    => $link->ended_at,
                     ]);
                 });
 
@@ -700,19 +708,19 @@ class AdminContractController extends Controller
 
                 $pdf = App::make('dompdf.wrapper')->loadView('pdf.invoice', [
                     'invoice' => $revokationInvoice,
-                    'sepaQr' => $sepaQr,
+                    'sepaQr'  => $sepaQr,
                 ]);
 
                 $content = $pdf->output();
 
                 /* @var File $file */
                 $file = File::create([
-                    'user_id' => null,
+                    'user_id'   => null,
                     'folder_id' => null,
-                    'name' => $revokationInvoice->number . '.pdf',
-                    'data' => $content,
-                    'mime' => 'application/pdf',
-                    'size' => strlen($content),
+                    'name'      => $revokationInvoice->number . '.pdf',
+                    'data'      => $content,
+                    'mime'      => 'application/pdf',
+                    'size'      => strlen($content),
                 ]);
 
                 $revokationInvoice->update([
@@ -721,9 +729,9 @@ class AdminContractController extends Controller
             }
 
             $contract->update([
-                'cancelled_at' => Carbon::now(),
+                'cancelled_at'            => Carbon::now(),
                 'cancellation_revoked_at' => null,
-                'cancelled_to' => Carbon::now(),
+                'cancelled_to'            => Carbon::now(),
             ]);
 
             return redirect()->back()->with('success', __('interface.messages.contract_stopped'));
@@ -737,9 +745,9 @@ class AdminContractController extends Controller
      *
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function contract_cancel(int $id): RedirectResponse
     {
@@ -775,9 +783,9 @@ class AdminContractController extends Controller
 
             if (! empty($cancelledTo)) {
                 $contract->update([
-                    'cancelled_at' => Carbon::now(),
+                    'cancelled_at'            => Carbon::now(),
                     'cancellation_revoked_at' => null,
-                    'cancelled_to' => $cancelledTo,
+                    'cancelled_to'            => $cancelledTo,
                 ]);
 
                 return redirect()->back()->with('success', __('interface.messages.contract_stopped'));
@@ -793,9 +801,9 @@ class AdminContractController extends Controller
      *
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function contract_restart(int $id): RedirectResponse
     {
@@ -812,11 +820,11 @@ class AdminContractController extends Controller
             $contract->type->type !== 'prepaid_manual'
         ) {
             $contract->update([
-                'started_at' => Carbon::now(),
-                'last_invoice_at' => null,
-                'cancelled_at' => null,
+                'started_at'              => Carbon::now(),
+                'last_invoice_at'         => null,
+                'cancelled_at'            => null,
                 'cancellation_revoked_at' => null,
-                'cancelled_to' => null,
+                'cancelled_to'            => null,
             ]);
 
             return redirect()->back()->with('success', __('interface.messages.contract_restarted'));
@@ -830,9 +838,9 @@ class AdminContractController extends Controller
      *
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function contract_cancellation_revoke(int $id): RedirectResponse
     {
@@ -849,9 +857,9 @@ class AdminContractController extends Controller
             $contract->type->type !== 'prepaid_manual'
         ) {
             $contract->update([
-                'cancelled_at' => null,
+                'cancelled_at'            => null,
                 'cancellation_revoked_at' => null,
-                'cancelled_to' => null,
+                'cancelled_to'            => null,
             ]);
 
             return redirect()->back()->with('success', __('interface.messages.contract_cancellation_revoked'));
@@ -865,27 +873,27 @@ class AdminContractController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function contract_positions_add(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
-            'contract_id' => ['required', 'integer'],
-            'name' => ['required', 'string'],
-            'description' => ['required', 'string'],
-            'amount' => ['required', 'numeric'],
+            'contract_id'    => ['required', 'integer'],
+            'name'           => ['required', 'string'],
+            'description'    => ['required', 'string'],
+            'amount'         => ['required', 'numeric'],
             'vat_percentage' => ['nullable', 'numeric'],
-            'quantity' => ['required', 'numeric'],
-            'discount_id' => ['nullable', 'integer'],
-            'tracker' => ['nullable', 'integer'],
+            'quantity'       => ['required', 'numeric'],
+            'discount_id'    => ['nullable', 'integer'],
+            'tracker'        => ['nullable', 'integer'],
         ])->validate();
 
         if (! empty($request->service_runtime)) {
             Validator::make($request->toArray(), [
                 'started_at' => ['required', 'string'],
-                'ended_at' => ['required', 'string'],
+                'ended_at'   => ['required', 'string'],
             ])->validate();
         }
 
@@ -895,20 +903,20 @@ class AdminContractController extends Controller
             ! $contract->started
         ) {
             $position = Position::create([
-                'discount_id' => ! empty($request->discount_id) ? $request->discount_id : null,
-                'name' => $request->name,
-                'description' => $request->description,
-                'amount' => $request->amount,
+                'discount_id'    => ! empty($request->discount_id) ? $request->discount_id : null,
+                'name'           => $request->name,
+                'description'    => $request->description,
+                'amount'         => $request->amount,
                 'vat_percentage' => ! empty($request->vat_percentage) ? $request->vat_percentage : 0,
-                'quantity' => $request->quantity,
+                'quantity'       => $request->quantity,
             ]);
 
             /* @var ContractPosition $positionLink */
             $positionLink = ContractPosition::create([
                 'contract_id' => $request->contract_id,
                 'position_id' => $position->id,
-                'started_at' => ! empty($request->service_runtime) ? Carbon::parse($request->started_at) : null,
-                'ended_at' => ! empty($request->service_runtime) ? Carbon::parse($request->ended_at) : null,
+                'started_at'  => ! empty($request->service_runtime) ? Carbon::parse($request->started_at) : null,
+                'ended_at'    => ! empty($request->service_runtime) ? Carbon::parse($request->ended_at) : null,
             ]);
 
             if (
@@ -916,7 +924,7 @@ class AdminContractController extends Controller
                 $positionLink->contract->type->type == 'contract_post_pay'
             ) {
                 TrackerInstance::updateOrCreate([
-                    'contract_id' => $contract->id,
+                    'contract_id'          => $contract->id,
                     'contract_position_id' => $positionLink->id,
                 ], [
                     'tracker_id' => $request->tracker,
@@ -938,27 +946,27 @@ class AdminContractController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function contract_positions_update(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
-            'position_id' => ['required', 'integer'],
-            'name' => ['required', 'string'],
-            'description' => ['required', 'string'],
-            'amount' => ['required', 'numeric'],
+            'position_id'    => ['required', 'integer'],
+            'name'           => ['required', 'string'],
+            'description'    => ['required', 'string'],
+            'amount'         => ['required', 'numeric'],
             'vat_percentage' => ['nullable', 'numeric'],
-            'quantity' => ['required', 'numeric'],
-            'discount_id' => ['nullable', 'integer'],
-            'tracker' => ['nullable', 'integer'],
+            'quantity'       => ['required', 'numeric'],
+            'discount_id'    => ['nullable', 'integer'],
+            'tracker'        => ['nullable', 'integer'],
         ])->validate();
 
         if (! empty($request->service_runtime)) {
             Validator::make($request->toArray(), [
                 'started_at' => ['required', 'string'],
-                'ended_at' => ['required', 'string'],
+                'ended_at'   => ['required', 'string'],
             ])->validate();
         }
 
@@ -968,17 +976,17 @@ class AdminContractController extends Controller
             ! $position->contract->started
         ) {
             $position->position->update([
-                'discount_id' => ! empty($request->discount_id) ? $request->discount_id : null,
-                'name' => $request->name,
-                'description' => $request->description,
-                'amount' => $request->amount,
+                'discount_id'    => ! empty($request->discount_id) ? $request->discount_id : null,
+                'name'           => $request->name,
+                'description'    => $request->description,
+                'amount'         => $request->amount,
                 'vat_percentage' => ! empty($request->vat_percentage) ? $request->vat_percentage : 0,
-                'quantity' => $request->quantity,
+                'quantity'       => $request->quantity,
             ]);
 
             $position->update([
                 'started_at' => ! empty($request->service_runtime) ? Carbon::parse($request->started_at) : null,
-                'ended_at' => ! empty($request->service_runtime) ? Carbon::parse($request->ended_at) : null,
+                'ended_at'   => ! empty($request->service_runtime) ? Carbon::parse($request->ended_at) : null,
             ]);
 
             if (
@@ -986,7 +994,7 @@ class AdminContractController extends Controller
                 $position->contract->type->type == 'contract_post_pay'
             ) {
                 TrackerInstance::updateOrCreate([
-                    'contract_id' => $position->contract_id,
+                    'contract_id'          => $position->contract_id,
                     'contract_position_id' => $position->id,
                 ], [
                     'tracker_id' => $request->tracker,
@@ -1009,9 +1017,9 @@ class AdminContractController extends Controller
      * @param int $contract_id
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function contract_positions_delete(int $contract_id, int $id): RedirectResponse
     {
@@ -1080,22 +1088,28 @@ class AdminContractController extends Controller
                 switch ($request->columns[$order['column']]) {
                     case 'name':
                         $orderBy = 'name';
+
                         break;
                     case 'description':
                         $orderBy = 'description';
+
                         break;
                     case 'invoice_period':
                         $orderBy = 'invoice_period';
+
                         break;
                     case 'cancellation_period':
                         $orderBy = 'cancellation_period';
+
                         break;
                     case 'type':
                         $orderBy = 'type';
+
                         break;
                     case 'id':
                     default:
                         $orderBy = 'id';
+
                         break;
                 }
 
@@ -1109,28 +1123,33 @@ class AdminContractController extends Controller
             ->limit($request->length);
 
         return response()->json([
-            'draw' => (int) $request->draw,
-            'recordsTotal' => $totalCount,
+            'draw'            => (int) $request->draw,
+            'recordsTotal'    => $totalCount,
             'recordsFiltered' => $filteredCount,
-            'data' => $query
+            'data'            => $query
                 ->get()
                 ->transform(function (ContractType $type) {
                     switch ($type->type) {
                         case 'contract_pre_pay':
                             $receiptType = __('interface.billing.contract_pre');
+
                             break;
                         case 'contract_post_pay':
                             $receiptType = __('interface.billing.contract_post');
+
                             break;
                         case 'prepaid_auto':
                             $receiptType = __('interface.billing.prepaid_auto');
+
                             break;
                         case 'prepaid_manual':
                             $receiptType = __('interface.billing.prepaid_manual');
+
                             break;
                         case 'normal':
                         default:
                             $receiptType = __('interface.status.unknown');
+
                             break;
                     }
 
@@ -1226,17 +1245,17 @@ class AdminContractController extends Controller
 ';
 
                     return (object) [
-                        'id' => $type->id,
-                        'name' => $type->name,
-                        'description' => $type->description,
-                        'invoice_period' => $type->invoice_period . ' ' . __('interface.units.days'),
-                        'invoice_type' => $type->invoiceType->name ?? __('interface.status.unknown'),
+                        'id'                  => $type->id,
+                        'name'                => $type->name,
+                        'description'         => $type->description,
+                        'invoice_period'      => $type->invoice_period . ' ' . __('interface.units.days'),
+                        'invoice_type'        => $type->invoiceType->name ?? __('interface.status.unknown'),
                         'cancellation_period' => $type->cancellation_period . ' ' . __('interface.units.days'),
-                        'type' => $receiptType,
-                        'edit' => $edit,
-                        'delete' => '<a href="' . route('admin.contracts.types.delete', $type->id) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>',
+                        'type'                => $receiptType,
+                        'edit'                => $edit,
+                        'delete'              => '<a href="' . route('admin.contracts.types.delete', $type->id) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>',
                     ];
-                })
+                }),
         ]);
     }
 
@@ -1245,27 +1264,27 @@ class AdminContractController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function contract_types_add(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
-            'name' => ['required', 'string'],
-            'description' => ['required', 'string'],
-            'type' => ['required', 'string'],
-            'invoice_type_id' => ['required', 'integer'],
-            'invoice_period' => ['required', 'integer'],
+            'name'                => ['required', 'string'],
+            'description'         => ['required', 'string'],
+            'type'                => ['required', 'string'],
+            'invoice_type_id'     => ['required', 'integer'],
+            'invoice_period'      => ['required', 'integer'],
             'cancellation_period' => ['required', 'integer'],
         ])->validate();
 
         ContractType::create([
-            'name' => $request->name,
-            'description' => $request->description,
-            'type' => $request->type,
-            'invoice_type_id' => $request->invoice_type_id,
-            'invoice_period' => $request->invoice_period,
+            'name'                => $request->name,
+            'description'         => $request->description,
+            'type'                => $request->type,
+            'invoice_type_id'     => $request->invoice_type_id,
+            'invoice_period'      => $request->invoice_period,
             'cancellation_period' => $request->cancellation_period,
         ]);
 
@@ -1277,29 +1296,29 @@ class AdminContractController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function contract_types_update(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
-            'type_id' => ['required', 'integer'],
-            'name' => ['required', 'string'],
-            'description' => ['required', 'string'],
-            'type' => ['required', 'string'],
-            'invoice_type_id' => ['required', 'integer'],
-            'invoice_period' => ['required', 'integer'],
+            'type_id'             => ['required', 'integer'],
+            'name'                => ['required', 'string'],
+            'description'         => ['required', 'string'],
+            'type'                => ['required', 'string'],
+            'invoice_type_id'     => ['required', 'integer'],
+            'invoice_period'      => ['required', 'integer'],
             'cancellation_period' => ['required', 'integer'],
         ])->validate();
 
         if (! empty($type = ContractType::find($request->type_id))) {
             $type->update([
-                'name' => $request->name,
-                'description' => $request->description,
-                'type' => $request->type,
-                'invoice_type_id' => $request->invoice_type_id,
-                'invoice_period' => $request->invoice_period,
+                'name'                => $request->name,
+                'description'         => $request->description,
+                'type'                => $request->type,
+                'invoice_type_id'     => $request->invoice_type_id,
+                'invoice_period'      => $request->invoice_period,
                 'cancellation_period' => $request->cancellation_period,
             ]);
 
@@ -1314,9 +1333,9 @@ class AdminContractController extends Controller
      *
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function contract_types_delete(int $id): RedirectResponse
     {
@@ -1372,16 +1391,20 @@ class AdminContractController extends Controller
                 switch ($request->columns[$order['column']]) {
                     case 'name':
                         $orderBy = 'name';
+
                         break;
                     case 'description':
                         $orderBy = 'description';
+
                         break;
                     case 'vat_type':
                         $orderBy = 'vat_type';
+
                         break;
                     case 'id':
                     default:
                         $orderBy = 'id';
+
                         break;
                 }
 
@@ -1395,10 +1418,10 @@ class AdminContractController extends Controller
             ->limit($request->length);
 
         return response()->json([
-            'draw' => (int) $request->draw,
-            'recordsTotal' => $totalCount,
+            'draw'            => (int) $request->draw,
+            'recordsTotal'    => $totalCount,
             'recordsFiltered' => $filteredCount,
-            'data' => $query
+            'data'            => $query
                 ->get()
                 ->transform(function (Tracker $tracker) {
                     $edit = '
@@ -1452,14 +1475,14 @@ class AdminContractController extends Controller
 ';
 
                     return (object) [
-                        'id' => $tracker->id,
-                        'name' => $tracker->name,
+                        'id'          => $tracker->id,
+                        'name'        => $tracker->name,
                         'description' => $tracker->description,
-                        'view' => '<a href="' . route('admin.contracts.trackers.details', $tracker->id) . '" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>',
-                        'edit' => $edit,
-                        'delete' => '<a href="' . route('admin.contracts.trackers.delete', $tracker->id) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>',
+                        'view'        => '<a href="' . route('admin.contracts.trackers.details', $tracker->id) . '" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>',
+                        'edit'        => $edit,
+                        'delete'      => '<a href="' . route('admin.contracts.trackers.delete', $tracker->id) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>',
                     ];
-                })
+                }),
         ]);
     }
 
@@ -1468,22 +1491,22 @@ class AdminContractController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function contract_trackers_add(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
-            'name' => ['required', 'string'],
+            'name'        => ['required', 'string'],
             'description' => ['required', 'string'],
-            'vat_type' => ['required', 'string'],
+            'vat_type'    => ['required', 'string'],
         ])->validate();
 
         Tracker::create([
-            'name' => $request->name,
+            'name'        => $request->name,
             'description' => $request->description,
-            'vat_type' => $request->vat_type,
+            'vat_type'    => $request->vat_type,
         ]);
 
         return redirect()->back()->with('success', __('interface.messages.usage_tracker_added'));
@@ -1494,24 +1517,24 @@ class AdminContractController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function contract_trackers_update(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
-            'tracker_id' => ['required', 'integer'],
-            'name' => ['required', 'string'],
+            'tracker_id'  => ['required', 'integer'],
+            'name'        => ['required', 'string'],
             'description' => ['required', 'string'],
-            'vat_type' => ['required', 'string'],
+            'vat_type'    => ['required', 'string'],
         ])->validate();
 
         if (! empty($tracker = Tracker::find($request->tracker_id))) {
             $tracker->update([
-                'name' => $request->name,
+                'name'        => $request->name,
                 'description' => $request->description,
-                'vat_type' => $request->vat_type,
+                'vat_type'    => $request->vat_type,
             ]);
 
             return redirect()->back()->with('success', __('interface.messages.usage_tracker_updated'));
@@ -1525,9 +1548,9 @@ class AdminContractController extends Controller
      *
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function contract_trackers_delete(int $id): RedirectResponse
     {
@@ -1594,22 +1617,28 @@ class AdminContractController extends Controller
                 switch ($request->columns[$order['column']]) {
                     case 'type':
                         $orderBy = 'type';
+
                         break;
                     case 'process':
                         $orderBy = 'process';
+
                         break;
                     case 'round':
                         $orderBy = 'round';
+
                         break;
                     case 'value':
                         $orderBy = 'value';
+
                         break;
                     case 'amount':
                         $orderBy = 'amount';
+
                         break;
                     case 'id':
                     default:
                         $orderBy = 'id';
+
                         break;
                 }
 
@@ -1623,45 +1652,53 @@ class AdminContractController extends Controller
             ->limit($request->length);
 
         return response()->json([
-            'draw' => (int) $request->draw,
-            'recordsTotal' => $totalCount,
+            'draw'            => (int) $request->draw,
+            'recordsTotal'    => $totalCount,
             'recordsFiltered' => $filteredCount,
-            'data' => $query
+            'data'            => $query
                 ->get()
                 ->transform(function (TrackerItem $item) {
                     switch ($item->type) {
                         case 'integer':
                             $type = __('interface.data_type.integer');
+
                             break;
                         case 'double':
                             $type = __('interface.data_type.double');
+
                             break;
                         case 'string':
                         default:
                             $type = __('interface.data_type.string');
+
                             break;
                     }
 
                     switch ($item->process) {
                         case 'min':
                             $processType = __('interface.data_processing.minimum');
+
                             break;
                         case 'median':
                             $processType = __('interface.data_processing.median');
+
                             break;
                         case 'average':
                             $processType = __('interface.data_processing.average');
+
                             break;
                         case 'max':
                             $processType = __('interface.data_processing.maximum');
+
                             break;
                         case 'equals':
                         default:
                             $processType = __('interface.data_processing.equals');
+
                             break;
                     }
 
-                    $numberSetting = '';
+                    $numberSetting    = '';
                     $availableOptions = '<option value="equals" selected>' . __('interface.data_processing.equals') . '</option>';
 
                     if ($type !== 'string') {
@@ -1745,16 +1782,16 @@ class AdminContractController extends Controller
 ';
 
                     return (object) [
-                        'id' => $item->id,
-                        'type' => $type,
+                        'id'      => $item->id,
+                        'type'    => $type,
                         'process' => $processType,
-                        'round' => __(ucfirst($item->round)),
-                        'step' => $item->step,
-                        'amount' => number_format($item->amount, 2) . ' €',
-                        'edit' => $edit,
-                        'delete' => '<a href="' . route('admin.contracts.trackers.items.delete', ['id' => $item->tracker_id, 'item_id' => $item->id]) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>',
+                        'round'   => __(ucfirst($item->round)),
+                        'step'    => $item->step,
+                        'amount'  => number_format($item->amount, 2) . ' €',
+                        'edit'    => $edit,
+                        'delete'  => '<a href="' . route('admin.contracts.trackers.items.delete', ['id' => $item->tracker_id, 'item_id' => $item->id]) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>',
                     ];
-                })
+                }),
         ]);
     }
 
@@ -1763,28 +1800,28 @@ class AdminContractController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function contract_trackers_items_add(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
             'tracker_id' => ['required', 'integer'],
-            'type' => ['required', 'string'],
-            'process' => ['required', 'string'],
-            'round' => ['required', 'string'],
-            'step' => ['required', 'string'],
-            'amount' => ['required', 'numeric'],
+            'type'       => ['required', 'string'],
+            'process'    => ['required', 'string'],
+            'round'      => ['required', 'string'],
+            'step'       => ['required', 'string'],
+            'amount'     => ['required', 'numeric'],
         ])->validate();
 
         TrackerItem::create([
             'tracker_id' => $request->tracker_id,
-            'type' => $request->type,
-            'process' => $request->process,
-            'round' => $request->round,
-            'step' => $request->step,
-            'amount' => $request->amount,
+            'type'       => $request->type,
+            'process'    => $request->process,
+            'round'      => $request->round,
+            'step'       => $request->step,
+            'amount'     => $request->amount,
         ]);
 
         return redirect()->back()->with('success', __('interface.messages.usage_tracker_item_added'));
@@ -1795,26 +1832,26 @@ class AdminContractController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function contract_trackers_items_update(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
             'item_id' => ['required', 'integer'],
             'process' => ['required', 'string'],
-            'round' => ['required', 'string'],
-            'step' => ['required', 'string'],
-            'amount' => ['required', 'numeric'],
+            'round'   => ['required', 'string'],
+            'step'    => ['required', 'string'],
+            'amount'  => ['required', 'numeric'],
         ])->validate();
 
         if (! empty($item = TrackerItem::find($request->item_id))) {
             $item->update([
                 'process' => $request->process,
-                'round' => $request->round,
-                'step' => $request->step,
-                'amount' => $request->amount,
+                'round'   => $request->round,
+                'step'    => $request->step,
+                'amount'  => $request->amount,
             ]);
 
             return redirect()->back()->with('success', __('interface.messages.usage_tracker_item_updated'));
@@ -1828,9 +1865,9 @@ class AdminContractController extends Controller
      *
      * @param int $id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function contract_trackers_items_delete(int $id): RedirectResponse
     {

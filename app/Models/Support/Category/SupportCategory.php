@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\Support\Category;
 
 use App\Models\ImapInbox;
@@ -12,27 +14,26 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class SupportCategory
+ * Class SupportCategory.
  *
  * This class is the model for basic category metadata.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *
- * @property int $id
- * @property int $imap_inbox_id
- * @property string $name
- * @property string $description
- * @property string $email_address
- * @property string $email_name
- * @property Carbon $created_at
- * @property Carbon $updated_at
- * @property Carbon $deleted_at
- *
- * @property ImapInbox|null $imapInbox
- * @property Collection<SupportTicket> $tickets
+ * @property int                                   $id
+ * @property int                                   $imap_inbox_id
+ * @property string                                $name
+ * @property string                                $description
+ * @property string                                $email_address
+ * @property string                                $email_name
+ * @property Carbon                                $created_at
+ * @property Carbon                                $updated_at
+ * @property Carbon                                $deleted_at
+ * @property ImapInbox|null                        $imapInbox
+ * @property Collection<SupportTicket>             $tickets
  * @property Collection<SupportCategoryAssignment> $assignments
- * @property string $answerEmailAddress
- * @property string $answerEmailName
+ * @property string                                $answerEmailAddress
+ * @property string                                $answerEmailName
  */
 class SupportCategory extends Model
 {
@@ -41,7 +42,7 @@ class SupportCategory extends Model
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var string[]|bool
+     * @var bool|string[]
      */
     protected $guarded = [
         'id',

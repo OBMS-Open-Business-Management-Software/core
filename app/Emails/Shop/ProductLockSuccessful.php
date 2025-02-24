@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Emails\Shop;
 
 use App\Helpers\SMIME;
@@ -29,7 +31,8 @@ class ProductLockSuccessful extends Notification
     /**
      * Get the notification's channels.
      *
-     * @param  ShopOrderQueue  $notifiable
+     * @param ShopOrderQueue $notifiable
+     *
      * @return array
      */
     public function via(ShopOrderQueue $notifiable): array
@@ -40,7 +43,7 @@ class ProductLockSuccessful extends Notification
     /**
      * Build the mail representation of the notification.
      *
-     * @param  ShopOrderQueue  $notifiable
+     * @param ShopOrderQueue $notifiable
      *
      * @return MailMessage
      */
@@ -58,7 +61,7 @@ class ProductLockSuccessful extends Notification
     /**
      * Get the support ticket creation email notification mail message for the given URL.
      *
-     * @param string $url
+     * @param string         $url
      * @param ShopOrderQueue $notifiable
      *
      * @return MailMessage
@@ -68,7 +71,7 @@ class ProductLockSuccessful extends Notification
         $message = (new MailMessage())
             ->subject(Lang::get('Products locked: ') . $notifiable->number)
             ->line(Lang::get('The contract of your order :id has expired. You now have :grace days to re-activate it. If you don\'t act in time all associated products will been removed permanently.', [
-                'id' => $notifiable->number,
+                'id'    => $notifiable->number,
                 'grace' => ! empty($handler = $notifiable->handler) && ! empty($grace = $handler->grace()) && $grace > 0 ?: '0',
             ]))
             ->action(Lang::get('View Orders'), $url)
@@ -80,7 +83,7 @@ class ProductLockSuccessful extends Notification
     /**
      * Get the verification URL for the given notifiable.
      *
-     * @param  ShopOrderQueue  $notifiable
+     * @param ShopOrderQueue $notifiable
      *
      * @return string
      */
@@ -97,8 +100,6 @@ class ProductLockSuccessful extends Notification
      * Set a callback that should be used when creating the email verification URL.
      *
      * @param Closure $callback
-     *
-     * @return void
      */
     public static function createUrlUsing(Closure $callback)
     {
@@ -109,8 +110,6 @@ class ProductLockSuccessful extends Notification
      * Set a callback that should be used when building the notification mail message.
      *
      * @param Closure $callback
-     *
-     * @return void
      */
     public static function toMailUsing(Closure $callback)
     {

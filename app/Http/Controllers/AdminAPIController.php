@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Models\API\OauthClient;
@@ -55,13 +57,16 @@ class AdminAPIController extends Controller
                 switch ($request->columns[$order['column']]) {
                     case 'name':
                         $orderBy = 'name';
+
                         break;
                     case 'status':
                         $orderBy = 'locked';
+
                         break;
                     case 'id':
                     default:
                         $orderBy = 'id';
+
                         break;
                 }
 
@@ -75,12 +80,12 @@ class AdminAPIController extends Controller
             ->limit($request->length);
 
         return response()->json([
-            'draw' => (int) $request->draw,
-            'recordsTotal' => $totalCount,
+            'draw'            => (int) $request->draw,
+            'recordsTotal'    => $totalCount,
             'recordsFiltered' => $filteredCount,
-            'data' => $query
+            'data'            => $query
                 ->get()
-                ->transform(function (User $user) use ($totalCount) {
+                ->transform(function (User $user) {
                     $edit = '
 <a class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editAPIUser' . $user->id . '"><i class="bi bi-pencil-square"></i></a>
 <div class="modal fade" id="editAPIUser' . $user->id . '" tabindex="-1" aria-labelledby="editAPIUser' . $user->id . 'Label" aria-hidden="true">
@@ -139,15 +144,15 @@ class AdminAPIController extends Controller
 ';
 
                     return (object) [
-                        'id' => $user->number,
-                        'name' => $user->realName,
-                        'email' => $user->email,
+                        'id'     => $user->number,
+                        'name'   => $user->realName,
+                        'email'  => $user->email,
                         'status' => $user->locked ? '<span class="badge badge-warning">' . __('interface.status.locked') . '</span>' : '<span class="badge badge-success">' . __('interface.status.unlocked') . '</span>',
-                        'lock' => $user->locked ? '<a href="' . route('admin.api.users.lock', $user->id) . '" class="btn btn-success btn-sm"><i class="bi bi-unlock-fill"></i></a>' : '<a href="' . route('admin.api.users.lock', $user->id) . '" class="btn btn-warning btn-sm"><i class="bi bi-lock-fill"></i></a>',
-                        'edit' => $edit,
+                        'lock'   => $user->locked ? '<a href="' . route('admin.api.users.lock', $user->id) . '" class="btn btn-success btn-sm"><i class="bi bi-unlock-fill"></i></a>' : '<a href="' . route('admin.api.users.lock', $user->id) . '" class="btn btn-warning btn-sm"><i class="bi bi-lock-fill"></i></a>',
+                        'edit'   => $edit,
                         'delete' => '<a href="' . route('admin.api.users.delete', $user->id) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>',
                     ];
-                })
+                }),
         ]);
     }
 
@@ -156,14 +161,14 @@ class AdminAPIController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function apiuser_create(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
-            'name' => ['required', 'string', 'max:255'],
+            'name'  => ['required', 'string', 'max:255'],
             'email' => [
                 'required',
                 'string',
@@ -177,10 +182,10 @@ class AdminAPIController extends Controller
         if (
             ! empty(
                 $user = User::create([
-                    'name' => $request->name,
-                    'email' => $request->email,
+                    'name'     => $request->name,
+                    'email'    => $request->email,
                     'password' => Hash::make($request->password),
-                    'role' => 'api',
+                    'role'     => 'api',
                 ])
             )
         ) {
@@ -195,16 +200,16 @@ class AdminAPIController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function apiuser_update(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
             'user_id' => ['required', 'integer'],
-            'name' => ['required', 'string', 'max:255'],
-            'email' => [
+            'name'    => ['required', 'string', 'max:255'],
+            'email'   => [
                 'required',
                 'string',
                 'email',
@@ -222,7 +227,7 @@ class AdminAPIController extends Controller
             )
         ) {
             $data = [
-                'name' => $request->name,
+                'name'  => $request->name,
                 'email' => $request->email,
             ];
 
@@ -243,9 +248,9 @@ class AdminAPIController extends Controller
      *
      * @param int $user_id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function apiuser_lock(int $user_id): RedirectResponse
     {
@@ -283,9 +288,9 @@ class AdminAPIController extends Controller
      *
      * @param int $user_id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function apiuser_delete(int $user_id): RedirectResponse
     {
@@ -348,17 +353,21 @@ class AdminAPIController extends Controller
                 switch ($request->columns[$order['column']]) {
                     case 'name':
                         $orderBy = 'name';
+
                         break;
                     case 'secret':
                     case 'public':
                         $orderBy = 'secret';
+
                         break;
                     case 'redirect':
                         $orderBy = 'redirect';
+
                         break;
                     case 'id':
                     default:
                         $orderBy = 'id';
+
                         break;
                 }
 
@@ -372,22 +381,22 @@ class AdminAPIController extends Controller
             ->limit($request->length);
 
         return response()->json([
-            'draw' => (int) $request->draw,
-            'recordsTotal' => $totalCount,
+            'draw'            => (int) $request->draw,
+            'recordsTotal'    => $totalCount,
             'recordsFiltered' => $filteredCount,
-            'data' => $query
+            'data'            => $query
                 ->get()
                 ->transform(function (OauthClient $client) {
                     return (object) [
-                        'id' => $client->id,
-                        'name' => $client->name,
-                        'public' => !$client->secret ? '<i class="bi bi-check-circle text-success"></i>' : '<i class="bi bi-x-circle text-danger"></i>',
+                        'id'       => $client->id,
+                        'name'     => $client->name,
+                        'public'   => !$client->secret ? '<i class="bi bi-check-circle text-success"></i>' : '<i class="bi bi-x-circle text-danger"></i>',
                         'redirect' => $client->redirect,
-                        'secret' => $client->secret,
-                        'type' => $client->personal_access_client ? '<span class="badge badge-primary">' . __('interface.data.personal') . '</span>' : ($client->password_client ? '<span class="badge badge-primary">' . __('interface.data.password') . '</span>' : '<span class="badge badge-primary">' . __('interface.data.client') . '</span>'),
-                        'delete' => '<a href="' . route('admin.api.oauth-clients.delete', $client->id) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>',
+                        'secret'   => $client->secret,
+                        'type'     => $client->personal_access_client ? '<span class="badge badge-primary">' . __('interface.data.personal') . '</span>' : ($client->password_client ? '<span class="badge badge-primary">' . __('interface.data.password') . '</span>' : '<span class="badge badge-primary">' . __('interface.data.client') . '</span>'),
+                        'delete'   => '<a href="' . route('admin.api.oauth-clients.delete', $client->id) . '" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>',
                     ];
-                })
+                }),
         ]);
     }
 
@@ -396,23 +405,23 @@ class AdminAPIController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function apiclient_create(Request $request): RedirectResponse
     {
         Validator::make($request->toArray(), [
-            'name' => ['required', 'string', 'max:255'],
-            'type' => ['required', 'string'],
+            'name'       => ['required', 'string', 'max:255'],
+            'type'       => ['required', 'string'],
             'grant_type' => ['required', 'string'],
-            'redirect' => ['nullable', 'string'],
-            'public' => ['nullable', 'string'],
+            'redirect'   => ['nullable', 'string'],
+            'public'     => ['nullable', 'string'],
         ])->validate();
 
         $clientRepository = app(ClientRepository::class);
-        $client = false;
-        $public = ! empty($request->public) && $request->public == 'true';
+        $client           = false;
+        $public           = ! empty($request->public) && $request->public == 'true';
 
         switch ($request->type) {
             case 'personal':
@@ -465,9 +474,9 @@ class AdminAPIController extends Controller
      *
      * @param int $client_id
      *
-     * @return RedirectResponse
-     *
      * @throws ValidationException
+     *
+     * @return RedirectResponse
      */
     public function apiclient_delete(int $client_id): RedirectResponse
     {

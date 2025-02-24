@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\Accounting\Invoice;
 
 use Carbon\Carbon;
@@ -9,21 +11,20 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class InvoiceDunning
+ * Class InvoiceDunning.
  *
  * This class is the model for basic invoice discount metadata.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *
- * @property int $id
- * @property string $name
- * @property string $description
- * @property double|null $period
- * @property double|null $percentage_amount
- * @property Carbon $created_at
- * @property Carbon $updated_at
- * @property Carbon $deleted_at
- *
+ * @property int                     $id
+ * @property string                  $name
+ * @property string                  $description
+ * @property float|null              $period
+ * @property float|null              $percentage_amount
+ * @property Carbon                  $created_at
+ * @property Carbon                  $updated_at
+ * @property Carbon                  $deleted_at
  * @property Collection<InvoiceType> $types
  */
 class InvoiceDiscount extends Model
@@ -40,7 +41,7 @@ class InvoiceDiscount extends Model
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var string[]|bool
+     * @var bool|string[]
      */
     protected $guarded = [
         'id',

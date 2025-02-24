@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Actions\Fortify;
 
 use App\Models\Content\Page;
@@ -21,14 +23,14 @@ class CreateNewUser implements CreatesNewUsers
      *
      * @param array $input
      *
-     * @return User
-     *
      * @throws ValidationException
+     *
+     * @return User
      */
     public function create(array $input)
     {
         Validator::make($input, [
-            'name' => ['required', 'string', 'max:255'],
+            'name'  => ['required', 'string', 'max:255'],
             'email' => [
                 'required',
                 'string',
@@ -50,8 +52,8 @@ class CreateNewUser implements CreatesNewUsers
         }
 
         $user = User::create([
-            'name' => $input['name'],
-            'email' => $input['email'],
+            'name'     => $input['name'],
+            'email'    => $input['email'],
             'password' => Hash::make($input['password']),
         ]);
 
@@ -62,13 +64,13 @@ class CreateNewUser implements CreatesNewUsers
 
             $acceptable->each(function (Page $page) use ($user, $request, $signedAt) {
                 PageAcceptance::updateOrCreate([
-                    'page_id' => $page->id,
+                    'page_id'         => $page->id,
                     'page_version_id' => $page->latest->id,
-                    'user_id' => $user->id,
-                    'user_agent' => $request->server('HTTP_USER_AGENT'),
-                    'ip' => $request->ip(),
-                    'signature' => md5($page->id . $page->latest->id . $user->id. $request->server('HTTP_USER_AGENT') . $request->ip() . $signedAt),
-                    'signed_at' => $signedAt,
+                    'user_id'         => $user->id,
+                    'user_agent'      => $request->server('HTTP_USER_AGENT'),
+                    'ip'              => $request->ip(),
+                    'signature'       => md5($page->id . $page->latest->id . $user->id . $request->server('HTTP_USER_AGENT') . $request->ip() . $signedAt),
+                    'signed_at'       => $signedAt,
                 ]);
             });
         }

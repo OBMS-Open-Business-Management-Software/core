@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\Profile;
 
 use Carbon\Carbon;
@@ -8,25 +10,24 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class BankAccount
+ * Class BankAccount.
  *
  * This class is the model for basic bank account metadata.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *
- * @property int $id
- * @property int $profile_id
- * @property string $iban
- * @property string $bic
- * @property string $bank
- * @property string $owner
- * @property bool $primary
- * @property string $sepa_mandate
- * @property Carbon $sepa_mandate_signed_at
- * @property Carbon $created_at
- * @property Carbon $updated_at
- * @property Carbon $deleted_at
- *
+ * @property int          $id
+ * @property int          $profile_id
+ * @property string       $iban
+ * @property string       $bic
+ * @property string       $bank
+ * @property string       $owner
+ * @property bool         $primary
+ * @property string       $sepa_mandate
+ * @property Carbon       $sepa_mandate_signed_at
+ * @property Carbon       $created_at
+ * @property Carbon       $updated_at
+ * @property Carbon       $deleted_at
  * @property Profile|null $profile
  */
 class BankAccount extends Model
@@ -36,7 +37,7 @@ class BankAccount extends Model
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var string[]|bool
+     * @var bool|string[]
      */
     protected $guarded = [
         'id',
@@ -48,7 +49,7 @@ class BankAccount extends Model
      * @var array
      */
     protected $casts = [
-        'primary' => 'boolean',
+        'primary'        => 'boolean',
         'sepa_signed_at' => 'datetime',
     ];
 

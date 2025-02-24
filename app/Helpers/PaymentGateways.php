@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Helpers;
 
 use App\Models\Accounting\Invoice\Invoice;
@@ -48,9 +50,9 @@ class PaymentGateways
     /**
      * Initialize a payment.
      *
-     * @param string $method
-     * @param float $value
-     * @param string $type
+     * @param string       $method
+     * @param float        $value
+     * @param string       $type
      * @param Invoice|null $invoice
      */
     public static function initialize(string $method, float $value, string $type = 'prepaid', ?Invoice $invoice = null): ?RedirectResponse
@@ -70,31 +72,31 @@ class PaymentGateways
             ) {
                 $checkUrl = route('customer.payment.check', [
                     'payment_method' => $method->technicalName(),
-                    'payment_type' => $type,
+                    'payment_type'   => $type,
                 ]);
 
                 $successUrl = route('customer.payment.response', [
-                    'payment_type' => $type,
+                    'payment_type'   => $type,
                     'payment_status' => 'success',
                 ]);
 
                 $failedUrl = route('customer.payment.response', [
-                    'payment_type' => $type,
+                    'payment_type'   => $type,
                     'payment_status' => 'failure',
                 ]);
 
                 $waitingUrl = route('customer.payment.response', [
-                    'payment_type' => $type,
+                    'payment_type'   => $type,
                     'payment_status' => 'waiting',
                 ]);
 
                 $pingbackUrl = route('customer.payment.pingback', [
                     'payment_method' => $method->technicalName(),
-                    'payment_type' => $type,
+                    'payment_type'   => $type,
                 ]);
 
                 $paymentIdentification = 'P' . Carbon::now()->format('YmdHis') . Auth::id();
-                $paymentName = ! empty($invoice) ? $invoice->number : $paymentIdentification;
+                $paymentName           = ! empty($invoice) ? $invoice->number : $paymentIdentification;
 
                 $methodData = [];
 
@@ -119,11 +121,11 @@ class PaymentGateways
 
                 if ($status['status'] == 'success') {
                     Payment::create([
-                        'user_id' => Auth::id(),
-                        'invoice_id' => ! empty($invoice) ? $invoice->id : null,
-                        'method' => $method->technicalName(),
-                        'amount' => $value,
-                        'transaction_id' => $status['payment_id'],
+                        'user_id'            => Auth::id(),
+                        'invoice_id'         => ! empty($invoice) ? $invoice->id : null,
+                        'method'             => $method->technicalName(),
+                        'amount'             => $value,
+                        'transaction_id'     => $status['payment_id'],
                         'transaction_status' => 0,
                     ]);
 
@@ -161,76 +163,76 @@ class PaymentGateways
                 $methodData[$setting->setting] = $setting->value;
             });
 
-            if (! empty($_GET["user_id"])) {
-                $client = User::find($_GET["user_id"]);
+            if (! empty($_GET['user_id'])) {
+                $client = User::find($_GET['user_id']);
             } else {
                 $client = Auth::user();
             }
 
             $status = $method->return($type, (object) $methodData, $client);
 
-            if ($status["status"] == "success") {
+            if ($status['status'] == 'success') {
                 if (
                     ! empty($type) &&
-                    ! empty($status["payment_id"])
+                    ! empty($status['payment_id'])
                 ) {
                     /* @var Payment $transaction */
                     if (
                         ! empty(
                             $transaction = Payment::where('user_id', '=', $client->id)
-                                ->where('id', '=', $status["payment_id"])
+                                ->where('id', '=', $status['payment_id'])
                                 ->first()
                         )
                     ) {
                         if ($type == 'prepaid') {
-                            if ($status["payment_status"] == "success") {
+                            if ($status['payment_status'] == 'success') {
                                 PrepaidHistory::create([
-                                    'user_id' => $transaction->user_id,
+                                    'user_id'    => $transaction->user_id,
                                     'invoice_id' => ! empty($invoiceId = $transaction->invoice_id) ? $invoiceId : null,
-                                    'amount' => $transaction->amount,
+                                    'amount'     => $transaction->amount,
                                 ]);
-                            } elseif ($status["payment_status"] == "revoked") {
+                            } elseif ($status['payment_status'] == 'revoked') {
                                 PrepaidHistory::create([
-                                    'user_id' => $transaction->user_id,
+                                    'user_id'    => $transaction->user_id,
                                     'invoice_id' => ! empty($invoiceId = $transaction->invoice_id) ? $invoiceId : null,
-                                    'amount' => $transaction->amount * (-1),
+                                    'amount'     => $transaction->amount * (-1),
                                 ]);
                             }
 
                             $transaction->update([
-                                'transaction_status' => $status["payment_status"],
+                                'transaction_status' => $status['payment_status'],
                             ]);
 
-                            if (! empty($status["redirect"])) {
-                                header("Location: " . $status["redirect"]);
+                            if (! empty($status['redirect'])) {
+                                header('Location: ' . $status['redirect']);
                             } else {
-                                if ($status["payment_status"] == "success") {
+                                if ($status['payment_status'] == 'success') {
                                     return redirect()->route('customer.invoices')->with('success', __('interface.messages.payment_successful_booked'));
                                 } elseif (
-                                    $status["payment_status"] == "revoked" ||
-                                    $status["payment_status"] == "failed"
+                                    $status['payment_status'] == 'revoked' ||
+                                    $status['payment_status'] == 'failed'
                                 ) {
                                     return redirect()->route('customer.invoices')->with('warning', __('interface.messages.payment_failed'));
-                                } elseif ($status["payment_status"] == "waiting") {
+                                } elseif ($status['payment_status'] == 'waiting') {
                                     return redirect()->route('customer.invoices')->with('success', __('interface.messages.payment_waiting_booked'));
                                 }
                             }
                         } else {
                             if (! empty($invoice = $transaction->invoice)) {
-                                if ($status["payment_status"] == "success") {
+                                if ($status['payment_status'] == 'success') {
                                     $invoice->update([
                                         'status' => 'paid',
                                     ]);
 
                                     InvoiceHistory::create([
-                                        'user_id' => $client->id ?? null,
+                                        'user_id'    => $client->id ?? null,
                                         'invoice_id' => $invoice->id,
-                                        'status' => 'pay',
+                                        'status'     => 'pay',
                                     ]);
                                 } elseif (
                                     (
-                                        $status["payment_status"] == "revoked" ||
-                                        $status["payment_status"] == "failed"
+                                        $status['payment_status'] == 'revoked' ||
+                                        $status['payment_status'] == 'failed'
                                     ) &&
                                     $invoice->status !== 'unpaid'
                                 ) {
@@ -239,27 +241,27 @@ class PaymentGateways
                                     ]);
 
                                     InvoiceHistory::create([
-                                        'user_id' => $client->id ?? null,
+                                        'user_id'    => $client->id ?? null,
                                         'invoice_id' => $invoice->id,
-                                        'status' => 'unpay',
+                                        'status'     => 'unpay',
                                     ]);
                                 }
 
                                 $transaction->update([
-                                    'transaction_status' => $status["payment_status"],
+                                    'transaction_status' => $status['payment_status'],
                                 ]);
 
-                                if (! empty($status["redirect"])) {
-                                    header("Location: " . $status["redirect"]);
+                                if (! empty($status['redirect'])) {
+                                    header('Location: ' . $status['redirect']);
                                 } else {
-                                    if ($status["payment_status"] == "success") {
+                                    if ($status['payment_status'] == 'success') {
                                         return redirect()->route('customer.profile.transactions')->with('success', __('interface.messages.payment_successful'));
                                     } elseif (
-                                        $status["payment_status"] == "revoked" ||
-                                        $status["payment_status"] == "failed"
+                                        $status['payment_status'] == 'revoked' ||
+                                        $status['payment_status'] == 'failed'
                                     ) {
                                         return redirect()->route('customer.invoices')->with('warning', __('interface.messages.payment_failed'));
-                                    } elseif ($status["payment_status"] == "waiting") {
+                                    } elseif ($status['payment_status'] == 'waiting') {
                                         return redirect()->route('customer.profile.transactions')->with('success', __('interface.messages.payment_waiting'));
                                     }
                                 }
@@ -294,61 +296,61 @@ class PaymentGateways
                 $methodData[$setting->setting] = $setting->value;
             });
 
-            if (! empty($_GET["user_id"])) {
-                $client = User::find($_GET["user_id"]);
+            if (! empty($_GET['user_id'])) {
+                $client = User::find($_GET['user_id']);
             } else {
                 $client = Auth::user();
             }
 
             $status = $method->return($type, (object) $methodData, $client);
 
-            if ($status["status"] == "success") {
+            if ($status['status'] == 'success') {
                 if (
                     ! empty($type) &&
-                    ! empty($status["payment_id"])
+                    ! empty($status['payment_id'])
                 ) {
                     /* @var Payment $transaction */
                     if (
                         ! empty(
                             $transaction = Payment::where('user_id', '=', $client->id)
-                                ->where('id', '=', $status["payment_id"])
+                                ->where('id', '=', $status['payment_id'])
                                 ->first()
                         )
                     ) {
                         if ($type == 'prepaid') {
-                            if ($status["payment_status"] == "success") {
+                            if ($status['payment_status'] == 'success') {
                                 PrepaidHistory::create([
-                                    'user_id' => $transaction->user_id,
+                                    'user_id'    => $transaction->user_id,
                                     'invoice_id' => ! empty($invoiceId = $transaction->invoice_id) ? $invoiceId : null,
-                                    'amount' => $transaction->amount,
+                                    'amount'     => $transaction->amount,
                                 ]);
-                            } elseif ($status["payment_status"] == "revoked") {
+                            } elseif ($status['payment_status'] == 'revoked') {
                                 PrepaidHistory::create([
-                                    'user_id' => $transaction->user_id,
+                                    'user_id'    => $transaction->user_id,
                                     'invoice_id' => ! empty($invoiceId = $transaction->invoice_id) ? $invoiceId : null,
-                                    'amount' => $transaction->amount * (-1),
+                                    'amount'     => $transaction->amount * (-1),
                                 ]);
                             }
 
                             $transaction->update([
-                                'transaction_status' => $status["payment_status"],
+                                'transaction_status' => $status['payment_status'],
                             ]);
                         } else {
                             if (! empty($invoice = $transaction->invoice)) {
-                                if ($status["payment_status"] == "success") {
+                                if ($status['payment_status'] == 'success') {
                                     $invoice->update([
                                         'status' => 'paid',
                                     ]);
 
                                     InvoiceHistory::create([
-                                        'user_id' => $client->id ?? null,
+                                        'user_id'    => $client->id ?? null,
                                         'invoice_id' => $invoice->id,
-                                        'status' => 'pay',
+                                        'status'     => 'pay',
                                     ]);
                                 } elseif (
                                     (
-                                        $status["payment_status"] == "revoked" ||
-                                        $status["payment_status"] == "failed"
+                                        $status['payment_status'] == 'revoked' ||
+                                        $status['payment_status'] == 'failed'
                                     ) &&
                                     $invoice->status !== 'unpaid'
                                 ) {
@@ -357,14 +359,14 @@ class PaymentGateways
                                     ]);
 
                                     InvoiceHistory::create([
-                                        'user_id' => $client->id ?? null,
+                                        'user_id'    => $client->id ?? null,
                                         'invoice_id' => $invoice->id,
-                                        'status' => 'unpay',
+                                        'status'     => 'unpay',
                                     ]);
                                 }
 
                                 $transaction->update([
-                                    'transaction_status' => $status["payment_status"],
+                                    'transaction_status' => $status['payment_status'],
                                 ]);
                             }
                         }

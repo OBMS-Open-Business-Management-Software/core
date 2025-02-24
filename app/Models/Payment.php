@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Models\Accounting\Invoice\Invoice;
@@ -9,24 +11,23 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class Payment
+ * Class Payment.
  *
  * This class is the model for basic payment log metadata.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *
- * @property int $id
- * @property int $user_id
- * @property int|null $invoice_id
- * @property string $method
- * @property double $amount
- * @property string $transaction_id
- * @property int $transaction_status
- * @property Carbon $created_at
- * @property Carbon $updated_at
- * @property Carbon $deleted_at
- *
- * @property User|null $user
+ * @property int          $id
+ * @property int          $user_id
+ * @property int|null     $invoice_id
+ * @property string       $method
+ * @property float        $amount
+ * @property string       $transaction_id
+ * @property int          $transaction_status
+ * @property Carbon       $created_at
+ * @property Carbon       $updated_at
+ * @property Carbon       $deleted_at
+ * @property User|null    $user
  * @property Invoice|null $invoice
  */
 class Payment extends Model
@@ -36,7 +37,7 @@ class Payment extends Model
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var string[]|bool
+     * @var bool|string[]
      */
     protected $guarded = [
         'id',

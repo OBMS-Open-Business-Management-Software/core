@@ -23,11 +23,12 @@ class TrackerRecord
 
     /**
      * TrackerRecord constructor.
+     *
      * @param string $jobId The associated queued job
      */
     public function __construct(string $jobId)
     {
-        $this->jobId = $jobId;
+        $this->jobId    = $jobId;
         $this->queuedAt = time();
     }
 

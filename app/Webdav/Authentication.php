@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Webdav;
 
 use Illuminate\Support\Facades\Auth;
@@ -32,7 +34,7 @@ class Authentication extends AbstractBasic
         }
 
         return Auth::attempt([
-            'email' => $username,
+            'email'    => $username,
             'password' => $password,
         ]);
     }

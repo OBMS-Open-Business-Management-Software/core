@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\Support\Run;
 
 use App\Models\Support\SupportTicket;
@@ -10,24 +12,23 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class SupportRunHistory
+ * Class SupportRunHistory.
  *
  * This class is the model for linking history with ticket runs metadata.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *
- * @property int $id
- * @property int $run_id
- * @property int $user_id
- * @property int $ticket_id
- * @property string $type
- * @property string $action
- * @property Carbon $created_at
- * @property Carbon $updated_at
- * @property Carbon $deleted_at
- *
- * @property SupportRun|null $run
- * @property User|null $user
+ * @property int                $id
+ * @property int                $run_id
+ * @property int                $user_id
+ * @property int                $ticket_id
+ * @property string             $type
+ * @property string             $action
+ * @property Carbon             $created_at
+ * @property Carbon             $updated_at
+ * @property Carbon             $deleted_at
+ * @property SupportRun|null    $run
+ * @property User|null          $user
  * @property SupportTicket|null $ticket
  */
 class SupportRunHistory extends Model
@@ -44,7 +45,7 @@ class SupportRunHistory extends Model
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var string[]|bool
+     * @var bool|string[]
      */
     protected $guarded = [
         'id',

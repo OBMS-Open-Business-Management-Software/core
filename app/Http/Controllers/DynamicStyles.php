@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Cache;
@@ -15,7 +17,7 @@ class DynamicStyles extends Controller
             return response($stylesheet, 200, ['Content-Type' => 'text/css']);
         }
 
-        $scss = view('styles')->render();
+        $scss     = view('styles')->render();
         $compiler = new Compiler();
         $compiler->setImportPaths([
             resource_path('themes/' . config('app.theme', 'aurora') . '/scss/'),

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Middleware;
 
 use App\Models\Shop\Configurator\ShopConfiguratorCategory;
@@ -8,7 +10,7 @@ use Closure;
 use Illuminate\Http\Request;
 
 /**
- * Class InjectShopCategoryOrProduct
+ * Class InjectShopCategoryOrProduct.
  *
  * This class is the middleware for injecting shop category or product data.
  *
@@ -19,7 +21,7 @@ class InjectShopCategoryOrProduct
     /**
      * Handle an incoming request.
      *
-     * @param  Request  $request
+     * @param Request $request
      * @param Closure $next
      *
      * @return mixed

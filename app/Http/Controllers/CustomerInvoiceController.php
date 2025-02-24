@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Helpers\Download;
@@ -40,7 +42,7 @@ class CustomerInvoiceController extends Controller
      *
      * @param int $id
      *
-     * @return Renderable|RedirectResponse
+     * @return RedirectResponse|Renderable
      */
     public function invoice_details(int $id)
     {
@@ -50,7 +52,7 @@ class CustomerInvoiceController extends Controller
             $invoice->user_id == Auth::id()
         ) {
             return view('customer.invoice.details', [
-                'invoice' => $invoice,
+                'invoice'        => $invoice,
                 'paymentMethods' => PaymentGateways::list(),
             ]);
         }
@@ -89,10 +91,12 @@ class CustomerInvoiceController extends Controller
                 switch ($request->columns[$order['column']]) {
                     case 'user':
                         $orderBy = 'user_id';
+
                         break;
                     case 'id':
                     default:
                         $orderBy = 'id';
+
                         break;
                 }
 
@@ -106,10 +110,10 @@ class CustomerInvoiceController extends Controller
             ->limit($request->length);
 
         return response()->json([
-            'draw' => (int) $request->draw,
-            'recordsTotal' => $totalCount,
+            'draw'            => (int) $request->draw,
+            'recordsTotal'    => $totalCount,
             'recordsFiltered' => $filteredCount,
-            'data' => $query
+            'data'            => $query
                 ->get()
                 ->transform(function (Invoice $invoice) {
                     switch ($invoice->status) {
@@ -119,34 +123,40 @@ class CustomerInvoiceController extends Controller
                             } else {
                                 $status = '<span class="badge badge-warning">' . __('interface.status.unpaid') . '</span>';
                             }
+
                             break;
                         case 'paid':
                             $status = '<span class="badge badge-success">' . __('interface.status.paid') . '</span>';
+
                             break;
                         case 'refunded':
                             $status = '<span class="badge badge-secondary">' . __('interface.status.refunded') . '</span>';
+
                             break;
                         case 'refund':
                             $status = '<span class="badge badge-info text-white">' . __('interface.actions.refund') . '</span>';
+
                             break;
                         case 'revoked':
                             $status = '<span class="badge badge-secondary">' . __('interface.status.revoked') . '</span>';
+
                             break;
                         case 'template':
                         default:
                             $status = '<span class="badge badge-primary">' . __('interface.status.draft') . '</span>';
+
                             break;
                     }
 
                     return (object) [
-                        'id' => $invoice->number,
+                        'id'     => $invoice->number,
                         'status' => $status,
-                        'type' => $invoice->type->name ?? __('interface.misc.not_available'),
-                        'date' => ! empty($invoice->archived_at) ? $invoice->archived_at->format('d.m.Y, H:i') : __('interface.misc.not_available'),
-                        'due' => ! empty($invoice->archived_at) ? $invoice->archived_at->addDays($invoice->type->period)->format('d.m.Y') . ', 23:59' : __('interface.misc.not_available'),
-                        'view' => '<a href="' . route('customer.invoices.details', $invoice->id) . '" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>',
+                        'type'   => $invoice->type->name ?? __('interface.misc.not_available'),
+                        'date'   => ! empty($invoice->archived_at) ? $invoice->archived_at->format('d.m.Y, H:i') : __('interface.misc.not_available'),
+                        'due'    => ! empty($invoice->archived_at) ? $invoice->archived_at->addDays($invoice->type->period)->format('d.m.Y') . ', 23:59' : __('interface.misc.not_available'),
+                        'view'   => '<a href="' . route('customer.invoices.details', $invoice->id) . '" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>',
                     ];
-                })
+                }),
         ]);
     }
 
@@ -154,8 +164,6 @@ class CustomerInvoiceController extends Controller
      * Download an existing invoice.
      *
      * @param int $id
-     *
-     * @return void
      *
      * @throws ValidationException
      */
@@ -199,7 +207,7 @@ class CustomerInvoiceController extends Controller
 
                 $pdf = App::make('dompdf.wrapper')->loadView('pdf.invoice', [
                     'invoice' => $invoice,
-                    'sepaQr' => $sepaQr,
+                    'sepaQr'  => $sepaQr,
                 ]);
 
                 return $pdf->download($invoice->number . '.pdf');
@@ -213,17 +221,15 @@ class CustomerInvoiceController extends Controller
      * @param int $id
      * @param int $reminder_id
      *
-     * @return void
-     *
      * @throws ValidationException
      */
     public function invoice_reminder_download(int $id, int $reminder_id)
     {
         Validator::make([
-            'invoice_id' => $id,
+            'invoice_id'  => $id,
             'reminder_id' => $reminder_id,
         ], [
-            'invoice_id' => ['required', 'integer'],
+            'invoice_id'  => ['required', 'integer'],
             'reminder_id' => ['required', 'integer'],
         ])->validate();
 
@@ -260,7 +266,7 @@ class CustomerInvoiceController extends Controller
 
                 $pdf = App::make('dompdf.wrapper')->loadView('pdf.reminder', [
                     'reminder' => $reminder,
-                    'sepaQr' => $sepaQr,
+                    'sepaQr'   => $sepaQr,
                 ]);
 
                 return $pdf->download($reminder->number . '.pdf');
@@ -297,13 +303,16 @@ class CustomerInvoiceController extends Controller
                 switch ($request->columns[$order['column']]) {
                     case 'status':
                         $orderBy = 'status';
+
                         break;
                     case 'date':
                         $orderBy = 'created_at';
+
                         break;
                     case 'id':
                     default:
                         $orderBy = 'id';
+
                         break;
                 }
 
@@ -317,40 +326,46 @@ class CustomerInvoiceController extends Controller
             ->limit($request->length);
 
         return response()->json([
-            'draw' => (int) $request->draw,
-            'recordsTotal' => $totalCount,
+            'draw'            => (int) $request->draw,
+            'recordsTotal'    => $totalCount,
             'recordsFiltered' => $filteredCount,
-            'data' => $query
+            'data'            => $query
                 ->get()
                 ->transform(function (InvoiceHistory $history) {
                     switch ($history->status) {
                         case 'publish':
                             $status = '<span class="badge badge-success">' . __('interface.status.published') . '</span>';
+
                             break;
                         case 'revoke':
                             $status = '<span class="badge badge-secondary">' . __('interface.status.revoked') . '</span>';
+
                             break;
                         case 'refund':
                             $status = '<span class="badge badge-info text-white">' . __('interface.actions.refund') . '</span>';
+
                             break;
                         case 'unpay':
                             $status = '<span class="badge badge-warning">' . __('interface.status.unpaid') . '</span>';
+
                             break;
                         case 'pay':
                             $status = '<span class="badge badge-success">' . __('interface.status.paid') . '</span>';
+
                             break;
                         default:
                             $status = '<span class="badge badge-secondary">' . __('interface.status.unknown') . '</span>';
+
                             break;
                     }
 
                     return (object) [
-                        'id' => $history->id,
-                        'date' => $history->created_at->format('d.m.Y, H:i'),
-                        'name' => ! empty($history->user) && ! empty($history->user->realName) ? '<i class="bi bi-person mr-2"></i> ' . $history->user->realName : '<i class="bi bi-robot mr-2""></i> ' . __('interface.data.system'),
+                        'id'     => $history->id,
+                        'date'   => $history->created_at->format('d.m.Y, H:i'),
+                        'name'   => ! empty($history->user) && ! empty($history->user->realName) ? '<i class="bi bi-person mr-2"></i> ' . $history->user->realName : '<i class="bi bi-robot mr-2""></i> ' . __('interface.data.system'),
                         'status' => $status,
                     ];
-                })
+                }),
         ]);
     }
 }

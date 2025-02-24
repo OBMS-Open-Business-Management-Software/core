@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Jobs\TenantJobs;
 
 use App\Helpers\IMAP;
@@ -16,7 +18,7 @@ use Illuminate\Database\Eloquent\Builder;
 use stdClass;
 
 /**
- * Class InvoiceImport
+ * Class InvoiceImport.
  *
  * This class is the tenant job for importing invoice metadata via. IMAP inboxes.
  *
@@ -27,7 +29,9 @@ class InvoiceImport extends TenantJob
     use UniquelyQueueable;
 
     public $tries = 1;
+
     public $timeout = 3600;
+
     public static $onQueue = 'invoice_import';
 
     /**
@@ -74,7 +78,7 @@ class InvoiceImport extends TenantJob
                 ) {
                     return (object) [
                         'supplier' => $supplier,
-                        'mail' => $mail,
+                        'mail'     => $mail,
                     ];
                 }
 
@@ -91,30 +95,30 @@ class InvoiceImport extends TenantJob
                         $fileMime = $fileInfo->buffer($file['attachment']);
 
                         $file = File::create([
-                            'user_id' => null,
+                            'user_id'   => null,
                             'folder_id' => null,
-                            'name' => Carbon::now()->format('YmdHis') . '_' . $file['filename'],
-                            'data' => $file['attachment'],
-                            'mime' => $fileMime,
-                            'size' => strlen($file['attachment']),
+                            'name'      => Carbon::now()->format('YmdHis') . '_' . $file['filename'],
+                            'data'      => $file['attachment'],
+                            'mime'      => $fileMime,
+                            'size'      => strlen($file['attachment']),
                         ]);
 
                         if ($file instanceof File) {
                             $invoice = Invoice::create([
-                                'user_id' => $result->supplier->id,
+                                'user_id'        => $result->supplier->id,
                                 'reverse_charge' => $result->supplier->reverseCharge,
                             ]);
                         }
 
                         InvoiceImporterHistory::create([
                             'importer_id' => $importer->id,
-                            'invoice_id' => isset($invoice) && $invoice instanceof Invoice ? $invoice->id : null,
-                            'file_id' => isset($file) && $file instanceof File ? $file->id : null,
-                            'subject' => $result->mail->subject,
-                            'from' => $result->mail->subject,
-                            'from_name' => $result->mail->subject,
-                            'to' => $result->mail->to,
-                            'message' => $result->mail->message,
+                            'invoice_id'  => isset($invoice) && $invoice instanceof Invoice ? $invoice->id : null,
+                            'file_id'     => isset($file) && $file instanceof File ? $file->id : null,
+                            'subject'     => $result->mail->subject,
+                            'from'        => $result->mail->subject,
+                            'from_name'   => $result->mail->subject,
+                            'to'          => $result->mail->to,
+                            'message'     => $result->mail->message,
                         ]);
                     });
             });

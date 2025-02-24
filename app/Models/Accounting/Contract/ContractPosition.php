@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\Accounting\Contract;
 
 use App\Models\Accounting\Position;
@@ -11,23 +13,22 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class ContractPosition
+ * Class ContractPosition.
  *
  * This class is the model for linking contract with position metadata.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *
- * @property int $id
- * @property int $contract_id
- * @property int $position_id
- * @property Carbon $started_at
- * @property Carbon $ended_at
- * @property Carbon $created_at
- * @property Carbon $updated_at
- * @property Carbon $deleted_at
- *
- * @property Contract|null $contract
- * @property Position|null $position
+ * @property int                  $id
+ * @property int                  $contract_id
+ * @property int                  $position_id
+ * @property Carbon               $started_at
+ * @property Carbon               $ended_at
+ * @property Carbon               $created_at
+ * @property Carbon               $updated_at
+ * @property Carbon               $deleted_at
+ * @property Contract|null        $contract
+ * @property Position|null        $position
  * @property TrackerInstance|null $trackerInstance
  */
 class ContractPosition extends Model
@@ -38,7 +39,7 @@ class ContractPosition extends Model
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var string[]|bool
+     * @var bool|string[]
      */
     protected $guarded = [
         'id',
@@ -51,7 +52,7 @@ class ContractPosition extends Model
      */
     protected $casts = [
         'started_at' => 'datetime',
-        'ended_at' => 'datetime',
+        'ended_at'   => 'datetime',
     ];
 
     /**

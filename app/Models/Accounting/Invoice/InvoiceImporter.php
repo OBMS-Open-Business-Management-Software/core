@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\Accounting\Invoice;
 
 use App\Models\ImapInbox;
@@ -9,20 +11,19 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
- * Class SupportCategory
+ * Class SupportCategory.
  *
  * This class is the model for basic invoice importer metadata.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *
- * @property int $id
- * @property int $imap_inbox_id
- * @property string $name
- * @property string $description
- * @property Carbon $created_at
- * @property Carbon $updated_at
- * @property Carbon $deleted_at
- *
+ * @property int            $id
+ * @property int            $imap_inbox_id
+ * @property string         $name
+ * @property string         $description
+ * @property Carbon         $created_at
+ * @property Carbon         $updated_at
+ * @property Carbon         $deleted_at
  * @property ImapInbox|null $imapInbox
  */
 class InvoiceImporter extends Model
@@ -30,7 +31,7 @@ class InvoiceImporter extends Model
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var string[]|bool
+     * @var bool|string[]
      */
     protected $guarded = [
         'id',
