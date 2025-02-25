@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.9.2](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.9.1...v1.9.2) (2025-02-25)
+
+
+### Bug Fixes
+
+* ticket run next object identification ([7a0462c](https://github.com/OBMS-Open-Business-Management-Software/core/commit/7a0462c5a81434760a63504e7ed9367a6b27b306))
+
 ## [1.9.1](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.9.0...v1.9.1) (2025-02-25)
 
 
