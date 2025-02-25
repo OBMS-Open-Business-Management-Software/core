@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.9.1](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.9.0...v1.9.1) (2025-02-25)
+
+
+### Bug Fixes
+
+* email supression translation ([9c366e3](https://github.com/OBMS-Open-Business-Management-Software/core/commit/9c366e345cac77e164dd6badb283b00e401588d3))
+
 ## [1.9.0](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.8.2...v1.9.0) (2025-02-24)
 
 
