@@ -203,6 +203,8 @@ Route::middleware([
         Route::middleware('role.admin')->group(function () {
             Route::get('/settings', [App\Http\Controllers\AdminSettingsController::class, 'settings_index'])->name('admin.settings');
             Route::get('/settings/list', [App\Http\Controllers\AdminSettingsController::class, 'settings_list'])->name('admin.settings.list');
+            Route::post('/settings/assets/update', [App\Http\Controllers\AdminSettingsController::class, 'settings_assets_update'])->name('admin.settings.assets');
+            Route::get('/settings/remove/{setting}', [App\Http\Controllers\AdminSettingsController::class, 'settings_assets_remove'])->name('admin.settings.assets.remove');
             Route::post('/settings/{id}/update', [App\Http\Controllers\AdminSettingsController::class, 'settings_update'])->name('admin.settings.update');
 
             Route::get('/support/categories', [App\Http\Controllers\AdminSupportController::class, 'support_categories'])->name('admin.support.categories');

@@ -37,7 +37,10 @@ class AdminSettingsController extends Controller
     {
         session_write_close();
 
-        $query = Setting::query();
+        $query = Setting::whereNotIn('setting', [
+            'company.logo',
+            'company.favicon',
+        ]);
 
         $totalCount = (clone $query)->count();
 
@@ -158,6 +161,77 @@ class AdminSettingsController extends Controller
 
                 Cache::forget($cacheKey);
             }
+
+            return redirect()->back()->with('success', __('interface.messages.setting_updated'));
+        }
+
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
+    }
+
+    /**
+     * Update a setting.
+     *
+     * @param Request $request
+     *
+     * @throws ValidationException
+     *
+     * @return RedirectResponse
+     */
+    public function settings_assets_update(Request $request): RedirectResponse
+    {
+        $assetsUpdated = false;
+
+        if (
+            ! empty($file = $request->files->get('logo')) &&
+            ! empty($setting = Setting::where('setting', 'company.logo')->first())
+        ) {
+            $setting->update([
+                'value' => 'data:' . $file->getClientMimeType() . ';base64,' . base64_encode($file->getContent()),
+            ]);
+
+            $assetsUpdated = true;
+        }
+
+        if (
+            ! empty($file = $request->files->get('favicon')) &&
+            ! empty($setting = Setting::where('setting', 'company.favicon')->first())
+        ) {
+            $setting->update([
+                'value' => 'data:' . $file->getClientMimeType() . ';base64,' . base64_encode($file->getContent()),
+            ]);
+
+            $assetsUpdated = true;
+        }
+
+        if ($assetsUpdated) {
+            return redirect()->back()->with('success', __('interface.messages.setting_updated'));
+        }
+
+        return redirect()->back()->with('warning', __('interface.misc.something_wrong_notice'));
+    }
+
+    /**
+     * Update a setting.
+     *
+     * @param Request $request
+     *
+     * @throws ValidationException
+     *
+     * @return RedirectResponse
+     */
+    public function settings_assets_remove(Request $request): RedirectResponse
+    {
+        Validator::make([
+            'setting' => $request->setting,
+        ], [
+            'setting' => ['required', 'string'],
+        ])->validate();
+
+        /* @var Setting $setting */
+        if (! empty($setting = Setting::where('setting', $request->setting)->first())) {
+            $setting->update([
+                'value' => null,
+            ]);
 
             return redirect()->back()->with('success', __('interface.messages.setting_updated'));
         }
