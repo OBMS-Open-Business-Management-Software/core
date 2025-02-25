@@ -942,7 +942,7 @@ class AdminSupportController extends Controller
             )
         ) {
             /* @var SupportTicket|null $nextTicket */
-            if (! empty($nextTicket = SupportRun::nextTicket())) {
+            if (! empty($nextTicket = SupportRunHelper::nextTicket($run->category_id))) {
                 SupportTicketHistory::create([
                     'ticket_id' => $nextTicket->id,
                     'user_id'   => Auth::id(),
