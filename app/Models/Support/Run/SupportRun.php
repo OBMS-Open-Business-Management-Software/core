@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models\Support\Run;
 
+use App\Models\Support\Category\SupportCategory;
 use App\Models\Support\SupportTicket;
 use App\Models\User;
 use Carbon\Carbon;
@@ -21,11 +22,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *
  * @property int                           $id
+ * @property int                           $category_id
  * @property int                           $ticket_id
  * @property int                           $user_id
  * @property Carbon                        $created_at
  * @property Carbon                        $updated_at
  * @property Carbon                        $deleted_at
+ * @property SupportCategory|null          $category
  * @property SupportTicket|null            $ticket
  * @property User|null                     $user
  * @property Collection<SupportRunHistory> $history
@@ -42,6 +45,16 @@ class SupportRun extends Model
     protected $guarded = [
         'id',
     ];
+
+    /**
+     * Relation to ticket category.
+     *
+     * @return HasOne
+     */
+    public function category(): HasOne
+    {
+        return $this->hasOne(SupportCategory::class, 'id', 'category_id');
+    }
 
     /**
      * Relation to ticket.
