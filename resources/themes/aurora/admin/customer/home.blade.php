@@ -97,7 +97,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="suppress_welcome_email" class="col-md-4 col-form-label text-md-right">{{ __('interface.misc.supress_welcome_email') }}</label>
+                            <label for="suppress_welcome_email" class="col-md-4 col-form-label text-md-right">{{ __('interface.data.supress_welcome_email') }}</label>
 
                             <div class="col-md-8">
                                 <input id="suppress_welcome_email" type="checkbox" class="form-control" name="suppress_welcome_email" value="true">
