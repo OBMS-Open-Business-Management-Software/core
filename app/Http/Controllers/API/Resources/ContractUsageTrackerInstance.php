@@ -7,7 +7,7 @@ namespace App\Http\Controllers\API\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class TrackerInstance extends JsonResource
+class ContractUsageTrackerInstance extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -23,9 +23,9 @@ class TrackerInstance extends JsonResource
             'contract_id'          => $this->contract_id,
             'contract_position_id' => $this->contract_position_id,
             'tracker_id'           => $this->tracker_id,
-            'created_at'           => $this->created_at->format('Y-m-d H:i:s'),
-            'updated_at'           => $this->updated_at->format('Y-m-d H:i:s'),
-            'deleted_at'           => $this->deleted_at->format('Y-m-d H:i:s'),
+            'created_at'           => $this->created_at?->toISOString(),
+            'updated_at'           => $this->updated_at?->toISOString(),
+            'deleted_at'           => $this->deleted_at?->toISOString(),
         ];
     }
 }
