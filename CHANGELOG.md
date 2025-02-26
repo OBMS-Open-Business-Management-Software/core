@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.10.0](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.9.2...v1.10.0) (2025-02-26)
+
+
+### Features
+
+* branding upload form ([58cc545](https://github.com/OBMS-Open-Business-Management-Software/core/commit/58cc545ddd582bacce8ccbd28bb9cb703bc32a2b))
+
 ## [1.9.2](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.9.1...v1.9.2) (2025-02-25)
 
 
