@@ -201,6 +201,9 @@ return [
         'tracker_item_id'                   => 'Tracker Item :id',
         'value_value'                       => 'Value: :value',
         'price_price'                       => 'Price: :price €',
+        'logo'                              => 'Logo',
+        'favicon'                           => 'Favicon',
+        'branding'                          => 'Branding',
     ],
     'data_type' => [
         'string'  => 'String',
@@ -675,6 +678,7 @@ return [
         'cancel_instantly'     => 'Cancel contract instantly',
         'accept'               => 'Accept',
         'accept_sepa_mandate'  => 'Accept SEPA Mandate',
+        'save_branding'        => 'Save Branding',
     ],
     'documents' => [
         'gross_position'           => 'Gross (Position)',
