@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.10.2](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.10.1...v1.10.2) (2025-02-26)
+
+
+### Bug Fixes
+
+* error message when no oauth clients are present ([144fe5d](https://github.com/OBMS-Open-Business-Management-Software/core/commit/144fe5dc28a178525ceb8ea4aeae3855c2e73e55))
+
 ## [1.10.1](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.10.0...v1.10.1) (2025-02-26)
 
 
