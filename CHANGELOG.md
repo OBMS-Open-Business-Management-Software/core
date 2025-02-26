@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.11.0](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.10.2...v1.11.0) (2025-02-26)
+
+
+### Features
+
+* contract usage tracker api endpoints ([5659c7a](https://github.com/OBMS-Open-Business-Management-Software/core/commit/5659c7a3060b46d4cd686d5b4e7dc5c870cb3d5b))
+
 ## [1.10.2](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.10.1...v1.10.2) (2025-02-26)
 
 
