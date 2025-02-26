@@ -764,13 +764,13 @@ return [
         'create' => 'Create Reminder',
     ],
     'payment_type' => [
-        'create' => 'Create Page',
+        'create' => 'Create Payment Type',
     ],
     'customer' => [
         'create' => 'Create Customer',
     ],
     'customer' => [
-        'create' => 'Create Page',
+        'create' => 'Create Customer',
     ],
     'folder' => [
         'create' => 'Create Folder',
