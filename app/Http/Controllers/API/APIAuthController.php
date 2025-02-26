@@ -38,19 +38,10 @@ class APIAuthController extends APIBaseController
 
                     return $this->sendResponse($success, 'User login successful.');
                 } catch (Exception $exception) {
-                    return $this->sendError('Unauthorized.', [
-                        'error' => 'Unauthorized',
-                    ]);
                 }
-            } else {
-                return $this->sendError('Unauthorized.', [
-                    'error' => 'Unauthorized',
-                ]);
             }
-        } else {
-            return $this->sendError('Unauthorized.', [
-                'error' => 'Unauthorized',
-            ]);
         }
+
+        return $this->sendError('Unauthorized.', [], 403);
     }
 }
