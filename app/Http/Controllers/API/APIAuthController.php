@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\API;
 
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -31,10 +32,16 @@ class APIAuthController extends APIBaseController
                 $user->role === 'api' &&
                 ! $user->locked
             ) {
-                $success['token'] = $user->createToken('MyApp')-> accessToken;
-                $success['name']  = $user->name;
+                try {
+                    $success['token'] = $user->createToken(config('app.name'))-> accessToken;
+                    $success['name']  = $user->name;
 
-                return $this->sendResponse($success, 'User login successful.');
+                    return $this->sendResponse($success, 'User login successful.');
+                } catch (Exception $exception) {
+                    return $this->sendError('Unauthorized.', [
+                        'error' => 'Unauthorized',
+                    ]);
+                }
             } else {
                 return $this->sendError('Unauthorized.', [
                     'error' => 'Unauthorized',
