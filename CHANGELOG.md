@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.10.1](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.10.0...v1.10.1) (2025-02-26)
+
+
+### Bug Fixes
+
+* creation form headlines ([f0007a6](https://github.com/OBMS-Open-Business-Management-Software/core/commit/f0007a69d7527edadb0193bdea58b4604a39608d))
+
 ## [1.10.0](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.9.2...v1.10.0) (2025-02-26)
 
 
