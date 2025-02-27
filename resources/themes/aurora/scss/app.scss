@@ -19,6 +19,22 @@
 
 // Base style
 @import 'base';
+@import 'frame';
+
+main {
+    overflow: auto;
+}
+
+.container-fluid, .container-sm, .container-md, .container-lg, .container-xl {
+    &.my-4 {
+        padding: 0.25rem 1.5rem;
+    }
+}
+
+.navbar-brand {
+    width: 250px;
+    max-width: 100%;
+}
 
 .logo {
     align-items: center;
@@ -37,6 +53,7 @@
     &.logo-stacked {
         flex-direction: column;
         gap: 0.5rem;
+        margin-top: 0.75rem;
     }
 
     img {
@@ -100,10 +117,6 @@
     }
 }
 
-.navbar-brand {
-    box-shadow: 0 -0.25rem 0.25rem rgba(0, 0, 0, 0.075);
-}
-
 .navbar-nav, .sidebar {
     .dropdown-menu {
         position: absolute;
@@ -140,7 +153,7 @@
 .navbar-toggler {
     border-color: transparent !important;
     color: var(--white) !important;
-    background-color: var(--primary);
+    background-color: var(--primary) !important;
     line-height: 1.9rem;
 }
 
@@ -231,16 +244,16 @@
 }
 
 .sidebar {
-    position: fixed;
     background-color: var(--white);
-    height: calc(100vh - 4.5rem);
+    border-top: 1px solid var(--gray);
+    height: 100%;
     left: 0;
     bottom: 0;
+    flex-shrink: 0;
     overflow-x: auto;
-
-    @media (max-width: 767px) {
-        z-index: 10;
-    }
+    width: 350px;
+    max-width: 100%;
+    z-index: 1020;
 
     .nav {
         &.flex-column {
@@ -297,7 +310,7 @@
                 &:not(.dropdown-indicator) {
                     align-items: center;
                     background-color: var(--gray);
-                    border-radius: 0.2rem;
+                    border-radius: 1.125rem;
                     color: var(--primary);
                     display: flex;
                     font-size: 1rem;
@@ -628,18 +641,38 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     padding: 0.3rem 0.5rem;
 }
 
+.login {
+    height: 100%;
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    align-content: space-around;
+    flex-wrap: wrap;
+
+    .wrapper {
+        padding-bottom: 2rem;
+        padding-top: 2rem;
+    }
+}
+
+.border {
+    &.border-gray {
+        border-color: var(--gray) !important;
+    }
+}
+
 ::-webkit-scrollbar {
-    width: 10px;
+    width: 0.625rem;
 }
 
 ::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    background: var(--gray);
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #888;
+    background: var(--primary);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #555;
+    background: var(--secondary);
 }

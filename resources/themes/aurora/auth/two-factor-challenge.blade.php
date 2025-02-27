@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <div class="card mb-4">
+                <div class="card">
                     <div class="card-header text-decoration-none">
                         <i class="bi bi-qr-code"></i> {{ __('interface.data.2fa') }}
                     </div>
