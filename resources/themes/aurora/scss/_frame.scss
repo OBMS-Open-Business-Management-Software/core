@@ -1,0 +1,60 @@
+.app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+
+    .wrapper {
+        display: flex;
+        flex-grow: 1;
+        overflow: hidden;
+        position: relative;
+
+        @media (max-width: 991px) {
+            &:has(> .sidebar.show) {
+                &::after {
+                    background-color: color-mix(in srgb, var(--gray) 80%, transparent);
+                    backdrop-filter: blur(2px);
+                    content: "";
+                    height: 100%;
+                    left: 0;
+                    position: absolute;
+                    top: 0;
+                    width: 100%;
+                }
+            }
+
+            .sidebar {
+                position: fixed;
+                top: 4.5rem;
+                height: calc(100% - 4.5rem);
+                transform: translateX(-100%);
+                transition: transform 0.25s ease !important;
+
+                &.show {
+                    transform: translateX(0);
+                }
+            }
+        }
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            justify-content: space-between;
+            overflow: hidden;
+
+            @media (max-width: 991px) {
+                width: 100vw;
+            }
+
+            .main {
+                flex-shrink: 1;
+                overflow: auto;
+            }
+
+            .actions {
+                background-color: var(--white);
+            }
+        }
+    }
+}

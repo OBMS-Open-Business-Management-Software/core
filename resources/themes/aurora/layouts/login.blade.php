@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-100">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,10 +16,10 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<body>
-    <div id="app">
-        <main>
-            <div class="row mx-0 vh-100 align-content-center">
+<body class="h-100">
+    <div class="login" id="app">
+        <main class="w-100">
+            <div class="row mx-0">
                 <div class="col-md-12 d-flex align-items-center">
                     <div class="wrapper w-100">
                         <div class="container mb-5">
@@ -66,21 +66,21 @@
 
                         @yield('content')
 
-                        <div class="row justify-content-center text-center my-4">
-                            <div class="col-md-12">
-                                <div class="row">
-                                    <div class="col-md-8 offset-md-2">
-                                        @if (request()->get('navigateables')->isNotEmpty())
+                        @if (request()->get('navigateables')->isNotEmpty())
+                            <div class="row justify-content-center text-center mt-5">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-8 offset-md-2">
                                             @foreach (request()->get('navigateables') as $page)
                                                 <a class="small" href="{{ route('cms.page.' . $page->id) }}" target="_blank">
                                                     {{ __($page->title) }}
                                                 </a>
                                             @endforeach
-                                        @endif
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        @endif
                     </div>
                 </div>
             </div>
