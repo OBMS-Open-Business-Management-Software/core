@@ -6,14 +6,28 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\API\Resources\ContractUsageTrackerInstance as Resource;
 use App\Models\UsageTracker\TrackerInstance;
+use App\Traits\API\SendsResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class APIContractUsageTrackerInstanceController extends APIBaseController
+class APIContractUsageTrackerInstanceController
 {
+    use SendsResponse;
+
     /**
      * Display a listing of the resource.
+     *
+     * @OA\Get(
+     *     path="/api/contracts/usage-trackers/instances",
+     *     summary="Get all contract usage tracker instances",
+     *     description="Get all contract usage tracker instances",
+     *     tags={"Contract Usage Tracker Instances"},
+     *     security={{"bearerAuth":{}}},
+     *
+     *     @OA\Response(response=200, description="Contract usage tracker instance retrieved successfully."),
+     *     @OA\Response(response=403, ref="#/components/responses/ForbiddenResponse")
+     * )
      *
      * @return JsonResponse
      */
@@ -26,6 +40,29 @@ class APIContractUsageTrackerInstanceController extends APIBaseController
 
     /**
      * Store a newly created resource in storage.
+     *
+     * @OA\Post(
+     *     path="/api/contracts/usage-trackers/instances",
+     *     summary="Create a new contract usage tracker instance",
+     *     description="Create a new contract usage tracker instance",
+     *     tags={"Contract Usage Tracker Instances"},
+     *     security={{"bearerAuth":{}}},
+     *
+     *     @OA\RequestBody(
+     *
+     *         @OA\JsonContent(
+     *             type="object",
+     *
+     *             @OA\Property(property="contract_id", type="integer", example=1),
+     *             @OA\Property(property="tracker_id", type="integer", example=1),
+     *             @OA\Property(property="contract_position_id", type="integer", example=1)
+     *         )
+     *     ),
+     *
+     *     @OA\Response(response=201, description="Contract usage tracker instance created successfully."),
+     *     @OA\Response(response=403, ref="#/components/responses/ForbiddenResponse"),
+     *     @OA\Response(response=422, ref="#/components/responses/ValidationErrorResponse")
+     * )
      *
      * @param Request $request
      *
@@ -42,16 +79,30 @@ class APIContractUsageTrackerInstanceController extends APIBaseController
         ]);
 
         if ($validator->fails()) {
-            return $this->sendError('Validation Error.', $validator->errors()->toArray(), 422);
+            return $this->sendError(422, 'Validation Error', $validator->errors()->toArray());
         }
 
         $item = TrackerInstance::create($input);
 
-        return $this->sendResponse(new Resource($item), 'Contract usage tracker instance created successfully.');
+        return $this->sendResponse('Contract usage tracker instance created successfully.', new Resource($item));
     }
 
     /**
      * Display the specified resource.
+     *
+     * @OA\Get(
+     *     path="/api/contracts/usage-trackers/instances/{id}",
+     *     summary="Get a contract usage tracker instance by ID",
+     *     description="Get a contract usage tracker instance by ID",
+     *     tags={"Contract Usage Tracker Instances"},
+     *     security={{"bearerAuth":{}}},
+     *
+     *     @OA\Parameter(name="id", in="path", required=true, description="ID of the contract usage tracker instance"),
+     *
+     *     @OA\Response(response=200, description="Contract usage tracker instance retrieved successfully."),
+     *     @OA\Response(response=403, ref="#/components/responses/ForbiddenResponse"),
+     *     @OA\Response(response=404, ref="#/components/responses/NotFoundResponse")
+     * )
      *
      * @param int $id
      *
@@ -62,14 +113,39 @@ class APIContractUsageTrackerInstanceController extends APIBaseController
         $item = TrackerInstance::find($id);
 
         if (is_null($item)) {
-            return $this->sendError('Not found.', [], 404);
+            return $this->sendError(404, 'Not Found');
         }
 
-        return $this->sendResponse(new Resource($item), 'Contract usage tracker instance retrieved successfully.');
+        return $this->sendResponse('Contract usage tracker instance retrieved successfully.', new Resource($item));
     }
 
     /**
      * Update the specified resource in storage.
+     *
+     * @OA\Put(
+     *     path="/api/contracts/usage-trackers/instances/{id}",
+     *     summary="Update a contract usage tracker instance by ID",
+     *     description="Update a contract usage tracker instance by ID",
+     *     tags={"Contract Usage Tracker Instances"},
+     *     security={{"bearerAuth":{}}},
+     *
+     *     @OA\Parameter(name="id", in="path", required=true, description="ID of the contract usage tracker instance"),
+     *
+     *     @OA\RequestBody(
+     *
+     *         @OA\JsonContent(
+     *             type="object",
+     *
+     *             @OA\Property(property="contract_id", type="integer", example=1),
+     *             @OA\Property(property="tracker_id", type="integer", example=1),
+     *             @OA\Property(property="contract_position_id", type="integer", example=1)
+     *         )
+     *     ),
+     *
+     *     @OA\Response(response=200, description="Contract usage tracker instance updated successfully."),
+     *     @OA\Response(response=403, ref="#/components/responses/ForbiddenResponse"),
+     *     @OA\Response(response=422, ref="#/components/responses/ValidationErrorResponse")
+     * )
      *
      * @param Request         $request
      * @param TrackerInstance $item
@@ -88,16 +164,41 @@ class APIContractUsageTrackerInstanceController extends APIBaseController
         ]);
 
         if ($validator->fails()) {
-            return $this->sendError('Validation Error.', $validator->errors()->toArray(), 422);
+            return $this->sendError(422, 'Validation Error', $validator->errors()->toArray());
         }
 
         $item->update($input);
 
-        return $this->sendResponse(new Resource($item), 'Contract usage tracker instance updated successfully.');
+        return $this->sendResponse('Contract usage tracker instance updated successfully.', new Resource($item));
     }
 
     /**
      * Remove the specified resource from storage.
+     *
+     * @OA\Delete(
+     *     path="/api/contracts/usage-trackers/instances/{id}",
+     *     summary="Delete a contract usage tracker instance by ID",
+     *     description="Delete a contract usage tracker instance by ID",
+     *     tags={"Contract Usage Tracker Instances"},
+     *     security={{"bearerAuth":{}}},
+     *
+     *     @OA\Parameter(name="id", in="path", required=true, description="ID of the contract usage tracker instance"),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Contract usage tracker instance deleted successfully.",
+     *
+     *         @OA\JsonContent(
+     *             type="object",
+     *
+     *             @OA\Property(property="success", type="boolean", example=true),
+     *             @OA\Property(property="message", type="string", example="Contract usage tracker instance deleted successfully."),
+     *         )
+     *     ),
+     *
+     *     @OA\Response(response=403, ref="#/components/responses/ForbiddenResponse"),
+     *     @OA\Response(response=404, ref="#/components/responses/NotFoundResponse")
+     * )
      *
      * @param TrackerInstance $item
      * @param TrackerInstance $instance
@@ -108,6 +209,6 @@ class APIContractUsageTrackerInstanceController extends APIBaseController
     {
         $item->delete();
 
-        return $this->sendResponse([], 'Contract usage tracker instance deleted successfully.');
+        return $this->sendResponse('Contract usage tracker instance deleted successfully.');
     }
 }
