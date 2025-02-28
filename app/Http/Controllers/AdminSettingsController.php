@@ -89,7 +89,7 @@ class AdminSettingsController extends Controller
             <div class="modal-header bg-warning">
                 <h5 class="modal-title" id="edit' . $setting->id . 'Label">' . __('interface.actions.edit') . ' (' . $setting->setting . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <i class="bi bi-x"></i>
                 </button>
             </div>
             <div class="modal-body">

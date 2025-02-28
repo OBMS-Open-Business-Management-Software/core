@@ -102,7 +102,7 @@ class AdminPageController extends Controller
             <div class="modal-header bg-warning">
                 <h5 class="modal-title" id="editPage' . $page->id . 'Label">' . __('interface.actions.edit') . ' (' . __($page->title) . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <i class="bi bi-x"></i>
                 </button>
             </div>
             <form action="' . route('admin.pages.update', $page->id) . '" method="post">
@@ -354,7 +354,7 @@ class AdminPageController extends Controller
             <div class="modal-header bg-warning">
                 <h5 class="modal-title" id="editPageVersion' . $version->id . 'Label">' . __('interface.actions.edit') . ' (#' . __($version->id) . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <i class="bi bi-x"></i>
                 </button>
             </div>
             <form action="' . route('admin.pages.versions.update', ['id' => $version->page_id, 'version_id' => $version->id]) . '" method="post">

@@ -44,7 +44,7 @@
                 <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title" id="addLabel"><i class="bi bi-plus-circle"></i> {{ __('interface.contract_type.create') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                        <i class="bi bi-x"></i>
                     </button>
                 </div>
                 <form action="{{ route('admin.contracts.types.add') }}" method="post">

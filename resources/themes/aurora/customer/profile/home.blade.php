@@ -482,7 +482,7 @@
                 <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title" id="editLabel"><i class="bi bi-pencil-square"></i> {{ __('interface.misc.edit_user_details') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                        <i class="bi bi-x"></i>
                     </button>
                 </div>
                 <form action="{{ route('customer.profile.update') }}" method="post">
@@ -547,7 +547,7 @@
                 <div class="modal-header bg-warning">
                     <h5 class="modal-title" id="passwordLabel"><i class="bi bi-key-fill"></i> {{ __('interface.actions.change_password') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                        <i class="bi bi-x"></i>
                     </button>
                 </div>
                 <form action="{{ route('customer.profile.password') }}" method="post">
@@ -605,7 +605,7 @@
                     <div class="modal-header bg-primary text-white">
                         <h5 class="modal-title" id="editProfileLabel"><i class="bi bi-pencil-square"></i> {{ __('interface.actions.edit_profile_details') }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                            <i class="bi bi-x"></i>
                         </button>
                     </div>
                     <form action="{{ route('customer.profile.update.details') }}" method="post">
@@ -710,7 +710,7 @@
                     <div class="modal-header bg-primary">
                         <h5 class="modal-title text-white" id="addEmailLabel"><i class="bi bi-plus-circle"></i> {{ __('interface.email.create') }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                            <i class="bi bi-x"></i>
                         </button>
                     </div>
                     <form action="{{ route('customer.profile.email.create') }}" method="post">
@@ -771,7 +771,7 @@
                     <div class="modal-header bg-primary">
                         <h5 class="modal-title text-white" id="addPhoneLabel"><i class="bi bi-plus-circle"></i> {{ __('interface.phone.create') }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                            <i class="bi bi-x"></i>
                         </button>
                     </div>
                     <form action="{{ route('customer.profile.phone.create') }}" method="post">
@@ -832,7 +832,7 @@
                     <div class="modal-header bg-primary">
                         <h5 class="modal-title text-white" id="addAddressLabel"><i class="bi bi-plus-circle"></i> {{ __('interface.address.create') }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                            <i class="bi bi-x"></i>
                         </button>
                     </div>
                     <form action="{{ route('customer.profile.address.create') }}" method="post">
@@ -997,7 +997,7 @@
                     <div class="modal-header bg-primary">
                         <h5 class="modal-title text-white" id="addAccountLabel"><i class="bi bi-plus-circle"></i> {{ __('interface.bank_account.create') }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                            <i class="bi bi-x"></i>
                         </button>
                     </div>
                     <form action="{{ route('customer.profile.bank.create') }}" method="post">

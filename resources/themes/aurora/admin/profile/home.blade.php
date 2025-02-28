@@ -65,7 +65,7 @@
                 <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title" id="editLabel"><i class="bi bi-pencil-square"></i> {{ __('interface.misc.edit_user_details') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                        <i class="bi bi-x"></i>
                     </button>
                 </div>
                 <form action="{{ route('admin.profile.update') }}" method="post">
@@ -130,7 +130,7 @@
                 <div class="modal-header bg-warning">
                     <h5 class="modal-title" id="passwordLabel"><i class="bi bi-key-fill"></i> {{ __('interface.actions.change_password') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                        <i class="bi bi-x"></i>
                     </button>
                 </div>
                 <form action="{{ route('admin.profile.password') }}" method="post">

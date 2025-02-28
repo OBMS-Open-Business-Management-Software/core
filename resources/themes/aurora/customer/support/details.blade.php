@@ -287,7 +287,7 @@
                 <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title" id="answerLabel"><i class="bi bi-pencil-square"></i> {{ __('interface.support.answer') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                        <i class="bi bi-x"></i>
                     </button>
                 </div>
                 <form action="{{ route('customer.support.answer', $ticket->id) }}" method="post" enctype="multipart/form-data">
@@ -340,7 +340,7 @@
                 <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title" id="uploadLabel"><i class="bi bi-upload"></i> {{ __('interface.actions.upload_file') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                        <i class="bi bi-x"></i>
                     </button>
                 </div>
                 <form action="{{ route('customer.support.file.upload', $ticket->id) }}" method="post" enctype="multipart/form-data">

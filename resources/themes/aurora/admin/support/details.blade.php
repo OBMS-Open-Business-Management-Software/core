@@ -347,7 +347,7 @@
                 <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title" id="answerLabel"><i class="bi bi-pencil-square"></i> {{ __('interface.support.answer') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                        <i class="bi bi-x"></i>
                     </button>
                 </div>
                 <form action="{{ route('admin.support.answer', $ticket->id) }}" method="post" enctype="multipart/form-data">
@@ -412,7 +412,7 @@
                 <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title" id="addLabel"><i class="bi bi-truck"></i> {{ __('interface.actions.move_ticket') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                        <i class="bi bi-x"></i>
                     </button>
                 </div>
                 <form action="{{ route('admin.support.move', $ticket->id) }}" method="post">
@@ -453,7 +453,7 @@
                 <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title" id="priorityLabel"><i class="bi bi-star"></i> {{ __('interface.actions.set_priority') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                        <i class="bi bi-x"></i>
                     </button>
                 </div>
                 <form action="{{ route('admin.support.priority', $ticket->id) }}" method="post">
@@ -494,7 +494,7 @@
                 <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title" id="uploadLabel"><i class="bi bi-upload"></i> {{ __('interface.actions.upload_file') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                        <i class="bi bi-x"></i>
                     </button>
                 </div>
                 <form action="{{ route('admin.support.file.upload', $ticket->id) }}" method="post" enctype="multipart/form-data">
@@ -534,7 +534,7 @@
                     <div class="modal-header bg-primary text-white">
                         <h5 class="modal-title" id="runStartLabel"><i class="bi bi-play-fill"></i> {{ __('interface.actions.start_ticket_run') }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                            <i class="bi bi-x"></i>
                         </button>
                     </div>
                     <form action="{{ route('admin.support.run.start') }}" method="post">

@@ -300,7 +300,7 @@
                 <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title" id="payLabel"><i class="bi bi-cash-stack"></i> {{ __('interface.actions.pay') }} ({{ $invoice->number }})</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                        <i class="bi bi-x"></i>
                     </button>
                 </div>
                 <form action="{{ route('customer.profile.transactions.invoice', $invoice->id) }}" method="post">

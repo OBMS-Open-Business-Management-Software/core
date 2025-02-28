@@ -101,7 +101,7 @@ class AdminTenantController extends Controller
             <div class="modal-header bg-primary text-white">
                 <h5 class="modal-title" id="infoTenant' . $tenant->id . 'Label">' . __('interface.data.information') . ' (' . $tenant->domain . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <i class="bi bi-x"></i>
                 </button>
             </div>
             <div class="modal-body">
@@ -203,7 +203,7 @@ class AdminTenantController extends Controller
             <div class="modal-header bg-warning">
                 <h5 class="modal-title" id="editTenant' . $tenant->id . 'Label">' . __('interface.actions.edit') . ' (' . $tenant->domain . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <i class="bi bi-x"></i>
                 </button>
             </div>
             <form action="' . route('admin.tenants.update', $tenant->id) . '" method="post">

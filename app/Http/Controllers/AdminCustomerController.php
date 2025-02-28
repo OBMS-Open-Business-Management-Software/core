@@ -539,7 +539,7 @@ class AdminCustomerController extends Controller
             <div class="modal-header bg-warning">
                 <h5 class="modal-title" id="editEmail' . $email->id . 'Label">' . __('interface.actions.edit') . ' (' . $email->email . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <i class="bi bi-x"></i>
                 </button>
             </div>
             <form action="' . route('admin.customers.profile.email.update', $user->id) . '" method="post">
@@ -878,7 +878,7 @@ class AdminCustomerController extends Controller
             <div class="modal-header bg-warning">
                 <h5 class="modal-title" id="editPhone' . $phone->id . 'Label">' . __('interface.actions.edit') . ' (' . $phone->phone . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <i class="bi bi-x"></i>
                 </button>
             </div>
             <form action="' . route('admin.customers.profile.phone.update', $user->id) . '" method="post">
@@ -1190,7 +1190,7 @@ class AdminCustomerController extends Controller
             <div class="modal-header bg-warning">
                 <h5 class="modal-title" id="editAddress' . $address->id . 'Label">' . __('interface.actions.edit') . ' (#' . $address->id . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <i class="bi bi-x"></i>
                 </button>
             </div>
             <form action="' . route('admin.customers.profile.address.update', $user->id) . '" method="post">
@@ -1508,7 +1508,7 @@ class AdminCustomerController extends Controller
             <div class="modal-header bg-primary">
                 <h5 class="modal-title text-white" id="sepaMandate' . $account->id . 'Label">' . __('interface.actions.accept_sepa_mandate') . ' (' . $account->iban . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <i class="bi bi-x"></i>
                 </button>
             </div>
             <form action="' . route('admin.customers.profile.bank.sepa', ['user_id' => $user->id, 'id' => $account->id]) . '" method="post">
@@ -1827,7 +1827,7 @@ class AdminCustomerController extends Controller
             <div class="modal-header bg-warning">
                 <h5 class="modal-title" id="editTransaction' . $entry->id . 'Label">' . __('interface.actions.edit') . ' (#' . $entry->id . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <i class="bi bi-x"></i>
                 </button>
             </div>
             <form action="' . route('admin.customers.transactions.update', $entry->user_id) . '" method="post">

@@ -172,7 +172,7 @@ class AdminInvoiceCustomerController extends Controller
             <div class="modal-header bg-warning">
                 <h5 class="modal-title" id="editInvoice' . $invoice->id . 'Label">' . __('interface.actions.edit') . ' (' . $invoice->number . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <i class="bi bi-x"></i>
                 </button>
             </div>
             <form action="' . route('admin.invoices.customers.update', $invoice->id) . '" method="post">
@@ -1032,7 +1032,7 @@ class AdminInvoiceCustomerController extends Controller
             <div class="modal-header bg-warning">
                 <h5 class="modal-title" id="editPaymentType' . $type->id . 'Label">' . __('interface.actions.edit') . ' (' . $type->name . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <i class="bi bi-x"></i>
                 </button>
             </div>
             <form action="' . route('admin.invoices.types.update', $type->id) . '" method="post">
@@ -1300,7 +1300,7 @@ class AdminInvoiceCustomerController extends Controller
             <div class="modal-header bg-warning">
                 <h5 class="modal-title" id="editPaymentType' . $type->id . 'Label">' . __('interface.actions.edit') . ' (#' . $type->id . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <i class="bi bi-x"></i>
                 </button>
             </div>
             <form action="' . route('admin.invoices.dunning.update', ['id' => $type->type_id, 'dunning_id' => $type->id]) . '" method="post">
@@ -1596,7 +1596,7 @@ class AdminInvoiceCustomerController extends Controller
             <div class="modal-header bg-warning">
                 <h5 class="modal-title" id="editDiscount' . $type->id . 'Label">' . __('interface.actions.edit') . ' (' . $type->name . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <i class="bi bi-x"></i>
                 </button>
             </div>
             <form action="' . route('admin.discounts.update', ['id' => $type->id]) . '" method="post">
@@ -1839,7 +1839,7 @@ class AdminInvoiceCustomerController extends Controller
             <div class="modal-header bg-warning">
                 <h5 class="modal-title" id="editPaymentType' . $discount->id . 'Label">' . __('interface.actions.edit') . ' (' . $discount->name . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <i class="bi bi-x"></i>
                 </button>
             </div>
             <form action="' . route('admin.invoices.discounts.update', $discount->id) . '" method="post">

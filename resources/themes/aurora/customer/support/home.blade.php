@@ -131,7 +131,7 @@
                 <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title" id="addLabel"><i class="bi bi-pencil-square"></i> {{ __('interface.support.create') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                        <i class="bi bi-x"></i>
                     </button>
                 </div>
                 <form action="{{ route('customer.support.create') }}" method="post" enctype="multipart/form-data">
