@@ -9,8 +9,9 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       packages: write
+      pages: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -40,15 +41,18 @@ jobs:
         env:
           TAG: ${{ github.ref_name }}
       - name: Copy API documentation
-        run: cp storage/api-docs/api-docs.json storage/api-docs/api-docs-${{ github.ref_name }}.json
+        run: |
+          mkdir -p docs
+          cp storage/api-docs/api-docs.json docs/api-docs-${{ github.ref_name }}.json
+          cp storage/api-docs/api-docs.json docs/api-docs-latest.json
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           personal_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: storage/api-docs
+          publish_dir: ./docs
           cname: api.getobms.com
           keep_files: true
-          publish_branch: main
+          publish_branch: gh-pages
       - name: Log in to GitHub Container Registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
       - name: Build and push app image
