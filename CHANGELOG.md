@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.12.0](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.11.0...v1.12.0) (2025-02-28)
+
+
+### Features
+
+* automated api specification generation ([6b6fb33](https://github.com/OBMS-Open-Business-Management-Software/core/commit/6b6fb33622b421fc244514656b4dedc086ffa78d))
+
 ## [1.11.0](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.10.2...v1.11.0) (2025-02-26)
 
 
