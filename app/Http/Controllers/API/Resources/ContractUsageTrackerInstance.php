@@ -7,6 +7,20 @@ namespace App\Http\Controllers\API\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @OA\Schema(
+ *     schema="ContractUsageTrackerInstance",
+ *     type="object",
+ *
+ *     @OA\Property(property="id", type="integer", example=1),
+ *     @OA\Property(property="contract_id", type="integer", example=1),
+ *     @OA\Property(property="contract_position_id", type="integer", example=1),
+ *     @OA\Property(property="tracker_id", type="integer", example=1),
+ *     @OA\Property(property="created_at", type="string", format="date-time", example="2021-01-01 00:00:00"),
+ *     @OA\Property(property="updated_at", type="string", format="date-time", example="2021-01-01 00:00:00"),
+ *     @OA\Property(property="deleted_at", type="string", format="date-time", example="2021-01-01 00:00:00")
+ * )
+ */
 class ContractUsageTrackerInstance extends JsonResource
 {
     /**

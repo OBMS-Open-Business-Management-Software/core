@@ -2,42 +2,44 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\API;
+namespace App\Traits\API;
 
-use App\Http\Controllers\Controller as Controller;
 use Illuminate\Http\JsonResponse;
 
-class APIBaseController extends Controller
+trait SendsResponse
 {
     /**
-     * success response method.
+     * Return success response.
      *
-     * @param $result
      * @param $message
+     * @param $result
      *
      * @return JsonResponse
      */
-    public function sendResponse($result, $message): JsonResponse
+    public function sendResponse($message, $result = null): JsonResponse
     {
         $response = [
             'success' => true,
-            'data'    => $result,
             'message' => $message,
         ];
+
+        if (!empty($result)) {
+            $response['data'] = $result;
+        }
 
         return response()->json($response, 200);
     }
 
     /**
-     * return error response.
+     * Return error response.
      *
+     * @param int   $code
      * @param       $error
      * @param array $errorMessages
-     * @param int   $code
      *
      * @return JsonResponse
      */
-    public function sendError($error, array $errorMessages = [], int $code = 404): JsonResponse
+    public function sendError(int $code, string $error, array $errorMessages = []): JsonResponse
     {
         $response = [
             'success' => false,
