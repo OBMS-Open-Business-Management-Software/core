@@ -1,0 +1,1030 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "OBMS API Documentation",
+        "description": "OBMS Swagger API documentation",
+        "contact": {
+            "email": "support@getobms.com"
+        },
+        "license": {
+            "name": "BSL 1.1",
+            "url": "https://getobms.com/docs/license/"
+        },
+        "version": "v1.12.2"
+    },
+    "paths": {
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Authenticate user",
+                "description": "Authenticate user and return a token",
+                "operationId": "8ab3faed13bd5ce8bffeb8ba52aabb4d",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "example": "user@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User login successful.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "token": {
+                                                    "type": "string",
+                                                    "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI3IiwianRpIjoiZjYzY2NlMjMyMGI0NjQ4ZTQzYzZlNDY3YzhmZWVkNDI3ODJjMDhjZGUzNWZlNWZkZWE5MmYzNDdmNWY2ZWMxYmMxM2NjNzVhMDVlMGJhNzMiLCJpYXQiOjE3NDA3Nzk0MDAuMjM1NzY1LCJuYmYiOjE3NDA3Nzk0MDAuMjM1NzY4LCJleHAiOjE3NzIzMTU0MDAuMjA5NDU5LCJzdWIiOiIzIiwic2NvcGVzIjpbXX0.cZfYgJ22uOjLsRLrbXr1eN0kXys3PPllVaQd27LyvLT_eoFTKZMEeBgnzI9DEar73HOc61t2FnokC2Y5X1fvUluN2N-K5M4BH-10cwK0I7Ch6NXHKrLww0B7lsPKoIu7nSvDWiydCY0HkzRWq-UpdODTafp6HIisF_T60sVfwKa1PxwkH4eTZ96HDo17wbIWnkHs5WX4e6z0GzxJ8QCavoZL3JzR2MUWUCGM52BICppe5EZorxW9iWHyWKs0sufUZgBLLFLqz5_Tz4RTnMAMkcimX41o-XBQeMmz1juJlRZ3LtlpOwFhy1Ixj9rkNtNz1UxMPq8fgqbMhYSgUHL1aTFT1qzrn6s0HP38bnnAsWj2V1OW4vftZF9jasvzn6yWl59Hfym4H1nUSf8iyFF9MxYZOJVFjqEwpNPZvL1zEYGETtAKeHyVzpL6ytj9xUE71LAqbTchwBLVUgCvLob1hhSkxg3-CBjHXKX_Az8nvOXiF62iw3Y1U7hjZLpYzU1HioqOkTsdwtbTyssqHYdU3OM_xr4lQkdwpHcFliwthUBdxzMWybtVxTRQUwQ-EjuJt3GRN4xKlWfkuDEHPWGxXr8Huz3lEtFc1q5fMex9i1fD0egS6wHw6BEBxAqJxDCfpbo7swRtrnvdDKBrsMId6dn6wxEQJNBqOvp_HnKqmEI"
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "API"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/ForbiddenResponse"
+                    }
+                }
+            }
+        },
+        "/api/contracts/usage-trackers": {
+            "get": {
+                "tags": [
+                    "Contract Usage Trackers"
+                ],
+                "summary": "Get all contract usage trackers",
+                "description": "Get all contract usage trackers",
+                "operationId": "4d18a150d799a1658eed7d2928bae080",
+                "responses": {
+                    "200": {
+                        "description": "Contract usage tracker retrieved successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Contract usage tracker retrieved successfully."
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/ContractUsageTracker"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/ForbiddenResponse"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Contract Usage Trackers"
+                ],
+                "summary": "Create a new contract usage tracker",
+                "description": "Create a new contract usage tracker",
+                "operationId": "dd9fcf67c1c756acb980ec2983e698b3",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Contract Usage Tracker"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Contract usage tracker description"
+                                    },
+                                    "vat_type": {
+                                        "type": "string",
+                                        "example": "VAT type"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Contract usage tracker created  successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Contract usage tracker created successfully."
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/ContractUsageTracker"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/ForbiddenResponse"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/ValidationErrorResponse"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/contracts/usage-trackers/{id}": {
+            "get": {
+                "tags": [
+                    "Contract Usage Trackers"
+                ],
+                "summary": "Get a contract usage tracker by ID",
+                "description": "Get a contract usage tracker by ID",
+                "operationId": "006930a8fb463395780abb4011d22280",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the contract usage tracker",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Contract usage tracker retrieved successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Contract usage tracker retrieved successfully."
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/ContractUsageTracker"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/ForbiddenResponse"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFoundResponse"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Contract Usage Trackers"
+                ],
+                "summary": "Update a contract usage tracker by ID",
+                "description": "Update a contract usage tracker by ID",
+                "operationId": "96023acba874a89a2159acaaf3f46496",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the contract usage tracker",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Contract Usage Tracker"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Contract usage tracker description"
+                                    },
+                                    "vat_type": {
+                                        "type": "string",
+                                        "example": "VAT type"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Contract usage tracker updated successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Contract usage tracker updated successfully."
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/ContractUsageTracker"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/ForbiddenResponse"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/ValidationErrorResponse"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Contract Usage Trackers"
+                ],
+                "summary": "Delete a contract usage tracker by ID",
+                "description": "Delete a contract usage tracker by ID",
+                "operationId": "8fa3c60e2ad1a806a9327bc0a7b64edc",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the contract usage tracker",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Contract usage tracker deleted successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Contract usage tracker deleted successfully."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/ForbiddenResponse"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFoundResponse"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/contracts/usage-trackers/instances": {
+            "get": {
+                "tags": [
+                    "Contract Usage Tracker Instances"
+                ],
+                "summary": "Get all contract usage tracker instances",
+                "description": "Get all contract usage tracker instances",
+                "operationId": "ef85469e8ae2f13e3b22477da7318ff7",
+                "responses": {
+                    "200": {
+                        "description": "Contract usage tracker instance retrieved successfully."
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/ForbiddenResponse"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Contract Usage Tracker Instances"
+                ],
+                "summary": "Create a new contract usage tracker instance",
+                "description": "Create a new contract usage tracker instance",
+                "operationId": "523123231bc0ad8aff5821d21d3a8cb0",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "contract_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "tracker_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "contract_position_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Contract usage tracker instance created successfully."
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/ForbiddenResponse"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/ValidationErrorResponse"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/contracts/usage-trackers/instances/{id}": {
+            "get": {
+                "tags": [
+                    "Contract Usage Tracker Instances"
+                ],
+                "summary": "Get a contract usage tracker instance by ID",
+                "description": "Get a contract usage tracker instance by ID",
+                "operationId": "ed7463c40e140043915937cc67b98289",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the contract usage tracker instance",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Contract usage tracker instance retrieved successfully."
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/ForbiddenResponse"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFoundResponse"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Contract Usage Tracker Instances"
+                ],
+                "summary": "Update a contract usage tracker instance by ID",
+                "description": "Update a contract usage tracker instance by ID",
+                "operationId": "9e060ade1d341cc9644e28da3e5dce64",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the contract usage tracker instance",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "contract_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "tracker_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "contract_position_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Contract usage tracker instance updated successfully."
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/ForbiddenResponse"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/ValidationErrorResponse"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Contract Usage Tracker Instances"
+                ],
+                "summary": "Delete a contract usage tracker instance by ID",
+                "description": "Delete a contract usage tracker instance by ID",
+                "operationId": "5466c3e4a57ba72d35bea6f30c955265",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the contract usage tracker instance",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Contract usage tracker instance deleted successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Contract usage tracker instance deleted successfully."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/ForbiddenResponse"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFoundResponse"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/contracts/usage-trackers/items": {
+            "get": {
+                "tags": [
+                    "Contract Usage Tracker Items"
+                ],
+                "summary": "Get all contract usage tracker items",
+                "description": "Get all contract usage tracker items",
+                "operationId": "50b09fb3343f87f9bb4f500d59b2243c",
+                "responses": {
+                    "200": {
+                        "description": "Usage tracker item retrieved successfully."
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/ForbiddenResponse"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Contract Usage Tracker Items"
+                ],
+                "summary": "Create a new usage tracker item",
+                "description": "Create a new usage tracker item",
+                "operationId": "cd328b360eeaf2f64d5d79bca58ba887",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "tracker_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "type": {
+                                        "type": "string",
+                                        "example": "type"
+                                    },
+                                    "process": {
+                                        "type": "string",
+                                        "example": "equals"
+                                    },
+                                    "round": {
+                                        "type": "string",
+                                        "example": "none"
+                                    },
+                                    "step": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "amount": {
+                                        "type": "number",
+                                        "example": 100
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Usage tracker item created successfully."
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/ForbiddenResponse"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/ValidationErrorResponse"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/contracts/usage-trackers/items/{id}": {
+            "get": {
+                "tags": [
+                    "Contract Usage Tracker Items"
+                ],
+                "summary": "Get a usage tracker item by ID",
+                "description": "Get a usage tracker item by ID",
+                "operationId": "6dd69ab770666cfb61f4529d68eeca32",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the usage tracker item",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Usage tracker item retrieved successfully."
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/ForbiddenResponse"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFoundResponse"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Contract Usage Tracker Items"
+                ],
+                "summary": "Update a usage tracker item by ID",
+                "description": "Update a usage tracker item by ID",
+                "operationId": "418eef1ee7ae7c2daad8afb88b5bf901",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the usage tracker item",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "tracker_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "type": {
+                                        "type": "string",
+                                        "example": "type"
+                                    },
+                                    "process": {
+                                        "type": "string",
+                                        "example": "equals"
+                                    },
+                                    "round": {
+                                        "type": "string",
+                                        "example": "none"
+                                    },
+                                    "step": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "amount": {
+                                        "type": "number",
+                                        "example": 100
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Usage tracker item updated successfully."
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/ForbiddenResponse"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/ValidationErrorResponse"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Contract Usage Tracker Items"
+                ],
+                "summary": "Delete a usage tracker item by ID",
+                "description": "Delete a usage tracker item by ID",
+                "operationId": "f7a6375d21fbabe0cafef481bcedb2f9",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the usage tracker item",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Usage tracker item deleted successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Usage tracker item deleted successfully."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/ForbiddenResponse"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFoundResponse"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ContractUsageTracker": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Usage Tracker"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Usage Tracker Description"
+                    },
+                    "vat_type": {
+                        "type": "string",
+                        "example": "VAT Type"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2021-01-01 00:00:00"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2021-01-01 00:00:00"
+                    },
+                    "deleted_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2021-01-01 00:00:00"
+                    }
+                },
+                "type": "object"
+            },
+            "ContractUsageTrackerInstance": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "contract_id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "contract_position_id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "tracker_id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2021-01-01 00:00:00"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2021-01-01 00:00:00"
+                    },
+                    "deleted_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2021-01-01 00:00:00"
+                    }
+                },
+                "type": "object"
+            },
+            "ContractUsageTrackerItem": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "tracker_id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "type": {
+                        "type": "string",
+                        "example": "string"
+                    },
+                    "process": {
+                        "type": "string",
+                        "example": "equals"
+                    },
+                    "round": {
+                        "type": "string",
+                        "example": "none"
+                    },
+                    "step": {
+                        "type": "number",
+                        "example": 1
+                    },
+                    "amount": {
+                        "type": "number",
+                        "example": 100
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2021-01-01 00:00:00"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2021-01-01 00:00:00"
+                    },
+                    "deleted_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2021-01-01 00:00:00"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "responses": {
+            "ForbiddenResponse": {
+                "description": "Forbidden",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean",
+                                    "example": false
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "Forbidden"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "NotFoundResponse": {
+                "description": "Not found",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean",
+                                    "example": false
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "Not Found"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "ValidationErrorResponse": {
+                "description": "Validation error",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean",
+                                    "example": false
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "Validation Error"
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string",
+                                        "example": "The user id field is required."
+                                    }
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "description": "JWT Authorization header using the Bearer scheme. Example: 'Bearer {token}'",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Authentication",
+            "description": "Endpoints for user authentication"
+        },
+        {
+            "name": "Contract Usage Trackers",
+            "description": "Contract Usage Trackers"
+        },
+        {
+            "name": "Contract Usage Tracker Instances",
+            "description": "Contract Usage Tracker Instances"
+        },
+        {
+            "name": "Contract Usage Tracker Items",
+            "description": "Contract Usage Tracker Items"
+        }
+    ]
+}
