@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.12.2](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.12.1...v1.12.2) (2025-02-28)
+
+
+### Bug Fixes
+
+* github pages api artifact publishing ([e97fd99](https://github.com/OBMS-Open-Business-Management-Software/core/commit/e97fd996fd7bef9f9ac65cecb21a5ec9a534f0ec))
+
 ## [1.12.1](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.12.0...v1.12.1) (2025-02-28)
 
 
