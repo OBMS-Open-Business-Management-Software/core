@@ -153,7 +153,7 @@ class AdminFilemanagerController extends Controller
             <div class="modal-header bg-warning">
                 <h5 class="modal-title" id="editFolder' . $fileOrFolder->id . 'Label">' . __('interface.actions.edit') . ' (' . $fileOrFolder->name . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <i class="bi bi-x"></i>
                 </button>
             </div>
             <form action="' . route('admin.filemanager.folder.update', $fileOrFolder->id) . '" method="post">
@@ -204,7 +204,7 @@ class AdminFilemanagerController extends Controller
             <div class="modal-header bg-warning">
                 <h5 class="modal-title" id="editFile' . $fileOrFolder->id . 'Label">' . __('interface.actions.edit') . ' (' . $fileOrFolder->name . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <i class="bi bi-x"></i>
                 </button>
             </div>
             <form action="' . route('admin.filemanager.file.update', $fileOrFolder->id) . '" method="post">

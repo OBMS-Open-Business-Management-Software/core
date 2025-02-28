@@ -117,7 +117,7 @@ class AdminShopController extends Controller
             <div class="modal-header bg-warning">
                 <h5 class="modal-title" id="editCategory' . $category->id . 'Label">' . __('interface.actions.edit') . ' (' . $category->name . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <i class="bi bi-x"></i>
                 </button>
             </div>
             <form action="' . route('admin.shop.categories.update', $category->id) . '" method="post">
@@ -377,7 +377,7 @@ class AdminShopController extends Controller
             <div class="modal-header bg-warning">
                 <h5 class="modal-title" id="editForm' . $form->id . 'Label">' . __('interface.actions.edit') . ' (' . $form->name . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <i class="bi bi-x"></i>
                 </button>
             </div>
             <form action="' . route('admin.shop.forms.update', $form->id) . '" method="post">
@@ -995,7 +995,7 @@ class AdminShopController extends Controller
             <div class="modal-header bg-warning">
                 <h5 class="modal-title" id="editField' . $field->id . 'Label">' . __('interface.actions.edit') . ' (' . $field->label . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <i class="bi bi-x"></i>
                 </button>
             </div>
             <form action="' . route('admin.shop.fields.update', $field->id) . '" method="post">
@@ -1269,7 +1269,7 @@ class AdminShopController extends Controller
             <div class="modal-header bg-warning">
                 <h5 class="modal-title" id="editQueueItem' . $queue->id . 'Label">' . __('interface.actions.edit') . ' (' . $queue->number . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <i class="bi bi-x"></i>
                 </button>
             </div>
             <form action="' . route('admin.shop.orders.update', $queue->id) . '" method="post">
@@ -1417,7 +1417,7 @@ class AdminShopController extends Controller
             <div class="modal-header bg-primary text-white">
                 <h5 class="modal-title" id="historyQueueItem' . $queue->id . 'Label">' . __('interface.data.history') . ' (' . $queue->number . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <i class="bi bi-x"></i>
                 </button>
             </div>
             <div class="modal-body">

@@ -170,7 +170,7 @@ class AdminInvoiceSupplierController extends Controller
             <div class="modal-header bg-warning">
                 <h5 class="modal-title" id="editInvoice' . $invoice->id . 'Label">' . __('interface.actions.edit') . ' (' . $invoice->number . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <i class="bi bi-x"></i>
                 </button>
             </div>
             <form action="' . route('admin.invoices.suppliers.update', $invoice->id) . '" method="post">
@@ -902,7 +902,7 @@ class AdminInvoiceSupplierController extends Controller
             <div class="modal-header bg-warning">
                 <h5 class="modal-title" id="editImporter' . $importer->id . 'Label">' . __('interface.actions.edit') . ' (' . $importer->name . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <i class="bi bi-x"></i>
                 </button>
             </div>
             <form action="' . route('admin.invoices.importers.update', $importer->id) . '" method="post">

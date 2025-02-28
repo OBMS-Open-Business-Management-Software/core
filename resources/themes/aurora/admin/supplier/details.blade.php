@@ -525,7 +525,7 @@
                 <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title" id="editLabel"><i class="bi bi-pencil-square"></i> {{ __('interface.misc.edit_user_details') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                        <i class="bi bi-x"></i>
                     </button>
                 </div>
                 <form action="{{ route('admin.suppliers.profile.update', $user->id) }}" method="post">
@@ -591,7 +591,7 @@
                     <div class="modal-header bg-primary text-white">
                         <h5 class="modal-title" id="editProfileLabel"><i class="bi bi-pencil-square"></i> {{ __('interface.actions.edit_profile_details') }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                            <i class="bi bi-x"></i>
                         </button>
                     </div>
                     <form action="{{ route('admin.suppliers.profile.update.details', $user->id) }}" method="post">
@@ -696,7 +696,7 @@
                     <div class="modal-header bg-primary">
                         <h5 class="modal-title text-white" id="addEmailLabel"><i class="bi bi-plus-circle"></i> {{ __('interface.email.create') }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                            <i class="bi bi-x"></i>
                         </button>
                     </div>
                     <form action="{{ route('admin.suppliers.profile.email.create', $user->id) }}" method="post">
@@ -757,7 +757,7 @@
                     <div class="modal-header bg-primary">
                         <h5 class="modal-title text-white" id="addPhoneLabel"><i class="bi bi-plus-circle"></i> {{ __('interface.phone.create') }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                            <i class="bi bi-x"></i>
                         </button>
                     </div>
                     <form action="{{ route('admin.suppliers.profile.phone.create', $user->id) }}" method="post">
@@ -818,7 +818,7 @@
                     <div class="modal-header bg-primary">
                         <h5 class="modal-title text-white" id="addAddressLabel"><i class="bi bi-plus-circle"></i> {{ __('interface.address.create') }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                            <i class="bi bi-x"></i>
                         </button>
                     </div>
                     <form action="{{ route('admin.suppliers.profile.address.create', $user->id) }}" method="post">
@@ -983,7 +983,7 @@
                     <div class="modal-header bg-primary">
                         <h5 class="modal-title text-white" id="addAccountLabel"><i class="bi bi-plus-circle"></i> {{ __('interface.bank_account.create') }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                            <i class="bi bi-x"></i>
                         </button>
                     </div>
                     <form action="{{ route('admin.suppliers.profile.bank.create', $user->id) }}" method="post">
@@ -1071,7 +1071,7 @@
                 <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title" id="addInvoiceLabel"><i class="bi bi-plus-circle"></i> {{ __('interface.invoices.create') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                        <i class="bi bi-x"></i>
                     </button>
                 </div>
                 <form action="{{ route('admin.invoices.suppliers.add') }}" method="post" enctype="multipart/form-data">
@@ -1156,7 +1156,7 @@
                 <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title" id="addTransactionLabel"><i class="bi bi-plus-circle"></i> {{ __('interface.transaction.create') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                        <i class="bi bi-x"></i>
                     </button>
                 </div>
                 <form action="{{ route('admin.suppliers.transactions.create', $user->id) }}" method="post">

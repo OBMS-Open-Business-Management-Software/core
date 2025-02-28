@@ -159,7 +159,7 @@ class AdminContractController extends Controller
             <div class="modal-header bg-warning">
                 <h5 class="modal-title" id="editContract' . $contract->id . 'Label">' . __('interface.actions.edit') . ' (' . $contract->number . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <i class="bi bi-x"></i>
                 </button>
             </div>
             <form action="' . route('admin.contracts.update', $contract->id) . '" method="post">
@@ -1167,7 +1167,7 @@ class AdminContractController extends Controller
             <div class="modal-header bg-warning">
                 <h5 class="modal-title" id="editPaymentType' . $type->id . 'Label">' . __('interface.actions.edit') . ' (' . $type->name . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <i class="bi bi-x"></i>
                 </button>
             </div>
             <form action="' . route('admin.contracts.types.update', $type->id) . '" method="post">
@@ -1432,7 +1432,7 @@ class AdminContractController extends Controller
             <div class="modal-header bg-warning">
                 <h5 class="modal-title" id="editTracker' . $tracker->id . 'Label">' . __('interface.actions.edit') . ' (' . $tracker->name . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <i class="bi bi-x"></i>
                 </button>
             </div>
             <form action="' . route('admin.contracts.trackers.update', $tracker->id) . '" method="post">
@@ -1734,7 +1734,7 @@ class AdminContractController extends Controller
             <div class="modal-header bg-warning">
                 <h5 class="modal-title" id="editTrackerItem' . $item->id . 'Label">' . __('interface.actions.edit') . ' (#' . $item->id . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <i class="bi bi-x"></i>
                 </button>
             </div>
             <form action="' . route('admin.contracts.trackers.items.update', ['id' => $item->tracker_id, 'item_id' => $item->id]) . '" method="post">

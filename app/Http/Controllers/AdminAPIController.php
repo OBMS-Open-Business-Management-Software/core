@@ -94,7 +94,7 @@ class AdminAPIController extends Controller
             <div class="modal-header bg-warning">
                 <h5 class="modal-title" id="editAPIUser' . $user->id . 'Label">' . __('interface.actions.edit') . ' (' . __($user->name) . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <i class="bi bi-x"></i>
                 </button>
             </div>
             <form action="' . route('admin.api.users.update', $user->id) . '" method="post">

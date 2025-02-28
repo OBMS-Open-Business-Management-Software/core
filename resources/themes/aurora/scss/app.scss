@@ -548,8 +548,44 @@ input[type=radio] {
     padding: 0 1.5rem;
 }
 
+.modal-content {
+    border-radius: calc($border-radius * 2);
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+
+    .modal-header {
+        border-top-left-radius: calc($border-radius * 2);
+        border-top-right-radius: calc($border-radius * 2);
+    }
+
+    .modal-footer {
+        border-bottom-left-radius: calc($border-radius * 2);
+        border-bottom-right-radius: calc($border-radius * 2);
+    }
+}
+
+.modal-backdrop {
+    background-color: color-mix(in srgb, var(--gray) 80%, transparent);
+    backdrop-filter: blur(2px);
+
+    &.show {
+        opacity: 1;
+    }
+}
+
+.close {
+    color: var(--white);
+    opacity: 1;
+
+    &:hover,
+    &:focus {
+        color: var(--white);
+        opacity: 1;
+    }
+}
+
 .card {
     border: none;
+    border-radius: calc($border-radius * 2);
     box-shadow: $box-shadow-sm;
     overflow: hidden;
 

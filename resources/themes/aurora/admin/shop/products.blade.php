@@ -32,7 +32,7 @@
                                                 <div class="modal-header bg-warning">
                                                     <h5 class="modal-title" id="edit{{ $product->technicalName() }}Label">{{ __('interface.actions.edit') }} ({{ $product->name() }})</h5>
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
+                                                        <i class="bi bi-x"></i>
                                                     </button>
                                                 </div>
                                                 <form action="{{ route('admin.products.save') }}" method="post">

@@ -532,7 +532,7 @@ class CustomerShopController extends Controller
             <div class="modal-header bg-primary text-white">
                 <h5 class="modal-title" id="historyQueueItem' . $queue->id . 'Label">' . __('interface.data.history') . ' (' . $queue->number . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <i class="bi bi-x"></i>
                 </button>
             </div>
             <div class="modal-body">

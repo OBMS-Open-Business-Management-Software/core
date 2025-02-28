@@ -298,7 +298,7 @@
                     <div class="modal-header bg-primary text-white">
                         <h5 class="modal-title" id="runStartLabel"><i class="bi bi-play-fill"></i> {{ __('interface.actions.start_ticket_run') }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                            <i class="bi bi-x"></i>
                         </button>
                     </div>
                     <form action="{{ route('admin.support.run.start') }}" method="post">

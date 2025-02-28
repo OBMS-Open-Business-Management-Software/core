@@ -443,7 +443,7 @@ class AdminSupplierController extends Controller
             <div class="modal-header bg-warning">
                 <h5 class="modal-title" id="editEmail' . $email->id . 'Label">' . __('interface.actions.edit') . ' (' . $email->email . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <i class="bi bi-x"></i>
                 </button>
             </div>
             <form action="' . route('admin.suppliers.profile.email.update', $user->id) . '" method="post">
@@ -782,7 +782,7 @@ class AdminSupplierController extends Controller
             <div class="modal-header bg-warning">
                 <h5 class="modal-title" id="editPhone' . $phone->id . 'Label">' . __('interface.actions.edit') . ' (' . $phone->phone . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <i class="bi bi-x"></i>
                 </button>
             </div>
             <form action="' . route('admin.suppliers.profile.phone.update', $user->id) . '" method="post">
@@ -1094,7 +1094,7 @@ class AdminSupplierController extends Controller
             <div class="modal-header bg-warning">
                 <h5 class="modal-title" id="editAddress' . $address->id . 'Label">' . __('interface.actions.edit') . ' (#' . $address->id . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <i class="bi bi-x"></i>
                 </button>
             </div>
             <form action="' . route('admin.suppliers.profile.address.update', $user->id) . '" method="post">
@@ -1412,7 +1412,7 @@ class AdminSupplierController extends Controller
             <div class="modal-header bg-primary">
                 <h5 class="modal-title text-white" id="sepaMandate' . $account->id . 'Label">' . __('interface.actions.accept_sepa_mandate') . ' (' . $account->iban . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <i class="bi bi-x"></i>
                 </button>
             </div>
             <form action="' . route('admin.suppliers.profile.bank.sepa', ['user_id' => $user->id, 'id' => $account->id]) . '" method="post">
@@ -1731,7 +1731,7 @@ class AdminSupplierController extends Controller
             <div class="modal-header bg-warning">
                 <h5 class="modal-title" id="editTransaction' . $entry->id . 'Label">' . __('interface.actions.edit') . ' (#' . $entry->id . ')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <i class="bi bi-x"></i>
                 </button>
             </div>
             <form action="' . route('admin.suppliers.transactions.update', $entry->user_id) . '" method="post">
