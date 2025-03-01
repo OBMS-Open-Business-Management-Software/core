@@ -3,3 +3,5 @@
 
 php artisan generate:erd storage/api-docs/erd.svg --format=svg
 git add storage/api-docs/erd.svg
+php artisan generate:erd storage/api-docs/erd.pdf --format=pdf
+git add storage/api-docs/erd.pdf
