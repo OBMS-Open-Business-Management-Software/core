@@ -1,0 +1,5 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+php artisan generate:erd storage/api-docs/erd.svg --format=svg
+git add storage/api-docs/erd.svg
