@@ -40,11 +40,19 @@ jobs:
         run: sed -i "s/0.0.0/$TAG/g" storage/api-docs/api-docs.json
         env:
           TAG: ${{ github.ref_name }}
+      - name: Install Graphviz
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y graphviz
+      - name: Generate ERD
+        run: php artisan generate:erd storage/api-docs/erd.svg --format=svg
       - name: Copy API documentation
         run: |
           mkdir -p docs
           cp storage/api-docs/api-docs.json docs/api-docs-${{ github.ref_name }}.json
           cp storage/api-docs/api-docs.json docs/api-docs-latest.json
+          cp storage/api-docs/erd.svg docs/erd-${{ github.ref_name }}.svg
+          cp storage/api-docs/erd.svg docs/erd-latest.svg
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
