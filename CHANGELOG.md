@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.12.3](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.12.2...v1.12.3) (2025-03-01)
+
+
+### Bug Fixes
+
+* missing migration timestamp variable ([ee0ea9e](https://github.com/OBMS-Open-Business-Management-Software/core/commit/ee0ea9e3bc53beaad57c0179993319dc0578d534))
+
 ## [1.12.2](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.12.1...v1.12.2) (2025-02-28)
 
 
