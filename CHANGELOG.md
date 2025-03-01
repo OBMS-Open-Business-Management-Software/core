@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.14.0](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.13.1...v1.14.0) (2025-03-01)
+
+
+### Features
+
+* enity relationship diagram pdf version ([1ccf540](https://github.com/OBMS-Open-Business-Management-Software/core/commit/1ccf540634ae3f9726841f080cca3ac637e23452))
+
 ## [1.13.1](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.13.0...v1.13.1) (2025-03-01)
 
 
