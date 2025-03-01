@@ -78,7 +78,7 @@ return [
      */
     'graph' => [
         'style'       => 'filled',
-        'bgcolor'     => '#F7F7F7',
+        'bgcolor'     => '#FFFFFF',
         'fontsize'    => 12,
         'labelloc'    => 't',
         'concentrate' => true,
