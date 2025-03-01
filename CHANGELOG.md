@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.14.1](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.14.0...v1.14.1) (2025-03-01)
+
+
+### Bug Fixes
+
+* entity relationship diagram colors ([4325fbc](https://github.com/OBMS-Open-Business-Management-Software/core/commit/4325fbcab461888ddbd104cde09dcc1da6a7c9bf))
+
 ## [1.14.0](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.13.1...v1.14.0) (2025-03-01)
 
 
