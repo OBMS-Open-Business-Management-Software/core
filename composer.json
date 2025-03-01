@@ -42,12 +42,14 @@
         "smhg/sepa-qr-data": "^1.1"
     },
     "require-dev": {
-        "phpstan/phpstan": "^1.10",
+        "beyondcode/laravel-er-diagram-generator": "^4.0",
+        "cweagans/composer-patches": "^1.7",
         "fakerphp/faker": "^1.23",
         "laravel/pint": "^1.13",
         "laravel/sail": "^1.26",
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.0",
+        "phpstan/phpstan": "^1.10",
         "phpunit/phpunit": "^10.5",
         "spatie/laravel-ignition": "^2.4"
     },
@@ -89,12 +91,20 @@
     "extra": {
         "laravel": {
             "dont-discover": []
+        },
+        "patches": {
+            "beyondcode/laravel-er-diagram-generator": {
+                "Laravel 11 database schema identification": "patches/beyondcode/laravel-er-diagram-generator/database-schema-identification.patch"
+            }
         }
     },
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "cweagans/composer-patches": true
+        }
     },
     "minimum-stability": "dev",
     "prefer-stable": true
