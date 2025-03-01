@@ -58,6 +58,8 @@ return new class () extends Migration {
      */
     public function down()
     {
+        $timestamp = Carbon::now();
+
         Setting::where(function ($query) {
             $query->where('setting', '=', 'theme.body')
                 ->orWhere('setting', '=', 'theme.info')
