@@ -27,24 +27,37 @@ class CustomTranslationLoader extends FileLoader
     {
         $customTranslations = [];
 
-        if (File::isDirectory(__DIR__ . '/../../resources/themes/' . config('app.theme') . '/lang')) {
-            collect(scandir(__DIR__ . '/../../resources/themes/' . config('app.theme') . '/lang'))->reject(function (string $path) {
-                return $path == '.' || $path == '..' || str_contains($path, '.php');
-            })->each(function (string $lang) use (&$customTranslations) {
-                collect(scandir(__DIR__ . '/../../resources/themes/' . config('app.theme') . '/lang/' . $lang))->reject(function (string $group) {
-                    return !str_contains($group, '.php');
-                })->transform(function (string $group) {
-                    return str_replace('.php', '', $group);
-                })->each(function (string $group) use ($lang, &$customTranslations) {
-                    $customTranslations = [
-                        ...$customTranslations,
-                        ...collect(Arr::dot(require __DIR__ . '/../../resources/themes/' . config('app.theme') . '/lang/' . $lang . '/' . $group . '.php'))->mapWithKeys(function ($value, string $key) use ($group) {
-                            return [
-                                $group . '.' . $key => $value,
-                            ];
-                        })->toArray(),
-                    ];
-                });
+        if (File::isDirectory(__DIR__ . '/../../lang/' . $locale)) {
+            collect(scandir(__DIR__ . '/../../lang/' . $locale))->reject(function (string $group) {
+                return !str_contains($group, '.php');
+            })->transform(function (string $group) {
+                return str_replace('.php', '', $group);
+            })->each(function (string $group) use ($locale, &$customTranslations) {
+                $customTranslations = [
+                    ...$customTranslations,
+                    ...collect(Arr::dot(require __DIR__ . '/../../lang/' . $locale . '/' . $group . '.php'))->mapWithKeys(function ($value, string $key) use ($group) {
+                        return [
+                            $group . '.' . $key => $value,
+                        ];
+                    })->toArray(),
+                ];
+            });
+        }
+
+        if (File::isDirectory(__DIR__ . '/../../resources/themes/' . config('app.theme') . '/lang/' . $locale)) {
+            collect(scandir(__DIR__ . '/../../resources/themes/' . config('app.theme') . '/lang/' . $locale))->reject(function (string $group) {
+                return !str_contains($group, '.php');
+            })->transform(function (string $group) {
+                return str_replace('.php', '', $group);
+            })->each(function (string $group) use ($locale, &$customTranslations) {
+                $customTranslations = [
+                    ...$customTranslations,
+                    ...collect(Arr::dot(require __DIR__ . '/../../resources/themes/' . config('app.theme') . '/lang/' . $locale . '/' . $group . '.php'))->mapWithKeys(function ($value, string $key) use ($group) {
+                        return [
+                            $group . '.' . $key => $value,
+                        ];
+                    })->toArray(),
+                ];
             });
         }
 

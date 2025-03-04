@@ -25,9 +25,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return redirect('login');
-});
+})->name('root');
 
 Route::get('/css/app.css', App\Http\Controllers\DynamicStyles::class);
+
+Route::get('/language/{locale}', [App\Http\Controllers\LanguageController::class, 'changeLanguage'])->name('language.change');
 
 Route::get('/email/verify/{id}/{hash}', function (AccountEmailVerificationRequest $request) {
     $request->fulfill();
