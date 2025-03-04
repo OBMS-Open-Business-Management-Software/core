@@ -3,8 +3,8 @@
 declare(strict_types=1);
 
 return [
-    'username'    => 'Username',
-    'public_key'  => 'Public Key',
-    'private_key' => 'Private Key',
-    'api_type'    => 'API Type ("test" or "live")',
+    'username'    => 'Benutzername',
+    'public_key'  => 'Öffentlicher Schlüssel',
+    'private_key' => 'Privater Schlüssel',
+    'api_type'    => 'API-Typ ("test" oder "live")',
 ];

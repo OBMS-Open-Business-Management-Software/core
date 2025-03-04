@@ -31,7 +31,7 @@
                 <button class="navbar-toggler shadow-sm rounded d-lg-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="bi bi-list"></i>
                 </button>
-                <ul class="navbar-nav px-3">
+                <ul class="navbar-nav px-3 d-flex flex-row">
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle px-3 rounded border border-gray" href="#" role="button" data-toggle="dropdown" aria-expanded="false" v-pre>
                             <div>
@@ -54,6 +54,23 @@
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                 @csrf
                             </form>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a id="languageDropdown" class="nav-link dropdown-toggle px-3 rounded border border-gray" href="#" role="button" data-toggle="dropdown" aria-expanded="false" v-pre>
+                            <div>
+                                <i class="bi bi-globe"></i>
+                            </div>
+                            <i class="bi bi-chevron-down dropdown-indicator"></i>
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-right shadow-sm" aria-labelledby="languageDropdown">
+                            <a class="dropdown-item" href="{{ route('language.change', ['locale' => 'en']) }}">
+                                {{ __('languages.english') }}
+                            </a>
+                            <a class="dropdown-item" href="{{ route('language.change', ['locale' => 'de']) }}">
+                                {{ __('languages.german') }}
+                            </a>
                         </div>
                     </li>
                 </ul>

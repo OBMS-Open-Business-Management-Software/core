@@ -168,6 +168,10 @@ main {
 }
 
 .navbar-nav {
+    &.flex-row {
+        gap: 0.5rem;
+    }
+
     .dropdown-menu {
         background-color: var(--white);
         left: auto;

@@ -21,6 +21,7 @@ use App\Http\Middleware\RequireAPIRole;
 use App\Http\Middleware\RequireCustomerRole;
 use App\Http\Middleware\RequireEmployeeRole;
 use App\Http\Middleware\RequireUnlockedProfile;
+use App\Http\Middleware\SetLocale;
 use App\Http\Middleware\TrimStrings;
 use App\Http\Middleware\TrustProxies;
 use App\Http\Middleware\VerifyCsrfToken;
@@ -72,6 +73,7 @@ class Kernel extends HttpKernel
             ShareErrorsFromSession::class,
             VerifyCsrfToken::class,
             SubstituteBindings::class,
+            SetLocale::class,
         ],
 
         'api' => [

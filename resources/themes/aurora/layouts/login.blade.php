@@ -66,6 +66,26 @@
 
                         @yield('content')
 
+                        <ul class="navbar-nav px-3 d-flex flex-row justify-content-center mt-5">
+                            <li class="nav-item dropdown">
+                                <a id="languageDropdown" class="nav-link dropdown-toggle px-3 rounded shadow-sm" href="#" role="button" data-toggle="dropdown" aria-expanded="false" v-pre>
+                                    <div>
+                                        <i class="bi bi-globe"></i>
+                                    </div>
+                                    <i class="bi bi-chevron-down dropdown-indicator"></i>
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-right shadow-sm" aria-labelledby="languageDropdown">
+                                    <a class="dropdown-item" href="{{ route('language.change', ['locale' => 'en']) }}">
+                                        {{ __('languages.english') }}
+                                    </a>
+                                    <a class="dropdown-item" href="{{ route('language.change', ['locale' => 'de']) }}">
+                                        {{ __('languages.german') }}
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+
                         @if (request()->get('navigateables')->isNotEmpty())
                             <div class="row justify-content-center text-center mt-5">
                                 <div class="col-md-12">
