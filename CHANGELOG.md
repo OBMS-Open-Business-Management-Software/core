@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.15.0](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.14.1...v1.15.0) (2025-03-04)
+
+
+### Features
+
+* german translations ([656a70d](https://github.com/OBMS-Open-Business-Management-Software/core/commit/656a70dd39eac52dcc965991918599076b1e776f))
+
 ## [1.14.1](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.14.0...v1.14.1) (2025-03-01)
 
 
