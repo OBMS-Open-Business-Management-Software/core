@@ -42,7 +42,12 @@ class AppServiceProvider extends ServiceProvider
         }
 
         collect(scandir(resource_path('themes')))->reject(function (string $path) {
-            return $path == '.' || $path == '..' || str_contains($path, '.php') || file_exists(public_path('themes/' . $path));
+            return $path == '.' ||
+                $path == '..' ||
+                str_contains($path, '.php') ||
+                file_exists(public_path('themes/' . $path)) ||
+                is_link(public_path('themes/' . $path)) ||
+                !file_exists(resource_path('themes/' . $path . '/public'));
         })->each(function (string $theme) {
             symlink(resource_path('themes/' . $theme . '/public'), public_path('themes/' . $theme));
         });
