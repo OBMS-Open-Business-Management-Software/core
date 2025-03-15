@@ -11,7 +11,7 @@
     <title>{{ config('app.name', 'OBMS') }}</title>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="{{ config('company.favicon') ?? asset('themes/aurora/images/favicon.logo.svg') }}">
+    <link rel="icon" type="image/svg+xml" href="{{ config('company.favicon') ?? theme_asset('aurora', 'images/favicon.logo.svg') }}">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -26,7 +26,7 @@
                             <div class="row justify-content-center">
                                 <div class="col-md-8 text-center">
                                     <div class="logo logo-lg logo-center logo-stacked">
-                                        <img src="{{ config('company.logo') ?? asset('themes/aurora/images/full.logo.svg') }}">
+                                        <img src="{{ config('company.logo') ?? theme_asset('aurora', 'images/full.logo.svg') }}">
                                         @if (config('app.slogan'))
                                             <div class="slogan-stacked small">{{ config('app.slogan', 'Open Business Management Software') }}</div>
                                         @endif
@@ -108,7 +108,7 @@
     </div>
 
     <!-- Scripts -->
-    <script src="{{ asset('themes/aurora/js/app.js') }}" defer></script>
+    <script src="{{ theme_asset('aurora', 'js/app.js') }}" defer></script>
 
     @yield('javascript')
 </body>
