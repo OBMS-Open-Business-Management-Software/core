@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.17.0](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.16.0...v1.17.0) (2025-03-15)
+
+
+### Features
+
+* omnipay support ([fdb284e](https://github.com/OBMS-Open-Business-Management-Software/core/commit/fdb284ef67e6805a7a1310cbac522b95f85db6a9))
+
 ## [1.16.0](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.15.1...v1.16.0) (2025-03-15)
 
 
