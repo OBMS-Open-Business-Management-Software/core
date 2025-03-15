@@ -44,15 +44,17 @@ class CustomTranslationLoader extends FileLoader
             });
         }
 
-        if (File::isDirectory(__DIR__ . '/../../resources/themes/' . config('app.theme') . '/lang/' . $locale)) {
-            collect(scandir(__DIR__ . '/../../resources/themes/' . config('app.theme') . '/lang/' . $locale))->reject(function (string $group) {
+        $themeTranslationsPath = theme_base(config('app.theme'), '/lang/' . $locale);
+
+        if (File::isDirectory($themeTranslationsPath)) {
+            collect(scandir($themeTranslationsPath))->reject(function (string $group) {
                 return !str_contains($group, '.php');
             })->transform(function (string $group) {
                 return str_replace('.php', '', $group);
-            })->each(function (string $group) use ($locale, &$customTranslations) {
+            })->each(function (string $group) use ($themeTranslationsPath, &$customTranslations) {
                 $customTranslations = [
                     ...$customTranslations,
-                    ...collect(Arr::dot(require __DIR__ . '/../../resources/themes/' . config('app.theme') . '/lang/' . $locale . '/' . $group . '.php'))->mapWithKeys(function ($value, string $key) use ($group) {
+                    ...collect(Arr::dot(require $themeTranslationsPath . '/' . $group . '.php'))->mapWithKeys(function ($value, string $key) use ($group) {
                         return [
                             $group . '.' . $key => $value,
                         ];

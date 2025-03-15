@@ -12,7 +12,7 @@
                     <div class="row mb-4">
                         <div class="col-md-6">
                             <div class="border border-gray p-3 rounded mb-3 img-preview__wrapper">
-                                <img src="{{ config('company.logo') ?? asset('themes/aurora/images/full.logo.svg') }}" class="img-preview">
+                                <img src="{{ config('company.logo') ?? theme_asset('aurora', 'images/full.logo.svg') }}" class="img-preview">
                             </div>
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -31,7 +31,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="border border-gray p-3 rounded mb-3 img-preview__wrapper">
-                                <img src="{{ config('company.favicon') ?? asset('themes/aurora/images/favicon.logo.svg') }}" class="img-preview">
+                                <img src="{{ config('company.favicon') ?? theme_asset('aurora', 'images/favicon.logo.svg') }}" class="img-preview">
                             </div>
                             <div class="input-group">
                                 <div class="input-group-prepend">

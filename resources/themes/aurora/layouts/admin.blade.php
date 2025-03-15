@@ -11,7 +11,7 @@
     <title>{{ config('app.name', 'OBMS') }}</title>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="{{ config('company.favicon') ?? asset('themes/aurora/images/favicon.logo.svg') }}">
+    <link rel="icon" type="image/svg+xml" href="{{ config('company.favicon') ?? theme_asset('aurora', 'images/favicon.logo.svg') }}">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -21,7 +21,7 @@
         <nav class="navbar navbar-dark sticky-top bg-white p-0 shadow-sm">
             <a class="navbar-brand bg-white py-3" href="{{ route('admin.home') }}">
                 <div class="logo">
-                    <img src="{{ config('company.logo') ?? asset('themes/aurora/images/full.logo.svg') }}" class="px-3">
+                    <img src="{{ config('company.logo') ?? theme_asset('aurora', 'images/full.logo.svg') }}" class="px-3">
                     @if (config('app.slogan'))
                         <div class="slogan small">{{ config('app.slogan', 'Open Business Management Software') }}</div>
                     @endif
@@ -348,7 +348,7 @@
     </div>
 
     <!-- Scripts -->
-    <script src="{{ asset('themes/aurora/js/app.js') }}"></script>
+    <script src="{{ theme_asset('aurora', 'js/app.js') }}"></script>
 
     <script type="text/javascript">
         $('.custom-file input').change(function (e) {
