@@ -27,6 +27,7 @@
         "endroid/qr-code": "^5.1",
         "guzzlehttp/guzzle": "^7.8",
         "horstoeko/zugferd-laravel": "^1.0",
+        "ignited/laravel-omnipay": "3.*",
         "laravel/fortify": "^1.24",
         "laravel/framework": "^11.0",
         "laravel/horizon": "^5.7",
@@ -36,6 +37,7 @@
         "laravel/tinker": "^2.9",
         "laravel/ui": "^4.5",
         "lcobucci/clock": "^2.2",
+        "php-http/guzzle7-adapter": "^1.1",
         "phpseclib/phpseclib": "^3.0",
         "sabre/dav": "^4.2",
         "scssphp/scssphp": "^2.0",
@@ -106,7 +108,8 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "allow-plugins": {
-            "cweagans/composer-patches": true
+            "cweagans/composer-patches": true,
+            "php-http/discovery": true
         }
     },
     "minimum-stability": "dev",
