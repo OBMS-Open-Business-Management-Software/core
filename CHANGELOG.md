@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.15.1](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.15.0...v1.15.1) (2025-03-15)
+
+
+### Bug Fixes
+
+* theme public folder symlink creation ([049ad7a](https://github.com/OBMS-Open-Business-Management-Software/core/commit/049ad7a70cb7b51e9534651b5d8a49d39f5ab1af))
+
 ## [1.15.0](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.14.1...v1.15.0) (2025-03-04)
 
 
