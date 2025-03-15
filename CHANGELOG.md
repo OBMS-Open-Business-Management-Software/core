@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.16.0](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.15.1...v1.16.0) (2025-03-15)
+
+
+### Features
+
+* theme asset helper function ([29ae079](https://github.com/OBMS-Open-Business-Management-Software/core/commit/29ae079eda8b92561f963516384b8e09cd6d25a4))
+
 ## [1.15.1](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.15.0...v1.15.1) (2025-03-15)
 
 
