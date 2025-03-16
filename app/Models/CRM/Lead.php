@@ -18,24 +18,24 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * This class is the model for leads.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
- * 
- * @property int                  $id
- * @property string               $name
- * @property string               $email
- * @property string               $phone
- * @property string               $address
- * @property string               $city
- * @property string               $state
- * @property string               $zip
- * @property string               $country
- * @property string               $notes
- * @property Carbon               $created_at
- * @property Carbon               $updated_at
- * @property Carbon               $deleted_at
+ *
+ * @property int                                $id
+ * @property string                             $name
+ * @property string                             $email
+ * @property string                             $phone
+ * @property string                             $address
+ * @property string                             $city
+ * @property string                             $state
+ * @property string                             $zip
+ * @property string                             $country
+ * @property string                             $notes
+ * @property Carbon                             $created_at
+ * @property Carbon                             $updated_at
+ * @property Carbon                             $deleted_at
  * @property Collection<LeadCategoryAssignment> $categoryAssignments
- * @property Collection<CampaignLead> $campaignLinks
- * @property Collection<LeadContact> $contacts
- * @property LeadContact|null $primaryContact
+ * @property Collection<CampaignLead>           $campaignLinks
+ * @property Collection<LeadContact>            $contacts
+ * @property LeadContact|null                   $primaryContact
  */
 class Lead extends Model
 {
