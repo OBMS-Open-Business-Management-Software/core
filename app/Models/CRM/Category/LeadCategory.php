@@ -18,14 +18,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *
- * @property int                                   $id
- * @property string                                $name
- * @property string                                $description
- * @property Carbon                                $created_at
- * @property Carbon                                $updated_at
- * @property Carbon                                $deleted_at
- * @property Collection<LeadCategoryAssignment>    $assignments
- * @property Collection<CampaignLeadCategory>      $campaignLinks
+ * @property int                                $id
+ * @property string                             $name
+ * @property string                             $description
+ * @property Carbon                             $created_at
+ * @property Carbon                             $updated_at
+ * @property Carbon                             $deleted_at
+ * @property Collection<LeadCategoryAssignment> $assignments
+ * @property Collection<CampaignLeadCategory>   $campaignLinks
  */
 class LeadCategory extends Model
 {

@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models\CRM\Campaign;
 
-use App\Models\CRM\Campaign\Campaign;
-use App\Models\CRM\Campaign\LeadCampaignMessage;
+use App\Models\CRM\LeadCampaignMessage;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -19,21 +18,21 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * This class is the model for campaign messages.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
- * 
- * @property int                  $id
- * @property int                  $campaign_id
- * @property string               $channel
- * @property string               $message
- * @property Carbon               $created_at
- * @property Carbon               $updated_at
- * @property Carbon               $deleted_at
- * @property Campaign|null        $campaign
+ *
+ * @property int                             $id
+ * @property int                             $campaign_id
+ * @property string                          $channel
+ * @property string                          $message
+ * @property Carbon                          $created_at
+ * @property Carbon                          $updated_at
+ * @property Carbon                          $deleted_at
+ * @property Campaign|null                   $campaign
  * @property Collection<LeadCampaignMessage> $leadCampaignMessages
  */
 class CampaignMessage extends Model
 {
     use SoftDeletes;
-    
+
     /**
      * The attributes that aren't mass assignable.
      *

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Models\CRM\Campaign;
 
-use App\Models\CRM\Campaign\Campaign;
 use App\Models\CRM\Lead;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -13,18 +12,18 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * Class CampaignLead.
  *
- * This class is the model for linking campaigns with leads.	
+ * This class is the model for linking campaigns with leads.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *
- * @property int                  $id
- * @property int                  $campaign_id
- * @property int                  $lead_id
- * @property Carbon               $created_at
- * @property Carbon               $updated_at
- * @property Carbon               $deleted_at
- * @property Campaign|null        $campaign
- * @property Lead|null            $lead
+ * @property int           $id
+ * @property int           $campaign_id
+ * @property int           $lead_id
+ * @property Carbon        $created_at
+ * @property Carbon        $updated_at
+ * @property Carbon        $deleted_at
+ * @property Campaign|null $campaign
+ * @property Lead|null     $lead
  */
 class CampaignLead extends Model
 {

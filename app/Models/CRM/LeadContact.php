@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Models\CRM;
 
-use App\Models\CRM\Lead;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -16,19 +15,19 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * This class is the model for lead contacts.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
- * 
- * @property int                  $id
- * @property int                  $lead_id
- * @property string               $name
- * @property string               $email
- * @property string               $phone
- * @property string               $role
- * @property string               $notes
- * @property bool                 $is_primary
- * @property Carbon               $created_at
- * @property Carbon               $updated_at
- * @property Carbon               $deleted_at
- * @property Lead|null            $lead
+ *
+ * @property int       $id
+ * @property int       $lead_id
+ * @property string    $name
+ * @property string    $email
+ * @property string    $phone
+ * @property string    $role
+ * @property string    $notes
+ * @property bool      $is_primary
+ * @property Carbon    $created_at
+ * @property Carbon    $updated_at
+ * @property Carbon    $deleted_at
+ * @property Lead|null $lead
  */
 class LeadContact extends Model
 {
@@ -51,7 +50,7 @@ class LeadContact extends Model
     protected $casts = [
         'is_primary' => 'boolean',
     ];
-    
+
     /**
      * Relation to lead.
      *

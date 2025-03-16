@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Models\CRM\Campaign;
 
-use App\Models\CRM\Campaign\CampaignLead;
-use App\Models\CRM\Campaign\CampaignLeadCategory;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -19,13 +17,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
  *
- * @property int                  $id
- * @property string               $name
- * @property string               $description
- * @property Carbon               $created_at
- * @property Carbon               $updated_at
- * @property Carbon               $deleted_at
- * @property Collection<CampaignLead> $leads
+ * @property int                              $id
+ * @property string                           $name
+ * @property string                           $description
+ * @property Carbon                           $created_at
+ * @property Carbon                           $updated_at
+ * @property Carbon                           $deleted_at
+ * @property Collection<CampaignLead>         $leads
  * @property Collection<CampaignLeadCategory> $categoryLinks
  */
 class Campaign extends Model

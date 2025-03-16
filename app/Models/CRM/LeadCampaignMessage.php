@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Models\CRM;
 
 use App\Models\CRM\Campaign\CampaignMessage;
-use App\Models\CRM\Lead;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -17,7 +16,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * This class is the model for lead campaign messages.
  *
  * @author Marcel Menk <marcel.menk@ipvx.io>
- * 
+ *
  * @property int                  $id
  * @property int                  $lead_id
  * @property int                  $campaign_message_id
