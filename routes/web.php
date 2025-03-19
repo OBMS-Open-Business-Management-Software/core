@@ -202,6 +202,14 @@ Route::middleware([
         Route::get('/support/tickets/{id}/file/delete/{filelink_id}', [App\Http\Controllers\AdminSupportController::class, 'support_file_delete'])->name('admin.support.file.delete');
         Route::post('/support/tickets/{id}/file/upload', [App\Http\Controllers\AdminSupportController::class, 'support_file_upload'])->name('admin.support.file.upload');
 
+        Route::get('/crm/leads', [App\Http\Controllers\AdminCRMController::class, 'crm_index'])->name('admin.crm');
+        Route::get('/crm/list/{category}/{type}', [App\Http\Controllers\AdminCRMController::class, 'crm_index_list'])->name('admin.crm.list');
+        Route::get('/crm/leads/{id}', [App\Http\Controllers\AdminCRMController::class, 'crm_details'])->name('admin.crm.details');
+        Route::get('/crm/leads/{id}/list', [App\Http\Controllers\AdminCRMController::class, 'crm_details_list'])->name('admin.crm.contacts.list');
+        Route::post('/crm/leads/{id}/add', [App\Http\Controllers\AdminCRMController::class, 'crm_contacts_add'])->name('admin.crm.contacts.add');
+        Route::post('/crm/leads/{id}/update/{contact_id}', [App\Http\Controllers\AdminCRMController::class, 'crm_contacts_update'])->name('admin.crm.contacts.update');
+        Route::get('/crm/leads/{id}/delete/{contact_id}', [App\Http\Controllers\AdminCRMController::class, 'crm_contacts_delete'])->name('admin.crm.contacts.delete');
+
         Route::middleware('role.admin')->group(function () {
             Route::get('/settings', [App\Http\Controllers\AdminSettingsController::class, 'settings_index'])->name('admin.settings');
             Route::get('/settings/list', [App\Http\Controllers\AdminSettingsController::class, 'settings_list'])->name('admin.settings.list');
@@ -217,6 +225,15 @@ Route::middleware([
             Route::get('/support/categories/{id}/delete', [App\Http\Controllers\AdminSupportController::class, 'support_categories_delete'])->name('admin.support.categories.delete');
             Route::post('/support/categories/{id}/add', [App\Http\Controllers\AdminSupportController::class, 'support_category_user_add'])->name('admin.support.categories.user.add');
             Route::get('/support/categories/{id}/delete/{category_link_id}', [App\Http\Controllers\AdminSupportController::class, 'support_category_user_delete'])->name('admin.support.categories.user.delete');
+
+            Route::get('/crm/categories', [App\Http\Controllers\AdminCRMController::class, 'crm_categories'])->name('admin.crm.categories');
+            Route::get('/crm/categories/list', [App\Http\Controllers\AdminCRMController::class, 'crm_categories_list'])->name('admin.crm.categories.list');
+            Route::get('/crm/categories/list/{id}', [App\Http\Controllers\AdminCRMController::class, 'crm_category_lead_list'])->name('admin.crm.categories.list.leads');
+            Route::post('/crm/categories/add', [App\Http\Controllers\AdminCRMController::class, 'crm_categories_add'])->name('admin.crm.categories.add');
+            Route::post('/crm/categories/{id}/update', [App\Http\Controllers\AdminCRMController::class, 'crm_categories_update'])->name('admin.crm.categories.update');
+            Route::get('/crm/categories/{id}/delete', [App\Http\Controllers\AdminCRMController::class, 'crm_categories_delete'])->name('admin.crm.categories.delete');
+            Route::post('/crm/categories/{id}/add', [App\Http\Controllers\AdminCRMController::class, 'crm_category_lead_add'])->name('admin.crm.categories.lead.add');
+            Route::get('/crm/categories/{id}/delete/{category_link_id}', [App\Http\Controllers\AdminCRMController::class, 'crm_category_lead_delete'])->name('admin.crm.categories.lead.delete');
 
             Route::get('/invoices/types', [App\Http\Controllers\AdminInvoiceCustomerController::class, 'invoice_types_index'])->name('admin.invoices.types');
             Route::get('/invoices/types/list', [App\Http\Controllers\AdminInvoiceCustomerController::class, 'invoice_types_list'])->name('admin.invoices.types.list');
