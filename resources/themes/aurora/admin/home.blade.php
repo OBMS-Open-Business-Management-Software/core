@@ -4,7 +4,7 @@
     <div class="container-fluid my-4">
         <div class="row">
             <div class="col-md-12">
-                <h2 class="text-primary mb-4">{{ __('interface.misc.sales') }}</h2>
+                <h2 class="text-primary mb-4 h4">{{ __('interface.misc.sales') }}</h2>
             </div>
         </div>
         <div class="row">
@@ -110,7 +110,7 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <h2 class="text-primary my-4">{{ __('interface.misc.procurement') }}</h2>
+                <h2 class="text-primary my-4 h4">{{ __('interface.misc.procurement') }}</h2>
             </div>
         </div>
         <div class="row">
