@@ -2,6 +2,20 @@
     display: flex;
     flex-direction: column;
     height: 100vh;
+    position: relative;
+
+    &::before {
+        background: url('/themes/aurora/images/pattern.svg'), linear-gradient(0deg, rgba(255 255 255 / 100%) 0%, rgba(255 255 255 / 0%) 100%);
+        background-blend-mode: overlay;
+        content: "";
+        display: block;
+        height: 400px;
+        mix-blend-mode: color-burn;
+        opacity: .5;
+        position: absolute;
+        top: -16px;
+        width: 100%;
+    }
 
     .wrapper {
         display: flex;
@@ -56,5 +70,32 @@
                 background-color: var(--white);
             }
         }
+    }
+}
+
+.login {
+    height: 100%;
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    align-content: space-around;
+    flex-wrap: wrap;
+
+    &::before {
+        background: url('/themes/aurora/images/pattern.svg'), linear-gradient(0deg, rgba(255 255 255 / 100%) 0%, rgba(255 255 255 / 0%) 100%);
+        background-blend-mode: overlay;
+        content: "";
+        display: block;
+        height: 400px;
+        mix-blend-mode: color-burn;
+        opacity: .5;
+        position: absolute;
+        top: -56px;
+        width: 100%;
+    }
+
+    .wrapper {
+        padding-bottom: 2rem;
+        padding-top: 2rem;
     }
 }

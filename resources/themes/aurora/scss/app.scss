@@ -681,20 +681,6 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     padding: 0.3rem 0.5rem;
 }
 
-.login {
-    height: 100%;
-    display: flex;
-    width: 100%;
-    justify-content: space-around;
-    align-content: space-around;
-    flex-wrap: wrap;
-
-    .wrapper {
-        padding-bottom: 2rem;
-        padding-top: 2rem;
-    }
-}
-
 .border {
     &.border-gray {
         border-color: var(--gray) !important;
