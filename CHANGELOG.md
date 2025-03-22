@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.18.0](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.17.0...v1.18.0) (2025-03-22)
+
+
+### Features
+
+* unified ui design ([1f24e61](https://github.com/OBMS-Open-Business-Management-Software/core/commit/1f24e6142a94ef1429ab8d9acf13db0dd66b7080))
+
 ## [1.17.0](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.16.0...v1.17.0) (2025-03-15)
 
 
