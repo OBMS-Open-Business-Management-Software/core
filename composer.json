@@ -101,6 +101,10 @@
             "beyondcode/laravel-er-diagram-generator": {
                 "Laravel 11 database schema identification": "patches/beyondcode/laravel-er-diagram-generator/database-schema-identification.patch"
             }
+        },
+        "installer-paths": {
+            "app/Products/{$name}": ["type:obms-product"],
+            "app/PaymentGateways/{$name}": ["type:obms-paymentgateway"]
         }
     },
     "config": {
@@ -109,7 +113,9 @@
         "sort-packages": true,
         "allow-plugins": {
             "cweagans/composer-patches": true,
-            "php-http/discovery": true
+            "php-http/discovery": true,
+            "composer/installers": true,
+            "obms/composer-installer": true
         }
     },
     "minimum-stability": "dev",
