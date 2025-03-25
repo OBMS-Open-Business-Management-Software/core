@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.18.1](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.18.0...v1.18.1) (2025-03-25)
+
+
+### Bug Fixes
+
+* prevent failed job requeuing ([f78b399](https://github.com/OBMS-Open-Business-Management-Software/core/commit/f78b399a066384d6bc8eef290307150e58d013dc))
+
 ## [1.18.0](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.17.0...v1.18.0) (2025-03-22)
 
 
