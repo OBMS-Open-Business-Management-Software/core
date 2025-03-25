@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.19.0](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.18.1...v1.19.0) (2025-03-25)
+
+
+### Features
+
+* composer installer support ([099e4ac](https://github.com/OBMS-Open-Business-Management-Software/core/commit/099e4ac602ccb76b4a0d30bc9158b2803197a7b8))
+
 ## [1.18.1](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.18.0...v1.18.1) (2025-03-25)
 
 
