@@ -8,9 +8,9 @@ use App\Helpers\Products;
 use App\Models\Content\Page;
 use App\Models\Shop\Configurator\ShopConfiguratorCategory;
 use App\Models\Shop\Configurator\ShopConfiguratorForm;
-use App\Products\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use OBMS\ModuleSDK\Products\Product;
 
 /*
 |--------------------------------------------------------------------------

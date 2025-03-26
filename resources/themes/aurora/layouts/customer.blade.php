@@ -114,12 +114,12 @@
                         </a>
                     </li>
                 </ul>
-                @if (!empty(request()->get('products')))
+                @if (!empty(request()->get('service_products')))
                     <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mb-2 mt-3 text-primary">
                         <span>{{ __('interface.misc.products') }}</span>
                     </h6>
                     <ul class="nav flex-column">
-                        @foreach (request()->get('products') as $product)
+                        @foreach (request()->get('service_products') as $product)
                             <li class="nav-item {{ Request::route()?->getName() == 'customer.services.' . $product->slug ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ route('customer.services.' . $product->slug) }}" title="{{ $product->name }}">
                                     <i class="{{ $product->icon ?: 'bi bi-box' }}"></i>

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Products\Sample\Models;
 
-use App\Products\Service;
-use App\Traits\Product\Service\CanStart;
-use App\Traits\Product\Service\HasStatistics;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OBMS\ModuleSDK\Products\Service;
+use OBMS\ModuleSDK\Products\Traits\CanStart;
+use OBMS\ModuleSDK\Products\Traits\HasStatistics;
 
 /**
  * Class Sample.
