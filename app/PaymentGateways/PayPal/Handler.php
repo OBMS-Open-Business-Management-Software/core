@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\PaymentGateways\PayPal;
 
-use App\PaymentGateways\Gateway;
 use App\PaymentGateways\PayPal\Helpers\PaypalIPNClient;
 use App\PaymentGateways\PayPal\Helpers\PaypalMerchantClient;
-use App\Traits\PaymentGateway\HasSettings;
 use Exception;
 use Illuminate\Support\Collection;
+use OBMS\ModuleSDK\Payments\Gateway;
+use OBMS\ModuleSDK\Payments\Traits\HasSettings;
 
 /**
  * Class Handler.

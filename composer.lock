@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f1169a117b4db939bda2c5f3273e7e15",
+    "content-hash": "44004f47f519d0da576380c21061b1fb",
     "packages": [
         {
             "name": "awobaz/compoships",
@@ -5278,6 +5278,49 @@
                 }
             ],
             "time": "2024-09-09T07:06:30+00:00"
+        },
+        {
+            "name": "obms/module-sdk",
+            "version": "v1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/OBMS-Open-Business-Management-Software/module-sdk.git",
+                "reference": "e7b4ba683c61035e9fd676588e09123023b94b70"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/OBMS-Open-Business-Management-Software/module-sdk/zipball/e7b4ba683c61035e9fd676588e09123023b94b70",
+                "reference": "e7b4ba683c61035e9fd676588e09123023b94b70",
+                "shasum": ""
+            },
+            "require": {
+                "obms/core": "*",
+                "php": "^8.2"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.13",
+                "phpstan/phpstan": "^1.10"
+            },
+            "type": "module",
+            "autoload": {
+                "psr-4": {
+                    "OBMS\\ModuleSDK\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BUSL-1.1"
+            ],
+            "description": "The OBMS module SDK.",
+            "keywords": [
+                "obms",
+                "open business management software"
+            ],
+            "support": {
+                "issues": "https://github.com/OBMS-Open-Business-Management-Software/module-sdk/issues",
+                "source": "https://github.com/OBMS-Open-Business-Management-Software/module-sdk/tree/v1.0.2"
+            },
+            "time": "2025-03-26T21:46:57+00:00"
         },
         {
             "name": "omnipay/common",

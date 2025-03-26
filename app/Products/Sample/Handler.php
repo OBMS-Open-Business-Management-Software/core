@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Products\Sample;
 
-use App\Products\Product;
 use App\Products\Sample\Models\Sample;
-use App\Traits\Product\HasCapabilities;
-use App\Traits\Product\HasService;
-use App\Traits\Product\HasSettings;
 use Illuminate\Support\Collection;
+use OBMS\ModuleSDK\Products\Product;
+use OBMS\ModuleSDK\Products\Traits\HasCapabilities;
+use OBMS\ModuleSDK\Products\Traits\HasService;
+use OBMS\ModuleSDK\Products\Traits\HasSettings;
 
 /**
  * Class Handler.
