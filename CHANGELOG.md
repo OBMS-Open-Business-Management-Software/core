@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.1.0](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v2.0.0...v2.1.0) (2025-03-27)
+
+
+### Features
+
+* dynamic module namespace support ([8d7da0a](https://github.com/OBMS-Open-Business-Management-Software/core/commit/8d7da0a1c9d0839cce39c5e6f0c45399abd5d98e))
+
 ## [2.0.0](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.20.0...v2.0.0) (2025-03-27)
 
 
