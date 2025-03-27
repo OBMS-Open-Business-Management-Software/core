@@ -63,50 +63,12 @@ class CustomTranslationLoader extends FileLoader
             });
         }
 
-        collect(scandir(__DIR__ . '/../PaymentGateways'))->reject(function (string $path) {
-            return $path == '.' || $path == '..' || $path == '.gitignore' || str_contains($path, '.php');
-        })->each(function (string $folder) use ($locale, &$customTranslations) {
-            collect(scandir(__DIR__ . '/../PaymentGateways/' . $folder . '/src/Languages'))->reject(function (string $path) use ($locale) {
-                return $path == '.' || $path == '..' || str_contains($path, '.php') || $path !== $locale;
-            })->each(function (string $lang) use ($folder, &$customTranslations) {
-                collect(scandir(__DIR__ . '/../PaymentGateways/' . $folder . '/src/Languages/' . $lang))->reject(function (string $group) {
-                    return !str_contains($group, '.php');
-                })->transform(function (string $group) {
-                    return str_replace('.php', '', $group);
-                })->each(function (string $group) use ($folder, $lang, &$customTranslations) {
-                    $customTranslations = [
-                        ...$customTranslations,
-                        ...collect(Arr::dot(require __DIR__ . '/../PaymentGateways/' . $folder . '/src/Languages/' . $lang . '/' . $group . '.php'))->mapWithKeys(function (string $value, string $key) use ($group) {
-                            return [
-                                $group . '.' . $key => empty($value) ? $group . '.' . $key : $value,
-                            ];
-                        })->toArray(),
-                    ];
-                });
-            });
+        PaymentGateways::list()->each(function ($gateway) use ($locale, &$customTranslations) {
+            $this->loadTranslationsFromFolder($gateway->folderName() . '/Languages', $locale, $customTranslations);
         });
 
-        collect(scandir(__DIR__ . '/../Products'))->reject(function (string $path) {
-            return $path == '.' || $path == '..' || $path == '.gitignore' || str_contains($path, '.php');
-        })->each(function (string $folder) use ($locale, &$customTranslations) {
-            collect(scandir(__DIR__ . '/../Products/' . $folder . '/src/Languages'))->reject(function (string $path) use ($locale) {
-                return $path == '.' || $path == '..' || str_contains($path, '.php') || $path !== $locale;
-            })->each(function (string $lang) use ($folder, &$customTranslations) {
-                collect(scandir(__DIR__ . '/../Products/' . $folder . '/src/Languages/' . $lang))->reject(function (string $group) {
-                    return !str_contains($group, '.php');
-                })->transform(function (string $group) {
-                    return str_replace('.php', '', $group);
-                })->each(function (string $group) use ($folder, $lang, &$customTranslations) {
-                    $customTranslations = [
-                        ...$customTranslations,
-                        ...collect(Arr::dot(require __DIR__ . '/../Products/' . $folder . '/src/Languages/' . $lang . '/' . $group . '.php'))->mapWithKeys(function (string $value, string $key) use ($group) {
-                            return [
-                                $group . '.' . $key => empty($value) ? $group . '.' . $key : $value,
-                            ];
-                        })->toArray(),
-                    ];
-                });
-            });
+        Products::list()->each(function ($product) use ($locale, &$customTranslations) {
+            $this->loadTranslationsFromFolder($product->folderName() . '/Languages', $locale, $customTranslations);
         });
 
         return collect($customTranslations)->map(function ($value, $key) {
@@ -115,6 +77,35 @@ class CustomTranslationLoader extends FileLoader
             }
 
             return $value;
+        });
+    }
+
+    /**
+     * Load translations from a specific folder structure.
+     *
+     * @param string $folder              The base folder path
+     * @param string $locale              The locale to load
+     * @param array  &$customTranslations Reference to the translations array
+     */
+    private function loadTranslationsFromFolder(string $folder, string $locale, array &$customTranslations): void
+    {
+        collect(scandir($folder))->reject(function (string $path) use ($locale) {
+            return $path == '.' || $path == '..' || str_contains($path, '.php') || $path !== $locale;
+        })->each(function (string $lang) use ($folder, &$customTranslations) {
+            collect(scandir($folder . '/' . $lang))->reject(function (string $group) {
+                return !str_contains($group, '.php');
+            })->transform(function (string $group) {
+                return str_replace('.php', '', $group);
+            })->each(function (string $group) use ($folder, $lang, &$customTranslations) {
+                $customTranslations = [
+                    ...$customTranslations,
+                    ...collect(Arr::dot(require $folder . '/' . $lang . '/' . $group . '.php'))->mapWithKeys(function (string $value, string $key) use ($group) {
+                        return [
+                            $group . '.' . $key => empty($value) ? $group . '.' . $key : $value,
+                        ];
+                    })->toArray(),
+                ];
+            });
         });
     }
 }
