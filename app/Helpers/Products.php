@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Helpers;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * Class Products.
@@ -28,8 +29,17 @@ class Products
         collect(scandir(__DIR__ . '/../Products'))->reject(function (string $path) {
             return $path == '.' || $path == '..' || $path == '.gitignore' || str_contains($path, '.php');
         })->transform(function (string $folder) use (&$list) {
-            $classPath = 'OBMS\\Products\\' . $folder . '\\Handler';
-            $service   = new $classPath();
+            $cacheKey  = 'module-product-' . $folder . '-classpath';
+            $classPath = Cache::get($cacheKey);
+
+            if (!$classPath) {
+                $meta      = json_decode(file_get_contents(__DIR__ . '/../Products/' . $folder . '/composer.json'));
+                $classPath = array_keys((array) $meta->autoload->{'psr-4'})[0] . 'Handler';
+
+                Cache::forever($cacheKey, $classPath);
+            }
+
+            $service = new $classPath();
 
             $list->put($service->technicalName(), $service);
         });

@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * Class PaymentGateways.
@@ -37,8 +38,17 @@ class PaymentGateways
         collect(scandir(__DIR__ . '/../PaymentGateways'))->reject(function (string $path) {
             return $path == '.' || $path == '..' || $path == '.gitignore' || str_contains($path, '.php');
         })->transform(function (string $folder) use (&$list) {
-            $classPath = 'OBMS\\PaymentGateways\\' . $folder . '\\Handler';
-            $gateway   = new $classPath();
+            $cacheKey  = 'module-paymentgateway-' . $folder . '-classpath';
+            $classPath = Cache::get($cacheKey);
+
+            if (!$classPath) {
+                $meta      = json_decode(file_get_contents(__DIR__ . '/../PaymentGateways/' . $folder . '/composer.json'));
+                $classPath = array_keys((array) $meta->autoload->{'psr-4'})[0] . 'Handler';
+
+                Cache::forever($cacheKey, $classPath);
+            }
+
+            $gateway = new $classPath();
 
             $list->put($gateway->technicalName(), $gateway);
         });
