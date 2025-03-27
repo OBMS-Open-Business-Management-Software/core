@@ -64,19 +64,19 @@ class CustomTranslationLoader extends FileLoader
         }
 
         collect(scandir(__DIR__ . '/../PaymentGateways'))->reject(function (string $path) {
-            return $path == '.' || $path == '..' || str_contains($path, '.php');
+            return $path == '.' || $path == '..' || $path == '.gitignore' || str_contains($path, '.php');
         })->each(function (string $folder) use ($locale, &$customTranslations) {
-            collect(scandir(__DIR__ . '/../PaymentGateways/' . $folder . '/Languages'))->reject(function (string $path) use ($locale) {
+            collect(scandir(__DIR__ . '/../PaymentGateways/' . $folder . '/src/Languages'))->reject(function (string $path) use ($locale) {
                 return $path == '.' || $path == '..' || str_contains($path, '.php') || $path !== $locale;
             })->each(function (string $lang) use ($folder, &$customTranslations) {
-                collect(scandir(__DIR__ . '/../PaymentGateways/' . $folder . '/Languages/' . $lang))->reject(function (string $group) {
+                collect(scandir(__DIR__ . '/../PaymentGateways/' . $folder . '/src/Languages/' . $lang))->reject(function (string $group) {
                     return !str_contains($group, '.php');
                 })->transform(function (string $group) {
                     return str_replace('.php', '', $group);
                 })->each(function (string $group) use ($folder, $lang, &$customTranslations) {
                     $customTranslations = [
                         ...$customTranslations,
-                        ...collect(Arr::dot(require __DIR__ . '/../PaymentGateways/' . $folder . '/Languages/' . $lang . '/' . $group . '.php'))->mapWithKeys(function (string $value, string $key) use ($group) {
+                        ...collect(Arr::dot(require __DIR__ . '/../PaymentGateways/' . $folder . '/src/Languages/' . $lang . '/' . $group . '.php'))->mapWithKeys(function (string $value, string $key) use ($group) {
                             return [
                                 $group . '.' . $key => empty($value) ? $group . '.' . $key : $value,
                             ];
@@ -87,19 +87,19 @@ class CustomTranslationLoader extends FileLoader
         });
 
         collect(scandir(__DIR__ . '/../Products'))->reject(function (string $path) {
-            return $path == '.' || $path == '..' || str_contains($path, '.php');
+            return $path == '.' || $path == '..' || $path == '.gitignore' || str_contains($path, '.php');
         })->each(function (string $folder) use ($locale, &$customTranslations) {
-            collect(scandir(__DIR__ . '/../Products/' . $folder . '/Languages'))->reject(function (string $path) use ($locale) {
+            collect(scandir(__DIR__ . '/../Products/' . $folder . '/src/Languages'))->reject(function (string $path) use ($locale) {
                 return $path == '.' || $path == '..' || str_contains($path, '.php') || $path !== $locale;
             })->each(function (string $lang) use ($folder, &$customTranslations) {
-                collect(scandir(__DIR__ . '/../Products/' . $folder . '/Languages/' . $lang))->reject(function (string $group) {
+                collect(scandir(__DIR__ . '/../Products/' . $folder . '/src/Languages/' . $lang))->reject(function (string $group) {
                     return !str_contains($group, '.php');
                 })->transform(function (string $group) {
                     return str_replace('.php', '', $group);
                 })->each(function (string $group) use ($folder, $lang, &$customTranslations) {
                     $customTranslations = [
                         ...$customTranslations,
-                        ...collect(Arr::dot(require __DIR__ . '/../Products/' . $folder . '/Languages/' . $lang . '/' . $group . '.php'))->mapWithKeys(function (string $value, string $key) use ($group) {
+                        ...collect(Arr::dot(require __DIR__ . '/../Products/' . $folder . '/src/Languages/' . $lang . '/' . $group . '.php'))->mapWithKeys(function (string $value, string $key) use ($group) {
                             return [
                                 $group . '.' . $key => empty($value) ? $group . '.' . $key : $value,
                             ];

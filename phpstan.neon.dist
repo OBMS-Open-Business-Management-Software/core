@@ -3,3 +3,6 @@ parameters:
     paths:
         - app
         - tests
+    excludePaths:
+        - app/Products/*
+        - app/PaymentGateways/*

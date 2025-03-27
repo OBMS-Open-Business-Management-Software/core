@@ -38,6 +38,8 @@
         "laravel/ui": "^4.5",
         "lcobucci/clock": "^2.2",
         "obms/module-sdk": "^1.0",
+        "obms/paymentgateway-paypal": "^1.1",
+        "obms/product-sample": "*",
         "php-http/guzzle7-adapter": "^1.1",
         "phpseclib/phpseclib": "^3.0",
         "sabre/dav": "^4.2",
