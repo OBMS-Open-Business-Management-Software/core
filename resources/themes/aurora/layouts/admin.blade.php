@@ -126,6 +126,21 @@
                     <span>{{ __('interface.misc.sales') }}</span>
                 </h6>
                 <ul class="nav flex-column">
+                    <li class="nav-item dropdown show {{ str_contains(Request::route()?->getName(), 'admin.crm') ? 'active' : '' }}">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdown05" data-toggle="dropdown" aria-expanded="false" title="{{ __('interface.misc.leads') }}">
+                            <div>
+                                <i class="bi bi-trophy"></i>
+                                <span>{{ __('interface.misc.leads') }}</span>
+                            </div>
+                            <i class="bi bi-chevron-down dropdown-indicator"></i>
+                        </a>
+                        <div class="dropdown-menu w-100" aria-labelledby="dropdown05">
+                            <!-- TODO: Add link to lead list -->
+                            @if (Auth::user()->role == 'admin')
+                                <a class="dropdown-item" href="{{ route('admin.crm.categories') }}" title="{{ __('interface.misc.categories') }}">{{ __('interface.misc.categories') }}</a>
+                            @endif
+                        </div>
+                    </li>
                     <li class="nav-item {{ str_contains(Request::route()?->getName(), 'admin.customers') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('admin.customers') }}" title="{{ __('interface.misc.customers') }}">
                             <i class="bi bi-person"></i>
