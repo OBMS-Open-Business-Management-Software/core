@@ -13,9 +13,9 @@ class MigrationServiceProvider extends ServiceProvider
         $folders = [];
 
         collect(scandir(__DIR__ . '/../PaymentGateways'))->reject(function (string $path) {
-            return $path == '.' || $path == '..' || str_contains($path, '.php');
+            return $path == '.' || $path == '..' || $path == '.gitignore' || str_contains($path, '.php');
         })->each(function (string $folder) use (&$folders) {
-            $fullPath = __DIR__ . '/../PaymentGateways/' . $folder . '/Migrations';
+            $fullPath = __DIR__ . '/../PaymentGateways/' . $folder . '/src/Migrations';
 
             if (is_dir($fullPath)) {
                 $folders[] = $fullPath;
@@ -23,9 +23,9 @@ class MigrationServiceProvider extends ServiceProvider
         });
 
         collect(scandir(__DIR__ . '/../Products'))->reject(function (string $path) {
-            return $path == '.' || $path == '..' || str_contains($path, '.php');
+            return $path == '.' || $path == '..' || $path == '.gitignore' || str_contains($path, '.php');
         })->each(function (string $folder) use (&$folders) {
-            $fullPath = __DIR__ . '/../Products/' . $folder . '/Migrations';
+            $fullPath = __DIR__ . '/../Products/' . $folder . '/src/Migrations';
 
             if (is_dir($fullPath)) {
                 $folders[] = $fullPath;

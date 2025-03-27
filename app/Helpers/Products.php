@@ -26,13 +26,12 @@ class Products
         $list = collect();
 
         collect(scandir(__DIR__ . '/../Products'))->reject(function (string $path) {
-            return $path == '.' || $path == '..' || str_contains($path, '.php');
+            return $path == '.' || $path == '..' || $path == '.gitignore' || str_contains($path, '.php');
         })->transform(function (string $folder) use (&$list) {
-            ClassFinder::getClassesInNamespace('App\Products\\' . $folder)->transform(function (string $classPath) {
-                return new $classPath();
-            })->each(function ($method) use (&$list) {
-                $list->put($method->technicalName(), $method);
-            });
+            $classPath = 'OBMS\\Products\\' . $folder . '\\Handler';
+            $service   = new $classPath();
+
+            $list->put($service->technicalName(), $service);
         });
 
         return $list;

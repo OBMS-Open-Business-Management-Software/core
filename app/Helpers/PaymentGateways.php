@@ -35,13 +35,12 @@ class PaymentGateways
         $list = collect();
 
         collect(scandir(__DIR__ . '/../PaymentGateways'))->reject(function (string $path) {
-            return $path == '.' || $path == '..' || str_contains($path, '.php');
+            return $path == '.' || $path == '..' || $path == '.gitignore' || str_contains($path, '.php');
         })->transform(function (string $folder) use (&$list) {
-            ClassFinder::getClassesInNamespace('App\PaymentGateways\\' . $folder)->transform(function (string $classPath) {
-                return new $classPath();
-            })->each(function ($method) use (&$list) {
-                $list->put($method->technicalName(), $method);
-            });
+            $classPath = 'OBMS\\PaymentGateways\\' . $folder . '\\Handler';
+            $gateway   = new $classPath();
+
+            $list->put($gateway->technicalName(), $gateway);
         });
 
         return $list;
