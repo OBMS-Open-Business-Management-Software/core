@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.0.0](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.20.0...v2.0.0) (2025-03-27)
+
+
+### ⚠ BREAKING CHANGES
+
+* load external modules through packagist
+
+### Features
+
+* external module support ([cc0f649](https://github.com/OBMS-Open-Business-Management-Software/core/commit/cc0f649313ff870c66d223d6995150b092107e62))
+
 ## [1.20.0](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v1.19.0...v1.20.0) (2025-03-26)
 
 
