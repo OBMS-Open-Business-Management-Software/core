@@ -679,6 +679,7 @@ return [
         'accept'               => 'Akzeptieren',
         'accept_sepa_mandate'  => 'SEPA-Mandat akzeptieren',
         'save_branding'        => 'Branding speichern',
+        'verify_email'         => 'Verify email',
     ],
     'documents' => [
         'gross_position'           => 'Brutto (Position)',

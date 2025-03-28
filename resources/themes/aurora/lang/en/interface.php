@@ -679,6 +679,7 @@ return [
         'accept'               => 'Accept',
         'accept_sepa_mandate'  => 'Accept SEPA Mandate',
         'save_branding'        => 'Save Branding',
+        'verify_email'         => 'E-Mail Adresse bestätigen',
     ],
     'documents' => [
         'gross_position'           => 'Gross (Position)',
