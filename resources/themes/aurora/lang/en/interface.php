@@ -204,6 +204,9 @@ return [
         'logo'                              => 'Logo',
         'favicon'                           => 'Favicon',
         'branding'                          => 'Branding',
+        'role'                              => 'Role',
+        'employee'                          => 'Employee',
+        'administrator'                     => 'Administrator',
     ],
     'data_type' => [
         'string'  => 'String',
@@ -269,6 +272,7 @@ return [
         'verifying'        => 'Verifying',
     ],
     'misc' => [
+        'instance'                           => 'Instance',
         'contract'                           => 'Contract',
         'account'                            => 'Account',
         'transactions'                       => 'Transactions',
@@ -434,6 +438,7 @@ return [
         'try_again_later'                    => 'Try again later.',
         'products'                           => 'Products',
         'payment_notice'                     => 'Payable within :days days gross without deductions.',
+        'employees'                          => 'Employees',
     ],
     'messages' => [
         'passwords_not_match'                => 'The provided password does not match your current password.',
@@ -508,6 +513,8 @@ return [
         'login_prohibited'                   => 'You don\'t have the permission to log in with this user account.',
         '2fa_removed'                        => 'The two factor authentication has been removed successfully.',
         '2fa_invalid'                        => 'Invalid two factor authentication code. Please try again.',
+        'employee_locked'                    => 'The employee account has been locked successfully.',
+        'employee_unlocked'                  => 'The employee account has been unlocked successfully.',
         'customer_locked'                    => 'The customer account has been locked successfully.',
         'customer_unlocked'                  => 'The customer account has been unlocked successfully.',
         'customer_created'                   => 'The customer account has been created successfully.',
@@ -534,6 +541,7 @@ return [
         'transaction_updated'                => 'Transaction has been updated successfully.',
         'transaction_deleted'                => 'Transaction has been deleted successfully.',
         'supplier_created'                   => 'The supplier account has been created successfully.',
+        'employee_created'                   => 'The employee account has been created successfully.',
         'shop_category_added'                => 'Shop category has been added successfully.',
         'shop_category_updated'              => 'Shop category has been updated successfully.',
         'shop_category_deleted'              => 'Shop category has been deleted successfully.',
@@ -754,6 +762,9 @@ return [
     ],
     'supplier' => [
         'create' => 'Create Supplier',
+    ],
+    'employee' => [
+        'create' => 'Create Employee',
     ],
     'form' => [
         'create' => 'Create Form',

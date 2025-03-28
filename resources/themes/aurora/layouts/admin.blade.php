@@ -211,28 +211,14 @@
                     </li>
                 </ul>
                 <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mb-2 mt-3 text-primary">
-                    <span>{{ __('interface.misc.miscellaneous') }}</span>
+                    <span>{{ __('interface.data.company') }}</span>
                 </h6>
                 <ul class="nav flex-column">
                     @if (Auth::user()->role == 'admin')
-                        <li class="nav-item {{ str_contains(Request::route()?->getName(), 'admin.settings') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('admin.settings') }}" title="{{ __('interface.misc.parameters') }}">
-                                <i class="bi bi-gear-wide-connected"></i>
-                                <span>{{ __('interface.misc.parameters') }}</span>
-                            </a>
-                        </li>
-                    @endif
-                    <li class="nav-item {{ str_contains(Request::route()?->getName(), 'admin.filemanager') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('admin.filemanager') }}" title="{{ __('interface.misc.file_manager') }}">
-                            <i class="bi bi-folder"></i>
-                            <span>{{ __('interface.misc.file_manager') }}</span>
-                        </a>
-                    </li>
-                    @if (Auth::user()->role == 'admin')
-                        <li class="nav-item {{ str_contains(Request::route()?->getName(), 'admin.paymentgateways') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('admin.paymentgateways') }}" title="{{ __('interface.misc.payment_gateways') }}">
-                                <i class="bi bi-currency-euro"></i>
-                                <span>{{ __('interface.misc.payment_gateways') }}</span>
+                        <li class="nav-item {{ str_contains(Request::route()?->getName(), 'admin.employees') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('admin.employees') }}" title="{{ __('interface.misc.employees') }}">
+                                <i class="bi bi-person"></i>
+                                <span>{{ __('interface.misc.employees') }}</span>
                             </a>
                         </li>
                     @endif
@@ -242,43 +228,68 @@
                             <span>{{ __('interface.misc.custom_pages') }}</span>
                         </a>
                     </li>
-                    @if (Auth::user()->role == 'admin')
-                        <li class="nav-item dropdown show {{ (str_contains(Request::route()?->getName(), 'admin.api.users') ? 'active' : '') }}">
-                            <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-expanded="false" title="{{ __('interface.misc.api') }}">
-                                <div>
-                                    <i class="bi bi-code-slash"></i>
-                                    <span>{{ __('interface.misc.api') }}</span>
-                                </div>
-                                <i class="bi bi-chevron-down dropdown-indicator"></i>
-                            </a>
-                            <div class="dropdown-menu w-100" aria-labelledby="dropdown04">
-                                <a class="dropdown-item" href="{{ route('admin.api.users') }}" title="{{ __('interface.misc.users') }}">{{ __('interface.misc.users') }}</a>
-                                <a class="dropdown-item" href="{{ route('admin.api.oauth-clients') }}" title="{{ __('interface.misc.oauth_clients') }}">{{ __('interface.misc.oauth_clients') }}</a>
-                            </div>
-                        </li>
-                        @if (empty(request()->get('tenant')))
-                            <li class="nav-item {{ str_contains(Request::route()?->getName(), 'admin.tenants') ? 'active' : '' }}">
-                                <a class="nav-link" href="{{ route('admin.tenants') }}" title="{{ __('interface.misc.tenants') }}">
-                                    <i class="bi bi-people"></i>
-                                    <span>{{ __('interface.misc.tenants') }}</span>
+                    <li class="nav-item {{ str_contains(Request::route()?->getName(), 'admin.filemanager') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('admin.filemanager') }}" title="{{ __('interface.misc.file_manager') }}">
+                            <i class="bi bi-folder"></i>
+                            <span>{{ __('interface.misc.file_manager') }}</span>
+                        </a>
+                    </li>
+                </ul>
+                @if (empty(request()->get('tenant')) || Auth::user()->role == 'admin')
+                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mb-2 mt-3 text-primary">
+                        <span>{{ __('interface.misc.instance') }}</span>
+                    </h6>
+                    <ul class="nav flex-column">
+                        @if (Auth::user()->role == 'admin')
+                            <li class="nav-item {{ str_contains(Request::route()?->getName(), 'admin.settings') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ route('admin.settings') }}" title="{{ __('interface.misc.parameters') }}">
+                                    <i class="bi bi-gear-wide-connected"></i>
+                                    <span>{{ __('interface.misc.parameters') }}</span>
                                 </a>
                             </li>
-                            <li class="nav-item dropdown show">
-                                <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-expanded="false" title="{{ __('interface.misc.monitoring') }}">
+                            <li class="nav-item {{ str_contains(Request::route()?->getName(), 'admin.paymentgateways') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ route('admin.paymentgateways') }}" title="{{ __('interface.misc.payment_gateways') }}">
+                                    <i class="bi bi-currency-euro"></i>
+                                    <span>{{ __('interface.misc.payment_gateways') }}</span>
+                                </a>
+                            </li>
+                            <li class="nav-item dropdown show {{ (str_contains(Request::route()?->getName(), 'admin.api.users') ? 'active' : '') }}">
+                                <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-expanded="false" title="{{ __('interface.misc.api') }}">
                                     <div>
-                                        <i class="bi bi-activity"></i>
-                                        <span>{{ __('interface.misc.monitoring') }}</span>
+                                        <i class="bi bi-code-slash"></i>
+                                        <span>{{ __('interface.misc.api') }}</span>
                                     </div>
                                     <i class="bi bi-chevron-down dropdown-indicator"></i>
                                 </a>
                                 <div class="dropdown-menu w-100" aria-labelledby="dropdown04">
-                                    <a class="dropdown-item" href="{{ url('/horizon') }}" target="_blank" title="{{ __('interface.misc.horizon') }}">{{ __('interface.misc.horizon') }}</a>
-                                    <a class="dropdown-item" href="{{ url('/pulse') }}" target="_blank" title="{{ __('interface.misc.pulse') }}">{{ __('interface.misc.pulse') }}</a>
+                                    <a class="dropdown-item" href="{{ route('admin.api.users') }}" title="{{ __('interface.misc.users') }}">{{ __('interface.misc.users') }}</a>
+                                    <a class="dropdown-item" href="{{ route('admin.api.oauth-clients') }}" title="{{ __('interface.misc.oauth_clients') }}">{{ __('interface.misc.oauth_clients') }}</a>
                                 </div>
                             </li>
+                            @if (empty(request()->get('tenant')))
+                                <li class="nav-item {{ str_contains(Request::route()?->getName(), 'admin.tenants') ? 'active' : '' }}">
+                                    <a class="nav-link" href="{{ route('admin.tenants') }}" title="{{ __('interface.misc.tenants') }}">
+                                        <i class="bi bi-people"></i>
+                                        <span>{{ __('interface.misc.tenants') }}</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item dropdown show">
+                                    <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-expanded="false" title="{{ __('interface.misc.monitoring') }}">
+                                        <div>
+                                            <i class="bi bi-activity"></i>
+                                            <span>{{ __('interface.misc.monitoring') }}</span>
+                                        </div>
+                                        <i class="bi bi-chevron-down dropdown-indicator"></i>
+                                    </a>
+                                    <div class="dropdown-menu w-100" aria-labelledby="dropdown04">
+                                        <a class="dropdown-item" href="{{ url('/horizon') }}" target="_blank" title="{{ __('interface.misc.horizon') }}">{{ __('interface.misc.horizon') }}</a>
+                                        <a class="dropdown-item" href="{{ url('/pulse') }}" target="_blank" title="{{ __('interface.misc.pulse') }}">{{ __('interface.misc.pulse') }}</a>
+                                    </div>
+                                </li>
+                            @endif
                         @endif
-                    @endif
-                </ul>
+                    </ul>
+                @endif
             </nav>
 
             <main role="main" class="content">

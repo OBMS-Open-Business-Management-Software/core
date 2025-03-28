@@ -204,6 +204,9 @@ return [
         'logo'                              => 'Logo',
         'favicon'                           => 'Favicon',
         'branding'                          => 'Branding',
+        'role'                              => 'Rolle',
+        'employee'                          => 'Mitarbeiter',
+        'administrator'                     => 'Administrator',
     ],
     'data_type' => [
         'string'  => 'Zeichenkette',
@@ -269,6 +272,7 @@ return [
         'verifying'        => 'Wird verifiziert',
     ],
     'misc' => [
+        'instance'                           => 'Instanz',
         'contract'                           => 'Vertrag',
         'account'                            => 'Konto',
         'transactions'                       => 'Transaktionen',
@@ -434,6 +438,7 @@ return [
         'try_again_later'                    => 'Versuchen Sie es später erneut.',
         'products'                           => 'Produkte',
         'payment_notice'                     => 'Zahlbar innerhalb von :days Tagen brutto ohne Abzüge.',
+        'employees'                          => 'Mitarbeiter',
     ],
     'messages' => [
         'passwords_not_match'                => 'Das eingegebene Passwort stimmt nicht mit Ihrem aktuellen Passwort überein.',
@@ -508,6 +513,8 @@ return [
         'login_prohibited'                   => 'Sie haben keine Berechtigung, sich mit diesem Benutzerkonto anzumelden.',
         '2fa_removed'                        => 'Die Zwei-Faktor-Authentifizierung wurde erfolgreich entfernt.',
         '2fa_invalid'                        => 'Ungültiger Zwei-Faktor-Authentifizierungscode. Bitte versuchen Sie es erneut.',
+        'employee_locked'                    => 'Das Mitarbeiterkonto wurde erfolgreich gesperrt.',
+        'employee_unlocked'                  => 'Das Mitarbeiterkonto wurde erfolgreich entsperrt.',
         'customer_locked'                    => 'Das Kundenkonto wurde erfolgreich gesperrt.',
         'customer_unlocked'                  => 'Das Kundenkonto wurde erfolgreich entsperrt.',
         'customer_created'                   => 'Das Kundenkonto wurde erfolgreich erstellt.',
@@ -534,6 +541,7 @@ return [
         'transaction_updated'                => 'Transaktion wurde erfolgreich aktualisiert.',
         'transaction_deleted'                => 'Transaktion wurde erfolgreich gelöscht.',
         'supplier_created'                   => 'Das Lieferantenkonto wurde erfolgreich erstellt.',
+        'employee_created'                   => 'Das Mitarbeiterkonto wurde erfolgreich erstellt.',
         'shop_category_added'                => 'Shop-Kategorie wurde erfolgreich hinzugefügt.',
         'shop_category_updated'              => 'Shop-Kategorie wurde erfolgreich aktualisiert.',
         'shop_category_deleted'              => 'Shop-Kategorie wurde erfolgreich gelöscht.',
@@ -754,6 +762,9 @@ return [
     ],
     'supplier' => [
         'create' => 'Lieferant erstellen',
+    ],
+    'employee' => [
+        'create' => 'Mitarbeiter erstellen',
     ],
     'form' => [
         'create' => 'Formular erstellen',
