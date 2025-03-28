@@ -274,6 +274,13 @@ Route::middleware([
             Route::get('/api/oauth-clients/list', [App\Http\Controllers\AdminAPIController::class, 'apiclient_list'])->name('admin.api.oauth-clients.list');
             Route::post('/api/oauth-clients/create', [App\Http\Controllers\AdminAPIController::class, 'apiclient_create'])->name('admin.api.oauth-clients.create');
             Route::get('/api/oauth-clients/{id}/delete', [App\Http\Controllers\AdminAPIController::class, 'apiclient_delete'])->name('admin.api.oauth-clients.delete');
+
+            Route::get('/employees', [App\Http\Controllers\AdminEmployeeController::class, 'employee_index'])->name('admin.employees');
+            Route::get('/employees/list', [App\Http\Controllers\AdminEmployeeController::class, 'employee_list'])->name('admin.employees.list');
+            Route::post('/employees/create', [App\Http\Controllers\AdminEmployeeController::class, 'employee_create'])->name('admin.employees.create');
+            Route::get('/employees/{user_id}', [App\Http\Controllers\AdminEmployeeController::class, 'employee_profile_index'])->name('admin.employees.profile');
+            Route::post('/employees/{user_id}/update', [App\Http\Controllers\AdminEmployeeController::class, 'employee_profile_update'])->name('admin.employees.profile.update');
+            Route::get('/employees/{user_id}/lock', [App\Http\Controllers\AdminEmployeeController::class, 'employee_lock'])->name('admin.employees.lock');
         });
 
         Route::get('/invoices/customers', [App\Http\Controllers\AdminInvoiceCustomerController::class, 'invoice_index'])->name('admin.invoices.customers');
