@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.2.0](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v2.1.1...v2.2.0) (2025-03-28)
+
+
+### Features
+
+* employee account management ([7af020b](https://github.com/OBMS-Open-Business-Management-Software/core/commit/7af020b24b9c7dc4d1b73e7ec53934eaeb8f24d0))
+
 ## [2.1.1](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v2.1.0...v2.1.1) (2025-03-28)
 
 
