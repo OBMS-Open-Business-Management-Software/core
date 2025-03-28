@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.1.1](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v2.1.0...v2.1.1) (2025-03-28)
+
+
+### Bug Fixes
+
+* add missing verify_email translation ([466c958](https://github.com/OBMS-Open-Business-Management-Software/core/commit/466c95859e5a67573b8b645ac44f52b4b678f83b))
+
 ## [2.1.0](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v2.0.0...v2.1.0) (2025-03-27)
 
 
