@@ -349,50 +349,59 @@
             </main>
         </div>
     </div>
+    <div class="loading" id="loadingOverlay">
+        <div class="spinner-border text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
 
     <!-- Scripts -->
     <script src="{{ theme_asset('aurora', 'js/app.js') }}"></script>
     <script src="{{ theme_asset('aurora', 'js/chart.umd.js') }}"></script>
 
     <script type="text/javascript">
-        $('.custom-file input').change(function (e) {
-            var files = [];
+        $(document).ready(function() {
+            $('.custom-file input').change(function (e) {
+                var files = [];
 
-            for (var i = 0; i < $(this)[0].files.length; i++) {
-                files.push($(this)[0].files[i].name);
+                for (var i = 0; i < $(this)[0].files.length; i++) {
+                    files.push($(this)[0].files[i].name);
+                }
+
+                $(this).next('.custom-file-label').html(files.join(', '));
+            });
+
+            const tooltip = $('.sidebar [data-toggle="tooltip"],.sidebar [data-toggle="dropdown"]').tooltip({
+                placement: 'right',
+                boundary: 'window',
+            });
+
+            if (Cookies.get('expanded_sidebar') !== 'no' && $(window).width() > 991) {
+                $('.sidebar').addClass('show');
             }
 
-            $(this).next('.custom-file-label').html(files.join(', '));
-        });
+            if ($('.sidebar').hasClass('show')) {
+                tooltip.tooltip('disable');
+            }
 
-        const tooltip = $('.sidebar [data-toggle="tooltip"],.sidebar [data-toggle="dropdown"]').tooltip({
-            placement: 'right',
-            boundary: 'window',
-        });
-
-        if (Cookies.get('expanded_sidebar') !== 'no' && $(window).width() > 991) {
-            $('.sidebar').addClass('show');
-        }
-
-        if ($('.sidebar').hasClass('show')) {
-            tooltip.tooltip('disable');
-        }
-
-        $('.sidebar [data-toggle="dropdown"]').on('click', function () {
-            $('.sidebar').addClass('show');
-            tooltip.tooltip('hide');
-            tooltip.tooltip('disable');
-            Cookies.set('expanded_sidebar', 'yes', { expires: 7, path: '/', sameSite: 'Lax' });
-        });
-
-        $('.navbar-toggler').on('click', function () {
-            if (!$('.sidebar').hasClass('show')) {
+            $('.sidebar [data-toggle="dropdown"]').on('click', function () {
+                $('.sidebar').addClass('show');
+                tooltip.tooltip('hide');
                 tooltip.tooltip('disable');
                 Cookies.set('expanded_sidebar', 'yes', { expires: 7, path: '/', sameSite: 'Lax' });
-            } else {
-                tooltip.tooltip('enable');
-                Cookies.set('expanded_sidebar', 'no', { expires: 7, path: '/', sameSite: 'Lax' });
-            }
+            });
+
+            $('.navbar-toggler').on('click', function () {
+                if (!$('.sidebar').hasClass('show')) {
+                    tooltip.tooltip('disable');
+                    Cookies.set('expanded_sidebar', 'yes', { expires: 7, path: '/', sameSite: 'Lax' });
+                } else {
+                    tooltip.tooltip('enable');
+                    Cookies.set('expanded_sidebar', 'no', { expires: 7, path: '/', sameSite: 'Lax' });
+                }
+            });
+
+            $('#loadingOverlay').remove();
         });
     </script>
 

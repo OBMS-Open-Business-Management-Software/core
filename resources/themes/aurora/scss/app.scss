@@ -722,6 +722,19 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     }
 }
 
+.loading {
+    align-items: center;
+    background-color: var(--white);
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 2000;
+}
+
 ::-webkit-scrollbar {
     width: 0.625rem;
 }
