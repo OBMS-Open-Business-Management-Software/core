@@ -207,6 +207,8 @@ return [
         'role'                              => 'Rolle',
         'employee'                          => 'Mitarbeiter',
         'administrator'                     => 'Administrator',
+        'revenue'                           => 'Einnahmen',
+        'expenses'                          => 'Ausgaben',
     ],
     'data_type' => [
         'string'  => 'Zeichenkette',
@@ -272,6 +274,7 @@ return [
         'verifying'        => 'Wird verifiziert',
     ],
     'misc' => [
+        'performance'                        => 'Leistung',
         'instance'                           => 'Instanz',
         'contract'                           => 'Vertrag',
         'account'                            => 'Konto',

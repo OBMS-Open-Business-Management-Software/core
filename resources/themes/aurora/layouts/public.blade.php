@@ -169,14 +169,6 @@
 
             <main role="main" class="content">
                 <div class="main">
-                    <div class="chartjs-size-monitor">
-                        <div class="chartjs-size-monitor-expand">
-                            <div class=""></div>
-                        </div>
-                        <div class="chartjs-size-monitor-shrink">
-                            <div class=""></div>
-                        </div>
-                    </div>
                     @if ($errors->any() || Session::has('success') || Session::has('warning') || Session::has('danger'))
                         <div class="container-fluid">
                             <div class="row">

@@ -159,14 +159,6 @@
 
             <main role="main" class="content">
                 <div class="main">
-                    <div class="chartjs-size-monitor">
-                        <div class="chartjs-size-monitor-expand">
-                            <div class=""></div>
-                        </div>
-                        <div class="chartjs-size-monitor-shrink">
-                            <div class=""></div>
-                        </div>
-                    </div>
                     @if ((empty(Auth::user()->profile) && Auth::user()->accepted) || $errors->any() || Session::has('success') || Session::has('warning') || Session::has('danger'))
                         <div class="container-fluid">
                             <div class="row">
@@ -235,6 +227,7 @@
 
     <!-- Scripts -->
     <script src="{{ theme_asset('aurora', 'js/app.js') }}"></script>
+    <script src="{{ theme_asset('aurora', 'js/chart.umd.js') }}"></script>
 
     <script type="text/javascript">
         $('.custom-file input').change(function (e) {
