@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.3.4](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v2.3.3...v2.3.4) (2025-03-29)
+
+
+### Bug Fixes
+
+* laravel horizon integration ([81c8a48](https://github.com/OBMS-Open-Business-Management-Software/core/commit/81c8a488f2bc85d4b7ab8fdfe689a446ae90de24))
+
 ## [2.3.3](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v2.3.2...v2.3.3) (2025-03-29)
 
 
