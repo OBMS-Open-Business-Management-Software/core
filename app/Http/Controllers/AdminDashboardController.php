@@ -27,20 +27,22 @@ class AdminDashboardController extends Controller
         $timeframes = Timeframe::getPastTimeframes(12);
         $data       = $timeframes->transform(function ($timeframe) {
             return (object) [
-                'in' => Position::whereHas('invoicePositions', function (Builder $builder) {
-                    $builder->whereHas('invoice', function (Builder $builder) {
+                'in' => Position::whereHas('invoicePositions', function (Builder $builder) use ($timeframe) {
+                    $builder->whereHas('invoice', function (Builder $builder) use ($timeframe) {
                         $builder->whereHas('user', function (Builder $builder) {
                             return $builder->where('role', '=', 'customer');
                         })
-                        ->whereNotNull('archived_at');
+                        ->where('archived_at', '>=', $timeframe->start)
+                        ->where('archived_at', '<=', $timeframe->end);
                     });
                 })->sum('amount'),
-                'out' => Position::whereHas('invoicePositions', function (Builder $builder) {
-                    $builder->whereHas('invoice', function (Builder $builder) {
+                'out' => Position::whereHas('invoicePositions', function (Builder $builder) use ($timeframe) {
+                    $builder->whereHas('invoice', function (Builder $builder) use ($timeframe) {
                         $builder->whereHas('user', function (Builder $builder) {
                             return $builder->where('role', '=', 'supplier');
                         })
-                        ->whereNotNull('archived_at');
+                        ->where('archived_at', '>=', $timeframe->start)
+                        ->where('archived_at', '<=', $timeframe->end);
                     });
                 })->sum('amount') * (-1),
                 'label' => $timeframe->label,
