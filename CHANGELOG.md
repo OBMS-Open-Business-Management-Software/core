@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.3.0](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v2.2.0...v2.3.0) (2025-03-29)
+
+
+### Features
+
+* dashboard financials chart ([c92aae6](https://github.com/OBMS-Open-Business-Management-Software/core/commit/c92aae61c74d6136f982eee6a7f40532e9c9920c))
+
 ## [2.2.0](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v2.1.1...v2.2.0) (2025-03-28)
 
 
