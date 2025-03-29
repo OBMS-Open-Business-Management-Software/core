@@ -20,7 +20,7 @@ class DynamicStyles extends Controller
         $scss     = view('styles')->render();
         $compiler = new Compiler();
         $compiler->setImportPaths([
-            resource_path('themes/' . config('app.theme', 'aurora') . '/scss/'),
+            resource_path('themes/' . config('app.theme', 'aurora') . '/src/scss/'),
             base_path('node_modules/'),
         ]);
         $compiledCss = $compiler->compileString($scss)->getCss();

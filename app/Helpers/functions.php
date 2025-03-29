@@ -30,8 +30,8 @@ if (!function_exists('theme_paths')) {
     function theme_paths(string $theme): object
     {
         return (object) [
-            'base'     => resource_path('themes/' . $theme),
-            'resource' => resource_path('themes/' . $theme . '/public'),
+            'base'     => resource_path('themes/' . $theme . '/src'),
+            'resource' => resource_path('themes/' . $theme . '/src/public'),
             'symlink'  => public_path('themes/' . $theme),
         ];
     }

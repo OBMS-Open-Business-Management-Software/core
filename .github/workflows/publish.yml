@@ -28,10 +28,6 @@ jobs:
           php-version: '8.2'
           tools: composer:v2
           extensions: curl, fileinfo, imagick, imap, json, pdo
-      - name: Install Node.js dependencies
-        run: npm ci
-      - name: Publish Aurora theme assets
-        run: npm run production
       - name: Install PHP dependencies
         run: composer install
       - name: Generate API documentation
