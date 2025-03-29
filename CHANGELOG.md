@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.3.1](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v2.3.0...v2.3.1) (2025-03-29)
+
+
+### Bug Fixes
+
+* invoice position timeframe filter ([181ca96](https://github.com/OBMS-Open-Business-Management-Software/core/commit/181ca96e6878cc95de4eea7bdc3d7e5d44fd9a8b))
+
 ## [2.3.0](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v2.2.0...v2.3.0) (2025-03-29)
 
 
