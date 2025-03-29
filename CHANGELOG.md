@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.5.1](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v2.5.0...v2.5.1) (2025-03-29)
+
+
+### Bug Fixes
+
+* unified border radius values ([751a082](https://github.com/OBMS-Open-Business-Management-Software/core/commit/751a0822f0719eb64955e79effeeb7297e3ac631))
+
 ## [2.5.0](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v2.4.0...v2.5.0) (2025-03-29)
 
 
