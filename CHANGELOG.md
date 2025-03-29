@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.5.0](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v2.4.0...v2.5.0) (2025-03-29)
+
+
+### Features
+
+* loading animation ([3db14ac](https://github.com/OBMS-Open-Business-Management-Software/core/commit/3db14aca37c2f3d276809f1d275caed00d319bdf))
+
 ## [2.4.0](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v2.3.4...v2.4.0) (2025-03-29)
 
 
