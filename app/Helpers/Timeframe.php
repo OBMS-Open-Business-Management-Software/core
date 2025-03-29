@@ -74,7 +74,7 @@ class Timeframe
             ->values()
             ->push((object) [
                 'start' => (clone $now)->{$groupingStartMethod}(),
-                'end'   => $now,
+                'end'   => (clone $now)->{$groupingEndMethod}(),
                 'label' => (clone $now)->format('F Y'),
             ]);
     }
