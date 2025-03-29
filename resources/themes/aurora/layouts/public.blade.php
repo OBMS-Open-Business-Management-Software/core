@@ -224,39 +224,48 @@
             </main>
         </div>
     </div>
+    <div class="loading" id="loadingOverlay">
+        <div class="spinner-border text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
 
     <!-- Scripts -->
     <script src="{{ theme_asset('aurora', 'js/app.js') }}"></script>
 
     <script type="text/javascript">
-        const tooltip = $('.sidebar [data-toggle="tooltip"],.sidebar [data-toggle="dropdown"]').tooltip({
-            placement: 'right',
-            boundary: 'window',
-        });
+        $(document).ready(function() {
+            const tooltip = $('.sidebar [data-toggle="tooltip"],.sidebar [data-toggle="dropdown"]').tooltip({
+                placement: 'right',
+                boundary: 'window',
+            });
 
-        if (Cookies.get('expanded_sidebar') !== 'no' && $(window).width() > 991) {
-            $('.sidebar').addClass('show');
-        }
+            if (Cookies.get('expanded_sidebar') !== 'no' && $(window).width() > 991) {
+                $('.sidebar').addClass('show');
+            }
 
-        if ($('.sidebar').hasClass('show')) {
-            tooltip.tooltip('disable');
-        }
+            if ($('.sidebar').hasClass('show')) {
+                tooltip.tooltip('disable');
+            }
 
-        $('.sidebar [data-toggle="dropdown"]').on('click', function () {
-            $('.sidebar').addClass('show');
-            tooltip.tooltip('hide');
-            tooltip.tooltip('disable');
-            Cookies.set('expanded_sidebar', 'yes', { expires: 7, path: '/', sameSite: 'Lax' });
-        });
-
-        $('.navbar-toggler').on('click', function () {
-            if (!$('.sidebar').hasClass('show')) {
+            $('.sidebar [data-toggle="dropdown"]').on('click', function () {
+                $('.sidebar').addClass('show');
+                tooltip.tooltip('hide');
                 tooltip.tooltip('disable');
                 Cookies.set('expanded_sidebar', 'yes', { expires: 7, path: '/', sameSite: 'Lax' });
-            } else {
-                tooltip.tooltip('enable');
-                Cookies.set('expanded_sidebar', 'no', { expires: 7, path: '/', sameSite: 'Lax' });
-            }
+            });
+
+            $('.navbar-toggler').on('click', function () {
+                if (!$('.sidebar').hasClass('show')) {
+                    tooltip.tooltip('disable');
+                    Cookies.set('expanded_sidebar', 'yes', { expires: 7, path: '/', sameSite: 'Lax' });
+                } else {
+                    tooltip.tooltip('enable');
+                    Cookies.set('expanded_sidebar', 'no', { expires: 7, path: '/', sameSite: 'Lax' });
+                }
+            });
+
+            $('#loadingOverlay').remove();
         });
     </script>
 
