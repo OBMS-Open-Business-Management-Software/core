@@ -4,6 +4,20 @@
     <div class="container-fluid my-4">
         <div class="row">
             <div class="col-md-12">
+                <h2 class="text-primary mb-4 h4">{{ __('interface.misc.performance') }}</h2>
+            </div>
+        </div>
+        <div class="row mb-4" style="height: 400px">
+            <div class="col-md-12">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <canvas id="performanceChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
                 <h2 class="text-primary mb-4 h4">{{ __('interface.misc.sales') }}</h2>
             </div>
         </div>
@@ -131,4 +145,66 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('javascript')
+    <script type="text/javascript">
+        $(window).on('load', function () {
+            const ctx = document.getElementById('performanceChart');
+            const DATA_COUNT = 7;
+            const NUMBER_CFG = {count: DATA_COUNT, min: {!! $performance->min !!}, max: {!! $performance->max !!}};
+            const labels = {!! $performance->labels !!};
+            const data = {
+                labels: labels,
+                datasets: [
+                    {
+                        label: '{{ __('data.revenue') }}',
+                        data: {!! $performance->datasets->in !!},
+                        backgroundColor: '{{ config('theme.primary', '#040E29') }}',
+                    },
+                    {
+                        label: '{{ __('data.expenses') }}',
+                        data: {!! $performance->datasets->out !!},
+                        backgroundColor: '{{ config('theme.secondary', '#040E29') }}',
+                    },
+                ]
+            };
+            
+            new Chart.Chart(ctx, {
+                type: 'bar',
+                data: data,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            type: 'category',
+                            stacked: true,
+                        },
+                        y: {
+                            type: 'linear',
+                            stacked: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return value.toFixed(2) + '€';
+                                },
+                            },
+                        },
+                    },
+                    plugins: {
+                        legend: {
+                            display: false,
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(tooltipItem) {
+                                    return tooltipItem.raw.toFixed(2) + '€';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
 @endsection

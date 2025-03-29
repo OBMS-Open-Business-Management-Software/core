@@ -207,6 +207,8 @@ return [
         'role'                              => 'Role',
         'employee'                          => 'Employee',
         'administrator'                     => 'Administrator',
+        'revenue'                           => 'Revenue',
+        'expenses'                          => 'Expenses',
     ],
     'data_type' => [
         'string'  => 'String',
@@ -272,6 +274,7 @@ return [
         'verifying'        => 'Verifying',
     ],
     'misc' => [
+        'performance'                        => 'Performance',
         'instance'                           => 'Instance',
         'contract'                           => 'Contract',
         'account'                            => 'Account',

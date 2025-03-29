@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Timeframe;
 use App\Models\Accounting\Contract\Contract;
 use App\Models\Accounting\Invoice\Invoice;
 use App\Models\Accounting\Position;
@@ -23,8 +24,53 @@ class AdminDashboardController extends Controller
      */
     public function index(): Renderable
     {
+        $timeframes = Timeframe::getPastTimeframes(12);
+        $data       = $timeframes->transform(function ($timeframe) {
+            return (object) [
+                'in' => Position::whereHas('invoicePositions', function (Builder $builder) {
+                    $builder->whereHas('invoice', function (Builder $builder) {
+                        $builder->whereHas('user', function (Builder $builder) {
+                            return $builder->where('role', '=', 'customer');
+                        })
+                        ->whereNotNull('archived_at');
+                    });
+                })->sum('amount'),
+                'out' => Position::whereHas('invoicePositions', function (Builder $builder) {
+                    $builder->whereHas('invoice', function (Builder $builder) {
+                        $builder->whereHas('user', function (Builder $builder) {
+                            return $builder->where('role', '=', 'supplier');
+                        })
+                        ->whereNotNull('archived_at');
+                    });
+                })->sum('amount') * (-1),
+                'label' => $timeframe->label,
+            ];
+        });
+        $in = (clone $data)->transform(function ($dataset) {
+            return $dataset->in;
+        })->toArray();
+        $out = (clone $data)->transform(function ($dataset) {
+            return $dataset->out;
+        })->toArray();
+        $performance = (object) [
+            'count'    => $timeframes->count(),
+            'data'     => $data,
+            'datasets' => (object) [
+                'in'  => json_encode($in),
+                'out' => json_encode($out),
+            ],
+            'labels' => json_encode(
+                (clone $data)->transform(function ($dataset) {
+                    return $dataset->label;
+                })->toArray()
+            ),
+            'min' => collect($out)->min(),
+            'max' => collect($in)->max(),
+        ];
+
         return view('admin.home', [
-            'tickets' => SupportTicket::where('status', '=', 'open')
+            'performance' => $performance,
+            'tickets'     => SupportTicket::where('status', '=', 'open')
                 ->where(function (Builder $builder) {
                     return $builder->where('category_id', '=', 0)
                         ->orWhereNull('category_id')
@@ -43,6 +89,7 @@ class AdminDashboardController extends Controller
                     ->whereHas('user', function (Builder $builder) {
                         return $builder->where('role', '=', 'customer');
                     })
+                    ->whereNotNull('archived_at')
                     ->count(),
                 'amount' => Position::whereHas('invoicePositions', function (Builder $builder) {
                     $builder->whereHas('invoice', function (Builder $builder) {
@@ -52,7 +99,8 @@ class AdminDashboardController extends Controller
                             })
                             ->whereHas('user', function (Builder $builder) {
                                 return $builder->where('role', '=', 'customer');
-                            });
+                            })
+                            ->whereNotNull('archived_at');
                     });
                 })->sum('amount'),
             ],
@@ -64,6 +112,7 @@ class AdminDashboardController extends Controller
                     ->whereHas('user', function (Builder $builder) {
                         return $builder->where('role', '=', 'supplier');
                     })
+                    ->whereNotNull('archived_at')
                     ->count(),
                 'amount' => Position::whereHas('invoicePositions', function (Builder $builder) {
                     $builder->whereHas('invoice', function (Builder $builder) {
@@ -73,7 +122,8 @@ class AdminDashboardController extends Controller
                             })
                             ->whereHas('user', function (Builder $builder) {
                                 return $builder->where('role', '=', 'supplier');
-                            });
+                            })
+                            ->whereNotNull('archived_at');
                     });
                 })->sum('amount'),
             ],

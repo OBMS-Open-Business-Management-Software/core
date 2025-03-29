@@ -13,4 +13,5 @@ const mix = require('laravel-mix');
 
 mix.setPublicPath(`resources/themes/aurora/public`);
 mix.js('resources/themes/aurora/js/app.js', 'js')
+    .js('node_modules/chart.js/dist/chart.umd.js', 'js')
     .sourceMaps();
