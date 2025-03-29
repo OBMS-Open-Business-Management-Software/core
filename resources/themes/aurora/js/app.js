@@ -8,6 +8,7 @@ require('./bootstrap');
 window.$  = require('jquery');
 window.dt = require('datatables.net');
 window.Vue = require('vue').default;
+window.Cookies = require('js-cookie');
 
 Vue.module.exports = {
     runtimeCompiler: true

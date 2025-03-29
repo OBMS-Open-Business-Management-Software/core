@@ -115,6 +115,12 @@ main {
         position: fixed;
         width: 100%;
     }
+
+    &-actions {
+        flex-grow: 1;
+        justify-content: space-between;
+        width: 100%;
+    }
 }
 
 .navbar-nav, .sidebar {
@@ -254,10 +260,39 @@ main {
     left: 0;
     bottom: 0;
     flex-shrink: 0;
-    overflow-x: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
     width: 350px;
     max-width: 100%;
     z-index: 1020;
+
+    &:not(.show) {
+        width: 6.25rem;
+        transition-duration: .5s;
+
+        span {
+            display: none !important;
+        }
+
+        > .sidebar-heading {
+            margin-top: 1rem !important;
+            margin-bottom: 1rem !important;
+            height: 1px;
+            display: block !important;
+            content: "";
+            margin-left: -1rem;
+            width: calc(100% + 2rem);
+            background: var(--gray);
+
+            &:first-child {
+                display: none !important;
+            }
+        }
+
+        .dropdown-indicator {
+            display: none;
+        }
+    }
 
     .nav {
         &.flex-column {
