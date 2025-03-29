@@ -9,8 +9,8 @@ $white: {{ config('theme.white', '#FFFFFF') }};
 $text-muted: {{ config('theme.body', '#3C4858') }};
 $body-color: {{ config('theme.body', '#3C4858') }};
 $gray: {{ config('theme.gray', '#F3F9FC') }};
-$border-radius: 0.2rem;
-$modal-content-border-radius: 0.2rem;
+$border-radius: 0.25rem;
+$modal-content-border-radius: 0.25rem;
 $modal-content-border-width: 0;
 $input-disabled-bg: $gray;
 
