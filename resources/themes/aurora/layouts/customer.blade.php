@@ -27,8 +27,8 @@
                     @endif
                 </div>
             </a>
-            <div class="d-flex gap-3">
-                <button class="navbar-toggler shadow-sm rounded d-lg-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+            <div class="d-flex gap-3 flex-grow-1 justify-content-between">
+                <button class="navbar-toggler shadow-sm rounded collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="bi bi-list"></i>
                 </button>
                 <ul class="navbar-nav px-3 d-flex flex-row">
@@ -84,31 +84,31 @@
                 </h6>
                 <ul class="nav flex-column">
                     <li class="nav-item {{ Request::route()?->getName() == 'customer.home' ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('customer.home') }}" title="{{ __('interface.misc.dashboard') }}">
+                        <a class="nav-link" href="{{ route('customer.home') }}" title="{{ __('interface.misc.dashboard') }}" data-toggle="tooltip">
                             <i class="bi bi-house-fill"></i>
                             <span>{{ __('interface.misc.dashboard') }}</span>
                         </a>
                     </li>
-                    <li class="nav-item {{ str_contains(Request::route()?->getName(), 'customer.support') ? 'active' : '' }}">
+                    <li class="nav-item {{ str_contains(Request::route()?->getName(), 'customer.support') ? 'active' : '' }}" data-toggle="tooltip">
                         <a class="nav-link" href="{{ route('customer.support') }}" title="{{ __('interface.misc.tickets') }}">
                             <i class="bi bi-ticket-fill"></i>
                             <span>{{ __('interface.misc.tickets') }}</span>
                         </a>
                     </li>
                     <li class="nav-item {{ str_contains(Request::route()?->getName(), 'customer.contracts') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('customer.contracts') }}" title="{{ __('interface.misc.contracts') }}">
+                        <a class="nav-link" href="{{ route('customer.contracts') }}" title="{{ __('interface.misc.contracts') }}" data-toggle="tooltip">
                             <i class="bi bi-file-earmark-text-fill"></i>
                             <span>{{ __('interface.misc.contracts') }}</span>
                         </a>
                     </li>
                     <li class="nav-item {{ str_contains(Request::route()?->getName(), 'customer.invoices') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('customer.invoices') }}" title="{{ __('interface.misc.invoices') }}">
+                        <a class="nav-link" href="{{ route('customer.invoices') }}" title="{{ __('interface.misc.invoices') }}" data-toggle="tooltip">
                             <i class="bi bi-file-earmark-text"></i>
                             <span>{{ __('interface.misc.invoices') }}</span>
                         </a>
                     </li>
                     <li class="nav-item {{ str_contains(Request::route()?->getName(), 'customer.orders') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('customer.shop.orders') }}" title="{{ __('interface.misc.orders') }}">
+                        <a class="nav-link" href="{{ route('customer.shop.orders') }}" title="{{ __('interface.misc.orders') }}" data-toggle="tooltip">
                             <i class="bi bi-cart-fill"></i>
                             <span>{{ __('interface.misc.orders') }}</span>
                         </a>
@@ -121,7 +121,7 @@
                     <ul class="nav flex-column">
                         @foreach (request()->get('service_products') as $product)
                             <li class="nav-item {{ Request::route()?->getName() == 'customer.services.' . $product->slug ? 'active' : '' }}">
-                                <a class="nav-link" href="{{ route('customer.services.' . $product->slug) }}" title="{{ $product->name }}">
+                                <a class="nav-link" href="{{ route('customer.services.' . $product->slug) }}" title="{{ $product->name }}" data-toggle="tooltip">
                                     <i class="{{ $product->icon ?: 'bi bi-box' }}"></i>
                                     <span>{{ $product->name }}</span>
                                 </a>
@@ -134,7 +134,7 @@
                 </h6>
                 <ul class="nav flex-column">
                     <li class="nav-item {{ str_contains(Request::route()?->getName(), 'public.shop') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('public.shop') }}" title="{{ __('interface.actions.browse') }}">
+                        <a class="nav-link" href="{{ route('public.shop') }}" title="{{ __('interface.actions.browse') }}" data-toggle="tooltip">
                             <i class="bi bi-arrow-right"></i>
                             <span>{{ __('interface.actions.browse') }}</span>
                         </a>
@@ -147,7 +147,7 @@
                     <ul class="nav flex-column">
                         @foreach (request()->get('navigateables') as $page)
                             <li class="nav-item {{ Request::route()?->getName() == 'cms.page.' . $page->id ? 'active' : '' }}">
-                                <a class="nav-link" href="{{ route('cms.page.' . $page->id) }}" title="{{ __($page->title) }}">
+                                <a class="nav-link" href="{{ route('cms.page.' . $page->id) }}" title="{{ __($page->title) }}" data-toggle="tooltip">
                                     <i class="bi bi-file-earmark-text"></i>
                                     <span>{{ __($page->title) }}</span>
                                 </a>
@@ -238,6 +238,36 @@
             }
 
             $(this).next('.custom-file-label').html(files.join(', '));
+        });
+
+        const tooltip = $('.sidebar [data-toggle="tooltip"],.sidebar [data-toggle="dropdown"]').tooltip({
+            placement: 'right',
+            boundary: 'window',
+        });
+
+        if (Cookies.get('expanded_sidebar') !== 'no' && $(window).width() > 991) {
+            $('.sidebar').addClass('show');
+        }
+
+        if ($('.sidebar').hasClass('show')) {
+            tooltip.tooltip('disable');
+        }
+
+        $('.sidebar [data-toggle="dropdown"]').on('click', function () {
+            $('.sidebar').addClass('show');
+            tooltip.tooltip('hide');
+            tooltip.tooltip('disable');
+            Cookies.set('expanded_sidebar', 'yes', { expires: 7, path: '/', sameSite: 'Lax' });
+        });
+
+        $('.navbar-toggler').on('click', function () {
+            if (!$('.sidebar').hasClass('show')) {
+                tooltip.tooltip('disable');
+                Cookies.set('expanded_sidebar', 'yes', { expires: 7, path: '/', sameSite: 'Lax' });
+            } else {
+                tooltip.tooltip('enable');
+                Cookies.set('expanded_sidebar', 'no', { expires: 7, path: '/', sameSite: 'Lax' });
+            }
         });
     </script>
 

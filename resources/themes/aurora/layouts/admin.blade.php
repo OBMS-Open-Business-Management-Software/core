@@ -27,8 +27,8 @@
                     @endif
                 </div>
             </a>
-            <div class="d-flex gap-3">
-                <button class="navbar-toggler shadow-sm rounded d-lg-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+            <div class="d-flex gap-3 flex-grow-1 justify-content-between">
+                <button class="navbar-toggler shadow-sm rounded collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="bi bi-list"></i>
                 </button>
                 <ul class="navbar-nav px-3 d-flex flex-row">
@@ -81,7 +81,7 @@
                 </h6>
                 <ul class="nav flex-column">
                     <li class="nav-item {{ Request::route()?->getName() == 'admin.home' ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('admin.home') }}" title="{{ __('interface.misc.dashboard') }}">
+                        <a class="nav-link" href="{{ route('admin.home') }}" title="{{ __('interface.misc.dashboard') }}" data-toggle="tooltip">
                             <i class="bi bi-house-fill"></i>
                             <span>{{ __('interface.misc.dashboard') }}</span>
                         </a>
@@ -94,7 +94,7 @@
                     <ul class="nav flex-column">
                         @foreach (request()->get('service_products') as $product)
                             <li class="nav-item {{ Request::route()?->getName() == 'admin.services.' . $product->slug ? 'active' : '' }}">
-                                <a class="nav-link" href="{{ route('admin.services.' . $product->slug) }}" title="{{ $product->name }}">
+                                <a class="nav-link" href="{{ route('admin.services.' . $product->slug) }}" title="{{ $product->name }}"  data-toggle="tooltip">
                                     <i class="{{ $product->icon ?: 'bi bi-box' }}"></i>
                                     <span>{{ $product->name }}</span>
                                 </a>
@@ -115,9 +115,9 @@
                             <i class="bi bi-chevron-down dropdown-indicator"></i>
                         </a>
                         <div class="dropdown-menu w-100" aria-labelledby="dropdown04">
-                            <a class="dropdown-item" href="{{ route('admin.support') }}" title="{{ __('interface.misc.tickets') }}">{{ __('interface.misc.tickets') }}</a>
+                            <a class="dropdown-item" href="{{ route('admin.support') }}" title="{{ __('interface.misc.tickets') }}" data-toggle="tooltip">{{ __('interface.misc.tickets') }}</a>
                             @if (Auth::user()->role == 'admin')
-                                <a class="dropdown-item" href="{{ route('admin.support.categories') }}" title="{{ __('interface.misc.categories') }}">{{ __('interface.misc.categories') }}</a>
+                                <a class="dropdown-item" href="{{ route('admin.support.categories') }}" title="{{ __('interface.misc.categories') }}" data-toggle="tooltip">{{ __('interface.misc.categories') }}</a>
                             @endif
                         </div>
                     </li>
@@ -127,7 +127,7 @@
                 </h6>
                 <ul class="nav flex-column">
                     <li class="nav-item {{ str_contains(Request::route()?->getName(), 'admin.customers') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('admin.customers') }}" title="{{ __('interface.misc.customers') }}">
+                        <a class="nav-link" href="{{ route('admin.customers') }}" title="{{ __('interface.misc.customers') }}" data-toggle="tooltip">
                             <i class="bi bi-person"></i>
                             <span>{{ __('interface.misc.customers') }}</span>
                         </a>
@@ -141,11 +141,11 @@
                             <i class="bi bi-chevron-down dropdown-indicator"></i>
                         </a>
                         <div class="dropdown-menu w-100" aria-labelledby="dropdown04">
-                            <a class="dropdown-item" href="{{ route('admin.invoices.customers') }}" title="{{ __('interface.misc.list') }}">{{ __('interface.misc.list') }}</a>
+                            <a class="dropdown-item" href="{{ route('admin.invoices.customers') }}" title="{{ __('interface.misc.list') }}" data-toggle="tooltip">{{ __('interface.misc.list') }}</a>
                             @if (Auth::user()->role == 'admin')
-                                <a class="dropdown-item" href="{{ route('admin.invoices.types') }}" title="{{ __('interface.misc.types') }}">{{ __('interface.misc.types') }}</a>
-                                <a class="dropdown-item" href="{{ route('admin.invoices.discounts') }}" title="{{ __('interface.misc.invoice_discounts') }}">{{ __('interface.misc.invoice_discounts') }}</a>
-                                <a class="dropdown-item" href="{{ route('admin.discounts') }}" title="{{ __('interface.misc.position_discounts') }}">{{ __('interface.misc.position_discounts') }}</a>
+                                <a class="dropdown-item" href="{{ route('admin.invoices.types') }}" title="{{ __('interface.misc.types') }}" data-toggle="tooltip">{{ __('interface.misc.types') }}</a>
+                                <a class="dropdown-item" href="{{ route('admin.invoices.discounts') }}" title="{{ __('interface.misc.invoice_discounts') }}" data-toggle="tooltip">{{ __('interface.misc.invoice_discounts') }}</a>
+                                <a class="dropdown-item" href="{{ route('admin.discounts') }}" title="{{ __('interface.misc.position_discounts') }}" data-toggle="tooltip">{{ __('interface.misc.position_discounts') }}</a>
                             @endif
                         </div>
                     </li>
@@ -158,10 +158,10 @@
                             <i class="bi bi-chevron-down dropdown-indicator"></i>
                         </a>
                         <div class="dropdown-menu w-100" aria-labelledby="dropdown04">
-                            <a class="dropdown-item" href="{{ route('admin.contracts') }}" title="{{ __('interface.misc.list') }}">{{ __('interface.misc.list') }}</a>
+                            <a class="dropdown-item" href="{{ route('admin.contracts') }}" title="{{ __('interface.misc.list') }}" data-toggle="tooltip">{{ __('interface.misc.list') }}</a>
                             @if (Auth::user()->role == 'admin')
-                                <a class="dropdown-item" href="{{ route('admin.contracts.types') }}" title="{{ __('interface.misc.types') }}">{{ __('interface.misc.types') }}</a>
-                                <a class="dropdown-item" href="{{ route('admin.contracts.trackers') }}" title="{{ __('interface.misc.usage_trackers') }}">{{ __('interface.misc.usage_trackers') }}</a>
+                                <a class="dropdown-item" href="{{ route('admin.contracts.types') }}" title="{{ __('interface.misc.types') }}" data-toggle="tooltip">{{ __('interface.misc.types') }}</a>
+                                <a class="dropdown-item" href="{{ route('admin.contracts.trackers') }}" title="{{ __('interface.misc.usage_trackers') }}" data-toggle="tooltip">{{ __('interface.misc.usage_trackers') }}</a>
                             @endif
                         </div>
                     </li>
@@ -174,10 +174,10 @@
                             <i class="bi bi-chevron-down dropdown-indicator"></i>
                         </a>
                         <div class="dropdown-menu w-100" aria-labelledby="dropdown04">
-                            <a class="dropdown-item" href="{{ route('admin.shop.orders') }}" title="{{ __('interface.misc.orders') }}">{{ __('interface.misc.orders') }}</a>
-                            <a class="dropdown-item" href="{{ route('admin.shop.categories') }}" title="{{ __('interface.misc.configuration') }}">{{ __('interface.misc.configuration') }}</a>
+                            <a class="dropdown-item" href="{{ route('admin.shop.orders') }}" title="{{ __('interface.misc.orders') }}" data-toggle="tooltip">{{ __('interface.misc.orders') }}</a>
+                            <a class="dropdown-item" href="{{ route('admin.shop.categories') }}" title="{{ __('interface.misc.configuration') }}" data-toggle="tooltip">{{ __('interface.misc.configuration') }}</a>
                             @if (Auth::user()->role == 'admin')
-                                <a class="dropdown-item" href="{{ route('admin.products') }}" title="{{ __('interface.misc.product_types') }}">{{ __('interface.misc.product_types') }}</a>
+                                <a class="dropdown-item" href="{{ route('admin.products') }}" title="{{ __('interface.misc.product_types') }}" data-toggle="tooltip">{{ __('interface.misc.product_types') }}</a>
                             @endif
                         </div>
                     </li>
@@ -187,7 +187,7 @@
                 </h6>
                 <ul class="nav flex-column">
                     <li class="nav-item {{ str_contains(Request::route()?->getName(), 'admin.suppliers') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('admin.suppliers') }}" title="{{ __('interface.misc.suppliers') }}">
+                        <a class="nav-link" href="{{ route('admin.suppliers') }}" title="{{ __('interface.misc.suppliers') }}" data-toggle="tooltip">
                             <i class="bi bi-person"></i>
                             <span>{{ __('interface.misc.suppliers') }}</span>
                         </a>
@@ -201,11 +201,11 @@
                             <i class="bi bi-chevron-down dropdown-indicator"></i>
                         </a>
                         <div class="dropdown-menu w-100" aria-labelledby="dropdown04">
-                            <a class="dropdown-item" href="{{ route('admin.invoices.suppliers') }}" title="{{ __('interface.misc.list') }}">{{ __('interface.misc.list') }}</a>
+                            <a class="dropdown-item" href="{{ route('admin.invoices.suppliers') }}" title="{{ __('interface.misc.list') }}" data-toggle="tooltip">{{ __('interface.misc.list') }}</a>
                             @if (Auth::user()->role == 'admin')
-                                <a class="dropdown-item" href="{{ route('admin.invoices.types') }}" title="{{ __('interface.misc.types') }}">{{ __('interface.misc.types') }}</a>
-                                <a class="dropdown-item" href="{{ route('admin.invoices.discounts') }}" title="{{ __('interface.misc.invoice_discounts') }}">{{ __('interface.misc.invoice_discounts') }}</a>
-                                <a class="dropdown-item" href="{{ route('admin.discounts') }}" title="{{ __('interface.misc.position_discounts') }}">{{ __('interface.misc.position_discounts') }}</a>
+                                <a class="dropdown-item" href="{{ route('admin.invoices.types') }}" title="{{ __('interface.misc.types') }}" data-toggle="tooltip">{{ __('interface.misc.types') }}</a>
+                                <a class="dropdown-item" href="{{ route('admin.invoices.discounts') }}" title="{{ __('interface.misc.invoice_discounts') }}" data-toggle="tooltip">{{ __('interface.misc.invoice_discounts') }}</a>
+                                <a class="dropdown-item" href="{{ route('admin.discounts') }}" title="{{ __('interface.misc.position_discounts') }}" data-toggle="tooltip">{{ __('interface.misc.position_discounts') }}</a>
                             @endif
                         </div>
                     </li>
@@ -216,20 +216,20 @@
                 <ul class="nav flex-column">
                     @if (Auth::user()->role == 'admin')
                         <li class="nav-item {{ str_contains(Request::route()?->getName(), 'admin.employees') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('admin.employees') }}" title="{{ __('interface.misc.employees') }}">
+                            <a class="nav-link" href="{{ route('admin.employees') }}" title="{{ __('interface.misc.employees') }}" data-toggle="tooltip">
                                 <i class="bi bi-person"></i>
                                 <span>{{ __('interface.misc.employees') }}</span>
                             </a>
                         </li>
                     @endif
                     <li class="nav-item {{ str_contains(Request::route()?->getName(), 'admin.pages') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('admin.pages') }}" title="{{ __('interface.misc.custom_pages') }}">
+                        <a class="nav-link" href="{{ route('admin.pages') }}" title="{{ __('interface.misc.custom_pages') }}" data-toggle="tooltip">
                             <i class="bi bi-list"></i>
                             <span>{{ __('interface.misc.custom_pages') }}</span>
                         </a>
                     </li>
                     <li class="nav-item {{ str_contains(Request::route()?->getName(), 'admin.filemanager') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('admin.filemanager') }}" title="{{ __('interface.misc.file_manager') }}">
+                        <a class="nav-link" href="{{ route('admin.filemanager') }}" title="{{ __('interface.misc.file_manager') }}" data-toggle="tooltip">
                             <i class="bi bi-folder"></i>
                             <span>{{ __('interface.misc.file_manager') }}</span>
                         </a>
@@ -242,13 +242,13 @@
                     <ul class="nav flex-column">
                         @if (Auth::user()->role == 'admin')
                             <li class="nav-item {{ str_contains(Request::route()?->getName(), 'admin.settings') ? 'active' : '' }}">
-                                <a class="nav-link" href="{{ route('admin.settings') }}" title="{{ __('interface.misc.parameters') }}">
+                                <a class="nav-link" href="{{ route('admin.settings') }}" title="{{ __('interface.misc.parameters') }}" data-toggle="tooltip">
                                     <i class="bi bi-gear-wide-connected"></i>
                                     <span>{{ __('interface.misc.parameters') }}</span>
                                 </a>
                             </li>
                             <li class="nav-item {{ str_contains(Request::route()?->getName(), 'admin.paymentgateways') ? 'active' : '' }}">
-                                <a class="nav-link" href="{{ route('admin.paymentgateways') }}" title="{{ __('interface.misc.payment_gateways') }}">
+                                <a class="nav-link" href="{{ route('admin.paymentgateways') }}" title="{{ __('interface.misc.payment_gateways') }}" data-toggle="tooltip">
                                     <i class="bi bi-currency-euro"></i>
                                     <span>{{ __('interface.misc.payment_gateways') }}</span>
                                 </a>
@@ -262,13 +262,13 @@
                                     <i class="bi bi-chevron-down dropdown-indicator"></i>
                                 </a>
                                 <div class="dropdown-menu w-100" aria-labelledby="dropdown04">
-                                    <a class="dropdown-item" href="{{ route('admin.api.users') }}" title="{{ __('interface.misc.users') }}">{{ __('interface.misc.users') }}</a>
-                                    <a class="dropdown-item" href="{{ route('admin.api.oauth-clients') }}" title="{{ __('interface.misc.oauth_clients') }}">{{ __('interface.misc.oauth_clients') }}</a>
+                                    <a class="dropdown-item" href="{{ route('admin.api.users') }}" title="{{ __('interface.misc.users') }}" data-toggle="tooltip">{{ __('interface.misc.users') }}</a>
+                                    <a class="dropdown-item" href="{{ route('admin.api.oauth-clients') }}" title="{{ __('interface.misc.oauth_clients') }}" data-toggle="tooltip">{{ __('interface.misc.oauth_clients') }}</a>
                                 </div>
                             </li>
                             @if (empty(request()->get('tenant')))
                                 <li class="nav-item {{ str_contains(Request::route()?->getName(), 'admin.tenants') ? 'active' : '' }}">
-                                    <a class="nav-link" href="{{ route('admin.tenants') }}" title="{{ __('interface.misc.tenants') }}">
+                                    <a class="nav-link" href="{{ route('admin.tenants') }}" title="{{ __('interface.misc.tenants') }}" data-toggle="tooltip">
                                         <i class="bi bi-people"></i>
                                         <span>{{ __('interface.misc.tenants') }}</span>
                                     </a>
@@ -282,8 +282,8 @@
                                         <i class="bi bi-chevron-down dropdown-indicator"></i>
                                     </a>
                                     <div class="dropdown-menu w-100" aria-labelledby="dropdown04">
-                                        <a class="dropdown-item" href="{{ url('/horizon') }}" target="_blank" title="{{ __('interface.misc.horizon') }}">{{ __('interface.misc.horizon') }}</a>
-                                        <a class="dropdown-item" href="{{ url('/pulse') }}" target="_blank" title="{{ __('interface.misc.pulse') }}">{{ __('interface.misc.pulse') }}</a>
+                                        <a class="dropdown-item" href="{{ url('/horizon') }}" target="_blank" title="{{ __('interface.misc.horizon') }}" data-toggle="tooltip">{{ __('interface.misc.horizon') }}</a>
+                                        <a class="dropdown-item" href="{{ url('/pulse') }}" target="_blank" title="{{ __('interface.misc.pulse') }}" data-toggle="tooltip">{{ __('interface.misc.pulse') }}</a>
                                     </div>
                                 </li>
                             @endif
@@ -363,6 +363,36 @@
             }
 
             $(this).next('.custom-file-label').html(files.join(', '));
+        });
+
+        const tooltip = $('.sidebar [data-toggle="tooltip"],.sidebar [data-toggle="dropdown"]').tooltip({
+            placement: 'right',
+            boundary: 'window',
+        });
+
+        if (Cookies.get('expanded_sidebar') !== 'no' && $(window).width() > 991) {
+            $('.sidebar').addClass('show');
+        }
+
+        if ($('.sidebar').hasClass('show')) {
+            tooltip.tooltip('disable');
+        }
+
+        $('.sidebar [data-toggle="dropdown"]').on('click', function () {
+            $('.sidebar').addClass('show');
+            tooltip.tooltip('hide');
+            tooltip.tooltip('disable');
+            Cookies.set('expanded_sidebar', 'yes', { expires: 7, path: '/', sameSite: 'Lax' });
+        });
+
+        $('.navbar-toggler').on('click', function () {
+            if (!$('.sidebar').hasClass('show')) {
+                tooltip.tooltip('disable');
+                Cookies.set('expanded_sidebar', 'yes', { expires: 7, path: '/', sameSite: 'Lax' });
+            } else {
+                tooltip.tooltip('enable');
+                Cookies.set('expanded_sidebar', 'no', { expires: 7, path: '/', sameSite: 'Lax' });
+            }
         });
     </script>
 
