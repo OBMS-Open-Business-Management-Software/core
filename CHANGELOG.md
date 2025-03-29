@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.4.0](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v2.3.4...v2.4.0) (2025-03-29)
+
+
+### Features
+
+* collapsable sidebar ([e7722c6](https://github.com/OBMS-Open-Business-Management-Software/core/commit/e7722c6089949dda0fbb6d3612d423a330d7aa40))
+
 ## [2.3.4](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v2.3.3...v2.3.4) (2025-03-29)
 
 
