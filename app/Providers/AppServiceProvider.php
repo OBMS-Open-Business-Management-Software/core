@@ -47,13 +47,13 @@ class AppServiceProvider extends ServiceProvider
                 str_contains($path, '.php') ||
                 file_exists(public_path('themes/' . $path)) ||
                 is_link(public_path('themes/' . $path)) ||
-                !file_exists(resource_path('themes/' . $path . '/public'));
+                !file_exists(resource_path('themes/' . $path . '/src/public'));
         })->each(function (string $theme) {
-            symlink(resource_path('themes/' . $theme . '/public'), public_path('themes/' . $theme));
+            symlink(resource_path('themes/' . $theme . '/src/public'), public_path('themes/' . $theme));
         });
 
         $theme     = config('app.theme', 'aurora');
-        $themePath = resource_path('themes/' . $theme);
+        $themePath = resource_path('themes/' . $theme . '/src');
 
         if (File::isDirectory($themePath)) {
             View::addLocation($themePath);
