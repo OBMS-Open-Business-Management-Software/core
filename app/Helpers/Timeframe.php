@@ -20,43 +20,62 @@ class Timeframe
     {
         switch ($grouping) {
             case 'hour':
-                $groupingMethod = 'subHours';
+                $groupingMethod      = 'subHours';
+                $groupingStartMethod = 'startOfHour';
+                $groupingEndMethod   = 'endOfHour';
+                $groupLabelFormat    = 'H:i';
 
                 break;
             case 'day':
-                $groupingMethod = 'subDays';
+                $groupingMethod      = 'subDays';
+                $groupingStartMethod = 'startOfDay';
+                $groupingEndMethod   = 'endOfDay';
+                $groupLabelFormat    = 'd.m.Y';
 
                 break;
             case 'month':
             default:
-                $groupingMethod = 'subMonths';
+                $groupingMethod      = 'subMonths';
+                $groupingStartMethod = 'startOfMonth';
+                $groupingEndMethod   = 'endOfMonth';
+                $groupLabelFormat    = 'F Y';
 
                 break;
             case 'year':
-                $groupingMethod = 'subYears';
+                $groupingMethod      = 'subYears';
+                $groupingStartMethod = 'startOfYear';
+                $groupingEndMethod   = 'endOfYear';
+                $groupLabelFormat    = 'Y';
 
                 break;
         }
 
         $now = Carbon::now();
 
+        if ($now->format('d') >= 28 && $grouping === 'month') {
+            $now->setDay(28);
+        }
+
         $timeframes = collect();
 
-        for ($i = $back - 2; $i >= 0; $i--) {
-            $start = (clone $now)->{$groupingMethod}($i)->startOfMonth();
-            $end   = (clone $now)->{$groupingMethod}($i)->endOfMonth();
+        collect(range(1, $back - 1))->each(function ($subtract) use ($groupingMethod, $groupingStartMethod, $groupingEndMethod, $groupLabelFormat, $timeframes, $now) {
+            $start = (clone $now)->{$groupingMethod}($subtract)->{$groupingStartMethod}();
+            $end   = (clone $now)->{$groupingMethod}($subtract)->{$groupingEndMethod}();
 
             $timeframes->push((object) [
                 'start' => $start,
                 'end'   => $end,
-                'label' => $start->format('F Y'),
+                'label' => $start->format($groupLabelFormat),
             ]);
-        }
+        });
 
-        return $timeframes->push((object) [
-            'start' => (clone $now)->startOfMonth(),
-            'end'   => $now,
-            'label' => (clone $now)->format('F Y'),
-        ]);
+        return $timeframes
+            ->reverse()
+            ->values()
+            ->push((object) [
+                'start' => (clone $now)->{$groupingStartMethod}(),
+                'end'   => $now,
+                'label' => (clone $now)->format('F Y'),
+            ]);
     }
 }
