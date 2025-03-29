@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.3.2](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v2.3.1...v2.3.2) (2025-03-29)
+
+
+### Bug Fixes
+
+* timeframe demarcation ([f00cac3](https://github.com/OBMS-Open-Business-Management-Software/core/commit/f00cac3f1995110341ab6a832b9f707815bb8062))
+
 ## [2.3.1](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v2.3.0...v2.3.1) (2025-03-29)
 
 
