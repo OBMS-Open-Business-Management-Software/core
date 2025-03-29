@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.6.0](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v2.5.1...v2.6.0) (2025-03-29)
+
+
+### Features
+
+* theme package dependency ([e342911](https://github.com/OBMS-Open-Business-Management-Software/core/commit/e34291140488b6969803ede4c5439bbc8989e3fd))
+
 ## [2.5.1](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v2.5.0...v2.5.1) (2025-03-29)
 
 
