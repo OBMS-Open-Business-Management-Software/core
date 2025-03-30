@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.6.2](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v2.6.1...v2.6.2) (2025-03-30)
+
+
+### Bug Fixes
+
+* theme initialization process ([dcb91c6](https://github.com/OBMS-Open-Business-Management-Software/core/commit/dcb91c6b129dd4c5e72426fee45b820a80e2e3a9))
+
 ## [2.6.1](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v2.6.0...v2.6.1) (2025-03-30)
 
 
