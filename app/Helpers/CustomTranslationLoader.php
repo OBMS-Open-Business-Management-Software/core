@@ -6,6 +6,7 @@ namespace App\Helpers;
 
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
 use Illuminate\Translation\FileLoader;
 
@@ -25,6 +26,13 @@ class CustomTranslationLoader extends FileLoader
 
     public function load($locale, $group, $namespace = null)
     {
+        $cacheKey     = "translation:{$locale}:{$group}";
+        $translations = Cache::get($cacheKey);
+
+        if ($translations) {
+            return $translations;
+        }
+
         $customTranslations = [];
 
         if (File::isDirectory(__DIR__ . '/../../lang/' . $locale)) {
@@ -71,13 +79,17 @@ class CustomTranslationLoader extends FileLoader
             $this->loadTranslationsFromFolder($product->folderName() . '/Languages', $locale, $customTranslations);
         });
 
-        return collect($customTranslations)->map(function ($value, $key) {
+        $translations = collect($customTranslations)->map(function ($value, $key) {
             if (is_array($value)) {
                 return $key;
             }
 
             return $value;
         });
+
+        Cache::forever($cacheKey, $translations);
+
+        return $translations;
     }
 
     /**
