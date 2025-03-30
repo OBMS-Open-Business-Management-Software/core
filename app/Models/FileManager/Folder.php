@@ -100,9 +100,9 @@ class Folder extends Model
     /**
      * Build size attribute.
      *
-     * @return string
+     * @return int
      */
-    public function getFolderSizeAttribute(): string
+    public function getFolderSizeAttribute(): int
     {
         $size = 0;
 

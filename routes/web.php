@@ -508,9 +508,6 @@ Route::middleware([
     });
 });
 
-Route::any('/api/webdav', [App\Http\Controllers\AdminFilemanagerController::class, 'filemanager_file_webdav'])->name('admin.filemanager.webdav');
-Route::any('/api/webdav/{path?}', [App\Http\Controllers\AdminFilemanagerController::class, 'filemanager_file_webdav'])->where('path', '(.*)')->name('admin.filemanager.webdav.path');
-
 Route::any('/payment/pingback/{payment_method}/{payment_type}', [App\Http\Controllers\PaymentController::class, 'pingback'])->name('customer.payment.pingback');
 
 try {

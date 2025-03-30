@@ -77,6 +77,16 @@ class File extends Framework
     }
 
     /**
+     * Get file key.
+     *
+     * @return string
+     */
+    public function getKey(): string
+    {
+        return $this->myPath;
+    }
+
+    /**
      * Get file.
      *
      * @throws NotFound
