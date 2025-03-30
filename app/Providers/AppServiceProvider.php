@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\Helpers\CustomPdfWrapper;
+use App\Helpers\Themes;
 use App\Models\Setting;
 use Exception;
 use Illuminate\Support\Facades\Config;
@@ -41,16 +42,7 @@ class AppServiceProvider extends ServiceProvider
         } catch (Exception $e) {
         }
 
-        collect(scandir(resource_path('themes')))->reject(function (string $path) {
-            return $path == '.' ||
-                $path == '..' ||
-                str_contains($path, '.php') ||
-                file_exists(public_path('themes/' . $path)) ||
-                is_link(public_path('themes/' . $path)) ||
-                !file_exists(resource_path('themes/' . $path . '/src/public'));
-        })->each(function (string $theme) {
-            symlink(resource_path('themes/' . $theme . '/src/public'), public_path('themes/' . $theme));
-        });
+        Themes::link();
 
         $theme     = config('app.theme', 'aurora');
         $themePath = resource_path('themes/' . $theme . '/src');

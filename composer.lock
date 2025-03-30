@@ -5620,16 +5620,16 @@
         },
         {
             "name": "obms/theme-aurora",
-            "version": "v1.0.1",
+            "version": "v1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/OBMS-Open-Business-Management-Software/theme-aurora.git",
-                "reference": "7ddf995c9fa6b194bef947c5e2bf4837d40c11c2"
+                "reference": "f4e68b035b201e6e90995420495d84842c0758ca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/OBMS-Open-Business-Management-Software/theme-aurora/zipball/7ddf995c9fa6b194bef947c5e2bf4837d40c11c2",
-                "reference": "7ddf995c9fa6b194bef947c5e2bf4837d40c11c2",
+                "url": "https://api.github.com/repos/OBMS-Open-Business-Management-Software/theme-aurora/zipball/f4e68b035b201e6e90995420495d84842c0758ca",
+                "reference": "f4e68b035b201e6e90995420495d84842c0758ca",
                 "shasum": ""
             },
             "require": {
@@ -5659,7 +5659,7 @@
                 "issues": "https://github.com/OBMS-Open-Business-Management-Software/core/issues",
                 "source": "https://github.com/OBMS-Open-Business-Management-Software/core"
             },
-            "time": "2025-03-30T10:14:20+00:00"
+            "time": "2025-03-30T11:40:27+00:00"
         },
         {
             "name": "omnipay/common",
