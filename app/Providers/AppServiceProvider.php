@@ -8,13 +8,13 @@ use App\Helpers\CustomPdfWrapper;
 use App\Helpers\Themes;
 use App\Models\Setting;
 use Exception;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Log;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -35,9 +35,9 @@ class AppServiceProvider extends ServiceProvider
     {
         try {
             if (Schema::hasTable('settings')) {
-                $tenant = request()->tenant;
-                $cacheKey = 'app_settings' . ($tenant ? '_' . $tenant->id : '');
-                
+                $tenant   = request()->tenant;
+                $cacheKey = 'app-settings' . ($tenant ? '-' . $tenant->id : '');
+
                 $settings = Cache::remember($cacheKey, 3600, function () {
                     return Setting::all();
                 });

@@ -148,8 +148,8 @@ class AdminSettingsController extends Controller
                 'value' => $request->value ? $request->value : null,
             ]);
 
-            $tenant = request()->tenant;
-            $cacheKey = 'app_settings' . ($tenant ? '_' . $tenant->id : '');
+            $tenant   = request()->tenant;
+            $cacheKey = 'app-settings' . ($tenant ? '-' . $tenant->id : '');
             Cache::forget($cacheKey);
 
             if (
@@ -161,8 +161,8 @@ class AdminSettingsController extends Controller
                     'theme.gray',
                 ])->contains($setting->setting)
             ) {
-                $tenant = request()->tenant;
-                $cacheKey = 'stylesheet-' . config('app.theme', 'aurora') . '-' . str_replace(['/', ':'], '_', str_replace(['http://', 'https://'], '', config('app.url'))) . ($tenant ? '_' . $tenant->id : '');
+                $tenant   = request()->tenant;
+                $cacheKey = 'stylesheet-' . config('app.theme', 'aurora') . '-' . str_replace(['/', ':'], '_', str_replace(['http://', 'https://'], '', config('app.url'))) . ($tenant ? '-' . $tenant->id : '');
                 Cache::forget($cacheKey);
             }
 

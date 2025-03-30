@@ -11,8 +11,8 @@ class DynamicStyles extends Controller
 {
     public function __invoke()
     {
-        $tenant = request()->tenant;
-        $cacheKey = 'stylesheet-' . config('app.theme', 'aurora') . '-' . str_replace(['/', ':'], '_', str_replace(['http://', 'https://'], '', config('app.url'))) . ($tenant ? '_' . $tenant->id : '');
+        $tenant   = request()->tenant;
+        $cacheKey = 'stylesheet-' . config('app.theme', 'aurora') . '-' . str_replace(['/', ':'], '_', str_replace(['http://', 'https://'], '', config('app.url'))) . ($tenant ? '-' . $tenant->id : '');
 
         if ($stylesheet = Cache::get($cacheKey)) {
             return response($stylesheet, 200, ['Content-Type' => 'text/css']);
