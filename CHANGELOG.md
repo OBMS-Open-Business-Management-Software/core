@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.7.0](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v2.6.2...v2.7.0) (2025-03-30)
+
+
+### Features
+
+* app settings caching ([95b87f2](https://github.com/OBMS-Open-Business-Management-Software/core/commit/95b87f2e0632654cece745624dad26bf665ea32f))
+
 ## [2.6.2](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v2.6.1...v2.6.2) (2025-03-30)
 
 
