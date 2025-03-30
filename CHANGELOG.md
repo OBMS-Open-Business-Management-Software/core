@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.7.1](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v2.7.0...v2.7.1) (2025-03-30)
+
+
+### Bug Fixes
+
+* **webdav:** multiple issues ([1612c4a](https://github.com/OBMS-Open-Business-Management-Software/core/commit/1612c4a8268f4058706b4c9b27fe29c279364c44))
+
 ## [2.7.0](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v2.6.2...v2.7.0) (2025-03-30)
 
 
