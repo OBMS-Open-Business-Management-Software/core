@@ -50,6 +50,7 @@ class Locks extends AbstractBackend
 
                 return $condition;
             })
+            ->get()
             ->transform(function (Lock $lock) {
                 $lockInfo          = new LockInfo();
                 $lockInfo->owner   = $lock->owner;

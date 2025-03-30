@@ -49,7 +49,11 @@ class Directory extends Collection
             }))->toArray();
         }
 
-        return [];
+        return Folder::whereNull('parent_id')->get()->transform(function (Folder $folder) {
+            return $this->getChild($folder->name);
+        })->merge(File::whereNull('folder_id')->get()->transform(function (File $file) {
+            return $this->getChild($file->name);
+        }))->toArray();
     }
 
     /**
@@ -89,7 +93,7 @@ class Directory extends Collection
     {
         $path = ! empty($this->myPath) ? $this->myPath . '/' . $name : $name;
 
-        return empty(Filemanager::resolve($path));
+        return ! empty(Filemanager::resolve($path));
     }
 
     /**
@@ -100,6 +104,16 @@ class Directory extends Collection
     public function getName(): string
     {
         return basename($this->myPath);
+    }
+
+    /**
+     * Get folder key.
+     *
+     * @return string
+     */
+    public function getKey(): string
+    {
+        return $this->myPath;
     }
 
     /**
@@ -126,7 +140,7 @@ class Directory extends Collection
             throw new NotFound('The folder with name: ' . $this->myPath . ' could not be found');
         }
 
-        if ($fileOrFolder->files->where('name', '=', $name)) {
+        if ($fileOrFolder->files->where('name', '=', $name)->isNotEmpty()) {
             throw new Exception('The file with name: ' . $name . ' already exists in folder: ' . $this->myPath);
         }
 

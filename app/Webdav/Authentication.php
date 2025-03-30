@@ -26,8 +26,8 @@ class Authentication extends AbstractBasic
                 'username' => $username,
                 'password' => $password,
             ], [
-                'username' => ['email', 'required'],
-                'password' => ['required', 'string', 'min:8'],
+                'username' => ['required', 'email'],
+                'password' => ['required', 'string'],
             ])->validate();
         } catch (ValidationException $exception) {
             return false;

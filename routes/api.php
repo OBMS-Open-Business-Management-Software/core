@@ -27,6 +27,9 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('contracts/usage-trackers', APIContractUsageTrackerController::class);
 });
 
+Route::match(['OPTIONS', 'HEAD', 'GET', 'POST', 'PUT', 'DELETE', 'PROPFIND', 'PROPPATCH', 'MKCOL', 'COPY', 'MOVE', 'LOCK', 'UNLOCK'], '/webdav', [App\Http\Controllers\AdminFilemanagerController::class, 'filemanager_file_webdav'])->name('admin.filemanager.webdav');
+Route::match(['OPTIONS', 'HEAD', 'GET', 'POST', 'PUT', 'DELETE', 'PROPFIND', 'PROPPATCH', 'MKCOL', 'COPY', 'MOVE', 'LOCK', 'UNLOCK'], '/webdav/{path?}', [App\Http\Controllers\AdminFilemanagerController::class, 'filemanager_file_webdav'])->where('path', '(.*)')->name('admin.filemanager.webdav.path');
+
 Route::fallback(function () {
     return response()->json([
         'success' => false,
