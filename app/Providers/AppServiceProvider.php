@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -33,13 +35,19 @@ class AppServiceProvider extends ServiceProvider
     {
         try {
             if (Schema::hasTable('settings')) {
-                $settings = Setting::all();
+                $tenant = request()->tenant;
+                $cacheKey = 'app_settings' . ($tenant ? '_' . $tenant->id : '');
+                
+                $settings = Cache::remember($cacheKey, 3600, function () {
+                    return Setting::all();
+                });
 
                 foreach ($settings as $setting) {
                     Config::set($setting->setting, $setting->value);
                 }
             }
         } catch (Exception $e) {
+            Log::error('Failed to load application settings: ' . $e->getMessage());
         }
 
         Themes::link();
