@@ -32,4 +32,16 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'microsoft' => [
+        'client_id'     => config('sso.client.id'),
+        'client_secret' => config('sso.client.secret'),
+        'redirect'      => config('app.url'),
+        'tenant'        => config('sso.tenant'),
+    ],
+
+    'google' => [
+        'client_id'     => config('sso.client.id'),
+        'client_secret' => config('sso.client.secret'),
+        'redirect'      => config('app.url'),
+    ],
 ];

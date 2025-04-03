@@ -183,6 +183,7 @@ return [
         App\Providers\QueueServiceProvider::class,
         App\Providers\TranslationServiceProvider::class,
         App\Providers\MigrationServiceProvider::class,
+        App\Providers\SocialiteServiceProvider::class,
 
     ],
 

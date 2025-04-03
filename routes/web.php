@@ -50,6 +50,9 @@ Route::get('/email/verify', function () {
 Route::get('/set-password', [App\Http\Controllers\DashboardController::class, 'setPassword'])->name('password-set');
 Route::post('/submit-password', [App\Http\Controllers\DashboardController::class, 'submitPassword'])->name('password-set.submit');
 
+Route::get('/sso', [App\Http\Controllers\Auth\SocialiteController::class, 'redirect'])->name('auth.sso.redirect');
+Route::get('/sso/callback', [App\Http\Controllers\Auth\SocialiteController::class, 'callback'])->name('auth.sso.callback');
+
 Route::middleware([
     'auth',
     'verified',
