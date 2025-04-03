@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.8.0](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v2.7.1...v2.8.0) (2025-04-03)
+
+
+### Features
+
+* company sso support ([fe43f00](https://github.com/OBMS-Open-Business-Management-Software/core/commit/fe43f006d345fb3e2723c17d6cd6a1949d02bd9b))
+
 ## [2.7.1](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v2.7.0...v2.7.1) (2025-03-30)
 
 
