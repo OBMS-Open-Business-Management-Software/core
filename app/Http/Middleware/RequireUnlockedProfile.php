@@ -31,7 +31,6 @@ class RequireUnlockedProfile
         if (Auth::user()->locked) {
             Auth::logout();
             Session::flush();
-            ;
 
             return redirect()->route('login')->with('warning', __('interface.messages.account_locked'));
         }

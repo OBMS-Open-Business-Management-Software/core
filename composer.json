@@ -34,6 +34,7 @@
         "laravel/passport": "^12.0",
         "laravel/pulse": "^1.4",
         "laravel/sanctum": "^4.0",
+        "laravel/socialite": "^5.19",
         "laravel/tinker": "^2.9",
         "laravel/ui": "^4.5",
         "lcobucci/clock": "^2.2",
@@ -45,7 +46,9 @@
         "phpseclib/phpseclib": "^3.0",
         "sabre/dav": "^4.2",
         "scssphp/scssphp": "^2.0",
-        "smhg/sepa-qr-data": "^1.1"
+        "smhg/sepa-qr-data": "^1.1",
+        "socialiteproviders/google": "^4.1",
+        "socialiteproviders/microsoft": "^4.6"
     },
     "require-dev": {
         "beyondcode/laravel-er-diagram-generator": "^4.0",
