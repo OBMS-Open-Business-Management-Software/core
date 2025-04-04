@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.0.0](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v2.8.0...v3.0.0) (2025-04-04)
+
+
+### ⚠ BREAKING CHANGES
+
+* introduction of foreign key constraints
+
+### Code Refactoring
+
+* improved database migrations ([bd17233](https://github.com/OBMS-Open-Business-Management-Software/core/commit/bd17233e467fce56d652be004169176bdbc24930))
+
 ## [2.8.0](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v2.7.1...v2.8.0) (2025-04-03)
 
 
