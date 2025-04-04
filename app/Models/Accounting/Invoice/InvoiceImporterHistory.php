@@ -8,6 +8,7 @@ use App\Models\FileManager\File;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class InvoiceImporterHistory.
@@ -34,6 +35,8 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  */
 class InvoiceImporterHistory extends Model
 {
+    use SoftDeletes;
+
     /**
      * The table associated with the model.
      *

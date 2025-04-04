@@ -9,6 +9,7 @@ use App\Traits\Encryptable;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
@@ -48,6 +49,7 @@ use Illuminate\Support\Facades\DB;
 class Tenant extends Model
 {
     use Encryptable;
+    use SoftDeletes;
 
     /**
      * The connection name for the model.
