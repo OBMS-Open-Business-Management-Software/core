@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Emails\AccountEmailVerification;
+use App\Helpers\NumberRanges;
 use App\Models\Accounting\Invoice\Invoice;
 use App\Models\Accounting\Invoice\InvoiceReminder;
 use App\Models\Accounting\Prepaid\PrepaidHistory;
@@ -385,22 +386,9 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @return string
      */
-    public function getnumberAttribute(): string
+    public function getNumberAttribute(): string
     {
-        switch ($this->role) {
-            case 'admin':
-                return 'A' . $this->id;
-            case 'employee':
-                return 'E' . $this->id;
-            case 'supplier':
-                return 'S' . $this->id;
-            case 'customer':
-                return 'KD' . $this->id;
-            case 'api':
-                return 'I' . $this->id;
-        }
-
-        return (string) $this->id;
+        return NumberRanges::getNumber(self::class, $this);
     }
 
     /**

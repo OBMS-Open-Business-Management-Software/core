@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models\Accounting\Invoice;
 
 use App\Emails\Accounting\AccountingReminder;
+use App\Helpers\NumberRanges;
 use App\Models\FileManager\File;
 use Carbon\Carbon;
 use Error;
@@ -108,7 +109,7 @@ class InvoiceReminder extends Model
      */
     public function getNumberAttribute(): string
     {
-        return 'R' . $this->created_at->format('Ymd') . $this->id;
+        return NumberRanges::getNumber(self::class, $this);
     }
 
     /**

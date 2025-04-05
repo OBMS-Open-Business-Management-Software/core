@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models\Accounting\Invoice;
 
 use App\Emails\Accounting\AccountingInvoice;
+use App\Helpers\NumberRanges;
 use App\Models\Accounting\Contract\Contract;
 use App\Models\Accounting\Position;
 use App\Models\FileManager\File;
@@ -203,7 +204,7 @@ class Invoice extends Model
      */
     public function getNumberAttribute(): string
     {
-        return ! empty($this->name) ? $this->name : 'INV' . $this->created_at->format('Ymd') . $this->id;
+        return ! empty($this->name) ? $this->name : NumberRanges::getNumber(self::class, $this);
     }
 
     /**

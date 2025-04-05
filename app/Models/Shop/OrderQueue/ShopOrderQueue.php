@@ -16,6 +16,7 @@ use App\Emails\Shop\ProductLockSuccessful;
 use App\Emails\Shop\ProductRemovalSuccessful;
 use App\Emails\Shop\ProductUnlockFailure;
 use App\Emails\Shop\ProductUnlockSuccessful;
+use App\Helpers\NumberRanges;
 use App\Helpers\Products;
 use App\Models\Accounting\Contract\Contract;
 use App\Models\Accounting\Contract\ContractPosition;
@@ -174,7 +175,7 @@ class ShopOrderQueue extends Model
      */
     public function getNumberAttribute(): string
     {
-        return 'O' . $this->created_at->format('Ymd') . $this->id;
+        return NumberRanges::getNumber(self::class, $this);
     }
 
     /**
