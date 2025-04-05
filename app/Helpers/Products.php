@@ -46,4 +46,14 @@ class Products
 
         return $list;
     }
+
+    /**
+     * Get a product by its technical name.
+     *
+     * @param string $technicalName
+     */
+    public static function get(string $technicalName)
+    {
+        return self::list()->get($technicalName);
+    }
 }

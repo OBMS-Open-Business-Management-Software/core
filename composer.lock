@@ -5720,16 +5720,16 @@
         },
         {
             "name": "obms/product-sample",
-            "version": "v1.0.1",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/OBMS-Open-Business-Management-Software/product-sample.git",
-                "reference": "32408f86be5994898c409388ecbfcf809fd9f0c4"
+                "reference": "caaaef0de6a6e0e700182f9463728c9683a030c7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/OBMS-Open-Business-Management-Software/product-sample/zipball/32408f86be5994898c409388ecbfcf809fd9f0c4",
-                "reference": "32408f86be5994898c409388ecbfcf809fd9f0c4",
+                "url": "https://api.github.com/repos/OBMS-Open-Business-Management-Software/product-sample/zipball/caaaef0de6a6e0e700182f9463728c9683a030c7",
+                "reference": "caaaef0de6a6e0e700182f9463728c9683a030c7",
                 "shasum": ""
             },
             "require": {
@@ -5766,7 +5766,7 @@
                 "issues": "https://github.com/OBMS-Open-Business-Management-Software/core/issues",
                 "source": "https://github.com/OBMS-Open-Business-Management-Software/core"
             },
-            "time": "2025-03-27T21:26:01+00:00"
+            "time": "2025-04-05T12:31:00+00:00"
         },
         {
             "name": "obms/theme-aurora",
