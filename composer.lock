@@ -5770,16 +5770,16 @@
         },
         {
             "name": "obms/theme-aurora",
-            "version": "v1.1.0",
+            "version": "v1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/OBMS-Open-Business-Management-Software/theme-aurora.git",
-                "reference": "37caa3b89a0ace150063714e7d30d5dd3a642d62"
+                "reference": "137efa9871601ff80dc36e0477eb1759f36da3a4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/OBMS-Open-Business-Management-Software/theme-aurora/zipball/37caa3b89a0ace150063714e7d30d5dd3a642d62",
-                "reference": "37caa3b89a0ace150063714e7d30d5dd3a642d62",
+                "url": "https://api.github.com/repos/OBMS-Open-Business-Management-Software/theme-aurora/zipball/137efa9871601ff80dc36e0477eb1759f36da3a4",
+                "reference": "137efa9871601ff80dc36e0477eb1759f36da3a4",
                 "shasum": ""
             },
             "require": {
@@ -5809,7 +5809,7 @@
                 "issues": "https://github.com/OBMS-Open-Business-Management-Software/core/issues",
                 "source": "https://github.com/OBMS-Open-Business-Management-Software/core"
             },
-            "time": "2025-04-03T18:35:26+00:00"
+            "time": "2025-04-05T12:05:47+00:00"
         },
         {
             "name": "omnipay/common",
@@ -8596,16 +8596,16 @@
         },
         {
             "name": "swagger-api/swagger-ui",
-            "version": "v5.20.5",
+            "version": "v5.20.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/swagger-api/swagger-ui.git",
-                "reference": "b9ed7e95da40275fb5df073b8978761c83ee556f"
+                "reference": "784d62c950ef4c20e6e3baba41ed55885b5b3fb2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swagger-api/swagger-ui/zipball/b9ed7e95da40275fb5df073b8978761c83ee556f",
-                "reference": "b9ed7e95da40275fb5df073b8978761c83ee556f",
+                "url": "https://api.github.com/repos/swagger-api/swagger-ui/zipball/784d62c950ef4c20e6e3baba41ed55885b5b3fb2",
+                "reference": "784d62c950ef4c20e6e3baba41ed55885b5b3fb2",
                 "shasum": ""
             },
             "type": "library",
@@ -8651,9 +8651,9 @@
             ],
             "support": {
                 "issues": "https://github.com/swagger-api/swagger-ui/issues",
-                "source": "https://github.com/swagger-api/swagger-ui/tree/v5.20.5"
+                "source": "https://github.com/swagger-api/swagger-ui/tree/v5.20.6"
             },
-            "time": "2025-04-03T10:47:52+00:00"
+            "time": "2025-04-04T13:51:24+00:00"
         },
         {
             "name": "symfony/clock",
