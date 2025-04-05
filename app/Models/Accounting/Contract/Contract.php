@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models\Accounting\Contract;
 
+use App\Helpers\NumberRanges;
 use App\Models\Accounting\Invoice\Invoice;
 use App\Models\User;
 use Carbon\Carbon;
@@ -130,7 +131,7 @@ class Contract extends Model
      */
     public function getNumberAttribute(): string
     {
-        return 'C' . $this->created_at->format('Ymd') . $this->id;
+        return NumberRanges::getNumber(self::class, $this);
     }
 
     /**
