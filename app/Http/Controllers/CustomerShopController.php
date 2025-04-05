@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Products;
 use App\Models\Accounting\Prepaid\PrepaidHistory;
 use App\Models\Content\Page;
 use App\Models\Content\PageAcceptance;
@@ -114,7 +115,10 @@ class CustomerShopController extends Controller
                     ])
                 )
             ) {
-                return view('customer.shop.form', [
+                $handler       = Products::get($form->product_type);
+                $hasCustomForm = collect(array_keys((array) $handler->ui()))->contains('order_form') && $handler->ui()->order_form;
+
+                return view($hasCustomForm ? $handler->ui()->order_form : 'customer.shop.form', [
                     'form' => $form,
                 ]);
             } else {
