@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.1.0](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v3.0.0...v3.1.0) (2025-04-05)
+
+
+### Features
+
+* configurable document numbers ([544644a](https://github.com/OBMS-Open-Business-Management-Software/core/commit/544644accdfbaaf0ffa802c8d780b7b3feb3206f))
+
 ## [3.0.0](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v2.8.0...v3.0.0) (2025-04-04)
 
 
