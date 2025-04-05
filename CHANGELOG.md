@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.2.0](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v3.1.1...v3.2.0) (2025-04-05)
+
+
+### Features
+
+* custom orderform support ([a5bb453](https://github.com/OBMS-Open-Business-Management-Software/core/commit/a5bb4531fabaae402273f85fc83f6c6cd5007e04))
+
 ## [3.1.1](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v3.1.0...v3.1.1) (2025-04-05)
 
 
