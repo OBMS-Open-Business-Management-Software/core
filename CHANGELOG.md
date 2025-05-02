@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.2.1](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v3.2.0...v3.2.1) (2025-05-02)
+
+
+### Bug Fixes
+
+* settings cache renewal ([0fc8bf2](https://github.com/OBMS-Open-Business-Management-Software/core/commit/0fc8bf2ff7fb33acbfffac2c2e8b21dfaed056a5))
+
 ## [3.2.0](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v3.1.1...v3.2.0) (2025-04-05)
 
 
