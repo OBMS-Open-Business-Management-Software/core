@@ -208,6 +208,11 @@ class AdminSettingsController extends Controller
         }
 
         if ($assetsUpdated) {
+            $tenant   = $request->attributes->get('tenant');
+            $cacheKey = 'app-settings' . ($tenant ? '-' . $tenant->id : '');
+
+            Cache::forget($cacheKey);
+
             return redirect()->back()->with('success', __('interface.messages.setting_updated'));
         }
 
@@ -236,6 +241,11 @@ class AdminSettingsController extends Controller
             $setting->update([
                 'value' => null,
             ]);
+
+            $tenant   = $request->attributes->get('tenant');
+            $cacheKey = 'app-settings' . ($tenant ? '-' . $tenant->id : '');
+
+            Cache::forget($cacheKey);
 
             return redirect()->back()->with('success', __('interface.messages.setting_updated'));
         }
