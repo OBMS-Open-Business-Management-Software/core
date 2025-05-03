@@ -54,5 +54,8 @@ class InstallThemePackages extends Command
                     $this->warn($processOutput);
                 }
             });
+
+        $this->info('Linking theme assets');
+        Themes::link();
     }
 }
