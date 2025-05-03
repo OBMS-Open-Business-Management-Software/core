@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.2.2](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v3.2.1...v3.2.2) (2025-05-03)
+
+
+### Bug Fixes
+
+* auto-link themes after npm install ([4e42241](https://github.com/OBMS-Open-Business-Management-Software/core/commit/4e422415b744648e418e2bbcd2a6e2291a6a6365))
+
 ## [3.2.1](https://github.com/OBMS-Open-Business-Management-Software/core/compare/v3.2.0...v3.2.1) (2025-05-02)
 
 
